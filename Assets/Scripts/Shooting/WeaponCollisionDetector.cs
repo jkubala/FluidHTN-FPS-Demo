@@ -9,6 +9,7 @@ public class WeaponCollisionDetector : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		CollisionEntered?.Invoke();
+		Debug.Log("ENTER" + other.name);
 		nOfCollisions++;
 	}
 
@@ -17,6 +18,7 @@ public class WeaponCollisionDetector : MonoBehaviour
 		nOfCollisions--;
 		if (nOfCollisions <= 0)
 		{
+			Debug.Log("EXIT" + other.name);
 			CollisionExited?.Invoke();
 		}
 	}

@@ -18,8 +18,8 @@ namespace FPSDemo.FPSController
         void OnEnable()
         {
             player.OnBeforeMove += OnBeforeMove;
-        }
-        void OnDisable()
+		}
+		void OnDisable()
         {
             player.OnBeforeMove -= OnBeforeMove;
         }
@@ -34,7 +34,7 @@ namespace FPSDemo.FPSController
             }
             else
             {
-                player.desiredTargetSpeed = player.WalkSpeed;
+				player.desiredTargetSpeed = player.WalkSpeed;
             }
         }
     }
