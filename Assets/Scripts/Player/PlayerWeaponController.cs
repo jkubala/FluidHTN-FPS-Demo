@@ -7,6 +7,7 @@ namespace FPSDemo.FPSController
 	{
 		enum GunPosition { away, aiming, run, normal }
 		GunPosition gunPosition = GunPosition.normal;
+		[SerializeField] CameraMovement cameraMovement;
 		[SerializeField] Weapon equippedWeapon;
 
 		[SerializeField, Tooltip("Multiplier to apply to player speed when aiming.")]
@@ -51,6 +52,14 @@ namespace FPSDemo.FPSController
 		Vector3 currentRecoilRotation = Vector3.zero;
 		Vector3 targetRecoilRotation = Vector3.zero;
 
+		[Header("Weapon Sway")]
+		[SerializeField] Vector3 lookSway = Vector3.zero;
+		[SerializeField] Vector3 movementSway = Vector3.zero;
+		[SerializeField] private float maxSway = 4f;
+		[SerializeField] private float swaySmoothness = 0.02f;
+		Vector3 currentSway;
+		Vector3 weaponSway = Vector3.zero;
+		Vector3 smoothedWeaponSway = Vector3.zero;
 		HealthSystem healthSystem;
 
 		private void Awake()
@@ -165,6 +174,7 @@ namespace FPSDemo.FPSController
 			{
 				AimInput(false);
 			}
+			UpdateWeaponSway();
 			FocusADS();
 			UpdateReticleSize();
 		}
@@ -197,13 +207,26 @@ namespace FPSDemo.FPSController
 			}
 
 			targetRecoilRotation = Vector3.Lerp(targetRecoilRotation, Vector3.zero, equippedWeapon.recoilRecoverSpeed * Time.deltaTime);
-			currentRecoilRotation = Vector3.Slerp(currentRecoilRotation, targetRecoilRotation, equippedWeapon.blowbackForce * Time.fixedDeltaTime);
+			currentRecoilRotation = Vector3.Slerp(currentRecoilRotation, targetRecoilRotation, equippedWeapon.blowbackForce * Time.deltaTime);
 
 			currentWeaponPos = Vector3.Lerp(currentWeaponPos, targetWeaponPos, weaponPosChangeSpeed * Time.deltaTime);
 			currentWeaponRot = Vector3.Slerp(currentWeaponRot, targetWeaponRot, weaponRotChangeSpeed * Time.deltaTime);
 
 			equippedWeapon.gameObject.transform.localPosition = currentWeaponPos;
-			equippedWeapon.gameObject.transform.localRotation = Quaternion.Euler(currentWeaponRot + currentRecoilRotation);
+			equippedWeapon.gameObject.transform.localRotation = Quaternion.Euler(currentWeaponRot + currentRecoilRotation + smoothedWeaponSway);
+		}
+
+		void UpdateWeaponSway()
+		{
+			Vector2 moveInput = player.inputManager.GetMovementInput();
+			Vector2 lookInput = cameraMovement.cameraMovementThisFrame;
+
+			weaponSway.x = lookInput.y * lookSway.x + moveInput.y * movementSway.x;
+			weaponSway.y = lookInput.x * lookSway.y + moveInput.x * movementSway.y;
+			weaponSway.z = lookInput.x * lookSway.z - moveInput.x * movementSway.z;
+			weaponSway = Vector3.ClampMagnitude(weaponSway, maxSway);
+
+			smoothedWeaponSway = Vector3.SmoothDamp(smoothedWeaponSway, weaponSway, ref currentSway, swaySmoothness);
 		}
 
 		void FocusADS()

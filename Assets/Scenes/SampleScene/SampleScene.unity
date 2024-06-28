@@ -53565,6 +53565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65195ab7ae737a4e88370987607cac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMovement: {fileID: 719387698}
   equippedWeapon: {fileID: 3157565930282778882}
   aimMultiplier: 0.4
   startMagazineCount: 3
@@ -53575,6 +53576,10 @@ MonoBehaviour:
   timeToReachFullMoveSpread: 0.5
   weaponPosChangeSpeed: 15
   weaponRotChangeSpeed: 5
+  lookSway: {x: 0, y: 0, z: 0}
+  movementSway: {x: 0, y: 0, z: 0}
+  maxSway: 4
+  swaySmoothness: 0.02
 --- !u!114 &1224698215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55598,6 +55603,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1995889545}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1563607769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8652505727956016578, guid: fda941103f762514fa18a6715e7b3669, type: 3}
+  m_PrefabInstance: {fileID: 1029210416048579293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1580461972
 GameObject:
   m_ObjectHideFlags: 0
@@ -56769,7 +56779,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8652505727956016578, guid: fda941103f762514fa18a6715e7b3669, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3157565930282778883}
   m_SourcePrefab: {fileID: 100100000, guid: fda941103f762514fa18a6715e7b3669, type: 3}
 --- !u!4 &2349258151264639931 stripped
 Transform:
@@ -56781,12 +56794,55 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7736027370485253251, guid: fda941103f762514fa18a6715e7b3669, type: 3}
   m_PrefabInstance: {fileID: 1029210416048579293}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1563607769}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f504d93444fd34c4aafae68a7ad11f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3157565930282778883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563607769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b745a5306fd81c942b0cb8b1f1e5f245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponTransform: {fileID: 0}
+  swayAmount: 0.01
+  maxSwayAmount: 0.5
+  swaySmooth: 50
+  swayCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  swaySmoothCounteraction: 1
+  rotationSwayMultiplier: -1
+  positionSwayMultiplier: 9
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
