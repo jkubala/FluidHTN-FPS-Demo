@@ -18898,6 +18898,11 @@ MonoBehaviour:
   tiltHeadForward: 0.15
   tiltHeadBack: -0.05
   cameraDefaultFOV: 65
+--- !u!4 &766458570 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1541767113245714645, guid: fda941103f762514fa18a6715e7b3669, type: 3}
+  m_PrefabInstance: {fileID: 1029210416048579293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &786368023
 GameObject:
   m_ObjectHideFlags: 0
@@ -53666,7 +53671,7 @@ MonoBehaviour:
   reloadTime: 3
   ammoText: {fileID: 1037912170}
   crosshairGameObject: {fileID: 2019667889}
-  bulletSpawnPoint: {fileID: 0}
+  bulletSpawnPoint: {fileID: 766458570}
   timeToReachFullMoveSpread: 0.5
   weaponPosChangeSpeed: 15
   weaponRotChangeSpeed: 5
