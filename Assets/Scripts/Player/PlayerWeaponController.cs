@@ -13,13 +13,6 @@ namespace FPSDemo.FPSController
 		[SerializeField, Tooltip("Multiplier to apply to player speed when aiming.")]
 		private float aimMultiplier = 0.4f;
 
-		[Header("Reload & Ammo")]
-		[SerializeField]
-		private int startMagazineCount = 3;
-
-		[SerializeField]
-		private float reloadTime = 3.0f;
-
 		[SerializeField]
 		private TextMeshProUGUI ammoText = null;
 
@@ -33,8 +26,8 @@ namespace FPSDemo.FPSController
 
 		// Reticle
 		RectTransform reticleTransform;
-		float currentOverallReticleAngleSpread;
-		float currentReticleAngleSpreadFromMoving = 0;
+		float currentOverallAngleSpread;
+		float currentSpreadFromMoving = 0;
 		[SerializeField] float timeToReachFullMoveSpread = 0.5f;
 		float angleSpreadFromShooting = 0;
 		float maxAngleSpread = 15f;
@@ -94,7 +87,7 @@ namespace FPSDemo.FPSController
 
 		void InitStartingVariables()
 		{
-			availableMagazines = startMagazineCount;
+			availableMagazines = equippedWeapon.startMagazineCount;
 			lastFired = -equippedWeapon.fireRate;
 			targetWeaponPos = equippedWeapon.normalPos;
 			targetWeaponRot = equippedWeapon.normalRot;
@@ -156,6 +149,8 @@ namespace FPSDemo.FPSController
 				return;
 			}
 
+			UpdateReticleSize();
+
 			if (ShouldFireTheGun())
 			{
 				FireInput();
@@ -176,7 +171,6 @@ namespace FPSDemo.FPSController
 			}
 			UpdateWeaponSway();
 			FocusADS();
-			UpdateReticleSize();
 		}
 
 		void OnBeforeMove()
@@ -249,23 +243,21 @@ namespace FPSDemo.FPSController
 
 		private void Fire()
 		{
-			if (player.IsAiming)
+			float maxAngle = currentOverallAngleSpread;
+			if (!player.IsAiming)
 			{
-				bulletSpawnPoint.localRotation = Quaternion.identity;
+				maxAngle += equippedWeapon.defaultHipFireAngleSpread;
 			}
-			else
-			{
-				// Apply hip inaccuracy
-				float xAngle = Random.Range(equippedWeapon.defaultHipFireAngleSpread, currentOverallReticleAngleSpread);
-				float yAngle = Random.Range(equippedWeapon.defaultHipFireAngleSpread, currentOverallReticleAngleSpread);
-				if (Random.Range(0, 2) == 1) { xAngle *= -1f; }
-				if (Random.Range(0, 2) == 1) { yAngle *= -1f; }
-				bulletSpawnPoint.localRotation = Quaternion.Euler(xAngle, yAngle, 0f);
-			}
+			float xAngle = Random.Range(0, maxAngle);
+			float yAngle = Random.Range(0, maxAngle);
+			if (Random.Range(0, 2) == 1) { xAngle *= -1f; }
+			if (Random.Range(0, 2) == 1) { yAngle *= -1f; }
+			bulletSpawnPoint.localRotation = Quaternion.Euler(xAngle, yAngle, 0f);
 			equippedWeapon.Fire(player.ThisTarget, bulletSpawnPoint);
+
 			AddRecoilToTheTargetPosition();
 			player.ThisTarget.LastTimeFired = Time.time;
-			// Update ammo
+			angleSpreadFromShooting += player.IsAiming ? equippedWeapon.angleSpreadPerShotADS : equippedWeapon.angleSpreadPerShot;
 			UpdateAmmoText();
 		}
 
@@ -279,7 +271,6 @@ namespace FPSDemo.FPSController
 					if (Time.time > equippedWeapon.fireRate + lastFired)
 					{
 						lastFired = Time.time;
-						angleSpreadFromShooting += equippedWeapon.angleSpreadPerShot;
 						Fire();
 					}
 				}
@@ -291,7 +282,7 @@ namespace FPSDemo.FPSController
 			if (!reloading && availableMagazines > 0)
 			{
 				reloading = true;
-				Invoke(nameof(EndReload), reloadTime);
+				Invoke(nameof(EndReload), equippedWeapon.reloadTime);
 			}
 		}
 
@@ -323,20 +314,20 @@ namespace FPSDemo.FPSController
 		{
 			if (player.IsMoving())
 			{
-				currentReticleAngleSpreadFromMoving = Mathf.Clamp(currentReticleAngleSpreadFromMoving + equippedWeapon.maxAngleSpreadWhenMoving / timeToReachFullMoveSpread * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenMoving);
+				currentSpreadFromMoving = Mathf.Clamp(currentSpreadFromMoving + equippedWeapon.maxAngleSpreadWhenMoving / timeToReachFullMoveSpread * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenMoving);
 			}
 			else
 			{
-				currentReticleAngleSpreadFromMoving = Mathf.Clamp(currentReticleAngleSpreadFromMoving - equippedWeapon.maxAngleSpreadWhenMoving / timeToReachFullMoveSpread * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenMoving);
+				currentSpreadFromMoving = Mathf.Clamp(currentSpreadFromMoving - equippedWeapon.maxAngleSpreadWhenMoving / timeToReachFullMoveSpread * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenMoving);
 			}
 
 			if (angleSpreadFromShooting > 0)
 			{
-				angleSpreadFromShooting = Mathf.Clamp(angleSpreadFromShooting - equippedWeapon.spreadStabilityGain.Evaluate(Time.time - lastFired) * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenShooting);
+				float targetMaxSpreadFromShooting = player.IsAiming ? equippedWeapon.maxAngleSpreadWhenShootingADS : equippedWeapon.maxAngleSpreadWhenShooting;
+				angleSpreadFromShooting = Mathf.Clamp(angleSpreadFromShooting - equippedWeapon.spreadStabilityGain.Evaluate(Time.time - lastFired) * Time.deltaTime, 0, targetMaxSpreadFromShooting);
 			}
-
-			currentOverallReticleAngleSpread = Mathf.Clamp(currentReticleAngleSpreadFromMoving + angleSpreadFromShooting, equippedWeapon.defaultHipFireAngleSpread, maxAngleSpread);
-			float currentSpreadToReticleSize = Mathf.Lerp(minReticleSize, maxReticleSize, currentOverallReticleAngleSpread / maxAngleSpread);
+			currentOverallAngleSpread = Mathf.Clamp(currentSpreadFromMoving + currentSpreadFromMoving + angleSpreadFromShooting, 0, maxAngleSpread);
+			float currentSpreadToReticleSize = Mathf.Lerp(minReticleSize, maxReticleSize, currentOverallAngleSpread / maxAngleSpread);
 			reticleTransform.sizeDelta = new Vector2(currentSpreadToReticleSize, currentSpreadToReticleSize);
 		}
 

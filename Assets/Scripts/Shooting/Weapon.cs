@@ -6,8 +6,7 @@ public class Weapon : MonoBehaviour
 {
 	public float gunShotDistanceToAlert;
 	[SerializeField] Transform muzzleFlashPos;
-	public Transform otherHandTransform;
-	public Transform AimTransform;
+	[SerializeField] float muzzleFlashDuration = 0.15f;
 	[SerializeField] AudioSource weaponAudioSource;
 	[SerializeField] LayerMask shotLayerMask;
 
@@ -15,15 +14,25 @@ public class Weapon : MonoBehaviour
 
 	public bool isAutomatic = false;
 	public int currentAvailableAmmo = 0;
-	public int maxAmmoInMagazine = 5;
+	[Header("Reload & Ammo")]
+	public int maxAmmoInMagazine = 30;
+	[SerializeField]
+	public int startMagazineCount = 3;
+	[SerializeField]
+	public float reloadTime = 3.0f;
+
 	public float fireRate = 3f;
 	public float maxRange = 1000f;
 	public float angleSpreadPerShot = 10f;
+	public float angleSpreadPerShotADS = 3f;
 	public float defaultHipFireAngleSpread = 1f;
 	public float maxAngleSpreadWhenShooting = 10f;
+	public float maxAngleSpreadWhenShootingADS = 3f;
 	public float maxAngleSpreadWhenMoving = 10f;
 	public AnimationCurve spreadStabilityGain;
-	[SerializeField] AudioClip shotSFX;
+	[SerializeField] AudioClip[] shotSFX;
+	[SerializeField] GameObjectPooler muzzleFlashVFX;
+	[SerializeField] GameObjectPooler bulletHoleVFX;
 
 	[Header("Positioning")]
 	public Vector3 normalPos;
@@ -52,18 +61,41 @@ public class Weapon : MonoBehaviour
 	public void Fire(HumanTarget target, Transform bulletStart)
 	{
 		currentAvailableAmmo--;
-		if (shotSFX != null)
-		{
-			weaponAudioSource.PlayOneShot(shotSFX);
-		}
-		// Instantiate muzzle flash
-		// flash.transform.position = muzzleFlashPos.position;
-		// flash.transform.rotation = muzzleFlashPos.rotation;
-		// flash.SetActive(true);
-		// Fire some raycast
+		weaponAudioSource.PlayOneShot(shotSFX[Random.Range(0, shotSFX.Length)]);
+		MakeMuzzleFlash();
+
 		if (Physics.Raycast(bulletStart.position, bulletStart.forward, out RaycastHit hit, maxRange, shotLayerMask))
 		{
-			Debug.Log("Gameobject hit: " + hit.collider.name + " at position: " + hit.point);
+			MakeBulletHole(hit);
 		}
+	}
+
+	void MakeMuzzleFlash()
+	{
+		GameObject flash = muzzleFlashVFX.GetPooledGO();
+		flash.SetActive(true);
+		StartCoroutine(MaintainMuzzleFlashPositionAndRotation(flash));
+	}
+
+	IEnumerator MaintainMuzzleFlashPositionAndRotation(GameObject flash)
+	{
+		float timeLeft = muzzleFlashDuration;
+		while (timeLeft > 0)
+		{
+			timeLeft -= Time.deltaTime;
+			flash.transform.position = muzzleFlashPos.position;
+			flash.transform.rotation = muzzleFlashPos.rotation;
+			yield return null;
+		}
+		yield return new WaitForEndOfFrame(); // TODO needed?
+		flash.SetActive(false);
+	}
+
+	void MakeBulletHole(RaycastHit hit)
+	{
+		GameObject bulletHole = bulletHoleVFX.GetPooledGO();
+		bulletHole.transform.position = hit.point;
+		bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+		bulletHole.SetActive(true);
 	}
 }
