@@ -10,6 +10,9 @@ namespace FPSDemo.FPSController
 		[SerializeField] CameraMovement cameraMovement;
 		[SerializeField] Weapon equippedWeapon;
 
+		[SerializeField] LayerMask shotLayerMask;
+		[SerializeField] int ragdollBodyLayerIndex;
+
 		[SerializeField, Tooltip("Multiplier to apply to player speed when aiming.")]
 		private float aimMultiplier = 0.4f;
 
@@ -265,7 +268,7 @@ namespace FPSDemo.FPSController
 			if (Random.Range(0, 2) == 1) { xAngle *= -1f; }
 			if (Random.Range(0, 2) == 1) { yAngle *= -1f; }
 			bulletSpawnPoint.localRotation = Quaternion.Euler(xAngle, yAngle, 0f);
-			equippedWeapon.Fire(player.ThisTarget, bulletSpawnPoint);
+			equippedWeapon.Fire(player.ThisTarget, bulletSpawnPoint, shotLayerMask, ragdollBodyLayerIndex);
 
 			AddRecoilToTheTargetPosition();
 			player.ThisTarget.LastTimeFired = Time.time;

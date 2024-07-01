@@ -8,7 +8,6 @@ public class Weapon : MonoBehaviour
 	[SerializeField] Transform muzzleFlashPos;
 	[SerializeField] float muzzleFlashDuration = 0.15f;
 	[SerializeField] AudioSource weaponAudioSource;
-	[SerializeField] LayerMask shotLayerMask;
 
 	public WeaponCollisionDetector weaponCollisionDetector;
 
@@ -32,6 +31,7 @@ public class Weapon : MonoBehaviour
 	public AnimationCurve spreadStabilityGain;
 	[SerializeField] AudioClip[] shotSFX;
 	[SerializeField] GameObjectPooler muzzleFlashVFX;
+	[SerializeField] GameObjectPooler bloodHitPooler;
 	[SerializeField] GameObjectPooler bulletHoleVFX;
 
 	[Header("Positioning")]
@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
 		currentAvailableAmmo = maxAmmoInMagazine;
 	}
 
-	public void Fire(HumanTarget target, Transform bulletStart)
+	public void Fire(HumanTarget target, Transform bulletStart, LayerMask shotLayerMask, int ragdollBodyLayerIndex)
 	{
 		currentAvailableAmmo--;
 		weaponAudioSource.PlayOneShot(shotSFX[Random.Range(0, shotSFX.Length)]);
@@ -66,7 +66,14 @@ public class Weapon : MonoBehaviour
 
 		if (Physics.Raycast(bulletStart.position, bulletStart.forward, out RaycastHit hit, maxRange, shotLayerMask))
 		{
-			MakeBulletHole(hit);
+			if (hit.transform.gameObject.layer == ragdollBodyLayerIndex)
+			{
+				MakeBloodSplash(hit);
+			}
+			else
+			{
+				MakeBulletHole(hit);
+			}
 		}
 	}
 
@@ -97,5 +104,14 @@ public class Weapon : MonoBehaviour
 		bulletHole.transform.position = hit.point;
 		bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
 		bulletHole.SetActive(true);
+	}
+
+	void MakeBloodSplash(RaycastHit hit)
+	{
+		GameObject bloodSplash = bloodHitPooler.GetPooledGO();
+		bloodSplash.transform.position = hit.point;
+		bloodSplash.transform.rotation = Quaternion.LookRotation(hit.normal);
+		bloodSplash.SetActive(true);
+
 	}
 }

@@ -218,6 +218,11 @@ Transform:
   - {fileID: 795844079}
   m_Father: {fileID: 251111690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &118110727 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4404946804142523465, guid: fcfaafb9413d02d418787268b9943b71, type: 3}
+  m_PrefabInstance: {fileID: 5724304588139530111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &160380741
 GameObject:
   m_ObjectHideFlags: 0
@@ -57105,6 +57110,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Soldier
       objectReference: {fileID: 0}
+    - target: {fileID: 3547403368139900184, guid: fcfaafb9413d02d418787268b9943b71, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 118110727}
     - target: {fileID: 6904552084435241203, guid: fcfaafb9413d02d418787268b9943b71, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.069659
