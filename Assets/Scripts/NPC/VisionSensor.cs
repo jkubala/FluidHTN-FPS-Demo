@@ -131,7 +131,10 @@ public class VisionSensor : MonoBehaviour
 
 	void OnDisable()
 	{
-		detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
+		if (detectionDirectionUpdater != null)
+		{
+			detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
+		}
 		//playerKilled -= DeregisterDetectionGUI;
 	}
 
