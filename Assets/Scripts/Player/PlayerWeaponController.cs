@@ -150,7 +150,7 @@ namespace FPSDemo.FPSController
 			}
 
 			UpdateReticleSize();
-
+			UpdateThePositionOfCollisionDetector();
 			if (ShouldFireTheGun())
 			{
 				FireInput();
@@ -171,6 +171,18 @@ namespace FPSDemo.FPSController
 			}
 			UpdateWeaponSway();
 			FocusADS();
+		}
+
+		void UpdateThePositionOfCollisionDetector()
+		{
+			if (player.IsAiming)
+			{
+				equippedWeapon.weaponCollisionDetector.transform.localPosition = equippedWeapon.ADSPos;
+			}
+			else
+			{
+				equippedWeapon.weaponCollisionDetector.transform.localPosition = equippedWeapon.normalPos;
+			}
 		}
 
 		void OnBeforeMove()

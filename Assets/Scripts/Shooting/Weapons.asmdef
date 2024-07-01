@@ -2,8 +2,8 @@
     "name": "Weapons",
     "rootNamespace": "",
     "references": [
-        "GUID:4bc0d72765b716d4f92ad15d318d3e8c",
-        "GUID:acff65d68f2e1f247a27e0837aa7c4d9"
+        "GUID:acff65d68f2e1f247a27e0837aa7c4d9",
+        "GUID:6d605134195099548b3b009524f8d09c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
