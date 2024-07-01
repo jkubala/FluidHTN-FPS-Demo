@@ -66,14 +66,7 @@ public class Weapon : MonoBehaviour
 
 		if (Physics.Raycast(bulletStart.position, bulletStart.forward, out RaycastHit hit, maxRange, shotLayerMask))
 		{
-			if (hit.transform.gameObject.layer == ragdollBodyLayerIndex)
-			{
-				MakeBloodSplash(hit);
-			}
-			else
-			{
-				MakeBulletHole(hit);
-			}
+			MakeImpactVFX(hit);
 		}
 	}
 
@@ -98,20 +91,20 @@ public class Weapon : MonoBehaviour
 		flash.SetActive(false);
 	}
 
-	void MakeBulletHole(RaycastHit hit)
+	void MakeImpactVFX(RaycastHit hit)
 	{
-		GameObject bulletHole = bulletHoleVFX.GetPooledGO();
-		bulletHole.transform.position = hit.point;
-		bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
-		bulletHole.SetActive(true);
-	}
-
-	void MakeBloodSplash(RaycastHit hit)
-	{
-		GameObject bloodSplash = bloodHitPooler.GetPooledGO();
-		bloodSplash.transform.position = hit.point;
-		bloodSplash.transform.rotation = Quaternion.LookRotation(hit.normal);
-		bloodSplash.SetActive(true);
-
+		GameObject impactVFXGO;
+		switch (hit.transform.gameObject.layer)
+		{
+			case LayerManager.ragdollBodyLayer:
+				impactVFXGO = bloodHitPooler.GetPooledGO();
+				break;
+			default:
+				impactVFXGO = bulletHoleVFX.GetPooledGO();
+				break;
+		}
+		impactVFXGO.transform.position = hit.point;
+		impactVFXGO.transform.rotation = Quaternion.LookRotation(hit.normal);
+		impactVFXGO.SetActive(true);
 	}
 }

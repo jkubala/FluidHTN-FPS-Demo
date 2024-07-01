@@ -11,7 +11,7 @@ namespace FPSDemo.FPSController
 			ToggleCursor(false);
 		}
 
-		public static void ToggleCursor(bool value)
+		void ToggleCursor(bool value)
 		{
 			if (value)
 			{
@@ -26,7 +26,7 @@ namespace FPSDemo.FPSController
 			}
 		}
 
-		static void FocusTheGameWindow()
+		void FocusTheGameWindow()
 		{
 #if UNITY_EDITOR
 			UnityEditor.EditorWindow gameViewWindow = UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.EditorWindow).Assembly.GetType("UnityEditor.GameView"));
