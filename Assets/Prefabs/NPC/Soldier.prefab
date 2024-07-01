@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3440609575807697701}
   - component: {fileID: 3547403368139900184}
   - component: {fileID: 7209519620689126936}
+  - component: {fileID: 3630944613706564964}
   m_Layer: 6
   m_Name: Soldier
   m_TagString: Untagged
@@ -70,6 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5871d0f2c70f65d4fa8b2d3bc0110182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 4404946804142523465}
+  _speed: 0
 --- !u!114 &7209519620689126936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +94,20 @@ MonoBehaviour:
   eyes: {fileID: 0}
   mainRigidbody: {fileID: 0}
   healthSystem: {fileID: 0}
+--- !u!114 &3630944613706564964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513477423149963949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e041e9f601a00d445bbaa3b1942d0eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  godMode: 0
+  rootModelTransform: {fileID: 0}
 --- !u!1001 &4404946804151988521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,6 +329,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3466521023567049724}
   m_SourcePrefab: {fileID: 100100000, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}
+--- !u!95 &4404946804142523465 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}
+  m_PrefabInstance: {fileID: 4404946804151988521}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4404946804152022925 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: fcb334eb247ae3e488abb081c847cf09, type: 3}

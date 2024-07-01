@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DefaultExecutionOrder(-10)]
+[DefaultExecutionOrder(-10), RequireComponent(typeof(HealthSystem))]
 public class HumanTarget : MonoBehaviour
 {
 	public List<VisibleBodyPart> bodyPartsToRaycast = new();
