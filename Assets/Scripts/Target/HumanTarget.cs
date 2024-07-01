@@ -13,7 +13,6 @@ public class HumanTarget : MonoBehaviour
 	public Team targetTeam;
 	public bool IsPlayer { get; set; } = false;
 	public Transform eyes;
-	public Rigidbody mainRigidbody;
 	[HideInInspector]
 	public HealthSystem healthSystem;
 
@@ -27,7 +26,6 @@ public class HumanTarget : MonoBehaviour
 	public void SetAsPlayer()
 	{
 		IsPlayer = true;
-		mainRigidbody = GetComponent<Rigidbody>();
 	}
 
 	void PopulateVisibleBodyParts()

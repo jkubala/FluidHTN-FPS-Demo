@@ -23,7 +23,8 @@ public class TargetRegister : MonoBehaviour
     public static event Action<HumanTarget> onTargetDeath;
     public static void RegisterSelf(HumanTarget target)
     {
-        if (target.targetTeam == HumanTarget.Team.BLUFOR)
+
+		if (target.targetTeam == HumanTarget.Team.BLUFOR)
         {
 			instance.ListOfActiveTargetsBLUFORTeam.Add(target);
         }

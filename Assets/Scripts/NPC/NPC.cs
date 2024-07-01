@@ -3,50 +3,58 @@ using UnityEngine;
 
 namespace FPSDemo.FPSController
 {
-    public class NPC : MonoBehaviour
-    {
-        [SerializeField] private Animator _animator;
-        [SerializeField] private float _speed;
+	public class NPC : MonoBehaviour
+	{
+		[SerializeField] private Animator _animator;
+		[SerializeField] private float _speed;
 
-        private int _speedFloatId;
-        private int _shootTriggerId;
+		public AIContext _context;
 
-        private const string SpeedFloatStr = "Speed";
-        private const string ShootTriggerStr = "Shoot";
+		private int _speedFloatId;
+		private int _shootTriggerId;
 
-        private void Awake()
-        {
-            _speedFloatId = Animator.StringToHash(SpeedFloatStr);
-            _shootTriggerId = Animator.StringToHash(ShootTriggerStr);
-        }
+		private const string SpeedFloatStr = "Speed";
+		private const string ShootTriggerStr = "Shoot";
 
-        public void SetSpeed(float speed)
-        {
-            _speed = speed;
-            if (_speed < 0.0f)
-            {
-                _speed = 0.0f;
-            }
+		private void Awake()
+		{
+			_speedFloatId = Animator.StringToHash(SpeedFloatStr);
+			_shootTriggerId = Animator.StringToHash(ShootTriggerStr);
+			_context = new AIContext(GetComponent<HumanTarget>());
+		}
 
-            _animator.SetFloat(_speedFloatId, _speed);
-        }
+		public void Start()
+		{
+			_context.Init();
+		}
 
-        [ContextMenu("Inc Speed")]
-        public void IncSpeed()
-        {
-            SetSpeed(_speed + 0.1f);
-        }
+		public void SetSpeed(float speed)
+		{
+			_speed = speed;
+			if (_speed < 0.0f)
+			{
+				_speed = 0.0f;
+			}
 
-        [ContextMenu("Dec Speed")]
-        public void DecSpeed()
-        {
-            SetSpeed(_speed - 0.1f);
-        }
+			_animator.SetFloat(_speedFloatId, _speed);
+		}
 
-        [ContextMenu("Shoot")]
-        public void Shoot()
-        {
-            _animator.SetTrigger(_shootTriggerId);
-        }
-    }
+		[ContextMenu("Inc Speed")]
+		public void IncSpeed()
+		{
+			SetSpeed(_speed + 0.1f);
+		}
+
+		[ContextMenu("Dec Speed")]
+		public void DecSpeed()
+		{
+			SetSpeed(_speed - 0.1f);
+		}
+
+		[ContextMenu("Shoot")]
+		public void Shoot()
+		{
+			_animator.SetTrigger(_shootTriggerId);
+		}
+	}
 }
