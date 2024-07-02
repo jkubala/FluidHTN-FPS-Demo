@@ -73,7 +73,6 @@ public class Weapon : MonoBehaviour
 	void MakeMuzzleFlash()
 	{
 		GameObject flash = muzzleFlashVFX.GetPooledGO();
-		flash.SetActive(true);
 		StartCoroutine(MaintainMuzzleFlashPositionAndRotation(flash));
 	}
 
@@ -105,6 +104,5 @@ public class Weapon : MonoBehaviour
 		}
 		impactVFXGO.transform.position = hit.point;
 		impactVFXGO.transform.rotation = Quaternion.LookRotation(hit.normal);
-		impactVFXGO.SetActive(true);
 	}
 }

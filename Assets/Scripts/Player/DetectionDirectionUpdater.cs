@@ -24,7 +24,6 @@ public class DetectionDirectionUpdater : MonoBehaviour
 		{
 			GameObject directionGUI = detectionDirectionGUIPooler.GetPooledGO();
 			targetsWatching.Add(target, directionGUI.GetComponent<DetectionDirectionFiller>());
-			directionGUI.SetActive(true);
 		}
 	}
 
