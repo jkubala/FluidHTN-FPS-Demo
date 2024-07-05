@@ -65,12 +65,10 @@ public class AIContext
 			{
 				if (ThisTarget.targetTeam == HumanTarget.Team.OPFOR)
 				{
-					Debug.Log("ADDED SOMEONE");
 					alliesSpecificData.Add(target, new());
 				}
 				else
 				{
-					Debug.Log("ADDED SOMEONE");
 					enemiesSpecificData.Add(target, new());
 				}
 			}

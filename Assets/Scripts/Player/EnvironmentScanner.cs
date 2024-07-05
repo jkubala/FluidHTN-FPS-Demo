@@ -47,14 +47,15 @@ namespace FPSDemo.FPSController
 		public List<ValidHit> ObstacleCheck()
 		{
 			List<ValidHit> validHits = new();
-			float rayLengthToUse = player.IsGrounded ? actualRayLengthFromGround : actualRayLengthFromGroundUngrounded;
+			float heightRayLengthToUse = player.IsGrounded ? heightRayLength : heightRayLengthUngrounded;
 			FindOutUniquePointsOnXZPlane();
 
 			Vector3 offsetIntoWall = transform.forward * 0.01f;
 			foreach (RaycastHit forwardHit in forwardHitPositions)
 			{
-				Vector3 heightOrigin = forwardHit.point + offsetIntoWall + Vector3.up * rayLengthToUse;
-				raycasts = RaycastTrulyAll(heightOrigin, Vector3.down, rayLengthToUse, obstacleLayer, 0.01f);
+				Vector3 coordXZToCheck = forwardHit.point + offsetIntoWall;
+				coordXZToCheck.y = transform.position.y + heightRayLengthToUse;
+				raycasts = RaycastTrulyAll(coordXZToCheck, Vector3.down, obstacleLayer, 0.01f);
 				if (raycasts.Length > 0)
 				{
 					foreach (RaycastHit hit in raycasts)
@@ -77,7 +78,7 @@ namespace FPSDemo.FPSController
 				foreach (RaycastHit hit in raycasts)
 				{
 					Gizmos.color = Color.blue;
-					Gizmos.DrawSphere(hit.point, 0.5f);
+					Gizmos.DrawWireSphere(hit.point, 0.25f);
 				}
 			}
 
@@ -86,7 +87,7 @@ namespace FPSDemo.FPSController
 				foreach (RaycastHit hit in forwardHitPositions)
 				{
 					Gizmos.color = Color.yellow;
-					Gizmos.DrawSphere(hit.point, 0.5f);
+					Gizmos.DrawWireSphere(hit.point, 0.5f);
 				}
 			}
 		}
@@ -145,13 +146,13 @@ namespace FPSDemo.FPSController
 			return !Physics.Raycast(origin, target - origin, Vector3.Distance(target, origin), obstacleLayer);
 		}
 
-		public RaycastHit[] RaycastTrulyAll(Vector3 origin, Vector3 direction, float maxLength, LayerMask layerMask, float offsetAfterHit)
+		public RaycastHit[] RaycastTrulyAll(Vector3 initialXZCoordToCheck, Vector3 direction, LayerMask layerMask, float offsetAfterHit)
 		{
 			List<RaycastHit> raycastHits = new();
-			RaycastHit hit;
-			Vector3 thisRayOrigin = origin;
+			Vector3 thisRayOrigin = initialXZCoordToCheck;
 			// If something is hit within the max length
-			while (Physics.Raycast(thisRayOrigin, direction, out hit, maxLength, layerMask) && (origin - hit.point).magnitude < maxLength)
+			float maxLength = player.IsGrounded ? actualRayLengthFromGround : actualRayLengthFromGroundUngrounded;
+			while (Physics.Raycast(thisRayOrigin, direction, out RaycastHit hit, maxLength, layerMask) && (initialXZCoordToCheck - hit.point).magnitude < maxLength)
 			{
 				raycastHits.Add(hit);
 				thisRayOrigin = hit.point + direction * offsetAfterHit;
