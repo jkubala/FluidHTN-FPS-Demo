@@ -53743,6 +53743,7 @@ GameObject:
   - component: {fileID: 1224698210}
   - component: {fileID: 1224698209}
   - component: {fileID: 1224698208}
+  - component: {fileID: 1224698222}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -53980,6 +53981,7 @@ MonoBehaviour:
   movementSway: {x: 0, y: 0, z: 0.2}
   maxSway: 4
   swaySmoothness: 0.2
+  weaponBob: {fileID: 1224698222}
 --- !u!114 &1224698215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54155,6 +54157,27 @@ Transform:
   - {fileID: 719387697}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1224698222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224698207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0cb88bc68fb90459c3683d25d6c099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bobDamping: 0.1
+  m_crouchBobAmount: {x: 1, y: 1, z: 0}
+  m_crouchBobSpeed: {x: 8, y: 4, z: 0}
+  m_walkBobAmount: {x: 2, y: 2, z: 0}
+  m_walkBobSpeed: {x: 16, y: 8, z: 0}
+  m_runBobAmount: {x: 5, y: 5, z: 1}
+  m_runBobSpeed: {x: 18, y: 7, z: 7}
+  m_resetSpeed: 5
+  player: {fileID: 1224698220}
 --- !u!224 &1224839550 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6098296903946090444, guid: 48a040a54ac61d84f8603ef7f6cd6d41, type: 3}
