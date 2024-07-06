@@ -88,7 +88,7 @@ namespace FPSDemo.FPSController
 		[Tooltip("How frequently is lastGroundedPosition updated")]
 		[SerializeField] float groundedPosUpdateInterval = 1f;
 
-		[SerializeField] private int stairCastMultiplier = 2;
+		[SerializeField] int stairCastMultiplier = 3;
 		readonly GroundCheckCastPoint[] groundCasts = new GroundCheckCastPoint[12];
 		public RaycastHit? ClosestHitToAveragePos { get; private set; }
 		[HideInInspector] public float lastOnGroundPositionTime;
@@ -434,7 +434,7 @@ namespace FPSDemo.FPSController
 		{
 			bool atLeastOneValidHit = false;
 			bool hitSomething = false;
-			float distanceToCast = stairCastMultiplier * maxStairHeight + castOriginOffsetDistance;
+			float distanceToCast = stairCastMultiplier * maxStairHeight + castOriginOffsetDistance + Capsule.radius / 4;
 			for (int i = 0; i < groundCasts.Length; i++)
 			{
 				groundCasts[i].validHit = null;
