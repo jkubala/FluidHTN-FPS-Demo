@@ -1,4 +1,5 @@
 
+using FPSDemo.Sensors;
 using UnityEngine;
 
 namespace FPSDemo.FPSController
@@ -9,6 +10,7 @@ namespace FPSDemo.FPSController
 		[SerializeField] private float _speed;
 
 		public AIContext _context;
+        private SensorySystem _sensory;
 
 		private int _speedFloatId;
 		private int _shootTriggerId;
@@ -21,12 +23,18 @@ namespace FPSDemo.FPSController
 			_speedFloatId = Animator.StringToHash(SpeedFloatStr);
 			_shootTriggerId = Animator.StringToHash(ShootTriggerStr);
 			_context = new AIContext(GetComponent<HumanTarget>());
-		}
+            _sensory = new SensorySystem(this);
+        }
 
 		public void Start()
 		{
 			_context.Init();
 		}
+
+        public void Update()
+        {
+			_sensory.Tick(_context);
+        }
 
 		public void SetSpeed(float speed)
 		{

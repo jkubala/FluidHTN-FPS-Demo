@@ -3,10 +3,15 @@
 namespace FPSDemo.FPSController
 {
 	public class Game : MonoBehaviour
-	{
+    {
+		private static Game Instance { get; set; }
+        public static AISettings AISettings => Instance != null ? Instance._aiSettings : null;
+
+        [SerializeField] private AISettings _aiSettings;
 
 		void Awake()
 		{
+			Instance = this;
 			FocusTheGameWindow();
 			ToggleCursor(false);
 		}

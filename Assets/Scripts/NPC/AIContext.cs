@@ -4,12 +4,6 @@ using System.Linq;
 
 public class AIContext
 {
-	public class TargetData
-	{
-		public float awarenessOfThisTarget = 0;
-		public List<VisibleBodyPart> visibleBodyParts = new();
-	}
-
 	public Dictionary<HumanTarget, TargetData> enemiesSpecificData = new();
 	public Dictionary<HumanTarget, TargetData> alliesSpecificData = new();
 
