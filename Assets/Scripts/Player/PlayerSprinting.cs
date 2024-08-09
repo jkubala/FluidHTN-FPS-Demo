@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
     [RequireComponent(typeof(Player))]
     public class PlayerSprinting : MonoBehaviour

@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2437ed87d8ca9e047b61ce940bad5dae, type: 3}
-  m_Name: AISettings
+  m_Name: Game_AISettings
   m_EditorClassIdentifier: 
   VisionSensorTickRate: 0.2

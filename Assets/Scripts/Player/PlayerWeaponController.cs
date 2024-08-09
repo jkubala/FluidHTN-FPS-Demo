@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using FPSDemo.Target;
+using FPSDemo.Weapons;
+using UnityEngine;
 using TMPro;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
 	public class PlayerWeaponController : MonoBehaviour
 	{

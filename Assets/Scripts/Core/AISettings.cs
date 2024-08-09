@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Core
 {
     [CreateAssetMenu(fileName = "New AISettings", menuName = "FPSDemo/AISettings")]
     public class AISettings : ScriptableObject

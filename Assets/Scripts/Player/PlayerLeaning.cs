@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
     public class PlayerLeaning : MonoBehaviour
     {

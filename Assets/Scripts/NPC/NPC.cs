@@ -1,13 +1,15 @@
 
-using FPSDemo.Sensors;
+using FPSDemo.NPC.Sensors;
+using FPSDemo.Target;
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.NPC
 {
 	public class NPC : MonoBehaviour
 	{
 		[SerializeField] private Animator _animator;
 		[SerializeField] private float _speed;
+        [SerializeField] private NPCSettings _settings;
 
 		public AIContext _context;
         private SensorySystem _sensory;
@@ -28,7 +30,7 @@ namespace FPSDemo.FPSController
 
 		public void Start()
 		{
-			_context.Init();
+			_context.Init(_settings);
 		}
 
         public void Update()

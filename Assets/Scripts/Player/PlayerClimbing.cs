@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
 	public class PlayerClimbing : MonoBehaviour
 	{

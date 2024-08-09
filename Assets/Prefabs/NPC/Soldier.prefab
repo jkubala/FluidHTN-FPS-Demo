@@ -73,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 4404946804142523465}
   _speed: 0
+  _settings: {fileID: 11400000, guid: 5302994f3393ba64484117271b56c756, type: 2}
 --- !u!114 &7209519620689126936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +93,6 @@ MonoBehaviour:
   - {fileID: 5327270936842957322}
   targetTeam: 1
   eyes: {fileID: 0}
-  mainRigidbody: {fileID: 0}
   healthSystem: {fileID: 0}
 --- !u!114 &3630944613706564964
 MonoBehaviour:

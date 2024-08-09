@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
 	public class EnvironmentScanner : MonoBehaviour
 	{

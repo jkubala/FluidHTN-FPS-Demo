@@ -1,4 +1,4 @@
-﻿namespace FPSDemo.Sensors
+﻿namespace FPSDemo.NPC.Sensors
 {
     public interface ISensor
     {

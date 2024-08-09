@@ -1,45 +1,51 @@
 using System;
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour
+namespace FPSDemo.Target
 {
-	[SerializeField] bool godMode = false;
-	[SerializeField] Transform rootModelTransform;
-	public string ActionDescription
-	{
-		get { return "Perform takedown"; }
-	}
-	bool isDead = false;
-	public event Action OnDeath;
-	public HumanTarget ThisTarget { get; private set; }
-	CapsuleCollider characterCollider;
+    public class HealthSystem : MonoBehaviour
+    {
+        [SerializeField] bool godMode = false;
+        [SerializeField] Transform rootModelTransform;
 
-	void Awake()
-	{
-		ThisTarget = GetComponent<HumanTarget>();
-		characterCollider = GetComponent<CapsuleCollider>();
-	}
+        public string ActionDescription
+        {
+            get { return "Perform takedown"; }
+        }
 
-	public void WasShot(HumanTarget shotBy)
-	{
-		if (!isDead && shotBy != ThisTarget && !godMode)
-		{
-			KillThisEntity();
-		}
-	}
+        bool isDead = false;
+        public event Action OnDeath;
+        public HumanTarget ThisTarget { get; private set; }
+        CapsuleCollider characterCollider;
 
-	public Transform GetRootModelTransform()
-	{
-		return rootModelTransform;
-	}
+        void Awake()
+        {
+            ThisTarget = GetComponent<HumanTarget>();
+            characterCollider = GetComponent<CapsuleCollider>();
+        }
 
-	void KillThisEntity()
-	{
-		if(!ThisTarget.IsPlayer)
-		{
-			characterCollider.enabled = false;
-		}
-		isDead = true;
-		OnDeath?.Invoke();
-	}
+        public void WasShot(HumanTarget shotBy)
+        {
+            if (!isDead && shotBy != ThisTarget && !godMode)
+            {
+                KillThisEntity();
+            }
+        }
+
+        public Transform GetRootModelTransform()
+        {
+            return rootModelTransform;
+        }
+
+        void KillThisEntity()
+        {
+            if (!ThisTarget.IsPlayer)
+            {
+                characterCollider.enabled = false;
+            }
+
+            isDead = true;
+            OnDeath?.Invoke();
+        }
+    }
 }

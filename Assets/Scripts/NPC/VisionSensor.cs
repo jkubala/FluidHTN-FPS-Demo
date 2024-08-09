@@ -1,14 +1,16 @@
 using UnityEngine;
 using UnityEditor;
-using System.Linq;
-using FPSDemo.FPSController;
+using FPSDemo.Core;
+using FPSDemo.Player;
+using FPSDemo.Target;
 
-namespace FPSDemo.Sensors
+namespace FPSDemo.NPC.Sensors
 {
     public class VisionSensor : MonoBehaviour, ISensor
     {
+        // TODO: Add tooltips to all serialized fields
+
         [SerializeField] HumanTarget thisTarget;
-        [SerializeField] NPC aiAgent;
         DetectionDirectionUpdater detectionDirectionUpdater;
 
         [SerializeField] LayerMask raycastMask = 1 | (1 << 2);
@@ -75,11 +77,6 @@ namespace FPSDemo.Sensors
             detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
         }
 
-        void Awake()
-        {
-            aiAgent = GetComponent<NPC>();
-        }
-
         void Start()
         {
             // Values for vision cone
@@ -88,6 +85,7 @@ namespace FPSDemo.Sensors
             peripheralNearVisionRatio = visionFocusDistance - visionPeripheralNearDistance;
             verticalTopRatio = visionVertUpperAngle - visionVertFocusAngleUp;
             verticalBotRatio = visionVertLowerAngle + visionVertFocusAngleDown;
+
             detectionDirectionUpdater = GameObject.FindGameObjectWithTag("DetectionCollisionUpdater")
                 .GetComponent<DetectionDirectionUpdater>();
             CheckRangeValues();
@@ -126,17 +124,18 @@ namespace FPSDemo.Sensors
         public void Tick(AIContext context)
         {
             // Enemy targets raycast
-            for (int i = 0; i < aiAgent._context.enemiesSpecificData.Count; i++)
+            foreach(var kvp in context.enemiesSpecificData)
             {
-                HumanTarget currentTarget = aiAgent._context.enemiesSpecificData.Keys.ElementAt(i);
-                TargetData currentTargetData = aiAgent._context.enemiesSpecificData[currentTarget];
+                var currentTarget = kvp.Key;
+                var currentTargetData = kvp.Value;
                 currentTargetData.visibleBodyParts.Clear();
-                float visionModifier = GetVisionModifier(currentTarget, currentTargetData);
-                float awarenessChangeThisTick = visionModifier / timeToNotice * Time.deltaTime;
+
+                var visionModifier = GetVisionModifier(currentTarget, currentTargetData);
+                var awarenessChangeThisTick = visionModifier / timeToNotice * Time.deltaTime;
 
                 if (visionModifier == 0)
                 {
-                    aiAgent._context.AwarenessDecrease(currentTargetData);
+                    context.AwarenessDecrease(currentTargetData);
                     if (currentTarget.IsPlayer)
                     {
                         DeregisterDetectionGUI();
@@ -149,13 +148,14 @@ namespace FPSDemo.Sensors
                         currentTargetData.awarenessOfThisTarget = 1f;
                     }
 
-                    float newAwarenessOfTheTarget = currentTargetData.awarenessOfThisTarget + awarenessChangeThisTick;
-                    aiAgent._context.SetAwarenessOfThisEnemy(currentTarget, newAwarenessOfTheTarget);
+                    var newAwarenessOfTheTarget = currentTargetData.awarenessOfThisTarget + awarenessChangeThisTick;
+                    context.SetAwarenessOfThisEnemy(currentTarget, newAwarenessOfTheTarget);
+
                     if (currentTarget.IsPlayer)
                     {
                         detectionDirectionUpdater.RegisterNewTargetWatching(gameObject);
                         detectionDirectionUpdater.UpdateGUIFill(gameObject,
-                            currentTargetData.awarenessOfThisTarget / aiAgent._context.alertAwarenessThreshold);
+                            currentTargetData.awarenessOfThisTarget / context.AlertAwarenessThreshold);
                     }
                 }
             }
@@ -177,35 +177,35 @@ namespace FPSDemo.Sensors
 
         float GetVisionModifier(HumanTarget target, TargetData targetData)
         {
-            Vector3 directionToTarget = target.eyes.position - thisTarget.eyes.position;
-            Vector3 horizontalEyeDir = Vector3.ProjectOnPlane(thisTarget.eyes.forward, thisTarget.eyes.up);
-            Vector3 horizontalDirToTarget = Vector3.ProjectOnPlane(directionToTarget, thisTarget.eyes.up);
-            float distanceToTarget = horizontalDirToTarget.magnitude;
+            var directionToTarget = target.eyes.position - thisTarget.eyes.position;
+            var horizontalEyeDir = Vector3.ProjectOnPlane(thisTarget.eyes.forward, thisTarget.eyes.up);
+            var horizontalDirToTarget = Vector3.ProjectOnPlane(directionToTarget, thisTarget.eyes.up);
+            var distanceToTarget = horizontalDirToTarget.magnitude;
 
-            float horizontalAngle = Vector3.Angle(horizontalEyeDir, horizontalDirToTarget);
-            float horizontalModifier = GetHorizontalVisionConeModifier(distanceToTarget, horizontalAngle, target);
+            var horizontalAngle = Vector3.Angle(horizontalEyeDir, horizontalDirToTarget);
+            var horizontalModifier = GetHorizontalVisionConeModifier(distanceToTarget, horizontalAngle, target);
             if (horizontalModifier <= 0)
             {
                 return 0f;
             }
 
-            float verticalAngle = Vector3.Angle(directionToTarget, horizontalDirToTarget);
-            float verticalModifier = GetVerticalVisionConeModifier(distanceToTarget, verticalAngle, target);
+            var verticalAngle = Vector3.Angle(directionToTarget, horizontalDirToTarget);
+            var verticalModifier = GetVerticalVisionConeModifier(distanceToTarget, verticalAngle, target);
             if (verticalModifier <= 0)
             {
                 return 0f;
             }
 
-            float rayCastModifier = GetRaycastModifier(target, targetData);
+            var rayCastModifier = GetRaycastModifier(target, targetData);
             return horizontalModifier * verticalModifier * rayCastModifier;
         }
 
         float GetRaycastModifier(HumanTarget targetToRayCast, TargetData targetData)
         {
-            float overallRayCastModifier = 0;
-            foreach (VisibleBodyPart bodyPart in targetToRayCast.bodyPartsToRaycast)
+            var overallRayCastModifier = 0f;
+            foreach (var bodyPart in targetToRayCast.bodyPartsToRaycast)
             {
-                float bodyPartVisionModifier = CalculateRayCastModifierForBodyPart(bodyPart);
+                var bodyPartVisionModifier = CalculateRayCastModifierForBodyPart(bodyPart);
                 if (bodyPartVisionModifier > 0)
                 {
                     targetData.visibleBodyParts.Add(bodyPart);
@@ -219,8 +219,8 @@ namespace FPSDemo.Sensors
 
         float CalculateRayCastModifierForBodyPart(VisibleBodyPart bodyPart)
         {
-            Vector3 origin = thisTarget.eyes.transform.position;
-            Vector3 direction = (bodyPart.transform.position - origin).normalized;
+            var origin = thisTarget.eyes.transform.position;
+            var direction = (bodyPart.transform.position - origin).normalized;
             if (Physics.Raycast(origin, direction, out RaycastHit hit, visionFocusFar, raycastMask)
                 && hit.transform.TryGetComponent(out VisibleBodyPart bodyPartHit) &&
                 bodyPartHit.owner == bodyPart.owner)
@@ -238,7 +238,7 @@ namespace FPSDemo.Sensors
                 return 0f;
             }
 
-            float horizontalModifier = 0f;
+            var horizontalModifier = 0f;
             if (distanceToTarget > visionFocusFar)
             {
                 return 0f;
@@ -316,7 +316,7 @@ namespace FPSDemo.Sensors
                 return 0f;
             }
 
-            float verticalModifier = 1f;
+            var verticalModifier = 1f;
             // If it is outside of focus area upwards
             if (verticalAngle > 0 && verticalAngle > visionVertFocusAngleUp)
             {

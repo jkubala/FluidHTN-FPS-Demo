@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
     public class PlayerJumping : MonoBehaviour
     {

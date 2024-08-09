@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Input
 {
 	public class InputManager : MonoBehaviour
 	{

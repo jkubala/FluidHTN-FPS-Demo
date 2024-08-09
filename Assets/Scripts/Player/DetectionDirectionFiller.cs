@@ -1,12 +1,16 @@
 using UnityEngine;
 
-public class DetectionDirectionFiller : MonoBehaviour
+namespace FPSDemo.Player
 {
-    [SerializeField] GameObject fillerToScale;
-    public void UpdateFiller(float scaleAmount)
+    public class DetectionDirectionFiller : MonoBehaviour
     {
-        Vector3 newScaleToSet = fillerToScale.transform.localScale;
-        newScaleToSet.x = scaleAmount;
-        fillerToScale.transform.localScale = newScaleToSet;
+        [SerializeField] GameObject fillerToScale;
+
+        public void UpdateFiller(float scaleAmount)
+        {
+            Vector3 newScaleToSet = fillerToScale.transform.localScale;
+            newScaleToSet.x = scaleAmount;
+            fillerToScale.transform.localScale = newScaleToSet;
+        }
     }
 }

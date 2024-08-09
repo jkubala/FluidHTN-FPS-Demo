@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class VisibleBodyPart : MonoBehaviour
+namespace FPSDemo.Target
 {
-	public float visibilityModifier = 0f;
-	public HumanTarget owner = null;
+    public class VisibleBodyPart : MonoBehaviour
+    {
+        public float visibilityModifier = 0f;
+        public HumanTarget owner = null;
+    }
 }

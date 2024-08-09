@@ -1,74 +1,84 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DefaultExecutionOrder(-10), RequireComponent(typeof(HealthSystem))]
-public class HumanTarget : MonoBehaviour
+namespace FPSDemo.Target
 {
-	public List<VisibleBodyPart> bodyPartsToRaycast = new();
-	public bool IsCrouching { get; set; } = false;
-	public bool IsDead { get; private set; } = false;
-	public float LastTimeFired { get; set; } = Mathf.NegativeInfinity;
-	public enum Team { BLUFOR, OPFOR };
+    // TODO: We shouldn't need to set execution order. It adds hidden execution direction from editor perspective. Let's instead take control in other ways.
+    [DefaultExecutionOrder(-10), RequireComponent(typeof(HealthSystem))]
+    public class HumanTarget : MonoBehaviour
+    {
+        public List<VisibleBodyPart> bodyPartsToRaycast = new();
+        public bool IsCrouching { get; set; } = false;
+        public bool IsDead { get; private set; } = false;
+        public float LastTimeFired { get; set; } = Mathf.NegativeInfinity;
 
-	public Team targetTeam;
-	public bool IsPlayer { get; set; } = false;
-	public Transform eyes;
-	[HideInInspector]
-	public HealthSystem healthSystem;
+        public enum Team
+        {
+            BLUFOR,
+            OPFOR
+        };
 
-	void Awake()
-	{
-		healthSystem = GetComponent<HealthSystem>();
-		PopulateVisibleBodyParts();
-		TargetRegister.RegisterSelf(this);
-	}
+        public Team targetTeam;
+        public bool IsPlayer { get; set; } = false;
+        public Transform eyes;
+        [HideInInspector] public HealthSystem healthSystem;
 
-	public void SetAsPlayer()
-	{
-		IsPlayer = true;
-	}
+        void Awake()
+        {
+            healthSystem = GetComponent<HealthSystem>();
+            PopulateVisibleBodyParts();
+            TargetRegister.RegisterSelf(this);
+        }
 
-	void PopulateVisibleBodyParts()
-	{
-		if (bodyPartsToRaycast.Count != 4)
-		{
-			Debug.LogError("Some body part to raycast against is wrong on " + transform.name);
-			return;
-		}
+        public void SetAsPlayer()
+        {
+            IsPlayer = true;
+        }
 
-		float overallModifier = 0;
-		float maxModifier = Mathf.Infinity;
-		foreach (VisibleBodyPart bodyPart in bodyPartsToRaycast)
-		{
-			bodyPart.owner = this;
-			overallModifier += bodyPart.visibilityModifier;
-			if (bodyPart.visibilityModifier > maxModifier)
-			{
-				Debug.LogError("Raycast modifiers for head, chest and legs are not in order on gameObject " +
-					gameObject.name + "! Modifier: " + bodyPart.visibilityModifier + " Previous modifier:" + maxModifier);
-			}
-			maxModifier = bodyPart.visibilityModifier;
-		}
+        void PopulateVisibleBodyParts()
+        {
+            if (bodyPartsToRaycast.Count != 4)
+            {
+                Debug.LogError("Some body part to raycast against is wrong on " + transform.name);
+                return;
+            }
 
-		if (overallModifier != 100)
-		{
-			Debug.LogError("Raycast modifiers for head, chest and legs are not making up to 100!");
-		}
-	}
+            float overallModifier = 0;
+            float maxModifier = Mathf.Infinity;
+            foreach (VisibleBodyPart bodyPart in bodyPartsToRaycast)
+            {
+                bodyPart.owner = this;
+                overallModifier += bodyPart.visibilityModifier;
+                if (bodyPart.visibilityModifier > maxModifier)
+                {
+                    Debug.LogError("Raycast modifiers for head, chest and legs are not in order on gameObject " +
+                                   gameObject.name + "! Modifier: " + bodyPart.visibilityModifier +
+                                   " Previous modifier:" + maxModifier);
+                }
 
-	public void OnDeath()
-	{
-		IsDead = true;
-		TargetRegister.UnregisterSelf(this);
-	}
+                maxModifier = bodyPart.visibilityModifier;
+            }
 
-	void OnEnable()
-	{
-		healthSystem.OnDeath += OnDeath;
-	}
+            if (overallModifier != 100)
+            {
+                Debug.LogError("Raycast modifiers for head, chest and legs are not making up to 100!");
+            }
+        }
 
-	void OnDisable()
-	{
-		healthSystem.OnDeath -= OnDeath;
-	}
+        public void OnDeath()
+        {
+            IsDead = true;
+            TargetRegister.UnregisterSelf(this);
+        }
+
+        void OnEnable()
+        {
+            healthSystem.OnDeath += OnDeath;
+        }
+
+        void OnDisable()
+        {
+            healthSystem.OnDeath -= OnDeath;
+        }
+    }
 }

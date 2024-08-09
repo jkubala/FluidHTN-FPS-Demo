@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Core
 {
 	public class Game : MonoBehaviour
     {
@@ -9,7 +9,7 @@ namespace FPSDemo.FPSController
 
         [SerializeField] private AISettings _aiSettings;
 
-		void Awake()
+        void Awake()
 		{
 			Instance = this;
 			FocusTheGameWindow();

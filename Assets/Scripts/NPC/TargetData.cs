@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using FPSDemo.Target;
 
-public class TargetData
+namespace FPSDemo.NPC
 {
-	public float awarenessOfThisTarget = 0;
-	public List<VisibleBodyPart> visibleBodyParts = new();
+    public class TargetData
+    {
+        public float awarenessOfThisTarget = 0;
+        public List<VisibleBodyPart> visibleBodyParts = new();
+    }
 }

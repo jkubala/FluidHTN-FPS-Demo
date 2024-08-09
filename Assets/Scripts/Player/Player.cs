@@ -3,8 +3,10 @@ using UnityEngine.AI;
 using System;
 using System.Linq;
 using System.Collections;
+using FPSDemo.Input;
+using FPSDemo.Target;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
 	public class Player : MonoBehaviour
 	{

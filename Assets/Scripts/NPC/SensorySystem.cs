@@ -1,8 +1,7 @@
 ﻿
-using FPSDemo.FPSController;
 using UnityEngine;
 
-namespace FPSDemo.Sensors
+namespace FPSDemo.NPC.Sensors
 {
     public class SensorySystem
     {

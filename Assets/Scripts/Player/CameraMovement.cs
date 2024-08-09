@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Player
 {
 	public class CameraMovement : MonoBehaviour
 	{

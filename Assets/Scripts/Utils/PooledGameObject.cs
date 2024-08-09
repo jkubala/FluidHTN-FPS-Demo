@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FPSDemo.FPSController
+namespace FPSDemo.Utils
 {
     public class PooledGameObject : MonoBehaviour
     {
