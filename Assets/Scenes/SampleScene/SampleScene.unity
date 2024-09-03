@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisTarget: {fileID: 70874580}
-  aiAgent: {fileID: 70874582}
   raycastMask:
     serializedVersion: 2
     m_Bits: 129
@@ -271,17 +270,6 @@ MonoBehaviour:
   multFocusClose: 1
   multPeripheralClose: 0.8
   multPeripheralFar: 0.2
---- !u!114 &70874582 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3547403368139900184, guid: fcfaafb9413d02d418787268b9943b71, type: 3}
-  m_PrefabInstance: {fileID: 83050518}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70874578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5871d0f2c70f65d4fa8b2d3bc0110182, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &83050518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19910,17 +19898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f8dcc99bf1c7a4490065af1702c953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &985403173 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3547403368139900184, guid: fcfaafb9413d02d418787268b9943b71, type: 3}
-  m_PrefabInstance: {fileID: 5724304588139530111}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985403170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5871d0f2c70f65d4fa8b2d3bc0110182, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &985403176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19934,7 +19911,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisTarget: {fileID: 985403172}
-  aiAgent: {fileID: 985403173}
   raycastMask:
     serializedVersion: 2
     m_Bits: 129
@@ -53737,6 +53713,8 @@ GameObject:
   - component: {fileID: 1224698216}
   - component: {fileID: 1224698215}
   - component: {fileID: 1224698214}
+  - component: {fileID: 1224698223}
+  - component: {fileID: 1224698222}
   - component: {fileID: 1224698213}
   - component: {fileID: 1224698212}
   - component: {fileID: 1224698211}
@@ -53963,16 +53941,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65195ab7ae737a4e88370987607cac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMovement: {fileID: 719387698}
   equippedWeapon: {fileID: 3157565930282778882}
   shotLayerMask:
     serializedVersion: 2
     m_Bits: 129
   ragdollBodyLayerIndex: 7
   aimMultiplier: 0.4
-  ammoText: {fileID: 1037912170}
-  crosshairGameObject: {fileID: 2019667889}
+  availableMagazines: 0
   bulletSpawnPoint: {fileID: 1977855923}
+  lastFired: 0
+  weaponAtTheReady: 0
+  weaponReadyForReload: 0
   timeToReachFullMoveSpread: 0.5
   weaponPosChangeSpeed: 15
   weaponRotChangeSpeed: 5
@@ -53992,6 +53971,8 @@ MonoBehaviour:
   runBobSpeed: {x: 18, y: 7, z: 7}
   bobDamp: 0.1
   resetSpeed: 6
+  breathSwayAmount: {x: 2, y: 2, z: 0}
+  breathSwaySpeed: {x: 2, y: 2, z: 0}
 --- !u!114 &1224698215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54167,6 +54148,53 @@ Transform:
   - {fileID: 719387697}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1224698222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224698207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a46253d8f70f6148ac9933325bc4158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairGameObject: {fileID: 2019667889}
+  ammoText: {fileID: 1037912170}
+--- !u!114 &1224698223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224698207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aff599749b5f554abbe8d8992965865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraMovement: {fileID: 719387698}
+  weaponPosChangeSpeed: 15
+  weaponRotChangeSpeed: 5
+  lookSway: {x: 4, y: 2, z: -2}
+  movementSway: {x: 0, y: 0, z: 0.2}
+  maxSway: 4
+  swaySmoothness: 0.2
+  crouchAimBobAmount: {x: 1, y: 1, z: 0}
+  crouchAimBobSpeed: {x: 6, y: 3, z: 0}
+  aimBobAmount: {x: 1, y: 1, z: 0}
+  aimBobSpeed: {x: 8, y: 4, z: 0}
+  crouchBobAmount: {x: 1, y: 1, z: 0}
+  crouchBobSpeed: {x: 8, y: 4, z: 0}
+  walkBobAmount: {x: 2, y: 2, z: 0}
+  walkBobSpeed: {x: 16, y: 8, z: 0}
+  runBobAmount: {x: 5, y: 5, z: 1}
+  runBobSpeed: {x: 18, y: 7, z: 7}
+  bobDamp: 0.1
+  resetSpeed: 6
+  breathSwayAmount: {x: 2, y: 2, z: 0}
+  breathSwaySpeed: {x: 2, y: 2, z: 0}
 --- !u!224 &1224839550 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6098296903946090444, guid: 48a040a54ac61d84f8603ef7f6cd6d41, type: 3}
@@ -57283,6 +57311,10 @@ PrefabInstance:
     - target: {fileID: 7736027370485253251, guid: fda941103f762514fa18a6715e7b3669, type: 3}
       propertyPath: fireRate
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736027370485253251, guid: fda941103f762514fa18a6715e7b3669, type: 3}
+      propertyPath: isAutomatic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7736027370485253251, guid: fda941103f762514fa18a6715e7b3669, type: 3}
       propertyPath: bulletHoleVFX
