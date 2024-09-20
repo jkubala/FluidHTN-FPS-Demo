@@ -27,6 +27,10 @@ namespace FPSDemo.Player
 			healthSystem = GetComponent<HealthSystem>();
 			equippedWeapon = weaponController.equippedWeapon;
 			reticleTransform = crosshairGameObject.GetComponent<RectTransform>();
+		}
+
+		void Start()
+		{
 			UpdateAmmoText();
 		}
 

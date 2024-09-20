@@ -101,7 +101,6 @@ namespace FPSDemo.Player
 
 		private void Fire()
 		{
-			OnFire.Invoke();
 			float maxAngle = currentOverallAngleSpread;
 			if (!player.IsAiming)
 			{
@@ -115,6 +114,7 @@ namespace FPSDemo.Player
 			equippedWeapon.Fire(player.ThisTarget, bulletSpawnPoint, shotLayerMask, ragdollBodyLayerIndex);
 			player.ThisTarget.LastTimeFired = Time.time;
 			angleSpreadFromShooting += player.IsAiming ? equippedWeapon.angleSpreadPerShotADS : equippedWeapon.angleSpreadPerShot;
+			OnFire.Invoke();
 		}
 
 
