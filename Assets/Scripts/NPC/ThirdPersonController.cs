@@ -57,6 +57,9 @@ namespace FPSDemo.NPC
 		[Tooltip("What layers the character uses as ground")]
 		public LayerMask GroundLayers;
 
+        private bool _isShooting;
+        private bool _isReloading;
+
 		// player
 		private float _targetRotation = 0.0f;
 		private float _rotationVelocity;
@@ -70,8 +73,10 @@ namespace FPSDemo.NPC
 		private int _animX;
 		private int _animCrouched;
 		private int _animY;
+        private int _animIsShooting;
+        private int _animReload;
 
-		[SerializeField] Animator _animator;
+        [SerializeField] Animator _animator;
 		NavMeshAgent navAgent;
 
 		private const float _threshold = 0.01f;
@@ -121,13 +126,15 @@ namespace FPSDemo.NPC
 		}
 
 		public void StartShooting()
-		{
-			_animator.SetBool("Shooting", true);
+        {
+            _isShooting = true;
+			_animator.SetBool(_animIsShooting, _isShooting);
 		}
 
 		public void StopShooting()
 		{
-			_animator.SetBool("Shooting", false);
+			_isShooting = false;
+			_animator.SetBool(_animIsShooting, _isShooting);
 		}
 
 		public void SetWalkSpeed()
@@ -166,6 +173,18 @@ namespace FPSDemo.NPC
 			StartCoroutine(crouchCoroutine);
 		}
 
+        public void Reload()
+        {
+            _isReloading = true;
+
+            if (_isShooting)
+            {
+				StopShooting();
+            }
+
+			_animator.SetTrigger(_animReload);
+        }
+
 		void Update()
 		{
 			HandleGravity();
@@ -180,7 +199,9 @@ namespace FPSDemo.NPC
 			_animX = Animator.StringToHash("x");
 			_animY = Animator.StringToHash("y");
 			_animCrouched = Animator.StringToHash("Crouched");
-		}
+            _animIsShooting = Animator.StringToHash("IsShooting");
+            _animReload = Animator.StringToHash("Reload");
+        }
 
 		void GroundedCheck()
 		{
@@ -229,6 +250,15 @@ namespace FPSDemo.NPC
 			_animator.SetFloat(_animX, convertedAnimParams.x);
 			_animator.SetFloat(_animY, convertedAnimParams.y);
 			_animator.SetFloat(_animCrouched, crouchAmount);
+
+            if (_isReloading)
+            {
+                var state = _animator.GetCurrentAnimatorStateInfo(1);
+                if (state.fullPathHash != _animReload)
+                {
+                    _isReloading = false;
+                }
+            }
 		}
 
 		void RotateAgent()

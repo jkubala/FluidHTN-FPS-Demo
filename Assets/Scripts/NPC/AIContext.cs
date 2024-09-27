@@ -14,12 +14,14 @@ namespace FPSDemo.NPC
         public float AlertAwarenessThreshold => _settings != null ? _settings.AlertAwarenessThreshold : 2f;
         public float AwarenessDeterioration => _settings != null ? _settings.AwarenessDeterioration : 0.1f;
 
+        public NPC ThisNPC { get; }
         public HumanTarget ThisTarget { get; }
         public HumanTarget CurrentEnemy { get; private set; }
         public TargetData CurrentEnemyData { get; private set; }
 
-        public AIContext(HumanTarget aTarget)
+        public AIContext(NPC npc, HumanTarget aTarget)
         {
+            ThisNPC = npc;
             ThisTarget = aTarget;
         }
 

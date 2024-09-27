@@ -34,7 +34,11 @@ public class ThirdPersonControllerEditor : Editor
 		{
 			npcController.StopShooting();
 		}
-		if (GUILayout.Button("Run"))
+        if (GUILayout.Button("Reload"))
+        {
+            npcController.Reload();
+        }
+        if (GUILayout.Button("Run"))
 		{
 			npcController.SetRunSpeed();
 		}
