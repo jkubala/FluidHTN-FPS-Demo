@@ -6,134 +6,177 @@ namespace FPSDemo.Player
 {
 	public class EnvironmentScanner : MonoBehaviour
 	{
-		Player player;
-		PlayerCrouching playerCrouching;
-		[SerializeField] float forwardRaysYPosStart = 1f;
-		[SerializeField] float forwardRaysForwardOffset = 0.3f;
-		[SerializeField] float forwardRayLength = 0.8f;
-		[SerializeField] float heightRayLength = 3.25f;
-		[SerializeField] float heightRayLengthUngrounded = 2f;
-		[SerializeField] float minDistanceForUniqueXZPoint = 0.01f;
-		float forwardRayEveryXDistance = 0.2f;
-		float actualRayLengthFromGround;
-		float actualRayLengthFromGroundUngrounded;
-		float actualForwardRayLength;
-		[SerializeField] LayerMask obstacleLayer;
-		readonly List<Vector3> forwardRayOrigins = new();
-		List<RaycastHit> forwardHitPositions = new();
+        // -------------------------------------------- INSPECTOR FIELDS
 
-		void Awake()
+		[SerializeField] private float _forwardRaysYPosStart = 1f;
+		[SerializeField] private float _forwardRaysForwardOffset = 0.3f;
+		[SerializeField] private float _forwardRayLength = 0.8f;
+		[SerializeField] private float _heightRayLength = 3.25f;
+		[SerializeField] private float _heightRayLengthUngrounded = 2f;
+		[SerializeField] private float _minDistanceForUniqueXZPoint = 0.01f;
+
+		[SerializeField] private LayerMask _obstacleLayer;
+
+        [SerializeField] private Player _player;
+        [SerializeField] private PlayerCrouching _playerCrouching;
+
+
+        // -------------------------------------------- PRIVATE FIELDS
+
+        private float _forwardRayEveryXDistance = 0.2f;
+        private float _actualRayLengthFromGround;
+        private float _actualRayLengthFromGroundUngrounded;
+        private float _actualForwardRayLength;
+
+        private readonly List<Vector3> _forwardRayOrigins = new();
+		private List<RaycastHit> _forwardHitPositions = new();
+
+		private List<RaycastHit> _raycasts = null;
+		private List<ValidHit> _validHits = new();
+
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
+        {
+            if (_player == null)
+            {
+                _player = GetComponent<Player>();
+            }
+
+            if (_playerCrouching == null)
+            {
+                _playerCrouching = GetComponent<PlayerCrouching>();
+            }
+        }
+
+        void Awake()
 		{
-			actualRayLengthFromGround = heightRayLength - forwardRaysYPosStart;
-			actualRayLengthFromGroundUngrounded = heightRayLengthUngrounded - forwardRaysYPosStart;
-			actualForwardRayLength = forwardRayLength - forwardRaysForwardOffset;
-
-			player = GetComponent<Player>();
-			playerCrouching = GetComponent<PlayerCrouching>();
+			_actualRayLengthFromGround = _heightRayLength - _forwardRaysYPosStart;
+			_actualRayLengthFromGroundUngrounded = _heightRayLengthUngrounded - _forwardRaysYPosStart;
+			_actualForwardRayLength = _forwardRayLength - _forwardRaysForwardOffset;
+			
 			InitRaycastColumn();
 		}
 
-		void InitRaycastColumn()
+
+        // ========================================================= INIT
+
+        private void InitRaycastColumn()
 		{
-			int nOfRaycasts = Mathf.CeilToInt(actualRayLengthFromGround / forwardRayEveryXDistance);
-			Vector3 newRayCastOriginPoint = Vector3.up * forwardRaysYPosStart;
-			for (int i = 0; i < nOfRaycasts; i++)
+			var nOfRaycasts = Mathf.CeilToInt(_actualRayLengthFromGround / _forwardRayEveryXDistance);
+			var newRayCastOriginPoint = Vector3.up * _forwardRaysYPosStart;
+
+			for (var i = 0; i < nOfRaycasts; i++)
 			{
-				forwardRayOrigins.Add(newRayCastOriginPoint);
-				newRayCastOriginPoint = newRayCastOriginPoint + Vector3.up * forwardRayEveryXDistance;
+				_forwardRayOrigins.Add(newRayCastOriginPoint);
+				newRayCastOriginPoint = newRayCastOriginPoint + Vector3.up * _forwardRayEveryXDistance;
 			}
 		}
-		RaycastHit[] raycasts = null;
-		public List<ValidHit> ObstacleCheck()
-		{
-			List<ValidHit> validHits = new();
-			float heightRayLengthToUse = player.IsGrounded ? heightRayLength : heightRayLengthUngrounded;
+
+
+        // ========================================================= PUBLIC METHODS
+
+        public List<ValidHit> ObstacleCheck()
+        {
+            _validHits.Clear();
+
+			var heightRayLengthToUse = _player.IsGrounded ? _heightRayLength : _heightRayLengthUngrounded;
 			FindOutUniquePointsOnXZPlane();
 
-			Vector3 offsetIntoWall = transform.forward * 0.01f;
-			foreach (RaycastHit forwardHit in forwardHitPositions)
+			var offsetIntoWall = transform.forward * 0.01f;
+			foreach (var forwardHit in _forwardHitPositions)
 			{
-				Vector3 coordXZToCheck = forwardHit.point + offsetIntoWall;
+				var coordXZToCheck = forwardHit.point + offsetIntoWall;
 				coordXZToCheck.y = transform.position.y + heightRayLengthToUse;
-				raycasts = RaycastTrulyAll(coordXZToCheck, Vector3.down, obstacleLayer, 0.01f);
-				if (raycasts.Length > 0)
+
+				_raycasts = RaycastTrulyAll(coordXZToCheck, Vector3.down, _obstacleLayer, 0.01f);
+				if (_raycasts.Count > 0)
 				{
-					foreach (RaycastHit hit in raycasts)
+					foreach (var hit in _raycasts)
 					{
-						float heightSpace = ValidateHit(hit.point);
-						if (heightSpace > 0)
+						var heightSpace = ValidateHit(hit.point);
+						if (heightSpace > 0f)
 						{
-							validHits.Add(new ValidHit(hit.point, Quaternion.LookRotation(-forwardHit.normal), heightSpace));
+							_validHits.Add(new ValidHit(hit.point, Quaternion.LookRotation(-forwardHit.normal), heightSpace));
 						}
 					}
 				}
 			}
-			return validHits;
-		}
-
-		void OnDrawGizmos()
-		{
-			if (raycasts != null)
-			{
-				foreach (RaycastHit hit in raycasts)
-				{
-					Gizmos.color = Color.blue;
-					Gizmos.DrawWireSphere(hit.point, 0.25f);
-				}
-			}
-
-			if (forwardHitPositions != null)
-			{
-				foreach (RaycastHit hit in forwardHitPositions)
-				{
-					Gizmos.color = Color.yellow;
-					Gizmos.DrawWireSphere(hit.point, 0.5f);
-				}
-			}
+			return _validHits;
 		}
 
 		private void FindOutUniquePointsOnXZPlane()
 		{
-			forwardHitPositions.Clear();
+			_forwardHitPositions.Clear();
 
-			float maxHeight = player.IsGrounded ? heightRayLength : heightRayLengthUngrounded;
-			foreach (Vector3 origin in forwardRayOrigins)
+			var maxHeight = _player.IsGrounded ? _heightRayLength : _heightRayLengthUngrounded;
+			foreach (var origin in _forwardRayOrigins)
 			{
-				Vector3 offsetOrigin = origin + transform.forward * forwardRaysForwardOffset;
-				if (origin.y <= maxHeight && Physics.Raycast(transform.position + offsetOrigin, transform.forward,
-				out RaycastHit forwardHit, actualForwardRayLength, obstacleLayer))
+				var offsetOrigin = origin + transform.forward * _forwardRaysForwardOffset;
+
+				if (origin.y <= maxHeight && 
+                    Physics.Raycast(transform.position + offsetOrigin, transform.forward, out var forwardHit, _actualForwardRayLength, _obstacleLayer))
 				{
-					if (forwardHitPositions.Count == 0 || !forwardHitPositions.Any(v => Mathf.Abs(v.point.x - forwardHit.point.x) < minDistanceForUniqueXZPoint && Mathf.Abs(v.point.z - forwardHit.point.z) < minDistanceForUniqueXZPoint))
+					// TODO: Ensure the refactor in AnyValidForwardPositions is correct. This was a bit complex, and Any LINQ in hot path is a big no no.
+					//if (_forwardHitPositions.Count == 0 || 
+                    //    !_forwardHitPositions.Any(v => Mathf.Abs(v.point.x - forwardHit.point.x) < _minDistanceForUniqueXZPoint && 
+                    //                                            Mathf.Abs(v.point.z - forwardHit.point.z) < _minDistanceForUniqueXZPoint))
+
+					if (AnyValidForwardPositions(in forwardHit))
 					{
-						forwardHitPositions.Add(forwardHit);
+						_forwardHitPositions.Add(forwardHit);
 					}
 				}
 			}
 		}
 
-		float ValidateHit(Vector3 posToValidate)
-		{
-			Vector3 origin = posToValidate + new Vector3(0, player.Radius + 0.01f, 0);
-			float crouchingDistance = player.crouchFloatingColliderHeight + player.DistanceToFloat - player.Radius * 2;
+        private bool AnyValidForwardPositions(in RaycastHit forwardHit)
+        {
+            if (_forwardHitPositions.Count == 0)
+            {
+                return true;
+            }
 
-			if (Physics.CheckSphere(origin, player.Radius, obstacleLayer) || !RaycastAccessibilityCheck(posToValidate))
+            foreach (var v in _forwardHitPositions)
+            {
+                if (Mathf.Abs(v.point.x - forwardHit.point.x) < _minDistanceForUniqueXZPoint ||
+                    Mathf.Abs(v.point.z - forwardHit.point.z) < _minDistanceForUniqueXZPoint)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        // ========================================================= VALIDATORS
+
+        private float ValidateHit(Vector3 posToValidate)
+		{
+			var origin = posToValidate + new Vector3(0, _player.Radius + 0.01f, 0);
+			var crouchingDistance = _player.crouchFloatingColliderHeight + _player.DistanceToFloat - _player.Radius * 2;
+
+			if (Physics.CheckSphere(origin, _player.Radius, _obstacleLayer) || 
+                RaycastAccessibilityCheck(posToValidate) == false)
 			{
 				return -1;
 			}
 
-			if (!Physics.SphereCast(origin, player.Radius, Vector3.up, out RaycastHit hit, crouchingDistance, obstacleLayer))
+			if (Physics.SphereCast(origin, _player.Radius, Vector3.up, out RaycastHit hit, crouchingDistance, _obstacleLayer) == false)
 			{
-				float standingDistance = player.characterHeight - player.Radius * 2;
-				if (Physics.SphereCast(origin, player.Radius, Vector3.up, out RaycastHit standingHit, standingDistance, obstacleLayer))
+				var standingDistance = _player.characterHeight - _player.Radius * 2;
+				if (Physics.SphereCast(origin, _player.Radius, Vector3.up, out RaycastHit standingHit, standingDistance, _obstacleLayer))
 				{
-					if (standingHit.point.y - posToValidate.y >= playerCrouching.CrouchColliderHeight)
+					if (standingHit.point.y - posToValidate.y >= _playerCrouching.CrouchColliderHeight)
 					{
 						return standingHit.point.y - posToValidate.y;
 					}
 				}
 				else
 				{
-					return player.characterHeight;
+					return _player.characterHeight;
 				}
 			}
 			return -1;
@@ -141,36 +184,77 @@ namespace FPSDemo.Player
 
 		bool RaycastAccessibilityCheck(Vector3 posToCheck)
 		{
-			Vector3 origin = transform.position + Vector3.up * (player.CurrentFloatingColliderHeight + player.DistanceToFloat);
-			Vector3 target = posToCheck + Vector3.up * playerCrouching.CrouchColliderHeight;
-			return !Physics.Raycast(origin, target - origin, Vector3.Distance(target, origin), obstacleLayer);
+			var origin = transform.position + Vector3.up * (_player.CurrentFloatingColliderHeight + _player.DistanceToFloat);
+			var target = posToCheck + Vector3.up * _playerCrouching.CrouchColliderHeight;
+
+			return Physics.Raycast(origin, target - origin, Vector3.Distance(target, origin), _obstacleLayer) == false;
 		}
 
-		public RaycastHit[] RaycastTrulyAll(Vector3 initialXZCoordToCheck, Vector3 direction, LayerMask layerMask, float offsetAfterHit)
-		{
-			List<RaycastHit> raycastHits = new();
-			Vector3 thisRayOrigin = initialXZCoordToCheck;
+
+        // ========================================================= RAYCASTS
+
+        private List<RaycastHit> RaycastTrulyAll(Vector3 initialXZCoordToCheck, Vector3 direction, LayerMask layerMask, float offsetAfterHit)
+        {
+            if (_raycasts == null)
+            {
+                _raycasts = new List<RaycastHit>();
+            }
+            else
+            {
+                _raycasts.Clear();
+            }
+
+            var thisRayOrigin = initialXZCoordToCheck;
+
 			// If something is hit within the max length
-			float maxLength = player.IsGrounded ? actualRayLengthFromGround : actualRayLengthFromGroundUngrounded;
-			while (Physics.Raycast(thisRayOrigin, direction, out RaycastHit hit, maxLength, layerMask) && (initialXZCoordToCheck - hit.point).magnitude < maxLength)
+			var maxLength = _player.IsGrounded ? _actualRayLengthFromGround : _actualRayLengthFromGroundUngrounded;
+
+			// TODO: Ensure this can't go infinite loop. I'd prefer a maxIteration failsafe mechanic here just to make sure it can't.
+			while (Physics.Raycast(thisRayOrigin, direction, out var hit, maxLength, layerMask) && (initialXZCoordToCheck - hit.point).magnitude < maxLength)
 			{
-				raycastHits.Add(hit);
+                _raycasts.Add(hit);
 				thisRayOrigin = hit.point + direction * offsetAfterHit;
 			}
-			return raycastHits.ToArray();
+
+			return _raycasts;
 		}
-	}
+
+
+        // ========================================================= DEBUG
+
+        void OnDrawGizmos()
+        {
+            if (_raycasts != null)
+            {
+                foreach (var hit in _raycasts)
+                {
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawWireSphere(hit.point, 0.25f);
+                }
+            }
+
+            if (_forwardHitPositions != null)
+            {
+                foreach (var hit in _forwardHitPositions)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawWireSphere(hit.point, 0.5f);
+                }
+            }
+        }
+    }
 
 	public struct ValidHit
 	{
-		public Vector3 destination;
-		public Quaternion rotation;
-		public float heightSpace;
+		public Vector3 Destination;
+		public Quaternion Rotation;
+		public float HeightSpace;
+
 		public ValidHit(Vector3 dest, Quaternion rot, float space)
 		{
-			destination = dest;
-			rotation = rot;
-			heightSpace = space;
+			Destination = dest;
+			Rotation = rot;
+			HeightSpace = space;
 		}
 	}
 }

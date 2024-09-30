@@ -197,7 +197,7 @@ namespace FPSDemo.Player
 		void UpdateWeaponSway()
 		{
 			Vector2 moveInput = player.inputManager.GetMovementInput();
-			Vector2 lookInput = cameraMovement.cameraMovementThisFrame;
+			Vector2 lookInput = cameraMovement.CameraMovementThisFrame;
 
 			weaponSway.x = lookInput.y * lookSway.x + moveInput.y * movementSway.x;
 			weaponSway.y = lookInput.x * lookSway.y + moveInput.x * movementSway.y;

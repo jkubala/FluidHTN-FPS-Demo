@@ -266,7 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fc9fa1f0291444182d082bf2bf45a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1224698220}
+  _player: {fileID: 1224698220}
+  _detectionDirectionGUIPooler: {fileID: 138242671}
 --- !u!114 &138242671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19103,19 +19104,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b31d4c2ad38097248b8a34601e09f50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  standingCamHeight: 1.65
-  targetCamYPos: 1.65
-  mouseSensitivity: 0.2
-  mouseSensitivityADS: 0.1
-  defaultYAngleLimit: 89
-  defaultXAngleLimit: 360
-  smoothSpeed: 50
-  lookTowardsSpeed: 200
-  camLeanMoveTime: 0.005
-  camDampSpeed: 0.05
-  tiltHeadForward: 0.15
-  tiltHeadBack: -0.05
-  cameraDefaultFOV: 65
+  _standingCamHeight: 1.65
+  _targetCamYPos: 1.65
+  _mouseSensitivity: 0.2
+  _mouseSensitivityADS: 0.1
+  _defaultYAngleLimit: 89
+  _defaultXAngleLimit: 360
+  _smoothSpeed: 50
+  _lookTowardsSpeed: 200
+  _camLeanMoveTime: 0.005
+  _camDampSpeed: 0.05
+  _tiltHeadForward: 0.15
+  _tiltHeadBack: -0.15
+  _cameraDefaultFOV: 65
+  _camera: {fileID: 1419568187}
+  _player: {fileID: 1224698220}
+  _playerLeaning: {fileID: 1224698217}
 --- !u!1 &786368023
 GameObject:
   m_ObjectHideFlags: 0
@@ -53603,15 +53607,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af51d0bf3fb713648b7428659e8e544c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardRaysYPosStart: 0.5
-  forwardRaysForwardOffset: 0.3
-  forwardRayLength: 0.7
-  heightRayLength: 3.25
-  heightRayLengthUngrounded: 2
-  minDistanceForUniqueXZPoint: 0.01
-  obstacleLayer:
+  _forwardRaysYPosStart: 0.5
+  _forwardRaysForwardOffset: 0.3
+  _forwardRayLength: 0.7
+  _heightRayLength: 3.25
+  _heightRayLengthUngrounded: 2
+  _minDistanceForUniqueXZPoint: 0.01
+  _obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
+  _player: {fileID: 1224698220}
+  _playerCrouching: {fileID: 1224698216}
 --- !u!114 &1224698210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53815,14 +53821,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fceb66fc87171d34c9f5f9eb05850c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  climbingSpeed: 80
-  angleToClimb: 60
-  grabbingTime: 0.5
-  climbingTime: 3
-  clampClimbingCameraAngle: 60
-  shouldClimbPressedDuration: 0.5
-  obstacleClimbSpeed: 3
-  obstacleMoveThreshold: 0.5
+  _climbingSpeed: 80
+  _angleToClimb: 60
+  _grabbingTime: 0.5
+  _climbingTime: 3
+  _clampClimbingCameraAngle: 60
+  _shouldClimbPressedDuration: 0.5
+  _obstacleClimbSpeed: 3
+  _obstacleMoveThreshold: 0.5
+  _player: {fileID: 1224698220}
+  _capsuleCollider: {fileID: 1224698213}
+  _playerCrouching: {fileID: 1224698216}
+  _cameraMovement: {fileID: 719387698}
+  _environmentScanner: {fileID: 1224698209}
 --- !u!114 &1224698216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54842,7 +54853,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -56318,7 +56329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1807950300}
   - component: {fileID: 1807950299}
-  - component: {fileID: 1807950298}
+  - component: {fileID: 1807950301}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -56326,26 +56337,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1807950298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807950297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &1807950299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56376,6 +56367,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1405902152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1807950301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807950297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &1858182656
 GameObject:
   m_ObjectHideFlags: 0

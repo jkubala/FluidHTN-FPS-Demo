@@ -5,204 +5,276 @@ namespace FPSDemo.Player
 {
 	public class CameraMovement : MonoBehaviour
 	{
-		public bool CanRotateCamera { get; set; } = true;
-		[SerializeField] float standingCamHeight = 1.65f;
-		[SerializeField] float targetCamYPos = 1.65f;
+        // -------------------------------------------- INSPECTOR FIELDS
+
+        [SerializeField] private float _standingCamHeight = 1.65f;
+		[SerializeField] private float _targetCamYPos = 1.65f;
+
 		[Tooltip("Mouse look sensitivity/camera move speed.")]
-		[SerializeField] float mouseSensitivity = 0.2f;
+		[SerializeField] private float _mouseSensitivity = 0.2f;
+
 		[Tooltip("Mouse look sensitivity/camera move speed in ADS.")]
-		[SerializeField] float mouseSensitivityADS = 0.1f;
+		[SerializeField] private float _mouseSensitivityADS = 0.1f;
+
 		[Tooltip("Maximum pitch of camera for mouselook.")]
-		[SerializeField] float defaultYAngleLimit = 89f;
+		[SerializeField] private float _defaultYAngleLimit = 89f;
+
 		[Tooltip("Maximum yaw of camera for mouselook.")]
-		[SerializeField] float defaultXAngleLimit = 360f;
+		[SerializeField] private float _defaultXAngleLimit = 360f;
+
 		[Tooltip("Smooth speed of camera angles for mouse look.")]
-		[SerializeField] float smoothSpeed = 50f;
-		[SerializeField] float lookTowardsSpeed = 50f;
-		[SerializeField] float camLeanMoveTime = 0.075f;
-		[SerializeField] float camDampSpeed = 0.1f;
-		[SerializeField] float tiltHeadForward = 0.1f;
-		[SerializeField] float tiltHeadBack = -0.15f;
+		[SerializeField] private float _smoothSpeed = 50f;
 
-		private Coroutine rotateTowardsRoutine = null;
-		public bool RotateTowardsFinished { get; private set; } = true;
-		float currentMaxXAngle = 360f;
-		float rotationX = 0f, rotationY = 0f, rotationZ = 0f;
-		Quaternion originalRotation;
-		new Camera camera;
-		[SerializeField] float cameraDefaultFOV = 65f;
-		public float NormalFOV { get { return cameraDefaultFOV; } private set { cameraDefaultFOV = value; } }
-		public Transform CameraBase { get; private set; }
-		Transform cameraOffsetPoint;
-		Vector3 currentCamXZPos;
-		Vector3 camXVelocity;
-		float currentCamYPos;
-		float camYVelocity;
-		float targetFOV;
-		float targetMouseSensitivity;
+		[SerializeField] private float _lookTowardsSpeed = 50f;
+		[SerializeField] private float _camLeanMoveTime = 0.075f;
+		[SerializeField] private float _camDampSpeed = 0.1f;
+		[SerializeField] private float _tiltHeadForward = 0.1f;
+		[SerializeField] private float _tiltHeadBack = -0.15f;
 
-		public Vector2 cameraMovementThisFrame { get; private set; } = Vector2.zero;
-		Vector2 cameraMovementLastFrame = Vector2.zero;
+        [SerializeField] float _cameraDefaultFOV = 65f;
+
+        [SerializeField] private Camera _camera;
+        [SerializeField] private Player _player;
+        [SerializeField] private PlayerLeaning _playerLeaning;
+
+
+        // -------------------------------------------- PRIVATE FIELDS
+
+        private Coroutine _rotateTowardsRoutine = null;
+		private Quaternion _originalRotation;
+		private Transform _cameraOffsetPoint;
+		private Vector3 _currentCamXZPos;
+        private Vector3 _camXVelocity;
+        private Vector2 _cameraMovementLastFrame = Vector2.zero;
+
+        private float _currentMaxXAngle = 360f;
+        private float _rotationX = 0f;
+        private float _rotationY = 0f;
+        private float _rotationZ = 0f;
+        private float _currentCamYPos;
+		private float _camYVelocity;
+		private float _targetFOV;
+        private float _targetMouseSensitivity;
+
+        // ========================================================= PROPERTIES
+
+        public Transform CameraBase { get; private set; }
+        public bool CanRotateCamera { get; set; } = true;
+        public bool RotateTowardsFinished { get; private set; } = true;
+        public Vector2 CameraMovementThisFrame { get; private set; } = Vector2.zero;
 		public float CurrentFOV { get; set; } = 45f;
+        public float NormalFOV { get { return _cameraDefaultFOV; } private set { _cameraDefaultFOV = value; } }
 
-		Player player;
-		PlayerLeaning playerLeaning;
 
-		void Awake()
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
+        {
+            if (_player == null)
+            {
+                _player = GetComponentInParent<Player>();
+            }
+
+            if (_playerLeaning == null)
+            {
+                _playerLeaning = GetComponentInParent<PlayerLeaning>();
+            }
+
+            if (_camera == null)
+            {
+                _camera = GetComponentInChildren<Camera>();
+            }
+        }
+
+        void Awake()
 		{
-			player = GetComponentInParent<Player>();
-			playerLeaning = GetComponentInParent<PlayerLeaning>();
-			camera = GetComponentInChildren<Camera>();
-			CameraBase = camera.transform.parent;
-			cameraOffsetPoint = CameraBase.transform.parent;
-			originalRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
-			targetCamYPos = standingCamHeight;
-			currentCamXZPos = transform.position;
+			CameraBase = _camera.transform.parent;
+			_cameraOffsetPoint = CameraBase.transform.parent;
+			_originalRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
+			_targetCamYPos = _standingCamHeight;
+			_currentCamXZPos = transform.position;
 			CurrentFOV = NormalFOV;
-			camera.fieldOfView = CurrentFOV;
-			targetMouseSensitivity = mouseSensitivity;
-			currentCamYPos = targetCamYPos + player.transform.position.y;
+			_camera.fieldOfView = CurrentFOV;
+			_targetMouseSensitivity = _mouseSensitivity;
+			_currentCamYPos = _targetCamYPos + _player.transform.position.y;
 		}
 
 		void Start()
 		{
 			transform.SetParent(null);
-			transform.position = new Vector3(transform.position.x, currentCamYPos, transform.position.z);
+			transform.position = new Vector3(transform.position.x, _currentCamYPos, transform.position.z);
 		}
 
 		void OnEnable()
 		{
-			player.OnBeforeMove += UpdateCameraPosition;
-			player.OnAfterMove += UpdateCamera;
-			player.OnTeleport += TeleportYCamPosUpdate;
-			player.OnTeleportRotate += UpdateRotation;
+			_player.OnBeforeMove += OnUpdateCameraPosition;
+			_player.OnAfterMove += OnUpdateCamera;
+			_player.OnTeleport += OnTeleportYCamPosUpdate;
+			_player.OnTeleportRotate += OnUpdateRotation;
 		}
+
 		void OnDisable()
 		{
-			player.OnBeforeMove -= UpdateCameraPosition;
-			player.OnAfterMove -= UpdateCamera;
-			player.OnTeleport -= TeleportYCamPosUpdate;
-			player.OnTeleportRotate -= UpdateRotation;
+			_player.OnBeforeMove -= OnUpdateCameraPosition;
+			_player.OnAfterMove -= OnUpdateCamera;
+			_player.OnTeleport -= OnTeleportYCamPosUpdate;
+			_player.OnTeleportRotate -= OnUpdateRotation;
 		}
 
-		public void UpdateCamera()
+
+        // ========================================================= TICK
+
+        
+
+        private void RotateCamera()
 		{
-			if (CanRotateCamera)
-			{
-				RotateCamera();
-			}
-			MoveCameraLean();
+			_targetMouseSensitivity = _player.IsAiming ? _mouseSensitivityADS : _mouseSensitivity;
+			_rotationX += _player.inputManager.GetLookInput().x * _targetMouseSensitivity;
+			_rotationY -= _player.inputManager.GetLookInput().y * _targetMouseSensitivity;
+
+			_rotationX = Mathf.Clamp(_rotationX %= 360f, -_currentMaxXAngle, _currentMaxXAngle);
+			_rotationY = Mathf.Clamp(_rotationY %= 360f, -_defaultYAngleLimit, _defaultYAngleLimit);
+			_rotationZ = -_playerLeaning.LeanPos * _playerLeaning.rotationLeanAmt;
+
+			CameraMovementThisFrame = new Vector2(_rotationX - _cameraMovementLastFrame.x, _rotationY - _cameraMovementLastFrame.y);
+			
+            transform.rotation = Quaternion.Lerp(transform.rotation, _originalRotation * Quaternion.AngleAxis(_rotationX, Vector3.up), _smoothSpeed * Time.deltaTime);
+			
+            CameraBase.transform.rotation = Quaternion.Lerp(CameraBase.transform.rotation, transform.rotation * Quaternion.AngleAxis(_rotationY, Vector3.right) * Quaternion.AngleAxis(_rotationZ, Vector3.forward), _smoothSpeed * Time.deltaTime);
+			
+            _cameraMovementLastFrame.x = _rotationX;
+			_cameraMovementLastFrame.y = _rotationY;
 		}
 
-		void UpdateCameraPosition()
+		private void MoveCameraLean()
 		{
-			if(player.ThisTarget.IsDead)
-			{
-				// Set it to the middle of the collider
-				targetCamYPos = player.CurrentFloatingColliderHeight / 2 + player.transform.position.y;
-			}
-			else
-			{
-			targetCamYPos = standingCamHeight - (player.standingFloatingColliderHeight - player.CurrentFloatingColliderHeight) + player.transform.position.y;
-			player.rigidbody.MoveRotation(Quaternion.Euler(Vector3.up * transform.eulerAngles.y));
-			}
+			var targetPos = _player.transform.position;
+
+			_currentCamXZPos = Vector3.SmoothDamp(_currentCamXZPos, targetPos, ref _camXVelocity, _camLeanMoveTime);
+			_currentCamYPos = Mathf.SmoothDamp(_currentCamYPos, _targetCamYPos, ref _camYVelocity, _camDampSpeed);
+
+			transform.position = new Vector3(_currentCamXZPos.x, _currentCamYPos, _currentCamXZPos.z);
+
+			var headTiltValue = Vector3.Dot(-transform.up, _camera.transform.forward);
+			var headTilt = transform.forward * Mathf.Lerp(_tiltHeadBack, _tiltHeadForward, (headTiltValue + 1f) / 2f);
+
+			CameraBase.transform.position = _cameraOffsetPoint.position + _player.transform.right * _playerLeaning.LeanPos + headTilt;
 		}
 
-		void RotateCamera()
-		{
-			targetMouseSensitivity = player.IsAiming ? mouseSensitivityADS : mouseSensitivity;
-			rotationX += player.inputManager.GetLookInput().x * targetMouseSensitivity;
-			rotationY -= player.inputManager.GetLookInput().y * targetMouseSensitivity;
 
-			rotationX = Mathf.Clamp(rotationX %= 360f, -currentMaxXAngle, currentMaxXAngle);
-			rotationY = Mathf.Clamp(rotationY %= 360f, -defaultYAngleLimit, defaultYAngleLimit);
-			rotationZ = -playerLeaning.LeanPos * playerLeaning.rotationLeanAmt;
-			cameraMovementThisFrame = new Vector2(rotationX - cameraMovementLastFrame.x, rotationY - cameraMovementLastFrame.y);
-			transform.rotation = Quaternion.Lerp(transform.rotation, originalRotation * Quaternion.AngleAxis(rotationX, Vector3.up), smoothSpeed * Time.deltaTime);
-			CameraBase.transform.rotation = Quaternion.Lerp(CameraBase.transform.rotation, transform.rotation * Quaternion.AngleAxis(rotationY, Vector3.right) * Quaternion.AngleAxis(rotationZ, Vector3.forward), smoothSpeed * Time.deltaTime);
-			cameraMovementLastFrame.x = rotationX;
-			cameraMovementLastFrame.y = rotationY;
-		}
+        // ========================================================= GETTERS
 
-		void MoveCameraLean()
-		{
-			Vector3 targetPos = player.transform.position;
-			currentCamXZPos = Vector3.SmoothDamp(currentCamXZPos, targetPos, ref camXVelocity, camLeanMoveTime);
-			currentCamYPos = Mathf.SmoothDamp(currentCamYPos, targetCamYPos, ref camYVelocity, camDampSpeed);
-			transform.position = new Vector3(currentCamXZPos.x, currentCamYPos, currentCamXZPos.z);
-			float headTiltValue = Vector3.Dot(-transform.up, camera.transform.forward);
-			Vector3 headTilt = transform.forward * Mathf.Lerp(tiltHeadBack, tiltHeadForward, (headTiltValue + 1f) / 2f);
-			CameraBase.transform.position = cameraOffsetPoint.position + player.transform.right * playerLeaning.LeanPos + headTilt;
-		}
+        public float GetCameraPitch()
+        {
+            float angleToReturn = CameraBase.localRotation.eulerAngles.x;
+            if (angleToReturn > 180)
+            {
+                angleToReturn -= 360;
+            }
+            return angleToReturn;
+        }
 
-		public void ResetXAngle()
+
+        // ========================================================= PUBLIC METHODS
+
+        public void ResetXAngle()
 		{
-			currentMaxXAngle = defaultXAngleLimit;
+			_currentMaxXAngle = _defaultXAngleLimit;
 		}
 
 		public void ClampXAngle(float angle)
 		{
-			currentMaxXAngle = angle;
+			_currentMaxXAngle = angle;
 		}
 
-		public float GetCameraPitch()
-		{
-			float angleToReturn = CameraBase.localRotation.eulerAngles.x;
-			if (angleToReturn > 180)
-			{
-				angleToReturn -= 360;
-			}
-			return angleToReturn;
-		}
 
 		public void StartRotatingCameraTowards(Quaternion targetRotation, float targetCameraPitch)
 		{
-			if (rotateTowardsRoutine != null)
+			if (_rotateTowardsRoutine != null)
 			{
-				StopCoroutine(rotateTowardsRoutine);
+				StopCoroutine(_rotateTowardsRoutine);
 			}
 			CanRotateCamera = false;
 			RotateTowardsFinished = false;
 			Vector3 modifiedRotation = targetRotation.eulerAngles;
 			modifiedRotation.x = 0;
-			rotateTowardsRoutine = StartCoroutine(RotateCameraTowards(Quaternion.Euler(modifiedRotation), targetCameraPitch));
+			_rotateTowardsRoutine = StartCoroutine(RotateCameraTowards(Quaternion.Euler(modifiedRotation), targetCameraPitch));
 		}
 
-		IEnumerator RotateCameraTowards(Quaternion targetRot, float targetCameraPitch)
+
+        // ========================================================= COROUTINES
+
+        private IEnumerator RotateCameraTowards(Quaternion targetRot, float targetCameraPitch)
 		{
 			while (targetRot != transform.rotation || !Mathf.Approximately(GetCameraPitch(), targetCameraPitch))
 			{
-				CameraBase.localRotation = Quaternion.Euler(new Vector3(Mathf.MoveTowards(GetCameraPitch(), targetCameraPitch, Time.deltaTime * lookTowardsSpeed), 0, 0));
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * lookTowardsSpeed);
+				CameraBase.localRotation = Quaternion.Euler(new Vector3(Mathf.MoveTowards(GetCameraPitch(), targetCameraPitch, Time.deltaTime * _lookTowardsSpeed), 0, 0));
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * _lookTowardsSpeed);
 				yield return null;
 			}
-			originalRotation = targetRot;
+			_originalRotation = targetRot;
 			UpdateRotation(transform.rotation);
 			UpdateCameraPitch(GetCameraPitch());
-			cameraMovementLastFrame = new Vector2(rotationX, rotationY);
+			_cameraMovementLastFrame = new Vector2(_rotationX, _rotationY);
 			RotateTowardsFinished = true;
 		}
 
-		void UpdateRotation(Quaternion newRotation)
-		{
-			originalRotation = newRotation;
-			rotationX = newRotation.x;
-			rotationZ = newRotation.z;
-		}
 
-		void TeleportYCamPosUpdate(float newPosition)
+        // ========================================================= PLAYER CALLBACKS
+
+        private void OnUpdateCameraPosition()
+        {
+            if (_player.ThisTarget.IsDead)
+            {
+                // Set it to the middle of the collider
+                _targetCamYPos = _player.CurrentFloatingColliderHeight / 2 + _player.transform.position.y;
+            }
+            else
+            {
+                _targetCamYPos = _standingCamHeight - (_player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + _player.transform.position.y;
+                _player.rigidbody.MoveRotation(Quaternion.Euler(Vector3.up * transform.eulerAngles.y));
+            }
+        }
+
+        private void OnUpdateCamera()
+        {
+            if (CanRotateCamera)
+            {
+                RotateCamera();
+            }
+
+            MoveCameraLean();
+        }
+
+        private void OnUpdateRotation(Quaternion newRotation)
+        {
+            UpdateRotation(newRotation);
+
+        }
+
+        private void OnTeleportYCamPosUpdate(float newPosition)
 		{
-			currentCamYPos = standingCamHeight + newPosition;
-			targetCamYPos = standingCamHeight - (player.standingFloatingColliderHeight - player.CurrentFloatingColliderHeight) + newPosition;
-			camYVelocity = 0f;
+			_currentCamYPos = _standingCamHeight + newPosition;
+			_targetCamYPos = _standingCamHeight - (_player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + newPosition;
+			_camYVelocity = 0f;
 			UpdateCameraPitch(0);
-			currentCamXZPos = player.transform.position;
-			transform.position = new Vector3(currentCamXZPos.x, currentCamYPos, currentCamXZPos.z);
+			_currentCamXZPos = _player.transform.position;
+			transform.position = new Vector3(_currentCamXZPos.x, _currentCamYPos, _currentCamXZPos.z);
 		}
 
-		void UpdateCameraPitch(float angle)
+
+        // ========================================================= SIMULATION
+
+        private void UpdateRotation(Quaternion newRotation)
+        {
+            _originalRotation = newRotation;
+            _rotationX = newRotation.x;
+            _rotationZ = newRotation.z;
+        }
+
+        private void UpdateCameraPitch(float angle)
 		{
-			rotationY = angle;
+			_rotationY = angle;
 		}
 	}
 }

@@ -7,6 +7,7 @@ namespace FPSDemo.NPC
 	public class ThirdPersonController : MonoBehaviour
 	{
 		// -------------------------------------------- INSPECTOR FIELDS
+
 		[SerializeField] Transform _playerTransform;
 		[SerializeField] Transform _pointToRotateTo;
 		[SerializeField] Transform _rootModel;

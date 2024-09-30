@@ -4,7 +4,12 @@ namespace FPSDemo.Player
 {
     public class DetectionDirectionFiller : MonoBehaviour
     {
+        // -------------------------------------------- INSPECTOR FIELDS
+
         [SerializeField] GameObject fillerToScale;
+
+
+        // -------------------------------------------- PUBLIC METHODS
 
         public void UpdateFiller(float scaleAmount)
         {

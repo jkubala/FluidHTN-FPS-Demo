@@ -10,6 +10,7 @@ public class ThirdPersonControllerEditor : Editor
 	public override void OnInspectorGUI()
 	{
 		ThirdPersonController npcController = (ThirdPersonController)target;
+
 		if (GUILayout.Button("Navigate to current player pos"))
 		{
 			npcController.NavigateToPlayer();
@@ -54,6 +55,7 @@ public class ThirdPersonControllerEditor : Editor
 		{
 			npcController.Uncrouch();
 		}
+
 		DrawDefaultInspector();
 	}
 }

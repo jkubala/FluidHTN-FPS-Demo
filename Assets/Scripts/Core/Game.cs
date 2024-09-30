@@ -4,19 +4,29 @@ namespace FPSDemo.Core
 {
 	public class Game : MonoBehaviour
     {
-		private static Game Instance { get; set; }
+        // -------------------------------------------- STATIC PROPERTIES
+        private static Game Instance { get; set; }
         public static AISettings AISettings => Instance != null ? Instance._aiSettings : null;
+
+
+        // -------------------------------------------- INSPECTOR FIELDS
 
         [SerializeField] private AISettings _aiSettings;
 
-        void Awake()
+
+        // ========================================================= UNITY METHODS
+
+        private void Awake()
 		{
 			Instance = this;
 			FocusTheGameWindow();
 			ToggleCursor(false);
 		}
 
-		void ToggleCursor(bool value)
+
+        // ========================================================= TOGGLES
+
+        private static void ToggleCursor(bool value)
 		{
 			if (value)
 			{
@@ -31,10 +41,13 @@ namespace FPSDemo.Core
 			}
 		}
 
-		void FocusTheGameWindow()
+
+        // ========================================================= EDITOR / DEBUG
+
+        private static void FocusTheGameWindow()
 		{
 #if UNITY_EDITOR
-			UnityEditor.EditorWindow gameViewWindow = UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.EditorWindow).Assembly.GetType("UnityEditor.GameView"));
+			var gameViewWindow = UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.EditorWindow).Assembly.GetType("UnityEditor.GameView"));
 			gameViewWindow.Focus();
 			Event focusMouseClick = new()
 			{
