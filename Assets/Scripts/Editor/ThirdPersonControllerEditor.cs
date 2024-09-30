@@ -20,7 +20,7 @@ public class ThirdPersonControllerEditor : Editor
 		}
 		if (GUILayout.Button("Keep rotating to player"))
 		{
-			npcController.SetPlayerAsRotatePoint();
+			npcController.ApplyPlayerAsRotatePoint();
 		}
 		if (GUILayout.Button("Clear rotate to point"))
 		{
@@ -40,11 +40,11 @@ public class ThirdPersonControllerEditor : Editor
         }
         if (GUILayout.Button("Run"))
 		{
-			npcController.SetRunSpeed();
+			npcController.ApplyRunSpeed();
 		}
 		if (GUILayout.Button("Walk"))
 		{
-			npcController.SetWalkSpeed();
+			npcController.ApplyWalkSpeed();
 		}
 		if(GUILayout.Button("Crouch"))
 		{

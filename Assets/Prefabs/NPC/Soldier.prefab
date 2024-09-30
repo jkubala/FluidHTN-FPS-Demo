@@ -1415,8 +1415,7 @@ MonoBehaviour:
   _animator: {fileID: 3251590371590400996}
   _velocity: {x: 0, y: 0, z: 0}
   _settings: {fileID: 11400000, guid: 5302994f3393ba64484117271b56c756, type: 2}
-  _crouchFactor: 0
-  _controller: {fileID: 0}
+  _controller: {fileID: 4286341724367834088}
 --- !u!136 &2773373085705929603
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1523,9 +1522,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
-  pointToRotateTo: {fileID: 0}
-  rootModel: {fileID: -8679921383154817045}
+  _playerTransform: {fileID: 0}
+  _pointToRotateTo: {fileID: 0}
+  _rootModel: {fileID: -8679921383154817045}
+  _animator: {fileID: 3251590371590400996}
+  _navAgent: {fileID: 4832982898588977342}
   speedToCrouch: 0.25
   speedToStop: 0.2
   CrouchedSpeed: 1.5
@@ -1553,7 +1554,6 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
-  _animator: {fileID: 3251590371590400996}
 --- !u!195 &4832982898588977342
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -8,118 +8,140 @@ namespace FPSDemo.NPC.Sensors
 {
     public class VisionSensor : MonoBehaviour, ISensor
     {
+        // ========================================================= INSPECTOR FIELDS
         // TODO: Add tooltips to all serialized fields
 
-        [SerializeField] HumanTarget thisTarget;
-        DetectionDirectionUpdater detectionDirectionUpdater;
+        [SerializeField] private HumanTarget _thisTarget;
+        [SerializeField] private LayerMask _raycastMask = 1 | (1 << 2);
 
-        [SerializeField] LayerMask raycastMask = 1 | (1 << 2);
+        [Header("Detection time")] 
+        [SerializeField] private float _timeToNotice = 1f;
 
-        [Header("Detection time")] [SerializeField]
-        float timeToNotice = 1f;
+        [Header("Vertical vision angles")] 
+        [SerializeField] private float _visionVertFocusAngleUp = 25f;
+        [SerializeField] private float _visionVertFocusAngleDown = 30f;
+        [SerializeField] private float _visionVertUpperAngle = 25f;
+        [SerializeField] private float _visionVertLowerAngle = -70f;
 
-        [Header("Vertical vision angles")] [SerializeField]
-        float visionVertFocusAngleUp = 25f;
+        [Header("Vertical distances")] 
+        [SerializeField] private float _visionVertClose = 3f;
 
-        [SerializeField] float visionVertFocusAngleDown = 30f;
-        [SerializeField] float visionVertUpperAngle = 25f;
-        [SerializeField] float visionVertLowerAngle = -70f;
+        [Header("Vertical multipliers")] 
+        [SerializeField] private float _multFocusVertical = 1f;
+        [SerializeField] private float _multVertUpper = 0.1f;
+        [SerializeField] private float _multVertLower = 0.2f;
 
-        [Header("Vertical distances")] [SerializeField]
-        float visionVertClose = 3f;
+        [Header("Horizontal distances")] 
+        [SerializeField] private float _visionFocusFar = 60f;
+        [SerializeField] private float _visionFocusDistance = 20f;
+        [SerializeField] private float _visionPeripheralNearDistance = 10f;
+        [SerializeField] private float _visionPeripheralRearDistance = 2f;
 
-        [Header("Vertical multipliers")] [SerializeField]
-        float multFocusVertical = 1f;
+        [Header("Horizontal angles")] 
+        [SerializeField] private float _visionFocusAngle = 60f;
+        [SerializeField] private float _visionPeripheralNearAngle = 80f;
+        [SerializeField] private float _visionPeripheralMidAngle = 90f;
+        [SerializeField] private float _visionPeripheralRearAngle = 20f;
 
-        [SerializeField] float multVertUpper = 0.1f;
-        [SerializeField] float multVertLower = 0.2f;
+        [Header("Horizontal multipliers")] 
+        [SerializeField] private float _multFocusFar = 0.1f;
+        [SerializeField] private float _multFocusClose = 1f;
+        [SerializeField] private float _multPeripheralClose = 0.8f;
+        [SerializeField] private float _multPeripheralFar = 0.2f;
 
-        [Header("Horizontal distances")] [SerializeField]
-        float visionFocusFar = 60f;
 
-        [SerializeField] float visionFocusDistance = 20f;
-        [SerializeField] float visionPeripheralNearDistance = 10f;
-        [SerializeField] float visionPeripheralRearDistance = 2f;
+        // ========================================================= PRIVATE FIELDS
 
-        [Header("Horizontal angles")] [SerializeField]
-        float visionFocusAngle = 60f;
+        private float _farVisionRatio = 0f;
+        private float _peripheralNearVisionRatio = 0f;
+        private float _peripheralMidVisionRatio = 0f;
+        private float _overallHorizontalAngle = 0f;
 
-        [SerializeField] float visionPeripheralNearAngle = 80f;
-        [SerializeField] float visionPeripheralMidAngle = 90f;
-        [SerializeField] float visionPeripheralRearAngle = 20f;
+        private float _verticalTopRatio = 0f;
+        private float _verticalBotRatio = 0f;
 
-        [Header("Horizontal multipliers")] [SerializeField]
-        float multFocusFar = 0.1f;
+        private DetectionDirectionUpdater _detectionDirectionUpdater;
 
-        [SerializeField] float multFocusClose = 1f;
-        [SerializeField] float multPeripheralClose = 0.8f;
-        [SerializeField] float multPeripheralFar = 0.2f;
 
-        float farVisionRatio = 0f;
-        float peripheralNearVisionRatio = 0f;
-        float peripheralMidVisionRatio = 0f;
-        float overallHorizontalAngle = 0f;
-
-        float verticalTopRatio = 0f;
-        float verticalBotRatio = 0f;
+        // ========================================================= PROPERTIES
 
         public float TickRate => Game.AISettings != null ? Game.AISettings.VisionSensorTickRate : 0f;
         public float NextTickTime { get; set; }
 
-        public void DeathBehavior()
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
         {
-            DeregisterDetectionGUI();
-            enabled = false;
+            if (_thisTarget == null)
+            {
+                _thisTarget = GetComponent<HumanTarget>();
+            }
         }
 
-        public void DeregisterDetectionGUI()
-        {
-            detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
-        }
-
-        void Start()
+        private void Start()
         {
             // Values for vision cone
-            overallHorizontalAngle = visionPeripheralMidAngle + visionPeripheralRearAngle;
-            farVisionRatio = visionFocusFar - visionFocusDistance;
-            peripheralNearVisionRatio = visionFocusDistance - visionPeripheralNearDistance;
-            verticalTopRatio = visionVertUpperAngle - visionVertFocusAngleUp;
-            verticalBotRatio = visionVertLowerAngle + visionVertFocusAngleDown;
+            _overallHorizontalAngle = _visionPeripheralMidAngle + _visionPeripheralRearAngle;
+            _farVisionRatio = _visionFocusFar - _visionFocusDistance;
+            _peripheralNearVisionRatio = _visionFocusDistance - _visionPeripheralNearDistance;
+            _verticalTopRatio = _visionVertUpperAngle - _visionVertFocusAngleUp;
+            _verticalBotRatio = _visionVertLowerAngle + _visionVertFocusAngleDown;
 
-            detectionDirectionUpdater = GameObject.FindGameObjectWithTag("DetectionCollisionUpdater")
+            _detectionDirectionUpdater = GameObject.FindGameObjectWithTag("DetectionCollisionUpdater")
                 .GetComponent<DetectionDirectionUpdater>();
             CheckRangeValues();
         }
 
-        void CheckRangeValues()
+        private void OnEnable()
         {
-            if (visionFocusFar < visionFocusDistance)
+            //playerKilled += DeregisterDetectionGUI;
+        }
+
+        private void OnDisable()
+        {
+            if (_detectionDirectionUpdater != null)
+            {
+                _detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
+            }
+            //playerKilled -= DeregisterDetectionGUI;
+        }
+
+
+        // ========================================================= VALIDATION METHODS
+
+        private void CheckRangeValues()
+        {
+            if (_visionFocusFar < _visionFocusDistance)
             {
                 Debug.LogError("visionFocusFar is less than visionFocusClose on object " + gameObject.name);
             }
 
-            if (visionFocusFar < visionFocusDistance)
+            if (_visionFocusFar < _visionFocusDistance)
             {
                 Debug.LogError("visionFocusFar is less than visionFocusNearPeripheralBorder on object " +
                                gameObject.name);
             }
 
-            if (visionFocusDistance < visionPeripheralNearDistance)
+            if (_visionFocusDistance < _visionPeripheralNearDistance)
             {
                 Debug.LogError("visionFocusNearPeripheralBorder is less than visionPeripheralNearMidBorder on object " +
                                gameObject.name);
             }
 
-            if (multFocusClose < multFocusFar)
+            if (_multFocusClose < _multFocusFar)
             {
                 Debug.LogError("multFocusClose is less than multFocusFar on object " + gameObject.name);
             }
 
-            if (multPeripheralClose < multPeripheralFar)
+            if (_multPeripheralClose < _multPeripheralFar)
             {
                 Debug.LogError("multPeripheralClose is less than multPeripheralFar on object " + gameObject.name);
             }
         }
+
+
+        // ========================================================= TICK
 
         public void Tick(AIContext context)
         {
@@ -131,7 +153,7 @@ namespace FPSDemo.NPC.Sensors
                 currentTargetData.visibleBodyParts.Clear();
 
                 var visionModifier = GetVisionModifier(currentTarget, currentTargetData);
-                var awarenessChangeThisTick = visionModifier / timeToNotice * Time.deltaTime;
+                var awarenessChangeThisTick = visionModifier / _timeToNotice * Time.deltaTime;
 
                 if (visionModifier == 0)
                 {
@@ -153,33 +175,36 @@ namespace FPSDemo.NPC.Sensors
 
                     if (currentTarget.IsPlayer)
                     {
-                        detectionDirectionUpdater.RegisterNewTargetWatching(gameObject);
-                        detectionDirectionUpdater.UpdateGUIFill(gameObject,
+                        _detectionDirectionUpdater.RegisterNewTargetWatching(gameObject);
+                        _detectionDirectionUpdater.UpdateGUIFill(gameObject,
                             currentTargetData.awarenessOfThisTarget / context.AlertAwarenessThreshold);
                     }
                 }
             }
         }
 
-        void OnEnable()
+
+        // ========================================================= ON DEATH
+
+        public void DeathBehavior()
         {
-            //playerKilled += DeregisterDetectionGUI;
+            DeregisterDetectionGUI();
+            enabled = false;
         }
 
-        void OnDisable()
+        private void DeregisterDetectionGUI()
         {
-            if (detectionDirectionUpdater != null)
-            {
-                detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
-            }
-            //playerKilled -= DeregisterDetectionGUI;
+            _detectionDirectionUpdater.UnregisterNewTargetWatching(gameObject);
         }
 
-        float GetVisionModifier(HumanTarget target, TargetData targetData)
+
+        // ========================================================= GETTERS
+
+        private float GetVisionModifier(HumanTarget target, TargetData targetData)
         {
-            var directionToTarget = target.eyes.position - thisTarget.eyes.position;
-            var horizontalEyeDir = Vector3.ProjectOnPlane(thisTarget.eyes.forward, thisTarget.eyes.up);
-            var horizontalDirToTarget = Vector3.ProjectOnPlane(directionToTarget, thisTarget.eyes.up);
+            var directionToTarget = target.eyes.position - _thisTarget.eyes.position;
+            var horizontalEyeDir = Vector3.ProjectOnPlane(_thisTarget.eyes.forward, _thisTarget.eyes.up);
+            var horizontalDirToTarget = Vector3.ProjectOnPlane(directionToTarget, _thisTarget.eyes.up);
             var distanceToTarget = horizontalDirToTarget.magnitude;
 
             var horizontalAngle = Vector3.Angle(horizontalEyeDir, horizontalDirToTarget);
@@ -200,7 +225,7 @@ namespace FPSDemo.NPC.Sensors
             return horizontalModifier * verticalModifier * rayCastModifier;
         }
 
-        float GetRaycastModifier(HumanTarget targetToRayCast, TargetData targetData)
+        private float GetRaycastModifier(HumanTarget targetToRayCast, TargetData targetData)
         {
             var overallRayCastModifier = 0f;
             foreach (var bodyPart in targetToRayCast.bodyPartsToRaycast)
@@ -217,11 +242,130 @@ namespace FPSDemo.NPC.Sensors
             return overallRayCastModifier / 100f;
         }
 
-        float CalculateRayCastModifierForBodyPart(VisibleBodyPart bodyPart)
+        private float GetHorizontalVisionConeModifier(float distanceToTarget, float horizontalAngle, HumanTarget target)
         {
-            var origin = thisTarget.eyes.transform.position;
+            if (horizontalAngle > _overallHorizontalAngle)
+            {
+                return 0f;
+            }
+
+            var horizontalModifier = 0f;
+            if (distanceToTarget > _visionFocusFar)
+            {
+                return 0f;
+            }
+
+            // Is it in binocular vision of the agent?
+            if (horizontalAngle < _visionFocusAngle)
+            {
+                // It is in focused area?
+                if (distanceToTarget < _visionFocusDistance)
+                {
+                    horizontalModifier = _multFocusClose;
+                }
+                else if (distanceToTarget < _visionFocusFar)
+                {
+                    if (!target.IsCrouching)
+                    {
+                        horizontalModifier = Mathf.Lerp(_multFocusClose, _multFocusFar,
+                            (distanceToTarget - _visionFocusDistance) / _farVisionRatio);
+                    }
+                }
+            }
+            // Is it in near peripheral focus vision?
+            else if (horizontalAngle < _visionPeripheralNearAngle)
+            {
+                if (distanceToTarget < _visionPeripheralNearDistance)
+                {
+                    horizontalModifier = _multPeripheralClose;
+                }
+                else if (distanceToTarget < _visionFocusDistance && !target.IsCrouching)
+                {
+                    horizontalModifier = Mathf.Lerp(_multPeripheralClose, _multPeripheralFar,
+                        (distanceToTarget - _visionPeripheralNearDistance) / _peripheralNearVisionRatio);
+                }
+            }
+            // Is it in mid peripheral vision?
+            else if (horizontalAngle < _visionPeripheralMidAngle)
+            {
+                if (distanceToTarget < _visionPeripheralRearDistance)
+                {
+                    horizontalModifier = _multPeripheralClose;
+                }
+                else if (distanceToTarget < _visionPeripheralNearDistance)
+                {
+                    if (!target.IsCrouching)
+                    {
+                        horizontalModifier = Mathf.Lerp(_multPeripheralClose, _multPeripheralFar,
+                            (distanceToTarget - _visionPeripheralRearDistance) / _peripheralMidVisionRatio);
+                    }
+                }
+            }
+            // It is has to be in rear peripheral vision
+            else
+            {
+                if (distanceToTarget < _visionPeripheralRearDistance)
+                {
+                    horizontalModifier = _multPeripheralClose;
+                }
+            }
+
+            return horizontalModifier;
+        }
+
+        private float GetVerticalVisionConeModifier(float distanceToTarget, float verticalAngle, HumanTarget target)
+        {
+            // If the target is less than two meters away, he is seen
+            if (distanceToTarget < 2.0f)
+            {
+                return 1f;
+            }
+
+            // If is outside the vertical view cone
+            if (verticalAngle < _visionVertLowerAngle || verticalAngle > _visionVertUpperAngle)
+            {
+                return 0f;
+            }
+
+            var verticalModifier = 1f;
+            // If it is outside of focus area upwards
+            if (verticalAngle > 0 && verticalAngle > _visionVertFocusAngleUp)
+            {
+                if (distanceToTarget > _visionVertClose && target.IsCrouching)
+                {
+                    verticalModifier = 0f;
+                }
+                else
+                {
+                    verticalModifier = Mathf.Lerp(_multVertUpper, _multFocusVertical,
+                        (_visionVertUpperAngle - verticalAngle) / _verticalTopRatio);
+                }
+            }
+            // If it is outside of focus area downwards
+            else if (Mathf.Abs(verticalAngle) > _visionVertFocusAngleDown)
+            {
+                if (distanceToTarget > _visionVertClose && target.IsCrouching)
+                {
+                    verticalModifier = 0f;
+                }
+                else
+                {
+                    verticalModifier = Mathf.Lerp(_multVertLower, _multFocusVertical,
+                        (_visionVertLowerAngle - verticalAngle) / _verticalBotRatio);
+                }
+            }
+
+            return verticalModifier;
+        }
+
+
+        // ========================================================= CALCULATIONS
+
+        private float CalculateRayCastModifierForBodyPart(VisibleBodyPart bodyPart)
+        {
+            var origin = _thisTarget.eyes.transform.position;
             var direction = (bodyPart.transform.position - origin).normalized;
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, visionFocusFar, raycastMask)
+            if (Physics.Raycast(origin, direction, out RaycastHit hit, _visionFocusFar, _raycastMask)
                 && hit.transform.TryGetComponent(out VisibleBodyPart bodyPartHit) &&
                 bodyPartHit.owner == bodyPart.owner)
             {
@@ -231,121 +375,8 @@ namespace FPSDemo.NPC.Sensors
             return 0f;
         }
 
-        float GetHorizontalVisionConeModifier(float distanceToTarget, float horizontalAngle, HumanTarget target)
-        {
-            if (horizontalAngle > overallHorizontalAngle)
-            {
-                return 0f;
-            }
 
-            var horizontalModifier = 0f;
-            if (distanceToTarget > visionFocusFar)
-            {
-                return 0f;
-            }
-
-            // Is it in binocular vision of the agent?
-            if (horizontalAngle < visionFocusAngle)
-            {
-                // It is in focused area?
-                if (distanceToTarget < visionFocusDistance)
-                {
-                    horizontalModifier = multFocusClose;
-                }
-                else if (distanceToTarget < visionFocusFar)
-                {
-                    if (!target.IsCrouching)
-                    {
-                        horizontalModifier = Mathf.Lerp(multFocusClose, multFocusFar,
-                            (distanceToTarget - visionFocusDistance) / farVisionRatio);
-                    }
-                }
-            }
-            // Is it in near peripheral focus vision?
-            else if (horizontalAngle < visionPeripheralNearAngle)
-            {
-                if (distanceToTarget < visionPeripheralNearDistance)
-                {
-                    horizontalModifier = multPeripheralClose;
-                }
-                else if (distanceToTarget < visionFocusDistance && !target.IsCrouching)
-                {
-                    horizontalModifier = Mathf.Lerp(multPeripheralClose, multPeripheralFar,
-                        (distanceToTarget - visionPeripheralNearDistance) / peripheralNearVisionRatio);
-                }
-            }
-            // Is it in mid peripheral vision?
-            else if (horizontalAngle < visionPeripheralMidAngle)
-            {
-                if (distanceToTarget < visionPeripheralRearDistance)
-                {
-                    horizontalModifier = multPeripheralClose;
-                }
-                else if (distanceToTarget < visionPeripheralNearDistance)
-                {
-                    if (!target.IsCrouching)
-                    {
-                        horizontalModifier = Mathf.Lerp(multPeripheralClose, multPeripheralFar,
-                            (distanceToTarget - visionPeripheralRearDistance) / peripheralMidVisionRatio);
-                    }
-                }
-            }
-            // It is has to be in rear peripheral vision
-            else
-            {
-                if (distanceToTarget < visionPeripheralRearDistance)
-                {
-                    horizontalModifier = multPeripheralClose;
-                }
-            }
-
-            return horizontalModifier;
-        }
-
-        float GetVerticalVisionConeModifier(float distanceToTarget, float verticalAngle, HumanTarget target)
-        {
-            // If the target is less than two meters away, he is seen
-            if (distanceToTarget < 2.0f)
-            {
-                return 1f;
-            }
-
-            // If is outside the vertical view cone
-            if (verticalAngle < visionVertLowerAngle || verticalAngle > visionVertUpperAngle)
-            {
-                return 0f;
-            }
-
-            var verticalModifier = 1f;
-            // If it is outside of focus area upwards
-            if (verticalAngle > 0 && verticalAngle > visionVertFocusAngleUp)
-            {
-                if (distanceToTarget > visionVertClose && target.IsCrouching)
-                {
-                    verticalModifier = 0f;
-                }
-                else
-                {
-                    verticalModifier = Mathf.Lerp(multVertUpper, multFocusVertical,
-                        (visionVertUpperAngle - verticalAngle) / verticalTopRatio);
-                }
-            }
-            // If it is outside of focus area downwards
-            else if (Mathf.Abs(verticalAngle) > visionVertFocusAngleDown)
-            {
-                if (distanceToTarget > visionVertClose && target.IsCrouching)
-                {
-                    verticalModifier = 0f;
-                }
-                else
-                {
-                    verticalModifier = Mathf.Lerp(multVertLower, multFocusVertical,
-                        (visionVertLowerAngle - verticalAngle) / verticalBotRatio);
-                }
-            }
-
-            return verticalModifier;
-        }
+        // ========================================================= EDITOR / DEBUG
 
 #if UNITY_EDITOR
         [CustomEditor(typeof(VisionSensor))]
@@ -358,68 +389,68 @@ namespace FPSDemo.NPC.Sensors
                 {
                     // Focus far
                     Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionFocusAngle, 0) * t.thisTarget.eyes.forward, t.visionFocusAngle * 2,
-                        t.visionFocusFar);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionFocusAngle, 0) * t._thisTarget.eyes.forward, t._visionFocusAngle * 2,
+                        t._visionFocusFar);
 
                     // Focus near
                     Handles.color = new Color(1f, 0f, 0f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionFocusAngle, 0) * t.thisTarget.eyes.forward, t.visionFocusAngle * 2,
-                        t.visionFocusDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionFocusAngle, 0) * t._thisTarget.eyes.forward, t._visionFocusAngle * 2,
+                        t._visionFocusDistance);
 
                     // Near peripheral far
                     Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionPeripheralNearAngle, 0) * t.thisTarget.eyes.forward,
-                        t.visionPeripheralNearAngle - t.visionFocusAngle, t.visionFocusDistance);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, t.visionPeripheralNearAngle, 0) * t.thisTarget.eyes.forward,
-                        -t.visionPeripheralNearAngle + t.visionFocusAngle, t.visionFocusDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionPeripheralNearAngle, 0) * t._thisTarget.eyes.forward,
+                        t._visionPeripheralNearAngle - t._visionFocusAngle, t._visionFocusDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, t._visionPeripheralNearAngle, 0) * t._thisTarget.eyes.forward,
+                        -t._visionPeripheralNearAngle + t._visionFocusAngle, t._visionFocusDistance);
 
                     // Near peripheral close
                     Handles.color = new Color(1f, 0.5f, 0.05f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionPeripheralNearAngle, 0) * t.thisTarget.eyes.forward,
-                        t.visionPeripheralNearAngle - t.visionFocusAngle, t.visionPeripheralNearDistance);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, t.visionPeripheralNearAngle, 0) * t.thisTarget.eyes.forward,
-                        -t.visionPeripheralNearAngle + t.visionFocusAngle, t.visionPeripheralNearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionPeripheralNearAngle, 0) * t._thisTarget.eyes.forward,
+                        t._visionPeripheralNearAngle - t._visionFocusAngle, t._visionPeripheralNearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, t._visionPeripheralNearAngle, 0) * t._thisTarget.eyes.forward,
+                        -t._visionPeripheralNearAngle + t._visionFocusAngle, t._visionPeripheralNearDistance);
 
                     // Mid peripheral far
                     Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionPeripheralMidAngle, 0) * t.thisTarget.eyes.forward,
-                        t.visionPeripheralMidAngle - t.visionPeripheralNearAngle, t.visionPeripheralNearDistance);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, t.visionPeripheralMidAngle, 0) * t.thisTarget.eyes.forward,
-                        -t.visionPeripheralMidAngle + t.visionPeripheralNearAngle, t.visionPeripheralNearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionPeripheralMidAngle, 0) * t._thisTarget.eyes.forward,
+                        t._visionPeripheralMidAngle - t._visionPeripheralNearAngle, t._visionPeripheralNearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, t._visionPeripheralMidAngle, 0) * t._thisTarget.eyes.forward,
+                        -t._visionPeripheralMidAngle + t._visionPeripheralNearAngle, t._visionPeripheralNearDistance);
 
                     // Mid peripheral close
                     Handles.color = new Color(1f, 0.5f, 0.05f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionPeripheralMidAngle, 0) * t.thisTarget.eyes.forward,
-                        t.visionPeripheralMidAngle - t.visionPeripheralNearAngle, t.visionPeripheralRearDistance);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, t.visionPeripheralMidAngle, 0) * t.thisTarget.eyes.forward,
-                        -t.visionPeripheralMidAngle + t.visionPeripheralNearAngle, t.visionPeripheralRearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionPeripheralMidAngle, 0) * t._thisTarget.eyes.forward,
+                        t._visionPeripheralMidAngle - t._visionPeripheralNearAngle, t._visionPeripheralRearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, t._visionPeripheralMidAngle, 0) * t._thisTarget.eyes.forward,
+                        -t._visionPeripheralMidAngle + t._visionPeripheralNearAngle, t._visionPeripheralRearDistance);
 
                     // Peripheral rear
                     Handles.color = new Color(1f, 0.5f, 0.05f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionPeripheralRearAngle - t.visionPeripheralMidAngle, 0) *
-                        t.thisTarget.eyes.forward, t.visionPeripheralRearAngle, t.visionPeripheralRearDistance);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, t.visionPeripheralRearAngle + t.visionPeripheralMidAngle, 0) *
-                        t.thisTarget.eyes.forward, -t.visionPeripheralRearAngle, t.visionPeripheralRearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionPeripheralRearAngle - t._visionPeripheralMidAngle, 0) *
+                        t._thisTarget.eyes.forward, t._visionPeripheralRearAngle, t._visionPeripheralRearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, t._visionPeripheralRearAngle + t._visionPeripheralMidAngle, 0) *
+                        t._thisTarget.eyes.forward, -t._visionPeripheralRearAngle, t._visionPeripheralRearDistance);
                     // For the same shade as the above
                     Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.1f);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, -t.visionPeripheralRearAngle - t.visionPeripheralMidAngle, 0) *
-                        t.thisTarget.eyes.forward, t.visionPeripheralRearAngle, t.visionPeripheralRearDistance);
-                    Handles.DrawSolidArc(t.thisTarget.eyes.position, Vector3.up,
-                        Quaternion.Euler(0, t.visionPeripheralRearAngle + t.visionPeripheralMidAngle, 0) *
-                        t.thisTarget.eyes.forward, -t.visionPeripheralRearAngle, t.visionPeripheralRearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, -t._visionPeripheralRearAngle - t._visionPeripheralMidAngle, 0) *
+                        t._thisTarget.eyes.forward, t._visionPeripheralRearAngle, t._visionPeripheralRearDistance);
+                    Handles.DrawSolidArc(t._thisTarget.eyes.position, Vector3.up,
+                        Quaternion.Euler(0, t._visionPeripheralRearAngle + t._visionPeripheralMidAngle, 0) *
+                        t._thisTarget.eyes.forward, -t._visionPeripheralRearAngle, t._visionPeripheralRearDistance);
                 }
             }
         }
