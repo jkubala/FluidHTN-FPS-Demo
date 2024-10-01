@@ -16,7 +16,7 @@ namespace FPSDemo.Player
 		[Tooltip("Multiplier to apply to player speed when aiming.")]
         [SerializeField] private float _aimMultiplier = 0.4f;
         [SerializeField] private float _timeToReachFullMoveSpread = 0.5f;
-        [SerializeField] Transform _bulletSpawnPoint;
+        [SerializeField] private Transform _bulletSpawnPoint;
 		
         [SerializeField] private Player _player;
 

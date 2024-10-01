@@ -54015,27 +54015,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aff599749b5f554abbe8d8992965865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMovement: {fileID: 719387698}
-  weaponPosChangeSpeed: 15
-  weaponRotChangeSpeed: 5
-  lookSway: {x: 4, y: 2, z: -2}
-  movementSway: {x: 0, y: 0, z: 0.2}
-  maxSway: 4
-  swaySmoothness: 0.2
-  crouchAimBobAmount: {x: 1, y: 1, z: 0}
-  crouchAimBobSpeed: {x: 6, y: 3, z: 0}
-  aimBobAmount: {x: 1, y: 1, z: 0}
-  aimBobSpeed: {x: 8, y: 4, z: 0}
-  crouchBobAmount: {x: 1, y: 1, z: 0}
-  crouchBobSpeed: {x: 8, y: 4, z: 0}
-  walkBobAmount: {x: 2, y: 2, z: 0}
-  walkBobSpeed: {x: 16, y: 8, z: 0}
-  runBobAmount: {x: 5, y: 5, z: 1}
-  runBobSpeed: {x: 18, y: 7, z: 7}
-  bobDamp: 0.1
-  resetSpeed: 6
-  breathSwayAmount: {x: 2, y: 2, z: 0}
-  breathSwaySpeed: {x: 2, y: 2, z: 0}
+  _weaponPosChangeSpeed: 15
+  _weaponRotChangeSpeed: 5
+  _lookSway: {x: 4, y: 2, z: -2}
+  _movementSway: {x: 0, y: 0, z: 0.2}
+  _maxSway: 4
+  _swaySmoothness: 0.2
+  _crouchAimBobAmount: {x: 1, y: 1, z: 0}
+  _crouchAimBobSpeed: {x: 6, y: 3, z: 0}
+  _aimBobAmount: {x: 1, y: 1, z: 0}
+  _aimBobSpeed: {x: 8, y: 4, z: 0}
+  _crouchBobAmount: {x: 1, y: 1, z: 0}
+  _crouchBobSpeed: {x: 8, y: 4, z: 0}
+  _walkBobAmount: {x: 2, y: 2, z: 0}
+  _walkBobSpeed: {x: 16, y: 8, z: 0}
+  _runBobAmount: {x: 5, y: 5, z: 1}
+  _runBobSpeed: {x: 18, y: 7, z: 7}
+  _bobDamp: 0.1
+  _resetSpeed: 6
+  _breathSwayAmount: {x: 2, y: 2, z: 0}
+  _breathSwaySpeed: {x: 2, y: 2, z: 0}
+  _cameraMovement: {fileID: 719387698}
+  _player: {fileID: 1224698220}
+  _weaponController: {fileID: 1224698214}
+  _healthSystem: {fileID: 1224698208}
 --- !u!224 &1224839550 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6098296903946090444, guid: 48a040a54ac61d84f8603ef7f6cd6d41, type: 3}
