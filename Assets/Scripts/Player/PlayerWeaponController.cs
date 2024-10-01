@@ -95,11 +95,11 @@ namespace FPSDemo.Player
                 ReloadInput();
             }
 
-            if (!_player.IsAiming && _player.inputManager.AimInputAction.IsPressed())
+            if (_player.IsAiming == false && _player.inputManager.AimInputAction.IsPressed())
             {
                 AimInput(true);
             }
-            else if (_player.IsAiming && !_player.inputManager.AimInputAction.IsPressed())
+            else if (_player.IsAiming && _player.inputManager.AimInputAction.IsPressed() == false)
             {
                 AimInput(false);
             }
@@ -122,7 +122,7 @@ namespace FPSDemo.Player
 
         public void FireInput()
         {
-            if (!_reloading)
+            if (_reloading == false)
             {
                 if (_equippedWeapon.currentAvailableAmmo > 0)
                 {
@@ -137,7 +137,7 @@ namespace FPSDemo.Player
 
         public void ReloadInput()
         {
-            if (!_reloading && _availableMagazines > 0)
+            if (_reloading == false && _availableMagazines > 0)
             {
                 _reloading = true;
 
@@ -152,7 +152,7 @@ namespace FPSDemo.Player
             {
                 _player.IsAiming = true;
             }
-            else if (_player.IsAiming && !aimIn)
+            else if (_player.IsAiming)
             {
                 _player.IsAiming = false;
             }
@@ -165,7 +165,7 @@ namespace FPSDemo.Player
 		{
 			// Tapping button for semi-auto, holding for full auto and gun pos needs to be either normal, or aiming
 			return ((_equippedWeapon.isAutomatic && _player.inputManager.FireInputAction.IsPressed()) ||
-				(!_equippedWeapon.isAutomatic && _player.inputManager.FireInputAction.WasPressedThisFrame())) &&
+				(_equippedWeapon.isAutomatic == false && _player.inputManager.FireInputAction.WasPressedThisFrame())) &&
 				(_weaponAtTheReady);
 		}
 
@@ -186,20 +186,32 @@ namespace FPSDemo.Player
 
 		private void Fire()
 		{
-			float maxAngle = _currentOverallAngleSpread;
-			if (!_player.IsAiming)
+			var maxAngle = _currentOverallAngleSpread;
+
+			if (_player.IsAiming == false)
 			{
 				maxAngle += _equippedWeapon.defaultHipFireAngleSpread;
 			}
-			float xAngle = UnityEngine.Random.Range(0, maxAngle);
-			float yAngle = UnityEngine.Random.Range(0, maxAngle);
-			if (UnityEngine.Random.Range(0, 2) == 1) { xAngle *= -1f; }
-			if (UnityEngine.Random.Range(0, 2) == 1) { yAngle *= -1f; }
+
+			var xAngle = UnityEngine.Random.Range(0, maxAngle);
+			var yAngle = UnityEngine.Random.Range(0, maxAngle);
+
+            if (UnityEngine.Random.Range(0, 2) == 1)
+            {
+                xAngle *= -1f;
+            }
+
+            if (UnityEngine.Random.Range(0, 2) == 1)
+            {
+                yAngle *= -1f;
+            }
+
 			_bulletSpawnPoint.localRotation = Quaternion.Euler(xAngle, yAngle, 0f);
 			_equippedWeapon.Fire(_player.ThisTarget, _bulletSpawnPoint, _shotLayerMask, _ragdollBodyLayerIndex);
 			_player.ThisTarget.LastTimeFired = Time.time;
 			_angleSpreadFromShooting += _player.IsAiming ? _equippedWeapon.angleSpreadPerShotADS : _equippedWeapon.angleSpreadPerShot;
-			OnFire.Invoke();
+
+			OnFire?.Invoke();
 		}
 
         private void EndReload()
@@ -207,7 +219,8 @@ namespace FPSDemo.Player
             _reloading = false;
             _equippedWeapon.currentAvailableAmmo = _equippedWeapon.maxAmmoInMagazine;
             _availableMagazines--;
-            OnReload.Invoke();
+
+            OnReload?.Invoke();
         }
 
 
@@ -226,9 +239,10 @@ namespace FPSDemo.Player
 
 			if (_angleSpreadFromShooting > 0)
 			{
-				float targetMaxSpreadFromShooting = _player.IsAiming ? _equippedWeapon.maxAngleSpreadWhenShootingADS : _equippedWeapon.maxAngleSpreadWhenShooting;
+				var targetMaxSpreadFromShooting = _player.IsAiming ? _equippedWeapon.maxAngleSpreadWhenShootingADS : _equippedWeapon.maxAngleSpreadWhenShooting;
 				_angleSpreadFromShooting = Mathf.Clamp(_angleSpreadFromShooting - _equippedWeapon.spreadStabilityGain.Evaluate(Time.time - _lastFired) * Time.deltaTime, 0, targetMaxSpreadFromShooting);
 			}
+
 			_currentOverallAngleSpread = Mathf.Clamp(_currentSpreadFromMoving + _currentSpreadFromMoving + _angleSpreadFromShooting, 0, _maxAngleSpread);
 		}
 	}
