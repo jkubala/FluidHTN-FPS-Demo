@@ -1,40 +1,58 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace FPSDemo.Player
 {
     [RequireComponent(typeof(Player))]
     public class PlayerSprinting : MonoBehaviour
     {
-        Player player;
+        // ========================================================= INSPECTOR FIELDS
+        
         [Tooltip("Speed that player moves when sprinting.")]
-        [SerializeField] float sprintSpeed = 9f;
+        [SerializeField] float _sprintSpeed = 9f;
+        [SerializeField] private Player _player;
 
 
-        void Awake()
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
         {
-            player = GetComponent<Player>();
+            if (_player == null)
+            {
+                _player = GetComponent<Player>();
+            }
         }
 
         void OnEnable()
         {
-            player.OnBeforeMove += OnBeforeMove;
+            _player.OnBeforeMove += OnBeforeMove;
 		}
 		void OnDisable()
         {
-            player.OnBeforeMove -= OnBeforeMove;
+            _player.OnBeforeMove -= OnBeforeMove;
         }
+
+
+        // ========================================================= CALLBACKS
 
         public void OnBeforeMove()
         {
-            Vector2 move = player.inputManager.GetMovementInput();
+            var move = _player.inputManager.GetMovementInput();
+
             // If the player is trying to sprint and criteria for sprinting are met, begin sprinting
-            if (player.inputManager.SprintInputAction.IsPressed() && move.y > 0f && Mathf.Approximately(move.x, 0f) && player.IsGrounded && !player.IsClimbing && !player.IsCrouching && !player.IsAiming)
+            if (_player.IsGrounded && 
+                _player.IsClimbing == false && 
+                _player.IsCrouching == false &&
+                _player.IsAiming == false &&
+                move.y > 0f &&
+                Mathf.Approximately(move.x, 0f) &&
+                _player.inputManager.SprintInputAction.IsPressed())
             {
-                player.desiredTargetSpeed = sprintSpeed;
+                _player.desiredTargetSpeed = _sprintSpeed;
             }
             else
             {
-				player.desiredTargetSpeed = player.WalkSpeed;
+				_player.desiredTargetSpeed = _player.WalkSpeed;
             }
         }
     }

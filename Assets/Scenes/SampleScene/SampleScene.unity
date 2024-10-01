@@ -53864,10 +53864,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9109234f3215cc446bbab8e5051c6606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leanDistance: 0.75
-  standLeanAmt: 1
-  crouchLeanAmt: 0.75
-  rotationLeanAmt: 20
+  _leanDistance: 0.75
+  _standLeanAmt: 1
+  _crouchLeanAmt: 0.75
+  _rotationLeanAmt: 20
+  _player: {fileID: 1224698220}
 --- !u!114 &1224698218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53880,7 +53881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b79b493e3108045a23ab5e9989e34f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprintSpeed: 5
+  _sprintSpeed: 5
+  _player: {fileID: 1224698220}
 --- !u!114 &1224698219
 MonoBehaviour:
   m_ObjectHideFlags: 0
