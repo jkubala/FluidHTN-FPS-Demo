@@ -54001,8 +54001,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a46253d8f70f6148ac9933325bc4158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshairGameObject: {fileID: 2019667889}
-  ammoText: {fileID: 1037912170}
+  _reticleTransform: {fileID: 1224839550}
+  _ammoText: {fileID: 1037912170}
+  _weaponController: {fileID: 1224698214}
+  _player: {fileID: 1224698220}
+  _healthSystem: {fileID: 1224698208}
 --- !u!114 &1224698223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56828,11 +56831,6 @@ Transform:
   - {fileID: 786368024}
   m_Father: {fileID: 197593922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2019667889 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6098296903946090445, guid: 48a040a54ac61d84f8603ef7f6cd6d41, type: 3}
-  m_PrefabInstance: {fileID: 791859364}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2039011992
 GameObject:
   m_ObjectHideFlags: 0
