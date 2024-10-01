@@ -5,96 +5,123 @@ namespace FPSDemo.Player
 {
     public class PlayerJumping : MonoBehaviour
     {
+        // ========================================================= INSPECTOR FIELDS
+
         [Tooltip("Vertical speed of player jump.")]
-        [SerializeField] float jumpSpeed = 4f;
+        [SerializeField] float _jumpSpeed = 4f;
+
         [Tooltip("Time in seconds allowed between player jumps.")]
-        [SerializeField] float delayBetweenJumps = 1f;
+        [SerializeField] float _delayBetweenJumps = 1f;
+
         [Tooltip("Vertical velocity to play landing effect.")]
-        [SerializeField] float velocityLandThreshold = 5f;
-        [SerializeField] float jumpBufferTime = 0.5f;
-        [SerializeField] float coyotteTimeGrace = 0.3f;
-        float lastLandedFromJumpTime = Mathf.NegativeInfinity;
-        float lastTryToJumpTime = Mathf.NegativeInfinity;
-        float lastJumpTime = Mathf.NegativeInfinity;
-        bool startJumping = false;
-        Player player;
-        public event Action OnHardLanding;
+        [SerializeField] float _velocityLandThreshold = 5f;
+
+        [SerializeField] float _jumpBufferTime = 0.5f;
+        [SerializeField] float _coyotteTimeGrace = 0.3f;
+
+        [SerializeField] private Player _player;
+
+
+        // ========================================================= PRIVATE FIELDS
+
+        float _lastLandedFromJumpTime = Mathf.NegativeInfinity;
+        float _lastTryToJumpTime = Mathf.NegativeInfinity;
+        float _lastJumpTime = Mathf.NegativeInfinity;
+        bool _startJumping = false;
+
+
+        // ========================================================= PROPERTIES
+
+        public Action OnHardLanding { get; set; }
+
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
+        {
+            if (_player == null)
+            {
+                _player = GetComponent<Player>();
+            }
+        }
 
         void Awake()
         {
-            player = GetComponent<Player>();
-            //lastTryToJumpTime = -jumpBufferTime;
+            //_lastTryToJumpTime = -_jumpBufferTime;
         }
 
         void OnEnable()
         {
-            player.OnPlayerUpdate += OnPlayerUpdate;
-            player.OnLanding += Landing;
-            player.OnBeforeMove += OnBeforeMove;
+            _player.OnPlayerUpdate += OnPlayerUpdate;
+            _player.OnLanding += OnLanding;
+            _player.OnBeforeMove += OnBeforeMove;
         }
         void OnDisable()
         {
-            player.OnPlayerUpdate -= OnPlayerUpdate;
-            player.OnLanding -= Landing;
-            player.OnBeforeMove -= OnBeforeMove;
+            _player.OnPlayerUpdate -= OnPlayerUpdate;
+            _player.OnLanding -= OnLanding;
+            _player.OnBeforeMove -= OnBeforeMove;
         }
 
-        void Landing(float velocity)
-        {
-            if (player.IsJumping)
-            {
-                lastLandedFromJumpTime = Time.time;
-                player.IsJumping = false;
-            }
 
-            if (velocity > velocityLandThreshold)
-            {
-                OnHardLanding?.Invoke();
-            }
-        }
+        // ========================================================= CALLBACKS
 
         public void OnPlayerUpdate()
         {
             // Cache last keypress the player tried to jump
-            if (player.inputManager.JumpInputAction.WasPerformedThisFrame() && !player.IsClimbing)
+            if (_player.inputManager.JumpInputAction.WasPerformedThisFrame() && _player.IsClimbing == false)
             {
-                lastTryToJumpTime = Time.time;
+                _lastTryToJumpTime = Time.time;
             }
 
-            /* The player must have been grounded for the last "coyotteTimeGrace" seconds - this enables the player to
-            jump even after contact with ground has been lost for that duration - relaxing the time window makes the game feel snappier */
-            bool groundCheck = player.lastOnGroundPositionTime + coyotteTimeGrace > Time.time && !player.IsSlidingDownSlope;
+            // The player must have been grounded for the last "_coyotteTimeGrace" seconds - this enables the player to
+            // jump even after contact with ground has been lost for that duration - relaxing the time window makes the game feel snappier
+            var groundCheck = _player.lastOnGroundPositionTime + _coyotteTimeGrace > Time.time && _player.IsSlidingDownSlope == false;
 
-            /* This makes player jump even in cases he hit the ground a fraction of second after pressing jump button, thus relaxing
-            the time window, but in a different way groundCheck does */
-            bool shouldTryToJump = lastTryToJumpTime + jumpBufferTime > Time.time;
-            bool canJumpAgain = lastLandedFromJumpTime + delayBetweenJumps < Time.time;
-            bool lastJumpWindowOver = lastJumpTime + 0.5f < Time.time;
+            // This makes player jump even in cases he hit the ground a fraction of second after pressing jump button, thus relaxing
+            // the time window, but in a different way groundCheck does
+            var shouldTryToJump = _lastTryToJumpTime + _jumpBufferTime > Time.time;
+            var canJumpAgain = _lastLandedFromJumpTime + _delayBetweenJumps < Time.time;
+            var lastJumpWindowOver = _lastJumpTime + 0.5f < Time.time;
 
-            if ((player.IsGrounded || player.IsSlidingDownSlope) && lastJumpWindowOver && player.IsJumping)
+            if ((_player.IsGrounded || _player.IsSlidingDownSlope) && lastJumpWindowOver && _player.IsJumping)
             {
-                player.IsJumping = false;
+                _player.IsJumping = false;
             }
             if (shouldTryToJump
                 && groundCheck
                 && canJumpAgain
-                && !player.IsJumping
-                && !player.IsCrouching
-            )
+                && _player.IsJumping == false
+                && _player.IsCrouching == false
+               )
             {
                 // apply the jump velocity to the player rigidbody
-                startJumping = true;
+                _startJumping = true;
             }
         }
 
         public void OnBeforeMove()
         {
-            if (startJumping)
+            if (_startJumping)
             {
-                player.IsJumping = true;
-                player.gravityForce += jumpSpeed;
-                lastJumpTime = Time.time;
-                startJumping = false;
+                _player.IsJumping = true;
+                _player.gravityForce += _jumpSpeed;
+                _lastJumpTime = Time.time;
+                _startJumping = false;
+            }
+        }
+
+        void OnLanding(float velocity)
+        {
+            if (_player.IsJumping)
+            {
+                _lastLandedFromJumpTime = Time.time;
+                _player.IsJumping = false;
+            }
+
+            if (velocity > _velocityLandThreshold)
+            {
+                OnHardLanding?.Invoke();
             }
         }
     }

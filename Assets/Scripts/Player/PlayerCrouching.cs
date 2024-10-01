@@ -88,12 +88,15 @@ namespace FPSDemo.Player
 			else
 			{
 				heightTarget = _player.standingFloatingColliderHeight - (_currentCrouchLevel * _stepSize);
-				if (_player.IsCrouching && !Mathf.Approximately(heightTarget, _player.CurrentFloatingColliderHeight))
+				if (_player.IsCrouching && Mathf.Approximately(heightTarget, _player.CurrentFloatingColliderHeight) == false)
 				{
 					_castOrigin = _player.PlayerTopSphere();
-					if (Physics.SphereCast(_castOrigin, _player.Radius, Vector3.up, out RaycastHit hit, _player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight, ~LayerMask.GetMask("Player"), QueryTriggerInteraction.Ignore))
+                    var maxDistance = _player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight;
+                    var layerMask = ~LayerMask.GetMask("Player");
+
+                    if (Physics.SphereCast(_castOrigin, _player.Radius, Vector3.up, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
 					{
-						float distanceToHit = Mathf.Clamp(hit.point.y - _castOrigin.y - _player.Radius, 0, Mathf.Infinity);
+						var distanceToHit = Mathf.Clamp(hit.point.y - _castOrigin.y - _player.Radius, 0, Mathf.Infinity);
 						heightTarget = Mathf.Clamp(Mathf.Min(_player.CurrentFloatingColliderHeight + distanceToHit - _spaceFromCeilingWhenUncrouching, heightTarget), _player.crouchFloatingColliderHeight, _player.standingFloatingColliderHeight);
 					}
 				}
@@ -177,13 +180,7 @@ namespace FPSDemo.Player
 				crouchLevelToSet = _numberOfStepsToCrouch - Mathf.FloorToInt((heightToMatch - CrouchColliderHeight - _spaceFromCeilingWhenUncrouching) / _stepSize);
 			}
 
-			if (crouchLevelToSet != _currentCrouchLevel)
-			{
-				_currentCrouchLevel = crouchLevelToSet;
-			}
-
-		}
-
-		
+            _currentCrouchLevel = crouchLevelToSet;
+        }
 	}
 }

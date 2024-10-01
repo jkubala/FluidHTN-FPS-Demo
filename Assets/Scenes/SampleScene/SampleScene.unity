@@ -53846,11 +53846,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b4e91ffc5bafb4dae1aa69bbc83d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchSpeed: 10
-  crouchSpeedMultiplier: 0.4
-  numberOfStepsToCrouch: 3
-  spaceFromCeilingWhenUncrouching: 0.1
-  deadHeight: 0.8
+  _crouchSpeed: 10
+  _crouchSpeedMultiplier: 0.4
+  _numberOfStepsToCrouch: 3
+  _spaceFromCeilingWhenUncrouching: 0.1
+  _deadHeight: 0.8
+  _player: {fileID: 1224698220}
 --- !u!114 &1224698217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53892,11 +53893,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2dbe4fb8ffad8c4181fb9a1ba4b84b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSpeed: 8
-  delayBetweenJumps: 1
-  velocityLandThreshold: 10
-  jumpBufferTime: 0.5
-  coyotteTimeGrace: 0.15
+  _jumpSpeed: 8
+  _delayBetweenJumps: 1
+  _velocityLandThreshold: 10
+  _jumpBufferTime: 0.5
+  _coyotteTimeGrace: 0.15
+  _player: {fileID: 1224698220}
 --- !u!114 &1224698220
 MonoBehaviour:
   m_ObjectHideFlags: 0
