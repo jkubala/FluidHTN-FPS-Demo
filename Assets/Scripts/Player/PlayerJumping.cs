@@ -8,26 +8,26 @@ namespace FPSDemo.Player
         // ========================================================= INSPECTOR FIELDS
 
         [Tooltip("Vertical speed of player jump.")]
-        [SerializeField] float _jumpSpeed = 4f;
+        [SerializeField] private float _jumpSpeed = 4f;
 
         [Tooltip("Time in seconds allowed between player jumps.")]
-        [SerializeField] float _delayBetweenJumps = 1f;
+        [SerializeField] private float _delayBetweenJumps = 1f;
 
         [Tooltip("Vertical velocity to play landing effect.")]
-        [SerializeField] float _velocityLandThreshold = 5f;
+        [SerializeField] private float _velocityLandThreshold = 5f;
 
-        [SerializeField] float _jumpBufferTime = 0.5f;
-        [SerializeField] float _coyotteTimeGrace = 0.3f;
+        [SerializeField] private float _jumpBufferTime = 0.5f;
+        [SerializeField] private float _coyotteTimeGrace = 0.3f;
 
         [SerializeField] private Player _player;
 
 
         // ========================================================= PRIVATE FIELDS
 
-        float _lastLandedFromJumpTime = Mathf.NegativeInfinity;
-        float _lastTryToJumpTime = Mathf.NegativeInfinity;
-        float _lastJumpTime = Mathf.NegativeInfinity;
-        bool _startJumping = false;
+        private float _lastLandedFromJumpTime = Mathf.NegativeInfinity;
+        private float _lastTryToJumpTime = Mathf.NegativeInfinity;
+        private float _lastJumpTime = Mathf.NegativeInfinity;
+        private bool _startJumping = false;
 
 
         // ========================================================= PROPERTIES

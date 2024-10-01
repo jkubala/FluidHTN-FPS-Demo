@@ -134,7 +134,7 @@ namespace FPSDemo.Player
 
 			_rotationX = Mathf.Clamp(_rotationX %= 360f, -_currentMaxXAngle, _currentMaxXAngle);
 			_rotationY = Mathf.Clamp(_rotationY %= 360f, -_defaultYAngleLimit, _defaultYAngleLimit);
-			_rotationZ = -_playerLeaning.LeanPos * _playerLeaning.rotationLeanAmt;
+			_rotationZ = -_playerLeaning.LeanPos * _playerLeaning.RotationLeanAmt;
 
 			CameraMovementThisFrame = new Vector2(_rotationX - _cameraMovementLastFrame.x, _rotationY - _cameraMovementLastFrame.y);
 			

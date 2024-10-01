@@ -4,53 +4,81 @@ namespace FPSDemo.Player
 {
     public class PlayerLeaning : MonoBehaviour
     {
+        // ========================================================= INSPECTOR FIELDS
+
         [Header("Leaning")]
         [Tooltip("Distance left or right the player can lean.")]
-        [SerializeField] float leanDistance = 0.75f;
+        [SerializeField] private float _leanDistance = 0.75f;
+
         [Tooltip("Pecentage the player can lean while standing.")]
-        [SerializeField] float standLeanAmt = 1f;
+        [SerializeField] private float _standLeanAmt = 1f;
+
         [Tooltip("Pecentage the player can lean while crouching.")]
-        [SerializeField] float crouchLeanAmt = 0.75f;
-        public float rotationLeanAmt = 20f;
+        [SerializeField] private float _crouchLeanAmt = 0.75f;
+
+        [SerializeField] private float _rotationLeanAmt = 20f;
+
+        [SerializeField] private Player _player;
 
 
+        // ========================================================= PRIVATE FIELDS
 
+        private float _leanFactorAmt = 1f;
+        private float _currentLeanVelocity;
+        private Vector3 _leanCheckPos;
+
+
+        // ========================================================= PROPERTIES
+
+        public float RotationLeanAmt => _rotationLeanAmt;
         public float LeanAmt { get; set; } = 0f;
         public float LeanPos { get; set; }
         public bool IsLeaning { get; set; }
 
-        Player player;
-        float leanFactorAmt = 1f;
-        float currentLeanVelocity;
-        Vector3 leanCheckPos;
-        // Start is called before the first frame update
-        void Awake()
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
         {
-            player = GetComponent<Player>();
+            if (_player == null)
+            {
+                _player = GetComponent<Player>();
+            }
         }
 
         void OnEnable()
         {
-            player.OnBeforeMove += OnBeforeMove;
+            _player.OnBeforeMove += OnBeforeMove;
         }
         void OnDisable()
         {
-            player.OnBeforeMove -= OnBeforeMove;
+            _player.OnBeforeMove -= OnBeforeMove;
         }
+
+
+        // ========================================================= CALLBACKS
 
         void OnBeforeMove()
         {
             LeanAmt = 0f;
             IsLeaning = false;
-            if (!player.IsSprinting && player.IsGrounded && Mathf.Abs(player.inputManager.GetMovementInput().y) < 0.2f &&
-            (player.inputManager.LeanLeftInputAction.IsPressed() || player.inputManager.LeanRightInputAction.IsPressed()))
+            if (_player.IsSprinting == false && 
+                _player.IsGrounded && 
+                Mathf.Abs(_player.inputManager.GetMovementInput().y) < 0.2f &&
+                (_player.inputManager.LeanLeftInputAction.IsPressed() || 
+                 _player.inputManager.LeanRightInputAction.IsPressed()))
             {
                 int direction;
-                if (player.inputManager.LeanLeftInputAction.IsPressed() && !player.inputManager.LeanRightInputAction.IsPressed()) // lean left
+
+                // lean left
+                if (_player.inputManager.LeanLeftInputAction.IsPressed() && 
+                    _player.inputManager.LeanRightInputAction.IsPressed() == false) 
                 {
                     direction = -1;
                 }
-                else if (player.inputManager.LeanRightInputAction.IsPressed() && !player.inputManager.LeanLeftInputAction.IsPressed()) // lean right
+                // lean right
+                else if (_player.inputManager.LeanRightInputAction.IsPressed() && 
+                         _player.inputManager.LeanLeftInputAction.IsPressed() == false) 
                 {
                     direction = 1;
                 }
@@ -58,19 +86,27 @@ namespace FPSDemo.Player
                 {
                     return;
                 }
-                leanCheckPos = transform.position + Vector3.up * (player.CurrentFloatingColliderHeight + player.DistanceToFloat - player.Capsule.radius);
-                leanFactorAmt = Mathf.Lerp(standLeanAmt, crouchLeanAmt, player.CrouchPercentage);
+
+                _leanCheckPos = transform.position + Vector3.up * (_player.CurrentFloatingColliderHeight + _player.DistanceToFloat - _player.Capsule.radius);
+                _leanFactorAmt = Mathf.Lerp(_standLeanAmt, _crouchLeanAmt, _player.CrouchPercentage);
 
                 // Offset a bit to the opposite side so that the cast does not miss a wall the player is touching
-                Vector3 offset = -direction * 0.05f * transform.right;
-                if (!Physics.SphereCast(leanCheckPos + offset, player.Capsule.radius * 0.6f, transform.right * direction, out _, leanDistance * leanFactorAmt, player.GroundMask.value))
+                var offset = -direction * 0.05f * transform.right;
+                var origin = _leanCheckPos + offset;
+                var radius = _player.Capsule.radius * 0.6f;
+                var dir = transform.right * direction;
+                var maxDistance = _leanDistance * _leanFactorAmt;
+                var layerMask = _player.GroundMask.value;
+
+                if (Physics.SphereCast(origin, radius, dir, out _, maxDistance, layerMask) == false)
                 {
-                    LeanAmt = leanDistance * leanFactorAmt * direction;
+                    LeanAmt = _leanDistance * _leanFactorAmt * direction;
                     IsLeaning = true;
                 }
             }
+
             // smooth position between leanAmt values
-            LeanPos = Mathf.SmoothDamp(LeanPos, LeanAmt, ref currentLeanVelocity, 0.1f, Mathf.Infinity, Time.deltaTime);
+            LeanPos = Mathf.SmoothDamp(LeanPos, LeanAmt, ref _currentLeanVelocity, 0.1f, Mathf.Infinity, Time.deltaTime);
         }
     }
 }
