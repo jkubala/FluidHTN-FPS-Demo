@@ -6,9 +6,9 @@ namespace FPSDemo.Player
 {
 	public class EnvironmentScanner : MonoBehaviour
 	{
-        // -------------------------------------------- INSPECTOR FIELDS
+        // ========================================================= INSPECTOR FIELDS
 
-		[SerializeField] private float _forwardRaysYPosStart = 1f;
+        [SerializeField] private float _forwardRaysYPosStart = 1f;
 		[SerializeField] private float _forwardRaysForwardOffset = 0.3f;
 		[SerializeField] private float _forwardRayLength = 0.8f;
 		[SerializeField] private float _heightRayLength = 3.25f;
@@ -21,7 +21,7 @@ namespace FPSDemo.Player
         [SerializeField] private PlayerCrouching _playerCrouching;
 
 
-        // -------------------------------------------- PRIVATE FIELDS
+        // ========================================================= PRIVATE FIELDS
 
         private float _forwardRayEveryXDistance = 0.2f;
         private float _actualRayLengthFromGround;

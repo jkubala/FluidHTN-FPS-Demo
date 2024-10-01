@@ -4,154 +4,186 @@ namespace FPSDemo.Player
 {
 	public class PlayerCrouching : MonoBehaviour
 	{
-		#region Variables
-		[Header("Crouching")]
-		Player player;
-		public float CrouchColliderHeight { get; private set; } = 1.25f;
-		[SerializeField] float crouchSpeed = 10f;
-		[SerializeField] float crouchSpeedMultiplier = 0.4f;
-		[SerializeField] int numberOfStepsToCrouch = 3;
-		[SerializeField] float spaceFromCeilingWhenUncrouching = 0.1f;
-		[SerializeField] float deadHeight = 0.8f;
+        // ========================================================= INSPECTOR FIELDS
 
-		int currentCrouchLevel = 0;
-		bool isAdjustingCrouchLevel = false;
-		float stepSize;
-		#endregion
+        [Header("Crouching")]
+		[SerializeField] private float _crouchSpeed = 10f;
+		[SerializeField] private float _crouchSpeedMultiplier = 0.4f;
+		[SerializeField] private int _numberOfStepsToCrouch = 3;
+		[SerializeField] private float _spaceFromCeilingWhenUncrouching = 0.1f;
+		[SerializeField] private float _deadHeight = 0.8f;
 
-		#region Builtin methods
-		void Awake()
+        [SerializeField] private Player _player;
+
+
+        // ========================================================= PRIVATE FIELDS
+
+        private int _currentCrouchLevel = 0;
+		private bool _isAdjustingCrouchLevel = false;
+		private float _stepSize;
+        private Vector3 _castOrigin = Vector3.zero;
+
+
+        // ========================================================= PROPERTIES
+
+        public float CrouchColliderHeight { get; private set; } = 1.25f;
+
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
+        {
+            if (_player == null)
+            {
+                _player = GetComponent<Player>();
+            }
+        }
+
+        private void Awake()
 		{
-			player = GetComponent<Player>();
-			player.crouchFloatingColliderHeight = CrouchColliderHeight - player.DistanceToFloat;
+			_player.crouchFloatingColliderHeight = CrouchColliderHeight - _player.DistanceToFloat;
 		}
 
-		void Start()
+        private void Start()
 		{
-			stepSize = (player.standingFloatingColliderHeight - player.crouchFloatingColliderHeight) / numberOfStepsToCrouch;
+			_stepSize = (_player.standingFloatingColliderHeight - _player.crouchFloatingColliderHeight) / _numberOfStepsToCrouch;
 		}
 
-		void OnEnable()
+        private void OnEnable()
 		{
-			player.OnPlayerUpdate += OnPlayerUpdate;
-			player.OnBeforeMove += OnBeforeMove;
+			_player.OnPlayerUpdate += OnPlayerUpdate;
+			_player.OnBeforeMove += OnBeforeMove;
+
+			OnRestart();
 		}
-		void OnDisable()
+        private void OnDisable()
 		{
-			player.OnPlayerUpdate -= OnPlayerUpdate;
-			player.OnBeforeMove -= OnBeforeMove;
+			_player.OnPlayerUpdate -= OnPlayerUpdate;
+			_player.OnBeforeMove -= OnBeforeMove;
 		}
-		#endregion
-		Vector3 castOrigin = Vector3.zero;
-		#region Custom methods
-		void OnBeforeMove()
+
+
+        // ========================================================= CLEAR / RESET
+
+        private void OnRestart()
+        {
+            SetCrouchLevelToMatchHeight(_player.characterHeight);
+        }
+
+
+        // ========================================================= CALLBACKS
+
+        private void OnPlayerUpdate()
+        {
+            UpdateCrouchLevel();
+        }
+
+        private void OnBeforeMove()
 		{
 			float heightTarget;
-			if (player.ThisTarget.IsDead)
+			if (_player.ThisTarget.IsDead)
 			{
-				heightTarget = deadHeight;
+				heightTarget = _deadHeight;
 			}
 			else
 			{
-				heightTarget = player.standingFloatingColliderHeight - (currentCrouchLevel * stepSize);
-				if (player.IsCrouching && !Mathf.Approximately(heightTarget, player.CurrentFloatingColliderHeight))
+				heightTarget = _player.standingFloatingColliderHeight - (_currentCrouchLevel * _stepSize);
+				if (_player.IsCrouching && !Mathf.Approximately(heightTarget, _player.CurrentFloatingColliderHeight))
 				{
-					castOrigin = player.PlayerTopSphere();
-					if (Physics.SphereCast(castOrigin, player.Radius, Vector3.up, out RaycastHit hit, player.standingFloatingColliderHeight - player.CurrentFloatingColliderHeight, ~LayerMask.GetMask("Player"), QueryTriggerInteraction.Ignore))
+					_castOrigin = _player.PlayerTopSphere();
+					if (Physics.SphereCast(_castOrigin, _player.Radius, Vector3.up, out RaycastHit hit, _player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight, ~LayerMask.GetMask("Player"), QueryTriggerInteraction.Ignore))
 					{
-						float distanceToHit = Mathf.Clamp(hit.point.y - castOrigin.y - player.Radius, 0, Mathf.Infinity);
-						heightTarget = Mathf.Clamp(Mathf.Min(player.CurrentFloatingColliderHeight + distanceToHit - spaceFromCeilingWhenUncrouching, heightTarget), player.crouchFloatingColliderHeight, player.standingFloatingColliderHeight);
+						float distanceToHit = Mathf.Clamp(hit.point.y - _castOrigin.y - _player.Radius, 0, Mathf.Infinity);
+						heightTarget = Mathf.Clamp(Mathf.Min(_player.CurrentFloatingColliderHeight + distanceToHit - _spaceFromCeilingWhenUncrouching, heightTarget), _player.crouchFloatingColliderHeight, _player.standingFloatingColliderHeight);
 					}
 				}
 			}
 
 			// Gradually adjust current height to target height
-			if (Mathf.Abs(heightTarget - player.CurrentFloatingColliderHeight) > 0.001f)
+			if (Mathf.Abs(heightTarget - _player.CurrentFloatingColliderHeight) > 0.001f)
 			{
-				player.CurrentFloatingColliderHeight = Mathf.Lerp(player.CurrentFloatingColliderHeight, heightTarget, crouchSpeed * Time.deltaTime);
+				_player.CurrentFloatingColliderHeight = Mathf.Lerp(_player.CurrentFloatingColliderHeight, heightTarget, _crouchSpeed * Time.deltaTime);
 			}
 			else
 			{
-				player.CurrentFloatingColliderHeight = heightTarget;
+				_player.CurrentFloatingColliderHeight = heightTarget;
 			}
 
 			// Calculate crouch speed
-			if (player.IsCrouching)
+			if (_player.IsCrouching)
 			{
-				player.crouchSpeedMultiplier = Mathf.Lerp(1f, crouchSpeedMultiplier, player.CrouchPercentage);
+				_player.crouchSpeedMultiplier = Mathf.Lerp(1f, _crouchSpeedMultiplier, _player.CrouchPercentage);
 			}
 			else
 			{
-				player.crouchSpeedMultiplier = 1f;
+				_player.crouchSpeedMultiplier = 1f;
 			}
 		}
-		void OnPlayerUpdate()
-		{
-			UpdateCrouchLevel();
-		}
 
-		void UpdateCrouchLevel()
+
+        // ========================================================= SIMULATION
+
+        private void UpdateCrouchLevel()
 		{
-			if (!player.IsSprinting)
+			if (!_player.IsSprinting)
 			{
-				if (player.inputManager.IncreaseCrouchLevel)
+				if (_player.inputManager.IncreaseCrouchLevel)
 				{
-					currentCrouchLevel = Mathf.Clamp(++currentCrouchLevel, 0, numberOfStepsToCrouch);
-					isAdjustingCrouchLevel = true;
+					_currentCrouchLevel = Mathf.Clamp(++_currentCrouchLevel, 0, _numberOfStepsToCrouch);
+					_isAdjustingCrouchLevel = true;
 				}
-				else if (player.inputManager.DecreaseCrouchLevel)
+				else if (_player.inputManager.DecreaseCrouchLevel)
 				{
-					currentCrouchLevel = Mathf.Clamp(--currentCrouchLevel, 0, numberOfStepsToCrouch);
-					isAdjustingCrouchLevel = true;
+					_currentCrouchLevel = Mathf.Clamp(--_currentCrouchLevel, 0, _numberOfStepsToCrouch);
+					_isAdjustingCrouchLevel = true;
 				}
-				else if (player.inputManager.CrouchToggled)
+				else if (_player.inputManager.CrouchToggled)
 				{
-					if (isAdjustingCrouchLevel)
+					if (_isAdjustingCrouchLevel)
 					{
-						isAdjustingCrouchLevel = false;
+						_isAdjustingCrouchLevel = false;
 					}
 					else
 					{
-						if (currentCrouchLevel > 0)
+						if (_currentCrouchLevel > 0)
 						{
-							currentCrouchLevel = 0;
+							_currentCrouchLevel = 0;
 						}
 						else
 						{
-							currentCrouchLevel = numberOfStepsToCrouch;
+							_currentCrouchLevel = _numberOfStepsToCrouch;
 						}
 					}
 				}
 			}
 			else
 			{
-				currentCrouchLevel = 0;
+				_currentCrouchLevel = 0;
 			}
 		}
 
-		public void SetCrouchLevelToMatchHeight(float heightToMatch)
+
+        // ========================================================= SETTERS
+
+        public void SetCrouchLevelToMatchHeight(float heightToMatch)
 		{
 			int crouchLevelToSet;
-			if (Mathf.Approximately(heightToMatch, player.characterHeight))
+			if (Mathf.Approximately(heightToMatch, _player.characterHeight))
 			{
 				crouchLevelToSet = 0;
 			}
 			else
 			{
-				crouchLevelToSet = numberOfStepsToCrouch - Mathf.FloorToInt((heightToMatch - CrouchColliderHeight - spaceFromCeilingWhenUncrouching) / stepSize);
+				crouchLevelToSet = _numberOfStepsToCrouch - Mathf.FloorToInt((heightToMatch - CrouchColliderHeight - _spaceFromCeilingWhenUncrouching) / _stepSize);
 			}
 
-			if (crouchLevelToSet != currentCrouchLevel)
+			if (crouchLevelToSet != _currentCrouchLevel)
 			{
-				currentCrouchLevel = crouchLevelToSet;
+				_currentCrouchLevel = crouchLevelToSet;
 			}
 
 		}
 
-		void OnRestart()
-		{
-			SetCrouchLevelToMatchHeight(player.characterHeight);
-		}
-		#endregion
+		
 	}
 }

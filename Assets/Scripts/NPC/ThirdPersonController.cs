@@ -6,9 +6,9 @@ namespace FPSDemo.NPC
 {
 	public class ThirdPersonController : MonoBehaviour
 	{
-		// -------------------------------------------- INSPECTOR FIELDS
+        // ========================================================= INSPECTOR FIELDS
 
-		[SerializeField] Transform _playerTransform;
+        [SerializeField] Transform _playerTransform;
 		[SerializeField] Transform _pointToRotateTo;
 		[SerializeField] Transform _rootModel;
         [SerializeField] Animator _animator;
@@ -60,9 +60,9 @@ namespace FPSDemo.NPC
         [SerializeField] private LayerMask _groundLayers;
 
 
-        // -------------------------------------------- PRIVATE FIELDS
+        // ========================================================= PRIVATE FIELDS
 
-		// state
+        // state
         private bool _isCrouched;
         private bool _isShooting;
         private bool _isReloading;

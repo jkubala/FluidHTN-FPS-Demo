@@ -8,13 +8,13 @@ namespace FPSDemo.Player
 {
     public class DetectionDirectionUpdater : MonoBehaviour
     {
-        // -------------------------------------------- INSPECTOR FIELDS
+        // ========================================================= INSPECTOR FIELDS
 
         [SerializeField] private Player _player;
         [SerializeField] private GameObjectPooler _detectionDirectionGUIPooler;
 
 
-        // -------------------------------------------- PRIVATE FIELDS
+        // ========================================================= PRIVATE FIELDS
 
         private Dictionary<GameObject, DetectionDirectionFiller> _targetsWatching = new();
         

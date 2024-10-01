@@ -5,7 +5,7 @@ namespace FPSDemo.Player
 {
 	public class CameraMovement : MonoBehaviour
 	{
-        // -------------------------------------------- INSPECTOR FIELDS
+        // ========================================================= INSPECTOR FIELDS
 
         [SerializeField] private float _standingCamHeight = 1.65f;
 		[SerializeField] private float _targetCamYPos = 1.65f;
@@ -38,7 +38,7 @@ namespace FPSDemo.Player
         [SerializeField] private PlayerLeaning _playerLeaning;
 
 
-        // -------------------------------------------- PRIVATE FIELDS
+        // ========================================================= PRIVATE FIELDS
 
         private Coroutine _rotateTowardsRoutine = null;
 		private Quaternion _originalRotation;
