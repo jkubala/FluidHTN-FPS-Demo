@@ -25,7 +25,7 @@ namespace FPSDemo.Player
 			player = GetComponent<Player>();
 			weaponController = GetComponent<PlayerWeaponController>();
 			healthSystem = GetComponent<HealthSystem>();
-			equippedWeapon = weaponController.equippedWeapon;
+			equippedWeapon = weaponController.EquippedWeapon;
 			reticleTransform = crosshairGameObject.GetComponent<RectTransform>();
 		}
 
@@ -58,7 +58,7 @@ namespace FPSDemo.Player
 
 		void UpdateCrosshair()
 		{
-			UpdateReticleSize(weaponController.currentOverallAngleSpread);
+			UpdateReticleSize(weaponController.CurrentOverallAngleSpread);
 			SetCrosshairVisibility(!player.IsAiming);
 		}
 
@@ -72,7 +72,7 @@ namespace FPSDemo.Player
 		{
 			if (ammoText != null)
 			{
-				ammoText.text = equippedWeapon.currentAvailableAmmo.ToString() + " / " + (weaponController.availableMagazines * equippedWeapon.maxAmmoInMagazine).ToString();
+				ammoText.text = equippedWeapon.currentAvailableAmmo.ToString() + " / " + (weaponController.AvailableMagazines * equippedWeapon.maxAmmoInMagazine).ToString();
 			}
 		}
 

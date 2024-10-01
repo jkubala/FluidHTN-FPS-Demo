@@ -53796,19 +53796,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65195ab7ae737a4e88370987607cac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedWeapon: {fileID: 3157565930282778882}
-  shotLayerMask:
+  _equippedWeapon: {fileID: 3157565930282778882}
+  _shotLayerMask:
     serializedVersion: 2
     m_Bits: 129
-  ragdollBodyLayerIndex: 7
-  aimMultiplier: 0.4
-  availableMagazines: 0
-  bulletSpawnPoint: {fileID: 1977855923}
-  lastFired: 0
-  weaponAtTheReady: 0
-  weaponReadyForReload: 0
-  currentOverallAngleSpread: 0
-  timeToReachFullMoveSpread: 0.5
+  _ragdollBodyLayerIndex: 7
+  _aimMultiplier: 0.4
+  _timeToReachFullMoveSpread: 0.5
+  _bulletSpawnPoint: {fileID: 1977855923}
+  _player: {fileID: 1224698220}
 --- !u!114 &1224698215
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,178 +7,229 @@ namespace FPSDemo.Player
 {
 	public class PlayerWeaponController : MonoBehaviour
 	{
-		public Weapon equippedWeapon;
-		public event Action OnUpdate;
-		public event Action OnFire;
-		public event Action OnReload;
+        // ========================================================= INSPECTOR FIELDS
 
-		[SerializeField] LayerMask shotLayerMask;
-		[SerializeField] int ragdollBodyLayerIndex;
+        [SerializeField] private Weapon _equippedWeapon;
+		[SerializeField] private LayerMask _shotLayerMask;
+		[SerializeField] private int _ragdollBodyLayerIndex;
 
-		[SerializeField, Tooltip("Multiplier to apply to player speed when aiming.")]
-		private float aimMultiplier = 0.4f;
-
-		Player player;
-		bool reloading = false;
-		public int availableMagazines = 0;
-		[SerializeField] Transform bulletSpawnPoint;
-		public float lastFired = 0.0f;
-		[HideInInspector] public bool weaponAtTheReady = false;
-		[HideInInspector] public bool weaponReadyForReload = false;
-
-		[HideInInspector] public float currentOverallAngleSpread;
-		float currentSpreadFromMoving = 0;
-		[SerializeField] float timeToReachFullMoveSpread = 0.5f;
-		float angleSpreadFromShooting = 0;
-		float maxAngleSpread = 15f;
+		[Tooltip("Multiplier to apply to player speed when aiming.")]
+        [SerializeField] private float _aimMultiplier = 0.4f;
+        [SerializeField] private float _timeToReachFullMoveSpread = 0.5f;
+        [SerializeField] Transform _bulletSpawnPoint;
+		
+        [SerializeField] private Player _player;
 
 
-		private void Awake()
+        // ========================================================= PRIVATE FIELDS
+        
+        private bool _reloading = false;
+		private bool _weaponAtTheReady = false;
+		private bool _weaponReadyForReload = false;
+
+		private float _currentOverallAngleSpread;
+        private float _currentSpreadFromMoving = 0;
+        private float _angleSpreadFromShooting = 0;
+		private float _maxAngleSpread = 15f;
+        private float _lastFired = 0.0f;
+
+        private int _availableMagazines = 0;
+
+
+        // ========================================================= PROPERTIES
+
+        public Weapon EquippedWeapon => _equippedWeapon;
+
+        public bool WeaponAtTheReady
+        {
+			set => _weaponAtTheReady = value;
+            get => _weaponAtTheReady;
+        }
+
+        public bool WeaponReadyForReload
+        {
+            set => _weaponReadyForReload = value;
+			get => _weaponReadyForReload;
+        }
+
+        public float CurrentOverallAngleSpread => _currentOverallAngleSpread;
+
+        public int AvailableMagazines => _availableMagazines;
+
+        public Action OnUpdate { get; set; }
+        public Action OnFire { get; set; }
+        public Action OnReload { get; set; }
+
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
+        {
+            if (_player == null)
+            {
+                _player = GetComponent<Player>();
+            }
+        }
+
+        private void Awake()
 		{
-			player = GetComponent<Player>();
 			InitStartingVariables();
 		}
 
-		void InitStartingVariables()
+        private void Update()
+        {
+            if (_player.ThisTarget.IsDead)
+            {
+                return;
+            }
+
+            OnUpdate.Invoke();
+
+            if (ShouldFireTheGun())
+            {
+                FireInput();
+            }
+
+            if (_weaponReadyForReload && _player.inputManager.ReloadInputAction.WasPressedThisFrame())
+            {
+                ReloadInput();
+            }
+
+            if (!_player.IsAiming && _player.inputManager.AimInputAction.IsPressed())
+            {
+                AimInput(true);
+            }
+            else if (_player.IsAiming && !_player.inputManager.AimInputAction.IsPressed())
+            {
+                AimInput(false);
+            }
+
+            UpdateFiringSpread();
+            FocusADS();
+        }
+
+
+        // ========================================================= INIT
+
+        private void InitStartingVariables()
 		{
-			availableMagazines = equippedWeapon.startMagazineCount;
-			lastFired = -equippedWeapon.fireRate;
+			_availableMagazines = _equippedWeapon.startMagazineCount;
+			_lastFired = -_equippedWeapon.fireRate;
 		}
 
-		
 
-		bool ShouldFireTheGun()
+        // ========================================================= INPUT TRIGGERS
+
+        public void FireInput()
+        {
+            if (!_reloading)
+            {
+                if (_equippedWeapon.currentAvailableAmmo > 0)
+                {
+                    if (Time.time > _equippedWeapon.fireRate + _lastFired)
+                    {
+                        _lastFired = Time.time;
+                        Fire();
+                    }
+                }
+            }
+        }
+
+        public void ReloadInput()
+        {
+            if (!_reloading && _availableMagazines > 0)
+            {
+                _reloading = true;
+
+                // TODO: Refactor this to be handled in Tick/Update
+                Invoke(nameof(EndReload), _equippedWeapon.reloadTime);
+            }
+        }
+
+        public void AimInput(bool aimIn)
+        {
+            if (aimIn)
+            {
+                _player.IsAiming = true;
+            }
+            else if (_player.IsAiming && !aimIn)
+            {
+                _player.IsAiming = false;
+            }
+        }
+
+
+        // ========================================================= VALIDATORS
+
+        private bool ShouldFireTheGun()
 		{
 			// Tapping button for semi-auto, holding for full auto and gun pos needs to be either normal, or aiming
-			return ((equippedWeapon.isAutomatic && player.inputManager.FireInputAction.IsPressed()) ||
-				(!equippedWeapon.isAutomatic && player.inputManager.FireInputAction.WasPressedThisFrame())) &&
-				(weaponAtTheReady);
+			return ((_equippedWeapon.isAutomatic && _player.inputManager.FireInputAction.IsPressed()) ||
+				(!_equippedWeapon.isAutomatic && _player.inputManager.FireInputAction.WasPressedThisFrame())) &&
+				(_weaponAtTheReady);
 		}
 
-		private void Update()
+
+        // ========================================================= ACTIONS
+
+        private void FocusADS()
 		{
-			if (player.ThisTarget.IsDead)
+			if (_player.IsAiming)
 			{
-				return;
-			}
-
-			OnUpdate.Invoke();
-
-			if (ShouldFireTheGun())
-			{
-				FireInput();
-			}
-
-			if (weaponReadyForReload && player.inputManager.ReloadInputAction.WasPressedThisFrame())
-			{
-				ReloadInput();
-			}
-
-			if (!player.IsAiming && player.inputManager.AimInputAction.IsPressed())
-			{
-				AimInput(true);
-			}
-			else if (player.IsAiming && !player.inputManager.AimInputAction.IsPressed())
-			{
-				AimInput(false);
-			}
-
-			UpdateFiringSpread();
-			FocusADS();
-		}
-
-		void FocusADS()
-		{
-			if (player.IsAiming)
-			{
-				player.aimingMultiplier = aimMultiplier;
+				_player.aimingMultiplier = _aimMultiplier;
 			}
 			else
 			{
-				player.aimingMultiplier = 1.0f;
+				_player.aimingMultiplier = 1.0f;
 			}
 		}
 
 		private void Fire()
 		{
-			float maxAngle = currentOverallAngleSpread;
-			if (!player.IsAiming)
+			float maxAngle = _currentOverallAngleSpread;
+			if (!_player.IsAiming)
 			{
-				maxAngle += equippedWeapon.defaultHipFireAngleSpread;
+				maxAngle += _equippedWeapon.defaultHipFireAngleSpread;
 			}
 			float xAngle = UnityEngine.Random.Range(0, maxAngle);
 			float yAngle = UnityEngine.Random.Range(0, maxAngle);
 			if (UnityEngine.Random.Range(0, 2) == 1) { xAngle *= -1f; }
 			if (UnityEngine.Random.Range(0, 2) == 1) { yAngle *= -1f; }
-			bulletSpawnPoint.localRotation = Quaternion.Euler(xAngle, yAngle, 0f);
-			equippedWeapon.Fire(player.ThisTarget, bulletSpawnPoint, shotLayerMask, ragdollBodyLayerIndex);
-			player.ThisTarget.LastTimeFired = Time.time;
-			angleSpreadFromShooting += player.IsAiming ? equippedWeapon.angleSpreadPerShotADS : equippedWeapon.angleSpreadPerShot;
+			_bulletSpawnPoint.localRotation = Quaternion.Euler(xAngle, yAngle, 0f);
+			_equippedWeapon.Fire(_player.ThisTarget, _bulletSpawnPoint, _shotLayerMask, _ragdollBodyLayerIndex);
+			_player.ThisTarget.LastTimeFired = Time.time;
+			_angleSpreadFromShooting += _player.IsAiming ? _equippedWeapon.angleSpreadPerShotADS : _equippedWeapon.angleSpreadPerShot;
 			OnFire.Invoke();
 		}
 
+        private void EndReload()
+        {
+            _reloading = false;
+            _equippedWeapon.currentAvailableAmmo = _equippedWeapon.maxAmmoInMagazine;
+            _availableMagazines--;
+            OnReload.Invoke();
+        }
 
-		public void FireInput()
-		{
-			if (!reloading)
-			{
-				if (equippedWeapon.currentAvailableAmmo > 0)
-				{
-					if (Time.time > equippedWeapon.fireRate + lastFired)
-					{
-						lastFired = Time.time;
-						Fire();
-					}
-				}
-			}
-		}
 
-		void UpdateFiringSpread()
+        // ========================================================= TICK
+
+        private void UpdateFiringSpread()
 		{
-			if (player.IsMoving())
+			if (_player.IsMoving())
 			{
-				currentSpreadFromMoving = Mathf.Clamp(currentSpreadFromMoving + equippedWeapon.maxAngleSpreadWhenMoving / timeToReachFullMoveSpread * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenMoving);
+				_currentSpreadFromMoving = Mathf.Clamp(_currentSpreadFromMoving + _equippedWeapon.maxAngleSpreadWhenMoving / _timeToReachFullMoveSpread * Time.deltaTime, 0, _equippedWeapon.maxAngleSpreadWhenMoving);
 			}
 			else
 			{
-				currentSpreadFromMoving = Mathf.Clamp(currentSpreadFromMoving - equippedWeapon.maxAngleSpreadWhenMoving / timeToReachFullMoveSpread * Time.deltaTime, 0, equippedWeapon.maxAngleSpreadWhenMoving);
+				_currentSpreadFromMoving = Mathf.Clamp(_currentSpreadFromMoving - _equippedWeapon.maxAngleSpreadWhenMoving / _timeToReachFullMoveSpread * Time.deltaTime, 0, _equippedWeapon.maxAngleSpreadWhenMoving);
 			}
 
-			if (angleSpreadFromShooting > 0)
+			if (_angleSpreadFromShooting > 0)
 			{
-				float targetMaxSpreadFromShooting = player.IsAiming ? equippedWeapon.maxAngleSpreadWhenShootingADS : equippedWeapon.maxAngleSpreadWhenShooting;
-				angleSpreadFromShooting = Mathf.Clamp(angleSpreadFromShooting - equippedWeapon.spreadStabilityGain.Evaluate(Time.time - lastFired) * Time.deltaTime, 0, targetMaxSpreadFromShooting);
+				float targetMaxSpreadFromShooting = _player.IsAiming ? _equippedWeapon.maxAngleSpreadWhenShootingADS : _equippedWeapon.maxAngleSpreadWhenShooting;
+				_angleSpreadFromShooting = Mathf.Clamp(_angleSpreadFromShooting - _equippedWeapon.spreadStabilityGain.Evaluate(Time.time - _lastFired) * Time.deltaTime, 0, targetMaxSpreadFromShooting);
 			}
-			currentOverallAngleSpread = Mathf.Clamp(currentSpreadFromMoving + currentSpreadFromMoving + angleSpreadFromShooting, 0, maxAngleSpread);
-		}
-
-		public void ReloadInput()
-		{
-			if (!reloading && availableMagazines > 0)
-			{
-				reloading = true;
-				Invoke(nameof(EndReload), equippedWeapon.reloadTime);
-			}
-		}
-
-		public void AimInput(bool aimIn)
-		{
-			if (aimIn)
-			{
-				player.IsAiming = true;
-			}
-			else if (player.IsAiming && !aimIn)
-			{
-				player.IsAiming = false;
-			}
-		}
-
-		void EndReload()
-		{
-			reloading = false;
-			equippedWeapon.currentAvailableAmmo = equippedWeapon.maxAmmoInMagazine;
-			availableMagazines--;
-			OnReload.Invoke();
+			_currentOverallAngleSpread = Mathf.Clamp(_currentSpreadFromMoving + _currentSpreadFromMoving + _angleSpreadFromShooting, 0, _maxAngleSpread);
 		}
 	}
 }

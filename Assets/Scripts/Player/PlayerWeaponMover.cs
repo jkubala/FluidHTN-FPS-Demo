@@ -75,16 +75,16 @@ namespace FPSDemo.Player
 
 		void Start()
 		{
-			targetWeaponPos = weaponController.equippedWeapon.normalPos;
-			targetWeaponRot = weaponController.equippedWeapon.normalRot;
+			targetWeaponPos = weaponController.EquippedWeapon.normalPos;
+			targetWeaponRot = weaponController.EquippedWeapon.normalRot;
 			currentWeaponPos = targetWeaponPos;
 			currentWeaponRot = targetWeaponRot;
 		}
 
 		private void OnEnable()
 		{
-			weaponController.equippedWeapon.weaponCollisionDetector.CollisionEntered += LowerWeapon;
-			weaponController.equippedWeapon.weaponCollisionDetector.CollisionExited += RaiseWeapon;
+			weaponController.EquippedWeapon.weaponCollisionDetector.CollisionEntered += LowerWeapon;
+			weaponController.EquippedWeapon.weaponCollisionDetector.CollisionExited += RaiseWeapon;
 			weaponController.OnUpdate += MoveWeapon;
 			weaponController.OnFire += AddRecoilToTheTargetRotation;
 			healthSystem.OnDeath += OnDeath;
@@ -92,8 +92,8 @@ namespace FPSDemo.Player
 
 		private void OnDisable()
 		{
-			weaponController.equippedWeapon.weaponCollisionDetector.CollisionEntered -= LowerWeapon;
-			weaponController.equippedWeapon.weaponCollisionDetector.CollisionExited -= RaiseWeapon;
+			weaponController.EquippedWeapon.weaponCollisionDetector.CollisionEntered -= LowerWeapon;
+			weaponController.EquippedWeapon.weaponCollisionDetector.CollisionExited -= RaiseWeapon;
 			weaponController.OnUpdate -= MoveWeapon;
 			weaponController.OnFire -= AddRecoilToTheTargetRotation;
 			healthSystem.OnDeath -= OnDeath;
@@ -125,28 +125,28 @@ namespace FPSDemo.Player
 		void ChangeGunPos(GunPosition newGunPos)
 		{
 			gunPosition = newGunPos;
-			weaponController.weaponReadyForReload = false;
-			weaponController.weaponAtTheReady = false;
+			weaponController.WeaponReadyForReload = false;
+			weaponController.WeaponAtTheReady = false;
 			switch (newGunPos)
 			{
 				case GunPosition.normal:
-					targetWeaponPos = weaponController.equippedWeapon.normalPos;
-					targetWeaponRot = weaponController.equippedWeapon.normalRot;
-					weaponController.weaponReadyForReload = true;
-					weaponController.weaponAtTheReady = true;
+					targetWeaponPos = weaponController.EquippedWeapon.normalPos;
+					targetWeaponRot = weaponController.EquippedWeapon.normalRot;
+					weaponController.WeaponReadyForReload = true;
+					weaponController.WeaponAtTheReady = true;
 					break;
 				case GunPosition.aiming:
-					targetWeaponPos = weaponController.equippedWeapon.ADSPos;
-					targetWeaponRot = weaponController.equippedWeapon.ADSRot;
-					weaponController.weaponAtTheReady = true;
+					targetWeaponPos = weaponController.EquippedWeapon.ADSPos;
+					targetWeaponRot = weaponController.EquippedWeapon.ADSRot;
+					weaponController.WeaponAtTheReady = true;
 					break;
 				case GunPosition.run:
-					targetWeaponPos = weaponController.equippedWeapon.runPos;
-					targetWeaponRot = weaponController.equippedWeapon.runRot;
+					targetWeaponPos = weaponController.EquippedWeapon.runPos;
+					targetWeaponRot = weaponController.EquippedWeapon.runRot;
 					break;
 				case GunPosition.away:
-					targetWeaponPos = weaponController.equippedWeapon.awayPos;
-					targetWeaponRot = weaponController.equippedWeapon.awayRot;
+					targetWeaponPos = weaponController.EquippedWeapon.awayPos;
+					targetWeaponRot = weaponController.EquippedWeapon.awayRot;
 					break;
 			}
 		}
@@ -155,11 +155,11 @@ namespace FPSDemo.Player
 		{
 			if (player.IsAiming)
 			{
-				weaponController.equippedWeapon.weaponCollisionDetector.transform.localPosition = weaponController.equippedWeapon.ADSPos;
+				weaponController.EquippedWeapon.weaponCollisionDetector.transform.localPosition = weaponController.EquippedWeapon.ADSPos;
 			}
 			else
 			{
-				weaponController.equippedWeapon.weaponCollisionDetector.transform.localPosition = weaponController.equippedWeapon.normalPos;
+				weaponController.EquippedWeapon.weaponCollisionDetector.transform.localPosition = weaponController.EquippedWeapon.normalPos;
 			}
 		}
 
@@ -185,13 +185,13 @@ namespace FPSDemo.Player
 				}
 			}
 
-			targetRecoilRotation = Vector3.Lerp(targetRecoilRotation, Vector3.zero, weaponController.equippedWeapon.recoilRecoverSpeed * Time.deltaTime);
-			currentRecoilRotation = Vector3.Slerp(currentRecoilRotation, targetRecoilRotation, weaponController.equippedWeapon.blowbackForce * Time.deltaTime);
+			targetRecoilRotation = Vector3.Lerp(targetRecoilRotation, Vector3.zero, weaponController.EquippedWeapon.recoilRecoverSpeed * Time.deltaTime);
+			currentRecoilRotation = Vector3.Slerp(currentRecoilRotation, targetRecoilRotation, weaponController.EquippedWeapon.blowbackForce * Time.deltaTime);
 
 			currentWeaponPos = Vector3.Lerp(currentWeaponPos, targetWeaponPos, weaponPosChangeSpeed * Time.deltaTime);
 			currentWeaponRot = Vector3.Slerp(currentWeaponRot, targetWeaponRot, weaponRotChangeSpeed * Time.deltaTime);
 
-			weaponController.equippedWeapon.gameObject.transform.SetLocalPositionAndRotation(currentWeaponPos, Quaternion.Euler(currentWeaponRot + currentRecoilRotation + smoothedWeaponSway + BobbingCalculation() + targetBreathSwaySmoothed));
+			weaponController.EquippedWeapon.transform.SetLocalPositionAndRotation(currentWeaponPos, Quaternion.Euler(currentWeaponRot + currentRecoilRotation + smoothedWeaponSway + BobbingCalculation() + targetBreathSwaySmoothed));
 		}
 
 		void UpdateWeaponSway()
@@ -280,7 +280,7 @@ namespace FPSDemo.Player
 
 		public void AddRecoilToTheTargetRotation()
 		{
-			Vector3 recoilToAdd = player.IsAiming ? weaponController.equippedWeapon.adsRecoil : weaponController.equippedWeapon.recoil;
+			Vector3 recoilToAdd = player.IsAiming ? weaponController.EquippedWeapon.adsRecoil : weaponController.EquippedWeapon.recoil;
 			targetRecoilRotation += new Vector3(recoilToAdd.x, UnityEngine.Random.Range(recoilToAdd.y, -recoilToAdd.y), UnityEngine.Random.Range(recoilToAdd.z, -recoilToAdd.z));
 		}
 	}
