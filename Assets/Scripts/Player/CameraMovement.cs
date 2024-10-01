@@ -129,8 +129,8 @@ namespace FPSDemo.Player
         private void RotateCamera()
 		{
 			_targetMouseSensitivity = _player.IsAiming ? _mouseSensitivityADS : _mouseSensitivity;
-			_rotationX += _player.inputManager.GetLookInput().x * _targetMouseSensitivity;
-			_rotationY -= _player.inputManager.GetLookInput().y * _targetMouseSensitivity;
+			_rotationX += _player.InputManager.GetLookInput().x * _targetMouseSensitivity;
+			_rotationY -= _player.InputManager.GetLookInput().y * _targetMouseSensitivity;
 
 			_rotationX = Mathf.Clamp(_rotationX %= 360f, -_currentMaxXAngle, _currentMaxXAngle);
 			_rotationY = Mathf.Clamp(_rotationY %= 360f, -_defaultYAngleLimit, _defaultYAngleLimit);
@@ -231,8 +231,8 @@ namespace FPSDemo.Player
             }
             else
             {
-                _targetCamYPos = _standingCamHeight - (_player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + _player.transform.position.y;
-                _player.rigidbody.MoveRotation(Quaternion.Euler(Vector3.up * transform.eulerAngles.y));
+                _targetCamYPos = _standingCamHeight - (_player.StandingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + _player.transform.position.y;
+                _player.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(Vector3.up * transform.eulerAngles.y));
             }
         }
 
@@ -255,7 +255,7 @@ namespace FPSDemo.Player
         private void OnTeleportYCamPosUpdate(float newPosition)
 		{
 			_currentCamYPos = _standingCamHeight + newPosition;
-			_targetCamYPos = _standingCamHeight - (_player.standingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + newPosition;
+			_targetCamYPos = _standingCamHeight - (_player.StandingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + newPosition;
 			_camYVelocity = 0f;
 			UpdateCameraPitch(0);
 			_currentCamXZPos = _player.transform.position;

@@ -206,7 +206,7 @@ namespace FPSDemo.Player
 
 		void UpdateWeaponPosition()
 		{
-			if (_weaponObstructed || _player.IsClimbing || _player.moveTowardsFinished == false)
+			if (_weaponObstructed || _player.IsClimbing || _player.MoveTowardsFinished == false)
 			{
 				ChangeGunPos(GunPosition.away);
 			}
@@ -237,7 +237,7 @@ namespace FPSDemo.Player
 
 		void UpdateWeaponSway()
 		{
-			var moveInput = _player.inputManager.GetMovementInput();
+			var moveInput = _player.InputManager.GetMovementInput();
 			var lookInput = _cameraMovement.CameraMovementThisFrame;
 
 			_weaponSway.x = lookInput.y * _lookSway.x + moveInput.y * _movementSway.x;

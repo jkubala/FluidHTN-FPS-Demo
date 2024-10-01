@@ -90,16 +90,16 @@ namespace FPSDemo.Player
                 FireInput();
             }
 
-            if (_weaponReadyForReload && _player.inputManager.ReloadInputAction.WasPressedThisFrame())
+            if (_weaponReadyForReload && _player.InputManager.ReloadInputAction.WasPressedThisFrame())
             {
                 ReloadInput();
             }
 
-            if (_player.IsAiming == false && _player.inputManager.AimInputAction.IsPressed())
+            if (_player.IsAiming == false && _player.InputManager.AimInputAction.IsPressed())
             {
                 AimInput(true);
             }
-            else if (_player.IsAiming && _player.inputManager.AimInputAction.IsPressed() == false)
+            else if (_player.IsAiming && _player.InputManager.AimInputAction.IsPressed() == false)
             {
                 AimInput(false);
             }
@@ -164,8 +164,8 @@ namespace FPSDemo.Player
         private bool ShouldFireTheGun()
 		{
 			// Tapping button for semi-auto, holding for full auto and gun pos needs to be either normal, or aiming
-			return ((_equippedWeapon.isAutomatic && _player.inputManager.FireInputAction.IsPressed()) ||
-				(_equippedWeapon.isAutomatic == false && _player.inputManager.FireInputAction.WasPressedThisFrame())) &&
+			return ((_equippedWeapon.isAutomatic && _player.InputManager.FireInputAction.IsPressed()) ||
+				(_equippedWeapon.isAutomatic == false && _player.InputManager.FireInputAction.WasPressedThisFrame())) &&
 				(_weaponAtTheReady);
 		}
 
@@ -176,11 +176,11 @@ namespace FPSDemo.Player
 		{
 			if (_player.IsAiming)
 			{
-				_player.aimingMultiplier = _aimMultiplier;
+				_player.AimingMultiplier = _aimMultiplier;
 			}
 			else
 			{
-				_player.aimingMultiplier = 1.0f;
+				_player.AimingMultiplier = 1.0f;
 			}
 		}
 

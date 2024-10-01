@@ -64,21 +64,21 @@ namespace FPSDemo.Player
             IsLeaning = false;
             if (_player.IsSprinting == false && 
                 _player.IsGrounded && 
-                Mathf.Abs(_player.inputManager.GetMovementInput().y) < 0.2f &&
-                (_player.inputManager.LeanLeftInputAction.IsPressed() || 
-                 _player.inputManager.LeanRightInputAction.IsPressed()))
+                Mathf.Abs(_player.InputManager.GetMovementInput().y) < 0.2f &&
+                (_player.InputManager.LeanLeftInputAction.IsPressed() || 
+                 _player.InputManager.LeanRightInputAction.IsPressed()))
             {
                 int direction;
 
                 // lean left
-                if (_player.inputManager.LeanLeftInputAction.IsPressed() && 
-                    _player.inputManager.LeanRightInputAction.IsPressed() == false) 
+                if (_player.InputManager.LeanLeftInputAction.IsPressed() && 
+                    _player.InputManager.LeanRightInputAction.IsPressed() == false) 
                 {
                     direction = -1;
                 }
                 // lean right
-                else if (_player.inputManager.LeanRightInputAction.IsPressed() && 
-                         _player.inputManager.LeanLeftInputAction.IsPressed() == false) 
+                else if (_player.InputManager.LeanRightInputAction.IsPressed() && 
+                         _player.InputManager.LeanLeftInputAction.IsPressed() == false) 
                 {
                     direction = 1;
                 }

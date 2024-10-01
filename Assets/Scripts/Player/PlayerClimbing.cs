@@ -113,7 +113,7 @@ namespace FPSDemo.Player
 
         private void OnPlayerUpdate()
 		{
-			if (_player.inputManager.InteractInputAction.WasPressedThisFrame() && !_player.IsClimbing)
+			if (_player.InputManager.InteractInputAction.WasPressedThisFrame() && !_player.IsClimbing)
 			{
 				_shouldClimb = true;
 				_lastTimeShouldClimbPressed = Time.time;
@@ -190,7 +190,7 @@ namespace FPSDemo.Player
 			{
                 case ClimbingState.Releasing:
                 {
-                    if (_player.moveTowardsFinished)
+                    if (_player.MoveTowardsFinished)
                     {
                         Unclimb();
                     }
@@ -199,7 +199,7 @@ namespace FPSDemo.Player
                 }
                 case ClimbingState.Grabbing:
                 {
-                    if (_player.moveTowardsFinished && _cameraMovement.RotateTowardsFinished)
+                    if (_player.MoveTowardsFinished && _cameraMovement.RotateTowardsFinished)
                     {
                         _climbingState = ClimbingState.Grabbed;
                         _cameraMovement.ClampXAngle(_clampClimbingCameraAngle);
@@ -211,7 +211,7 @@ namespace FPSDemo.Player
                 }
                 case ClimbingState.ClimbingLedge:
                 {
-                    if (_player.moveTowardsFinished && _cameraMovement.RotateTowardsFinished)
+                    if (_player.MoveTowardsFinished && _cameraMovement.RotateTowardsFinished)
                     {
                         _climbingState = ClimbingState.None;
                         _capsuleCollider.enabled = true;

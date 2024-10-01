@@ -37,7 +37,7 @@ namespace FPSDemo.Player
 
         public void OnBeforeMove()
         {
-            var move = _player.inputManager.GetMovementInput();
+            var move = _player.InputManager.GetMovementInput();
 
             // If the player is trying to sprint and criteria for sprinting are met, begin sprinting
             if (_player.IsGrounded && 
@@ -46,13 +46,13 @@ namespace FPSDemo.Player
                 _player.IsAiming == false &&
                 move.y > 0f &&
                 Mathf.Approximately(move.x, 0f) &&
-                _player.inputManager.SprintInputAction.IsPressed())
+                _player.InputManager.SprintInputAction.IsPressed())
             {
-                _player.desiredTargetSpeed = _sprintSpeed;
+                _player.DesiredTargetSpeed = _sprintSpeed;
             }
             else
             {
-				_player.desiredTargetSpeed = _player.WalkSpeed;
+				_player.DesiredTargetSpeed = _player.WalkSpeed;
             }
         }
     }

@@ -69,14 +69,14 @@ namespace FPSDemo.Player
         public void OnPlayerUpdate()
         {
             // Cache last keypress the player tried to jump
-            if (_player.inputManager.JumpInputAction.WasPerformedThisFrame() && _player.IsClimbing == false)
+            if (_player.InputManager.JumpInputAction.WasPerformedThisFrame() && _player.IsClimbing == false)
             {
                 _lastTryToJumpTime = Time.time;
             }
 
             // The player must have been grounded for the last "_coyotteTimeGrace" seconds - this enables the player to
             // jump even after contact with ground has been lost for that duration - relaxing the time window makes the game feel snappier
-            var groundCheck = _player.lastOnGroundPositionTime + _coyotteTimeGrace > Time.time && _player.IsSlidingDownSlope == false;
+            var groundCheck = _player.LastOnGroundPositionTime + _coyotteTimeGrace > Time.time && _player.IsSlidingDownSlope == false;
 
             // This makes player jump even in cases he hit the ground a fraction of second after pressing jump button, thus relaxing
             // the time window, but in a different way groundCheck does
@@ -105,7 +105,7 @@ namespace FPSDemo.Player
             if (_startJumping)
             {
                 _player.IsJumping = true;
-                _player.gravityForce += _jumpSpeed;
+                _player.GravityForce += _jumpSpeed;
                 _lastJumpTime = Time.time;
                 _startJumping = false;
             }

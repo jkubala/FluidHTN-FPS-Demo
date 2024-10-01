@@ -156,7 +156,7 @@ namespace FPSDemo.Player
         private float ValidateHit(Vector3 posToValidate)
 		{
 			var origin = posToValidate + new Vector3(0, _player.Radius + 0.01f, 0);
-			var crouchingDistance = _player.crouchFloatingColliderHeight + _player.DistanceToFloat - _player.Radius * 2;
+			var crouchingDistance = _player.CrouchFloatingColliderHeight + _player.DistanceToFloat - _player.Radius * 2;
 
 			if (Physics.CheckSphere(origin, _player.Radius, _obstacleLayer) || 
                 RaycastAccessibilityCheck(posToValidate) == false)
@@ -166,7 +166,7 @@ namespace FPSDemo.Player
 
 			if (Physics.SphereCast(origin, _player.Radius, Vector3.up, out RaycastHit hit, crouchingDistance, _obstacleLayer) == false)
 			{
-				var standingDistance = _player.characterHeight - _player.Radius * 2;
+				var standingDistance = _player.CharacterHeight - _player.Radius * 2;
 				if (Physics.SphereCast(origin, _player.Radius, Vector3.up, out RaycastHit standingHit, standingDistance, _obstacleLayer))
 				{
 					if (standingHit.point.y - posToValidate.y >= _playerCrouching.CrouchColliderHeight)
@@ -176,7 +176,7 @@ namespace FPSDemo.Player
 				}
 				else
 				{
-					return _player.characterHeight;
+					return _player.CharacterHeight;
 				}
 			}
 			return -1;
