@@ -57389,29 +57389,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4286341724367834088, guid: 4ebe47047ff5b4f4fbed17c1c01c3410, type: 3}
-      propertyPath: _walkSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4286341724367834088, guid: 4ebe47047ff5b4f4fbed17c1c01c3410, type: 3}
-      propertyPath: _speedToCrouch
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4286341724367834088, guid: 4ebe47047ff5b4f4fbed17c1c01c3410, type: 3}
       propertyPath: _playerTransform
       value: 
       objectReference: {fileID: 1224698221}
-    - target: {fileID: 4286341724367834088, guid: 4ebe47047ff5b4f4fbed17c1c01c3410, type: 3}
-      propertyPath: _footstepAudioVolume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4286341724367834088, guid: 4ebe47047ff5b4f4fbed17c1c01c3410, type: 3}
-      propertyPath: _groundLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4286341724367834088, guid: 4ebe47047ff5b4f4fbed17c1c01c3410, type: 3}
-      propertyPath: _footstepAudioClips.Array.size
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
