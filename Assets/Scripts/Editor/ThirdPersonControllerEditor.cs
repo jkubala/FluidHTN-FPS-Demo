@@ -19,13 +19,21 @@ public class ThirdPersonControllerEditor : Editor
 		{
 			npcController.SetDestination(null);
 		}
-		if (GUILayout.Button("Keep rotating to player"))
+		if (GUILayout.Button("Keep aiming at player"))
 		{
-			npcController.ApplyPlayerAsRotatePoint();
+			npcController.ApplyPlayerAsAimAtPoint();
 		}
-		if (GUILayout.Button("Clear rotate to point"))
+		if (GUILayout.Button("Clear aimAt point"))
 		{
-			npcController.ClearRotateToPoint();
+			npcController.ClearAimAtPoint();
+		}
+		if (GUILayout.Button("Start IK"))
+		{
+			npcController.StartIK();
+		}
+		if (GUILayout.Button("Stop IK"))
+		{
+			npcController.StopIK();
 		}
 		if (GUILayout.Button("Start shooting"))
 		{

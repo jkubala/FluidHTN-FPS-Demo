@@ -1,23 +1,29 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 namespace FPSDemo.NPC
 {
 	public class ThirdPersonController : MonoBehaviour
 	{
-        // ========================================================= INSPECTOR FIELDS
+		// ========================================================= INSPECTOR FIELDS
 
-        [SerializeField] Transform _playerTransform;
-		[SerializeField] Transform _pointToRotateTo;
+		[SerializeField] Transform _playerTransform;
+		[SerializeField] Transform _pointToAimAt;
 		[SerializeField] Transform _rootModel;
-        [SerializeField] Animator _animator;
-        [SerializeField] NavMeshAgent _navAgent;
-        
+		[SerializeField] Animator _animator;
+		[SerializeField] NavMeshAgent _navAgent;
+		[SerializeField] Rig _ikRig;
+		[SerializeField] Transform _ikRigAim;
+		[SerializeField] float _ikRigWeightChangeSpeed = 10f;
+		[SerializeField] float angleToTargetToEngageIK = 50f;
+		float _targetIKRigWeight = 1;
+
 		[Tooltip("How fast the character un/crouches in s")]
 		[SerializeField] private float _speedToCrouch = 1f;
 		[SerializeField] private float _speedToStop = 0.2f;
-		
+
 		[Header("Speed")]
 		[Tooltip("Crouched speed of the character in m/s")]
 		[SerializeField] private float _crouchedSpeed = 1.5f;
@@ -26,46 +32,46 @@ namespace FPSDemo.NPC
 		[SerializeField] private float _walkSpeed = 1f;
 
 		[Tooltip("Run speed of the character in m/s")]
-        [SerializeField] private float _runSpeed = 5;
+		[SerializeField] private float _runSpeed = 5;
 
 		[Tooltip("How fast the character turns to face movement direction")]
 		[Range(0.0f, 0.3f)]
-        [SerializeField] private float _rotationSmoothTime = 0.12f;
+		[SerializeField] private float _rotationSmoothTime = 0.12f;
 
 		[Tooltip("Acceleration and deceleration")]
-        [SerializeField] private float _speedChangeRate = 10.0f;
+		[SerializeField] private float _speedChangeRate = 10.0f;
 
-        [SerializeField] private AudioClip[] _footstepAudioClips;
+		[SerializeField] private AudioClip[] _footstepAudioClips;
 
 		[Range(0, 1)]
-        [SerializeField] private float _footstepAudioVolume = 0.5f;
+		[SerializeField] private float _footstepAudioVolume = 0.5f;
 
 		[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-        [SerializeField] private float _gravity = -15.0f;
+		[SerializeField] private float _gravity = -15.0f;
 
 		[Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
-        [SerializeField] private float _fallTimeout = 0.15f;
+		[SerializeField] private float _fallTimeout = 0.15f;
 
 		[Header("Player Grounded")]
 		[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
-        [SerializeField] private bool _grounded = true;
+		[SerializeField] private bool _grounded = true;
 
 		[Tooltip("Useful for rough ground")]
-        [SerializeField] private float _groundedOffset = -0.14f;
+		[SerializeField] private float _groundedOffset = -0.14f;
 
 		[Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
-        [SerializeField] private float _groundedRadius = 0.28f;
+		[SerializeField] private float _groundedRadius = 0.28f;
 
 		[Tooltip("What layers the character uses as ground")]
-        [SerializeField] private LayerMask _groundLayers;
+		[SerializeField] private LayerMask _groundLayers;
 
 
-        // ========================================================= PRIVATE FIELDS
+		// ========================================================= PRIVATE FIELDS
 
-        // state
-        private bool _isCrouched;
-        private bool _isShooting;
-        private bool _isReloading;
+		// state
+		private bool _isCrouched;
+		private bool _isShooting;
+		private bool _isReloading;
 
 		// player
 		private float _targetRotation = 0.0f;
@@ -80,21 +86,21 @@ namespace FPSDemo.NPC
 		private int _animX;
 		private int _animCrouched;
 		private int _animY;
-        private int _animIsShooting;
-        private int _animReload;
+		private int _animIsShooting;
+		private int _animReload;
 
 		// crouching
-        private IEnumerator _crouchCoroutine;
-        private float _crouchAmount;
+		private IEnumerator _crouchCoroutine;
+		private float _crouchAmount;
 
 		// target
-        private float _targetSpeed;
-        private float _targetSpeedCached;
+		private float _targetSpeed;
+		private float _targetSpeedCached;
 
 
-        // ========================================================= UNITY METHODS
+		// ========================================================= UNITY METHODS
 
-        private void OnValidate()
+		private void OnValidate()
 		{
 			_navAgent = GetComponent<NavMeshAgent>();
 		}
@@ -110,145 +116,161 @@ namespace FPSDemo.NPC
 			_targetSpeedCached = _walkSpeed;
 		}
 
-        private void Update()
-        {
-            TickGravity();
-            GroundedCheck();
-            TickMove();
-            TickRotateAgent();
-            TickAnimator();
-        }
+		private void Update()
+		{
+			TickGravity();
+			GroundedCheck();
+			TickMove();
+			TickRotateAgent();
+			HandleIK();
+			TickAnimator();
+			_ikRig.weight = Mathf.Lerp(_ikRig.weight, _targetIKRigWeight, _ikRigWeightChangeSpeed * Time.deltaTime);
+		}
 
 
-        // ========================================================= INIT
+		// ========================================================= INIT
 
-        private void AssignAnimationIDs()
-        {
-            _animX = Animator.StringToHash("x");
-            _animY = Animator.StringToHash("y");
-            _animCrouched = Animator.StringToHash("Crouched");
-            _animIsShooting = Animator.StringToHash("IsShooting");
-            _animReload = Animator.StringToHash("Reload");
-        }
-
-
-        // ========================================================= RESET / CLEAR
-
-        public void ClearRotateToPoint()
-        {
-            _pointToRotateTo = null;
-        }
+		private void AssignAnimationIDs()
+		{
+			_animX = Animator.StringToHash("x");
+			_animY = Animator.StringToHash("y");
+			_animCrouched = Animator.StringToHash("Crouched");
+			_animIsShooting = Animator.StringToHash("IsShooting");
+			_animReload = Animator.StringToHash("Reload");
+		}
 
 
-        // ========================================================= APPLY SETTINGS
+		// ========================================================= RESET / CLEAR
 
-        public void ApplyPlayerAsRotatePoint()
-        {
-            _pointToRotateTo = _playerTransform;
-        }
-
-        public void ApplyWalkSpeed()
-        {
-            Uncrouch();
-            _targetSpeed = _walkSpeed;
-            _targetSpeedCached = _walkSpeed;
-        }
-
-        public void ApplyRunSpeed()
-        {
-            Uncrouch();
-            _targetSpeed = _runSpeed;
-            _targetSpeedCached = _runSpeed;
-        }
+		public void ClearAimAtPoint()
+		{
+			_pointToAimAt = null;
+		}
 
 
-        // ========================================================= TICK
+		// ========================================================= APPLY SETTINGS
 
-        private void TickGravity()
-        {
-            if (_grounded)
-            {
-                // reset the fall timeout timer
-                _fallTimeoutDelta = _fallTimeout;
+		public void ApplyPlayerAsAimAtPoint()
+		{
+			_pointToAimAt = _playerTransform;
+		}
 
-                // stop our velocity dropping infinitely when grounded
-                if (_verticalVelocity < 0.0f)
-                {
-                    _verticalVelocity = -2f;
-                }
-            }
-            else
-            {
-                // fall timeout
-                if (_fallTimeoutDelta >= 0.0f)
-                {
-                    _fallTimeoutDelta -= Time.deltaTime;
-                }
-            }
+		public void ApplyWalkSpeed()
+		{
+			Uncrouch();
+			_targetSpeed = _walkSpeed;
+			_targetSpeedCached = _walkSpeed;
+		}
 
-            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-            if (_verticalVelocity < _terminalVelocity)
-            {
-                _verticalVelocity += _gravity * Time.deltaTime;
-            }
-        }
+		public void ApplyRunSpeed()
+		{
+			Uncrouch();
+			_targetSpeed = _runSpeed;
+			_targetSpeedCached = _runSpeed;
+		}
 
-        private void TickMove()
-        {
-            if (!_navAgent.hasPath || _navAgent.remainingDistance < _navAgent.stoppingDistance)
-            {
-                return;
-            }
+		// ========================================================= TICK
 
-            _targetSpeed = _targetSpeedCached;
-            Vector3 navAgentVelocity = _navAgent.velocity;
-            navAgentVelocity.y = 0f;
-            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-            _navAgent.speed = _targetSpeed;
-        }
+		private void TickGravity()
+		{
+			if (_grounded)
+			{
+				// reset the fall timeout timer
+				_fallTimeoutDelta = _fallTimeout;
 
-        private void TickRotateAgent()
-        {
-            Vector3 inputDirection;
-            if (_pointToRotateTo != null)
-            {
-                inputDirection = (_pointToRotateTo.position - transform.position).normalized;
-            }
-            else if (_navAgent.hasPath)
-            {
-                inputDirection = (_navAgent.steeringTarget - transform.position).normalized;
-            }
-            else
-            {
-                return;
-            }
+				// stop our velocity dropping infinitely when grounded
+				if (_verticalVelocity < 0.0f)
+				{
+					_verticalVelocity = -2f;
+				}
+			}
+			else
+			{
+				// fall timeout
+				if (_fallTimeoutDelta >= 0.0f)
+				{
+					_fallTimeoutDelta -= Time.deltaTime;
+				}
+			}
 
-            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
-            float rotation = Mathf.SmoothDampAngle(_rootModel.eulerAngles.y, _targetRotation, ref _rotationVelocity, _rotationSmoothTime);
-            _rootModel.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-        }
+			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+			if (_verticalVelocity < _terminalVelocity)
+			{
+				_verticalVelocity += _gravity * Time.deltaTime;
+			}
+		}
 
-        private void TickAnimator()
-        {
-            Vector2 convertedAnimParams = CalculateAnimatorMoveParams(_rootModel.InverseTransformDirection(_navAgent.velocity));
-            _animator.SetFloat(_animX, convertedAnimParams.x);
-            _animator.SetFloat(_animY, convertedAnimParams.y);
-            _animator.SetFloat(_animCrouched, _crouchAmount);
+		private void TickMove()
+		{
+			if (!_navAgent.hasPath || _navAgent.remainingDistance < _navAgent.stoppingDistance)
+			{
+				return;
+			}
 
-            if (_isReloading)
-            {
-                var state = _animator.GetCurrentAnimatorStateInfo(1);
-                if (state.fullPathHash != _animReload)
-                {
-                    _isReloading = false;
-                }
-            }
-        }
+			_targetSpeed = _targetSpeedCached;
+			Vector3 navAgentVelocity = _navAgent.velocity;
+			navAgentVelocity.y = 0f;
+			Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+			_navAgent.speed = _targetSpeed;
+		}
+
+		private void TickRotateAgent()
+		{
+			Vector3 inputDirection;
+			if (_pointToAimAt != null)
+			{
+				inputDirection = (_pointToAimAt.position - transform.position).normalized;
+			}
+			else if (_navAgent.hasPath)
+			{
+				inputDirection = (_navAgent.steeringTarget - transform.position).normalized;
+
+			}
+			else
+			{
+				return;
+			}
+
+			_targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
+			float rotation = Mathf.SmoothDampAngle(_rootModel.eulerAngles.y, _targetRotation, ref _rotationVelocity, _rotationSmoothTime);
+			_rootModel.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+		}
+
+		private void HandleIK()
+		{
+			if (_pointToAimAt == null)
+			{
+				_targetIKRigWeight = 0f;
+			}
+			else if(Mathf.Abs(Vector3.SignedAngle(transform.position, _pointToAimAt.position, Vector3.up)) < angleToTargetToEngageIK)
+			{
+				_ikRigAim.transform.position = _pointToAimAt.position;
+				_targetIKRigWeight = 1f;
+			}
+
+		}
+
+		private void TickAnimator()
+		{
+			Vector2 convertedAnimParams = CalculateAnimatorMoveParams(_rootModel.InverseTransformDirection(_navAgent.velocity));
+			_animator.SetFloat(_animX, convertedAnimParams.x);
+			_animator.SetFloat(_animY, convertedAnimParams.y);
+			_animator.SetFloat(_animCrouched, _crouchAmount);
+
+			if (_isReloading)
+			{
+				var state = _animator.GetCurrentAnimatorStateInfo(1);
+				if (state.fullPathHash != _animReload)
+				{
+					_isReloading = false;
+				}
+			}
+		}
 
 
-        // ========================================================= SETTERS
+		// ========================================================= SETTERS
 
-        public void SetDestination(Vector3? destination)
+		public void SetDestination(Vector3? destination)
 		{
 			if (destination.HasValue)
 			{
@@ -262,11 +284,11 @@ namespace FPSDemo.NPC
 		}
 
 
-        // ========================================================= START BEHAVIORS
+		// ========================================================= START BEHAVIORS
 
-        public void StartShooting()
-        {
-            _isShooting = true;
+		public void StartShooting()
+		{
+			_isShooting = true;
 			_animator.SetBool(_animIsShooting, _isShooting);
 		}
 
@@ -281,16 +303,26 @@ namespace FPSDemo.NPC
 			StartCoroutine(_crouchCoroutine);
 		}
 
+		public void StartIK()
+		{
+			_targetIKRigWeight = 1f;
+		}
 
-        // ========================================================= STOP BEHAVIORS
+		public void StopIK()
+		{
+			_targetIKRigWeight = 0f;
+		}
 
-        public void StopShooting()
-        {
-            _isShooting = false;
-            _animator.SetBool(_animIsShooting, _isShooting);
-        }
 
-        public void Uncrouch()
+		// ========================================================= STOP BEHAVIORS
+
+		public void StopShooting()
+		{
+			_isShooting = false;
+			_animator.SetBool(_animIsShooting, _isShooting);
+		}
+
+		public void Uncrouch()
 		{
 			_isCrouched = false;
 			if (_crouchCoroutine != null)
@@ -302,52 +334,52 @@ namespace FPSDemo.NPC
 		}
 
 
-        // ========================================================= TRIGGER BEHAVIORS
+		// ========================================================= TRIGGER BEHAVIORS
 
-        public void Reload()
-        {
-            _isReloading = true;
+		public void Reload()
+		{
+			_isReloading = true;
 
-            if (_isShooting)
-            {
+			if (_isShooting)
+			{
 				StopShooting();
-            }
+			}
 
 			_animator.SetTrigger(_animReload);
-        }
+		}
 
-        public void NavigateToPlayer()
-        {
-            SetDestination(_playerTransform.position);
-        }
-
-
-        // ========================================================= COROUTINES
-
-        // TODO: We want to move these into tick and stop using coroutines (they're super expensive performance wise)
-        // TODO: E.g. TickCrouchTransition()
-        private IEnumerator SimulateCrouching()
-        {
-            while (_crouchAmount < 1f)
-            {
-                _crouchAmount = Mathf.Clamp01(_crouchAmount + (Time.deltaTime / _speedToCrouch));
-                yield return null;
-            }
-        }
-
-        private IEnumerator SimulateUncrouching()
-        {
-            while (_crouchAmount > 0f)
-            {
-                _crouchAmount = Mathf.Clamp01(_crouchAmount - (Time.deltaTime / _speedToCrouch));
-                yield return null;
-            }
-        }
+		public void NavigateToPlayer()
+		{
+			SetDestination(_playerTransform.position);
+		}
 
 
-        // ========================================================= CHECKS / VALIDATORS
+		// ========================================================= COROUTINES
 
-        void GroundedCheck()
+		// TODO: We want to move these into tick and stop using coroutines (they're super expensive performance wise)
+		// TODO: E.g. TickCrouchTransition()
+		private IEnumerator SimulateCrouching()
+		{
+			while (_crouchAmount < 1f)
+			{
+				_crouchAmount = Mathf.Clamp01(_crouchAmount + (Time.deltaTime / _speedToCrouch));
+				yield return null;
+			}
+		}
+
+		private IEnumerator SimulateUncrouching()
+		{
+			while (_crouchAmount > 0f)
+			{
+				_crouchAmount = Mathf.Clamp01(_crouchAmount - (Time.deltaTime / _speedToCrouch));
+				yield return null;
+			}
+		}
+
+
+		// ========================================================= CHECKS / VALIDATORS
+
+		void GroundedCheck()
 		{
 			// set sphere position, with offset
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - _groundedOffset,
@@ -357,9 +389,9 @@ namespace FPSDemo.NPC
 		}
 
 
-        // ========================================================= CALCULATIONS
+		// ========================================================= CALCULATIONS
 
-        Vector2 CalculateAnimatorMoveParams(Vector3 directionOfModelRootMovement)
+		Vector2 CalculateAnimatorMoveParams(Vector3 directionOfModelRootMovement)
 		{
 			Vector3 flattenedNavAgentVelocity = directionOfModelRootMovement;
 			flattenedNavAgentVelocity.y = 0;
@@ -373,7 +405,6 @@ namespace FPSDemo.NPC
 			else
 			{
 				if (currentSpeed <= _walkSpeed)
-
 				{
 					scale = Mathf.Lerp(0f, 0.5f, currentSpeed / _walkSpeed);
 				}
@@ -398,6 +429,13 @@ namespace FPSDemo.NPC
 					AudioSource.PlayClipAtPoint(_footstepAudioClips[index], transform.position, _footstepAudioVolume);
 				}
 			}
+		}
+
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = Color.black;
+			Gizmos.DrawWireSphere(_ikRigAim.position, 0.1f);
+			Gizmos.color = Color.white;
 		}
 	}
 }
