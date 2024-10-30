@@ -270,7 +270,7 @@ namespace FPSDemo.Player
 			UpdateDirectionFromInput();
 			CheckGround(_moveDirection.normalized);
 
-			if (IsJumping && _rigidbody.velocity.y < 0f)
+			if (IsJumping && _rigidbody.linearVelocity.y < 0f)
 			{
 				_gravityMultiplier = _gravityMultiplierOnFall;
 			}
@@ -325,7 +325,7 @@ namespace FPSDemo.Player
 				}
 				_moveDirection *= currSpeed;
 
-				Vector3 velocityChange = _moveDirection + Vector3.up * _gravityForce - _rigidbody.velocity;
+				Vector3 velocityChange = _moveDirection + Vector3.up * _gravityForce - _rigidbody.linearVelocity;
 				// Finally, add movement velocity to player rigidbody velocity
 				_rigidbody.AddForce(Vector3.ClampMagnitude(velocityChange, _maxVelocityChange), ForceMode.VelocityChange);
 			}
@@ -472,7 +472,7 @@ namespace FPSDemo.Player
 
 		public void Stop()
 		{
-			_rigidbody.velocity = Vector3.zero;
+			_rigidbody.linearVelocity = Vector3.zero;
 		}
 
 		public void ReturnToLastGroundPosition()
@@ -579,7 +579,7 @@ namespace FPSDemo.Player
 				if (!IsGrounded)
 				{
 					IsGrounded = true;
-					OnLanding?.Invoke(Mathf.Abs(_rigidbody.velocity.y));
+					OnLanding?.Invoke(Mathf.Abs(_rigidbody.linearVelocity.y));
 				}
 				if (_lastOnGroundPositionTime < Time.time)
 				{
@@ -621,7 +621,7 @@ namespace FPSDemo.Player
 
 		Vector3 PlayerFloatForce()
 		{
-			float dotDownVel = Vector3.Dot(-_averageSlopeNormal, _rigidbody.velocity);
+			float dotDownVel = Vector3.Dot(-_averageSlopeNormal, _rigidbody.linearVelocity);
 			float distanceFromGround = PlayerBottomPosFloating().y - AverageYPos;
 			float distanceToIdealFloatHeight = distanceFromGround - _distanceToFloat;
 			float floatForce = distanceToIdealFloatHeight * _springStrength - dotDownVel * _springDamp;
