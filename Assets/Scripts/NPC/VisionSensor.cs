@@ -147,7 +147,7 @@ namespace FPSDemo.NPC.Sensors
         public void Tick(AIContext context)
         {
             // Enemy targets raycast
-            foreach(var kvp in context.enemiesSpecificData)
+            foreach(var kvp in context.EnemiesSpecificData)
             {
                 var currentTarget = kvp.Key;
                 var currentTargetData = kvp.Value;

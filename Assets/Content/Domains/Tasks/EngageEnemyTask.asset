@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 178bf9902588ddc44808d0f982d43038, type: 3}
-  m_Name: Soldier_NPCSettings
+  m_Script: {fileID: 11500000, guid: 1073d762bb255a44ba2ec989939a21a5, type: 3}
+  m_Name: EngageEnemyTask
   m_EditorClassIdentifier: 
-  AIDomain: {fileID: 11400000, guid: ddefbac2915780a4386d05e446f9caca, type: 2}
-  AlertAwarenessThreshold: 1
-  AwarenessDeterioration: 0.1
+  TaskName: Engage Enemy
+  SelectionOfTasks: []
+  Conditions:
+  - State: 0
+    Value: 1

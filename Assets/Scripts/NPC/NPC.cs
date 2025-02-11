@@ -1,4 +1,5 @@
 
+using FluidHTN;
 using FPSDemo.NPC.Sensors;
 using FPSDemo.Target;
 using UnityEngine;
@@ -20,7 +21,13 @@ namespace FPSDemo.NPC
         
         private AIContext _context;
         private SensorySystem _sensory;
+        private Domain<AIContext> _domain;
+        private Planner<AIContext> _planner;
 
+
+        // ========================================================= PUBLIC PROPERTIES
+
+        public ThirdPersonController Controller => _controller;
 
         // ========================================================= UNITY METHODS
 
@@ -33,6 +40,8 @@ namespace FPSDemo.NPC
 
             _context = new AIContext(this, GetComponent<HumanTarget>());
             _sensory = new SensorySystem(this);
+            _planner = new Planner<AIContext>();
+            _domain = _settings.AIDomain.Create();
         }
 
 		public void Start()
@@ -43,6 +52,7 @@ namespace FPSDemo.NPC
         public void Update()
         {
 			_sensory.Tick(_context);
+            _planner.Tick(_domain, _context);
         }
     }
 }

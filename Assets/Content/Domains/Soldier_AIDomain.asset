@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 178bf9902588ddc44808d0f982d43038, type: 3}
-  m_Name: Soldier_NPCSettings
+  m_Script: {fileID: 11500000, guid: 7e80dd489271740488dfee65114bcd46, type: 3}
+  m_Name: Soldier_AIDomain
   m_EditorClassIdentifier: 
-  AIDomain: {fileID: 11400000, guid: ddefbac2915780a4386d05e446f9caca, type: 2}
-  AlertAwarenessThreshold: 1
-  AwarenessDeterioration: 0.1
+  DomainName: Soldier
+  OrderedTasks:
+  - {fileID: 11400000, guid: 295b9a04f2f04004a9b1db40f02d5c44, type: 2}
+  - {fileID: 11400000, guid: 0a51faf756a4d524cb368c7ccb0e2111, type: 2}

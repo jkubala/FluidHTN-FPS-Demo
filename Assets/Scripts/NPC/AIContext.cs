@@ -7,18 +7,28 @@ namespace FPSDemo.NPC
 {
     public partial class AIContext : BaseContext
     {
-        public Dictionary<HumanTarget, TargetData> enemiesSpecificData = new();
-        public Dictionary<HumanTarget, TargetData> alliesSpecificData = new();
+        // ========================================================= PRIVATE FIELDS
 
         private NPCSettings _settings;
+
+
+        // ========================================================= PUBLIC PROPERTIES
+
+        public Dictionary<HumanTarget, TargetData> EnemiesSpecificData { get; } = new();
+        public Dictionary<HumanTarget, TargetData> AlliesSpecificData { get; } = new();
 
         public float AlertAwarenessThreshold => _settings != null ? _settings.AlertAwarenessThreshold : 2f;
         public float AwarenessDeterioration => _settings != null ? _settings.AwarenessDeterioration : 0.1f;
 
         public NPC ThisNPC { get; }
         public HumanTarget ThisTarget { get; }
+        public ThirdPersonController ThisController => ThisNPC?.Controller;
+
         public HumanTarget CurrentEnemy { get; private set; }
         public TargetData CurrentEnemyData { get; private set; }
+
+
+        // ========================================================= INIT
 
         public AIContext(NPC npc, HumanTarget aTarget)
         {
@@ -34,12 +44,48 @@ namespace FPSDemo.NPC
             Init();
         }
 
+        void AddTargets()
+        {
+            foreach (HumanTarget target in TargetRegister.instance.ListOfActiveTargetsBLUFORTeam)
+            {
+                if (target != ThisTarget)
+                {
+                    if (ThisTarget.targetTeam == HumanTarget.Team.BLUFOR)
+                    {
+                        AlliesSpecificData.Add(target, new());
+                    }
+                    else
+                    {
+                        EnemiesSpecificData.Add(target, new());
+                    }
+                }
+            }
+
+            foreach (HumanTarget target in TargetRegister.instance.ListOfActiveTargetsOPFORTeam)
+            {
+                if (target != ThisTarget)
+                {
+                    if (ThisTarget.targetTeam == HumanTarget.Team.OPFOR)
+                    {
+                        AlliesSpecificData.Add(target, new());
+                    }
+                    else
+                    {
+                        EnemiesSpecificData.Add(target, new());
+                    }
+                }
+            }
+        }
+
+
+        // ========================================================= CURRENT ENEMIES
+
         public void UpdateCurrentEnemy(HumanTarget target)
         {
             CurrentEnemy = target;
             if (CurrentEnemy != null)
             {
-                if (enemiesSpecificData.TryGetValue(CurrentEnemy, out var data))
+                if (EnemiesSpecificData.TryGetValue(CurrentEnemy, out var data))
                 {
                     CurrentEnemyData = data;
                 }
@@ -67,42 +113,12 @@ namespace FPSDemo.NPC
             }
         }
 
-        void AddTargets()
-        {
-            foreach (HumanTarget target in TargetRegister.instance.ListOfActiveTargetsBLUFORTeam)
-            {
-                if (target != ThisTarget)
-                {
-                    if (ThisTarget.targetTeam == HumanTarget.Team.BLUFOR)
-                    {
-                        alliesSpecificData.Add(target, new());
-                    }
-                    else
-                    {
-                        enemiesSpecificData.Add(target, new());
-                    }
-                }
-            }
 
-            foreach (HumanTarget target in TargetRegister.instance.ListOfActiveTargetsOPFORTeam)
-            {
-                if (target != ThisTarget)
-                {
-                    if (ThisTarget.targetTeam == HumanTarget.Team.OPFOR)
-                    {
-                        alliesSpecificData.Add(target, new());
-                    }
-                    else
-                    {
-                        enemiesSpecificData.Add(target, new());
-                    }
-                }
-            }
-        }
+        // ========================================================= AWARENESS
 
         public void SetAwarenessOfThisEnemy(HumanTarget target, float newAwareness)
         {
-            if (enemiesSpecificData.TryGetValue(target, out var currentTargetData))
+            if (EnemiesSpecificData.TryGetValue(target, out var currentTargetData))
             {
                 // Increase awareness of the target
                 if (currentTargetData.awarenessOfThisTarget < newAwareness)

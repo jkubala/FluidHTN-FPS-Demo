@@ -68,7 +68,7 @@ namespace FPSDemo.NPC.Sensors
             var bestAwareness = 0.0f;
 
             // Update to current enemy awareness and line of sight world state
-            foreach (var kvp in context.enemiesSpecificData)
+            foreach (var kvp in context.EnemiesSpecificData)
             {
                 var currentTarget = kvp.Key;
                 var currentTargetData = kvp.Value;
