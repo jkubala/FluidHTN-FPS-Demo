@@ -6,6 +6,7 @@ using FPSDemo.Target;
 
 namespace FPSDemo.NPC.Sensors
 {
+    [RequireComponent(typeof(HumanTarget))]
     public class VisionSensor : MonoBehaviour, ISensor
     {
         // ========================================================= INSPECTOR FIELDS

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Game_AISettings
   m_EditorClassIdentifier: 
   VisionSensorTickRate: 0.2
+  EnemySensorTickRate: 0.21

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using FluidHTN.Contexts;
 using FPSDemo.Target;
 
 namespace FPSDemo.NPC
 {
-    public class AIContext
+    public partial class AIContext : BaseContext
     {
         public Dictionary<HumanTarget, TargetData> enemiesSpecificData = new();
         public Dictionary<HumanTarget, TargetData> alliesSpecificData = new();
@@ -29,6 +30,8 @@ namespace FPSDemo.NPC
         {
             _settings = settings;
             AddTargets();
+
+            Init();
         }
 
         public void UpdateCurrentEnemy(HumanTarget target)
@@ -40,6 +43,23 @@ namespace FPSDemo.NPC
                 {
                     CurrentEnemyData = data;
                 }
+                else
+                {
+                    CurrentEnemyData = null;
+                }
+            }
+            else
+            {
+                CurrentEnemyData = null;
+            }
+        }
+
+        public void UpdateCurrentEnemy(HumanTarget target, TargetData targetData)
+        {
+            CurrentEnemy = target;
+            if (CurrentEnemy != null)
+            {
+                CurrentEnemyData = targetData;
             }
             else
             {

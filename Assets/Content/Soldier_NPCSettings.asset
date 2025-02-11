@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178bf9902588ddc44808d0f982d43038, type: 3}
   m_Name: Soldier_NPCSettings
   m_EditorClassIdentifier: 
-  AlertAwarenessThreshold: 2
+  AlertAwarenessThreshold: 1
   AwarenessDeterioration: 0.1

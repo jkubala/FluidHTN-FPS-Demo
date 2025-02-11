@@ -8,5 +8,6 @@ namespace FPSDemo.Core
         // ========================================================= PUBLIC FIELDS
 
         public float VisionSensorTickRate = 1f;
+        public float EnemySensorTickRate = 1f;
     }
 }
