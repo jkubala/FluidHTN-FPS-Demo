@@ -101,7 +101,8 @@ namespace FPSDemo.NPC.Sensors
 
                 if (context.CurrentEnemy != null)
                 {
-                    Debug.Log($"Current Enemy: {context.CurrentEnemy.gameObject.name}");
+                    var distance = Vector3.Distance(context.CurrentEnemy.transform.position, context.ThisNPC.transform.position);
+                    Debug.Log($"Current Enemy: {context.CurrentEnemy.gameObject.name} at distance: {distance}");
                 }
             }
         }

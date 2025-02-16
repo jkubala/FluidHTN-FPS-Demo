@@ -27,6 +27,12 @@ namespace FPSDemo.NPC
         public HumanTarget CurrentEnemy { get; private set; }
         public TargetData CurrentEnemyData { get; private set; }
 
+        // TODO: We want a sensor to update the ideal range.
+        // TODO: We also need to use a lookup on enemy position to find ideal
+        // TODO: destination points. E.g. find a position that's closest to ideal
+        // TODO: range and also a tactically sound position.
+        public float IdealEnemyRange { get; set; } = 20.0f;
+
 
         // ========================================================= INIT
 

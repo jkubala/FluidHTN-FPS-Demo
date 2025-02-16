@@ -3,6 +3,7 @@ using FluidHTN.Factory;
 using FluidHTN.PrimitiveTasks;
 using FPSDemo.NPC.Conditions;
 using FPSDemo.NPC.Effects;
+using FPSDemo.NPC.Operators;
 
 namespace FPSDemo.NPC
 {
@@ -80,6 +81,23 @@ namespace FPSDemo.NPC
                 var effect = new IncrementWorldStateEffect(state, value, type);
                 task.AddEffect(effect);
             }
+            return this;
+        }
+
+        public AIDomainBuilder MoveToPlayer()
+        {
+            Action("Move to enemy");
+            {
+                HasState(AIWorldState.AwareOfEnemy);
+
+                if (Pointer is IPrimitiveTask task)
+                {
+                    task.SetOperator(new MoveToPlayerOperator());
+                }
+
+                SetState(AIWorldState.IsPursuingEnemy, EffectType.PlanAndExecute);
+            }
+            End();
             return this;
         }
     }

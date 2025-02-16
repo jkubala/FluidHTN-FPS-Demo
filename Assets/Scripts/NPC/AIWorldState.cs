@@ -3,6 +3,7 @@
     public enum AIWorldState
     {
         AwareOfEnemy,
-        HasEnemyInSight
+        HasEnemyInSight,
+        IsPursuingEnemy
     }
 }

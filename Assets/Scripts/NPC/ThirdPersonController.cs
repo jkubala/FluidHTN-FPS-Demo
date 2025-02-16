@@ -98,9 +98,16 @@ namespace FPSDemo.NPC
 		private float _targetSpeedCached;
 
 
-		// ========================================================= UNITY METHODS
+        // ========================================================= PUBLIC PROPERTIES
 
-		private void OnValidate()
+        public float DistanceToDestination => _navAgent?.remainingDistance ?? 0.0f;
+        public float StoppingDistance => _navAgent?.stoppingDistance ?? 0.0f;
+		public bool IsStopped => _navAgent?.isStopped ?? true;
+
+
+        // ========================================================= UNITY METHODS
+
+        private void OnValidate()
 		{
 			_navAgent = GetComponent<NavMeshAgent>();
 		}
