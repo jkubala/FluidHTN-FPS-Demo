@@ -5,7 +5,7 @@ namespace FPSDemo.NPC.Utilities
 	[CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositionGrid/Data")]
 	public class TacticalPositionData : ScriptableObject
 	{
-		public List<TacticalPosition> _positions = new();
+		public HashSet<TacticalPosition> _positions = new();
 	}
 
 	[System.Serializable]
