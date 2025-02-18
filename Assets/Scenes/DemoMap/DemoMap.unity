@@ -12119,7 +12119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tacticalPositionData: {fileID: 11400000, guid: b94514ec79c5099429cbbe581fb4c80a, type: 2}
   _gridSettings: {fileID: 11400000, guid: 7f1a61b3308fdd7468f2c930d8b37226, type: 2}
-  _showThePositionsInEditor: 0
+  _showThePositionsInEditor: 1
 --- !u!1 &1557896659
 GameObject:
   m_ObjectHideFlags: 0
@@ -13655,6 +13655,37 @@ Transform:
   m_Children:
   - {fileID: 1600484373}
   m_Father: {fileID: 406072034}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1787846777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1787846778}
+  m_Layer: 0
+  m_Name: TacticalProbe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1787846778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787846777}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1794525217
 Mesh:
@@ -18270,3 +18301,4 @@ SceneRoots:
   - {fileID: 957333115}
   - {fileID: 154116032}
   - {fileID: 1246466892}
+  - {fileID: 1787846778}

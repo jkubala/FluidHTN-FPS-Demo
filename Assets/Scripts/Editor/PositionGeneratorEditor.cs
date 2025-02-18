@@ -12,15 +12,15 @@ namespace FPSDemo.NPC.Utilities
 
 			if (GUILayout.Button("Generate tactical positions for AI"))
 			{
-				if (posGenerator._tacticalPositionData == null)
+				if (posGenerator.TacticalPositionData == null)
 				{
 					Debug.LogError("TacticalPositionData is missing!");
 					return;
 				}
 
 				posGenerator.GenerateTacticalPositions();
-				EditorUtility.SetDirty(posGenerator._tacticalPositionData);
-				AssetDatabase.SaveAssetIfDirty(posGenerator._tacticalPositionData);
+				EditorUtility.SetDirty(posGenerator.TacticalPositionData);
+				AssetDatabase.SaveAssetIfDirty(posGenerator.TacticalPositionData);
 			}
 
 			base.OnInspectorGUI();

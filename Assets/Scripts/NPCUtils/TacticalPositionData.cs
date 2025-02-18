@@ -5,24 +5,24 @@ namespace FPSDemo.NPC.Utilities
 	[CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositionGrid/Data")]
 	public class TacticalPositionData : ScriptableObject
 	{
-		public HashSet<TacticalPosition> _positions = new();
+		public List<TacticalPosition> Positions;
 	}
 
 	[System.Serializable]
 	public struct TacticalPosition
 	{
-		public Vector3 position;
-		public CoverStatus[] coverDirections;
+		public Vector3 Position;
+		public CoverStatus[] CoverDirections;
 	}
 
 	[System.Serializable]
 	public struct CoverStatus
 	{
-		public bool providesCover;
+		public bool ProvidesCover;
 
 		// TODO additional raycasting around the position has to be done to detect these properties
-		public bool lowCover;
-		public bool leftCorner;
-		public bool rightCorner;
+		public bool LowCover;
+		public bool LeftCorner;
+		public bool RightCorner;
 	}
 }

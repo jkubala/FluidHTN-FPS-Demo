@@ -1,19 +1,42 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FPSDemo.NPC.Utilities
 {
 	public class TacticalPositionGenerator : MonoBehaviour
 	{
-		public TacticalPositionData _tacticalPositionData;
-		[SerializeField] TacticalGridGenerationSettings _gridSettings;
-		[SerializeField] bool _showThePositionsInEditor = false;
+        // ========================================================= INSPECTOR FIELDS
 
-		public void GenerateTacticalPositions()
+        [SerializeField] private TacticalPositionData _tacticalPositionData;
+		[SerializeField] private TacticalGridGenerationSettings _gridSettings;
+		[SerializeField] private bool _showThePositionsInEditor = false;
+
+
+        // ========================================================= PROPERTIES
+
+        public TacticalPositionData TacticalPositionData
+        {
+            get { return _tacticalPositionData; }
+			set {_tacticalPositionData = value; }
+        }
+
+
+        // ========================================================= GENERATION
+
+        public void GenerateTacticalPositions()
 		{
 			ValidateParams();
 
-			_tacticalPositionData._positions.Clear();
+            if (_tacticalPositionData.Positions == null)
+            {
+                _tacticalPositionData.Positions = new List<TacticalPosition>();
+            }
+            else if (_tacticalPositionData.Positions.Count > 0)
+            {
+                _tacticalPositionData.Positions.Clear();
+            }
+
 			Debug.Log("Generating tactical positions for AI");
 
 			PerformRaycastsAlongTheGrid();
@@ -32,10 +55,10 @@ namespace FPSDemo.NPC.Utilities
 					{
 						TacticalPosition newPositionToAdd = new()
 						{
-							position = hit.point
+							Position = hit.point
 						};
 
-						_tacticalPositionData._positions.Add(newPositionToAdd);
+						_tacticalPositionData.Positions.Add(newPositionToAdd);
 					}
 					currentPos.z += _gridSettings.DistanceBetweenPositions;
 				}
@@ -58,17 +81,20 @@ namespace FPSDemo.NPC.Utilities
 			}
 		}
 
-		void OnDrawGizmos()
+
+        // ========================================================= DEBUG
+
+        void OnDrawGizmos()
 		{
 			if (_tacticalPositionData == null || !_showThePositionsInEditor)
 			{
 				return;
 			}
 
-			Debug.Log($"Currently displaying {_tacticalPositionData._positions.Count} positions");
-			foreach (TacticalPosition position in _tacticalPositionData._positions)
+			Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
+			foreach (TacticalPosition position in _tacticalPositionData.Positions)
 			{
-				Gizmos.DrawSphere(position.position, 0.1f);
+				Gizmos.DrawSphere(position.Position, 0.1f);
 			}
 		}
 	}
