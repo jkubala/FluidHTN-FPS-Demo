@@ -15,13 +15,16 @@ namespace FPSDemo.NPC.Utilities
 		public CoverStatus[] CoverDirections;
 	}
 
+	public enum CoverType
+	{
+		LowCover, HighCover, NoCover
+	}
+
 	[System.Serializable]
 	public struct CoverStatus
 	{
-		public bool ProvidesCover;
-
 		// TODO additional raycasting around the position has to be done to detect these properties
-		public bool LowCover;
+		public CoverType coverType;
 		public bool LeftCorner;
 		public bool RightCorner;
 	}

@@ -18,7 +18,10 @@ MonoBehaviour:
   DistanceOfRaycasts: 1.5
   OffsetEveryOtherRow: 0
   NumberOfRays: 8
-  RequiredProximityToNavMesh: 0.1
+  RequiredProximityToNavMesh: 0.2
+  geometryCheckYOffset: 3
   RaycastMask:
     serializedVersion: 2
     m_Bits: 1
+  minHeightToConsiderHighCover: 1.85
+  minHeightToConsiderLowCover: 0.95
