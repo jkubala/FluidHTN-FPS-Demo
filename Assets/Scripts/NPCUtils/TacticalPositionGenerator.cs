@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace FPSDemo.NPC.Utilities
 {
@@ -29,7 +30,7 @@ namespace FPSDemo.NPC.Utilities
 
         // ========================================================= GENERATION
 
-        public void AddTacticalProbes(bool clearPositions, TacticalProbe[] probes)
+		public void AddTacticalProbes(bool clearPositions, TacticalProbe[] probes)
         {
             if (probes == null || probes.Length == 0)
             {
@@ -49,12 +50,12 @@ namespace FPSDemo.NPC.Utilities
 
             foreach (var probe in probes)
             {
-                _tacticalPositionData.Positions.Add(new TacticalPosition
+				_tacticalPositionData.Positions.Add(new TacticalPosition
                 {
-                    Position = probe.transform.position,
-                    CoverDirections = new CoverStatus[1]
+					Position = probe.transform.position,
+					CoverDirections = new CoverStatus[1]
                     {
-                        new CoverStatus
+						new CoverStatus
                         {
 
                         }
@@ -84,28 +85,95 @@ namespace FPSDemo.NPC.Utilities
 		private void PerformRaycastsAlongTheGrid()
 		{
 			Vector3 currentPos = _gridSettings.StartPos;
-			while (currentPos.x < _gridSettings.EndPos.x)
+            bool otherRow = false;
+            while (currentPos.x < _gridSettings.EndPos.x)
 			{
 				currentPos.z = _gridSettings.StartPos.z;
-				while (currentPos.z < _gridSettings.EndPos.z)
-				{
-					RaycastHit[] hitsToConvertToPos = Physics.RaycastAll(currentPos, Vector3.down, Mathf.Infinity, _gridSettings.RaycastMask);
-					foreach (var hit in hitsToConvertToPos)
-					{
-						TacticalPosition newPositionToAdd = new()
-						{
-							Position = hit.point
-						};
 
-						_tacticalPositionData.Positions.Add(newPositionToAdd);
-					}
+                if (_gridSettings.OffsetEveryOtherRow)
+                {
+                    if (otherRow)
+                    {
+                        currentPos.z += _gridSettings.DistanceBetweenPositions / 2;
+                    }
+                    otherRow = !otherRow;
+                }
+
+                while (currentPos.z < _gridSettings.EndPos.z)
+				{
+                    RaycastHit[] hitsToConvertToPos = RaycastTrulyAll(currentPos, Vector3.down, _gridSettings.RaycastMask, 0.1f, 100f);
+                    foreach (var hit in hitsToConvertToPos)
+                    {
+                        if (ValidatePosition(hit.point))
+                        {
+                            TacticalPosition newPositionToAdd = new()
+                            {
+                                Position = hit.point
+                            };
+
+                            _tacticalPositionData.Positions.Add(newPositionToAdd);
+                        }
+                    }
 					currentPos.z += _gridSettings.DistanceBetweenPositions;
 				}
 				currentPos.x += _gridSettings.DistanceBetweenPositions;
 			}
 		}
 
-		private void ValidateParams()
+        private bool ValidatePosition(Vector3 position)
+        {
+            // Discard the position if it is too far from NavMesh
+            if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, _gridSettings.RaycastMask))
+            {
+                Vector3 heightAdjustedHit = hit.position;
+                heightAdjustedHit.y = position.y;
+                if (Vector3.Distance(heightAdjustedHit, position) > _gridSettings.RequiredProximityToNavMesh)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+            // Discard the position if it provides no cover
+            RaycastHit[] raycastHits = RaycastFanAround(position);
+            if (raycastHits.Length == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        private RaycastHit[] RaycastFanAround(Vector3 position)
+        {
+            float angleBetweenRays = 360f / _gridSettings.NumberOfRays;
+            List<RaycastHit> raycastHits = new();
+            Vector3 rcOrigin = position + Vector3.up * 0.5f;
+            Vector3 direction = Vector3.forward;
+            for (int i = 0; i < _gridSettings.NumberOfRays; i++)
+            {
+                if (Physics.Raycast(rcOrigin, direction, out RaycastHit hit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
+                {
+                    raycastHits.Add(hit);
+                }
+                direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
+            }
+            return raycastHits.ToArray();
+        }
+        private RaycastHit[] RaycastTrulyAll(Vector3 initialXZCoordToCheck, Vector3 direction, LayerMask layerMask, float offsetAfterHit, float maxLength)
+        {
+            List<RaycastHit> _raycasts = new();
+            var thisRayOrigin = initialXZCoordToCheck;
+            // TODO: Ensure this can't go infinite loop. I'd prefer a maxIteration failsafe mechanic here just to make sure it can't.
+            while (Physics.Raycast(thisRayOrigin, direction, out var hit, maxLength, layerMask) && (initialXZCoordToCheck - hit.point).magnitude < maxLength)
+            {
+                _raycasts.Add(hit);
+                thisRayOrigin = hit.point + direction * offsetAfterHit;
+            }
+            return _raycasts.ToArray();
+        }
+
+        private void ValidateParams()
 		{
 			if (_gridSettings == null)
 			{

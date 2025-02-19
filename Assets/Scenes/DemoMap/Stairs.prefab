@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8111802799580836415}
   - component: {fileID: 8144529216108003363}
   - component: {fileID: 4886681177996091883}
+  - component: {fileID: 8284092343335139039}
   m_Layer: 0
   m_Name: Stairs
   m_TagString: Untagged
@@ -3564,14 +3565,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Shape:
     rid: 3831135648213893129
-  m_Size: {x: 4, y: 4.2, z: 10}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_PivotLocation: 1
-  m_PivotPosition: {x: 0, y: 0, z: 0}
+  m_ShapeRotation: {x: 0, y: 0, z: 0, w: 1}
   m_UnmodifiedMeshVersion: 2245
-  m_ShapeBox:
-    m_Center: {x: 2, y: 2.1007247, z: 5}
-    m_Extent: {x: 2, y: 2.1, z: 5}
+  m_Size: {x: 4, y: 4.2, z: 10}
+  m_LocalCenter: {x: 0, y: 0, z: 0}
   references:
     version: 2
     RefIds:
@@ -3602,6 +3599,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3657,3 +3657,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &8284092343335139039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732963636400844872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_Size: {x: 4.6194415, y: 0.38182756, z: 10.072563}
+  m_Center: {x: 2.2670076, y: -0.00020717084, z: 5.0962715}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

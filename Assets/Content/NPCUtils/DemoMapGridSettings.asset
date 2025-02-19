@@ -15,8 +15,10 @@ MonoBehaviour:
   StartPos: {x: -80, y: 50, z: -140}
   EndPos: {x: 95, y: 50, z: 15}
   DistanceBetweenPositions: 1
-  DistanceOfRaycasts: 0.5
+  DistanceOfRaycasts: 1.5
+  OffsetEveryOtherRow: 0
   NumberOfRays: 8
+  RequiredProximityToNavMesh: 0.1
   RaycastMask:
     serializedVersion: 2
     m_Bits: 1
