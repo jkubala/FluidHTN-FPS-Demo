@@ -11,6 +11,8 @@ namespace FPSDemo.NPC.Utilities
 
 		[SerializeField] private TacticalPositionData _tacticalPositionData;
 		[SerializeField] private TacticalGridGenerationSettings _gridSettings;
+		[SerializeField] private bool _useHandplacedTacticalProbes = true;
+		[SerializeField] private bool _generateAutoProbeGrid = true;
 		[SerializeField] private bool _showThePositionsInEditor = false;
 
 
@@ -21,11 +23,47 @@ namespace FPSDemo.NPC.Utilities
 			get { return _tacticalPositionData; }
 			set { _tacticalPositionData = value; }
 		}
+		public bool UseHandplacedTacticalProbes => _useHandplacedTacticalProbes;
+		public bool GenerateAutoProbeGrid => _generateAutoProbeGrid;
 
 
 		// ========================================================= GENERATION
 
-		public void GenerateTacticalPositions()
+		public void AddTacticalProbes(bool clearPositions, TacticalProbe[] probes)
+		{
+			if (probes == null || probes.Length == 0)
+			{
+				return;
+			}
+
+			ValidateParams();
+
+			if (_tacticalPositionData.Positions == null)
+			{
+				_tacticalPositionData.Positions = new List<TacticalPosition>();
+			}
+			else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
+			{
+				_tacticalPositionData.Positions.Clear();
+			}
+
+			foreach (var probe in probes)
+			{
+				_tacticalPositionData.Positions.Add(new TacticalPosition
+				{
+					Position = probe.transform.position,
+					CoverDirections = new CoverStatus[1]
+					{
+						new CoverStatus
+						{
+
+						}
+					}
+				});
+			}
+		}
+
+		public void GenerateTacticalPositions(bool clearPositions)
 		{
 			ValidateParams();
 
@@ -33,7 +71,7 @@ namespace FPSDemo.NPC.Utilities
 			{
 				_tacticalPositionData.Positions = new List<TacticalPosition>();
 			}
-			else if (_tacticalPositionData.Positions.Count > 0)
+			else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
 			{
 				_tacticalPositionData.Positions.Clear();
 			}
