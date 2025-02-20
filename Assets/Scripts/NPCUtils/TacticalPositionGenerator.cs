@@ -140,12 +140,7 @@ namespace FPSDemo.NPC.Utilities
 
 		private bool HaveSameSpecialCover(TacticalPosition position1, TacticalPosition position2)
 		{
-			if (position1.specialCover.HasValue && position2.specialCover.HasValue)
-			{
-				return position1.specialCover.Value.type == position2.specialCover.Value.type;
-			}
-
-			return !position1.specialCover.HasValue && !position2.specialCover.HasValue;
+				return position1.specialCover.type == position2.specialCover.type;
 		}
 
 		private void CreateSpawnersAlongTheGrid()
@@ -439,11 +434,11 @@ namespace FPSDemo.NPC.Utilities
 			Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
 			foreach (TacticalPosition position in _tacticalPositionData.Positions)
 			{
-				if (position.specialCover.HasValue && position.specialCover.Value.type == SpecialCoverType.LeftCorner)
+				if (position.specialCover.type == SpecialCoverType.LeftCorner)
 				{
 					Gizmos.color = Color.red;
 				}
-				else if (position.specialCover.HasValue && position.specialCover.Value.type == SpecialCoverType.RightCorner)
+				else if (position.specialCover.type == SpecialCoverType.RightCorner)
 				{
 					Gizmos.color = Color.blue;
 				}
