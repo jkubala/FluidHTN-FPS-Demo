@@ -12,20 +12,26 @@ namespace FPSDemo.NPC.Utilities
 	public struct TacticalPosition
 	{
 		public Vector3 Position;
-		public CoverStatus[] CoverDirections;
+		public CoverType[] CoverDirections;
+		public SpecialCover? specialCover;
 	}
+
+
 
 	public enum CoverType
 	{
 		LowCover, HighCover, NoCover
 	}
 
-	[System.Serializable]
-	public struct CoverStatus
+	public enum SpecialCoverType
 	{
-		// TODO additional raycasting around the position has to be done to detect these properties
-		public CoverType coverType;
-		public bool LeftCorner;
-		public bool RightCorner;
+		LeftCorner, RightCorner, Window
+	}
+
+	[System.Serializable]
+	public struct SpecialCover
+	{
+		public SpecialCoverType type;
+		public Quaternion rotationToAlignWithCover;
 	}
 }

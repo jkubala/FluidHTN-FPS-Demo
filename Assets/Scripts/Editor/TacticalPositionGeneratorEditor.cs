@@ -42,7 +42,7 @@ namespace FPSDemo.NPC.Utilities
 
                 if (posGenerator.GenerateAutoProbeGrid)
                 {
-                    posGenerator.GenerateTacticalPositions(clearPositions: posGenerator.UseHandplacedTacticalProbes == false);
+                    posGenerator.GenerateTacticalPositionSpawners(clearPositions: posGenerator.UseHandplacedTacticalProbes == false);
                 }
 
                 EditorUtility.SetDirty(posGenerator.TacticalPositionData);
