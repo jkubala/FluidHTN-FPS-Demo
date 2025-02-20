@@ -79,34 +79,74 @@ namespace FPSDemo.NPC.Utilities
 			Debug.Log("Generating tactical positions for AI");
 
 			CreateSpawnersAlongTheGrid();
-			//AdjustPositions();
+			StandardizePositionsOnYAxis();
+			RemoveDuplicates(0.2f);
 		}
 
-		//private void AdjustPositions()
-		//{
-		//	for (int i = 0; i < _tacticalPositionData.Positions.Count; i++)
-		//	{
-		//		bool containsHighCover = false;
-		//		for (int j = 0; j < _gridSettings.NumberOfRays; j++)
-		//		{
-		//			if (_tacticalPositionData.Positions[i].CoverDirections[j].coverType == CoverType.HighCover)
-		//				containsHighCover = true;
-		//		}
+		private void StandardizePositionsOnYAxis()
+		{
+			for (int i = _tacticalPositionData.Positions.Count - 1; i >= 0; i--) // Iterate from end to start
+			{
+				TacticalPosition currentPos = _tacticalPositionData.Positions[i];
+				if (Physics.Raycast(currentPos.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _gridSettings.RaycastMask))
+				{
+					float standardizedHeight = currentPos.Position.y;
+					standardizedHeight = hit.point.y + 1.8f;
 
-		//		if (containsHighCover)
-		//		{
-		//			if(CheckForCorner(_tacticalPositionData.Positions[i]))
-		//			{
-		//				AdjustForCorner(_tacticalPositionData.Positions[i]);
-		//			}
+					if (currentPos.Position.y - standardizedHeight < 0)
+					{
+						_tacticalPositionData.Positions.RemoveAt(i); // Remove by index
+					}
+					else
+					{
+						currentPos.Position.y = standardizedHeight;
+						_tacticalPositionData.Positions[i] = currentPos; // Update the position
+					}
+				}
+			}
+		}
 
-		//			// Lift them up for debug purposes
-		//			TacticalPosition modifiedPosition = _tacticalPositionData.Positions[i];
-		//			modifiedPosition.Position += Vector3.up * 1f;
-		//			_tacticalPositionData.Positions[i] = modifiedPosition;
-		//		}
-		//	}
-		//}
+		private void RemoveDuplicates(float distanceThreshold)
+		{
+			// List to store unique positions
+			List<TacticalPosition> uniquePositions = new List<TacticalPosition>();
+
+			// Iterate over each position
+			for (int i = 0; i < _tacticalPositionData.Positions.Count; i++)
+			{
+				TacticalPosition currentPos = _tacticalPositionData.Positions[i];
+				bool isDuplicate = false;
+
+				// Compare with every other position
+				for (int j = 0; j < uniquePositions.Count; j++)
+				{
+					// If the distance between currentPos and any unique position is less than the threshold, it's a duplicate
+					if (Vector3.Distance(currentPos.Position, uniquePositions[j].Position) < distanceThreshold
+						&& HaveSameSpecialCover(currentPos, uniquePositions[j]))
+					{
+						isDuplicate = true;
+						break; // No need to check further, it's already a duplicate
+					}
+				}
+
+				if (!isDuplicate)
+				{
+					uniquePositions.Add(currentPos);
+				}
+			}
+
+			_tacticalPositionData.Positions = uniquePositions;
+		}
+
+		private bool HaveSameSpecialCover(TacticalPosition position1, TacticalPosition position2)
+		{
+			if (position1.specialCover.HasValue && position2.specialCover.HasValue)
+			{
+				return position1.specialCover.Value.type == position2.specialCover.Value.type;
+			}
+
+			return !position1.specialCover.HasValue && !position2.specialCover.HasValue;
+		}
 
 		private void CreateSpawnersAlongTheGrid()
 		{
@@ -192,25 +232,25 @@ namespace FPSDemo.NPC.Utilities
 						_tacticalPositionData.Positions.Add(newPosition.Value);
 					}
 				}
-				else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
-				{
-					TacticalPosition newPosition = new()
-					{
-						Position = lowHit.point
-					};
-					// Try to find special cover for low cover
-					_tacticalPositionData.Positions.Add(newPosition);
-				}
+				//else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
+				//{
+				//	TacticalPosition newPosition = new()
+				//	{
+				//		Position = lowHit.point
+				//	};
+				//	// Try to find special cover for low cover
+				//	_tacticalPositionData.Positions.Add(newPosition);
+				//}
 
 				direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
 			}
 		}
 
 		float cornerCheckRayWallOffset = 0.1f; // how far from the wall should the raycasts be fired from
-		float cornerCheckRayStep = 0.1f; // how much distance between the individual raycasts when scanning the wall
+		readonly float cornerCheckRayStep = 0.01f; // how much distance between the individual raycasts when scanning the wall
 		float cornerCheckRaySequenceDistance = 2f; // how far to the side should the raycasts go when scanning the wall
-		float cornerCheckPositionOffset = 0.5f; // how far to offset the position from the found corner
-		float minWidthToConsiderAValidPosition = 1f;
+		float cornerCheckPositionOffset = 0.25f; // how far to offset the position from the found corner
+		readonly float minWidthToConsiderAValidPosition = 0.7f;
 
 		private TacticalPosition? GetHighPosAdjustedToCorner(Vector3 position, Vector3 hitNormal)
 		{
@@ -226,12 +266,13 @@ namespace FPSDemo.NPC.Utilities
 				return null;
 			}
 
+
 			float distanceToLeftCorner = Mathf.Infinity;
 			float distanceToRightCorner = Mathf.Infinity;
 
 			// Looking for left and right corners
-			Vector3 leftCornerPos = FindCorner(position, hitNormal, offsetPosition, leftDirection, ref distanceToLeftCorner);
-			Vector3 rightCornerPos = FindCorner(position, hitNormal, offsetPosition, -leftDirection, ref distanceToRightCorner);
+			Vector3 leftCornerPos = FindCorner(offsetPosition, hitNormal, leftDirection, ref distanceToLeftCorner);
+			Vector3 rightCornerPos = FindCorner(offsetPosition, hitNormal, -leftDirection, ref distanceToRightCorner);
 
 			// If there is not enough space (do not want to have a cover position behind thin objects)
 			if (distanceToLeftCorner + distanceToRightCorner < minWidthToConsiderAValidPosition)
@@ -279,9 +320,9 @@ namespace FPSDemo.NPC.Utilities
 			return null;
 		}
 
-		private Vector3 FindCorner(Vector3 position, Vector3 hitNormal, Vector3 offsetPosition, Vector3 direction, ref float distanceToCorner)
+		private Vector3 FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, ref float distanceToCorner)
 		{
-			float distanceClampedForObstacles = GetDistanceToClosestHit(position, direction, cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
+			float distanceClampedForObstacles = GetDistanceToClosestHit(offsetPosition, direction, cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
 
 			for (float distance = 0; distance <= distanceClampedForObstacles; distance += cornerCheckRayStep)
 			{
