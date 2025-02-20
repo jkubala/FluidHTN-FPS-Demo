@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPos: {x: -80, y: 50, z: -140}
   EndPos: {x: 95, y: 50, z: 15}
-  DistanceBetweenPositions: 1
-  DistanceOfRaycasts: 1.5
+  DistanceBetweenPositions: 0.75
+  DistanceOfRaycasts: 3
   OffsetEveryOtherRow: 0
-  NumberOfRays: 8
+  NumberOfRaysSpawner: 8
+  NumberOfRaysPosition: 8
   RequiredProximityToNavMesh: 0.2
   geometryCheckYOffset: 3
   RaycastMask:

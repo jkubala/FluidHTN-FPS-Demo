@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 namespace FPSDemo.NPC.Utilities
 {
@@ -205,44 +206,37 @@ namespace FPSDemo.NPC.Utilities
 			}
 		}
 
-		float cornerCheckRayWallOffset = 0.1f;
-		float cornerCheckRayStep = 0.1f;
-		float cornerCheckRaySequenceDistance = 0.25f;
-		float cornerCheckPositionOffset = 0.5f;
+		float cornerCheckRayWallOffset = 0.1f; // how far from the wall should the raycasts be fired from
+		float cornerCheckRayStep = 0.1f; // how much distance between the individual raycasts when scanning the wall
+		float cornerCheckRaySequenceDistance = 2f; // how far to the side should the raycasts go when scanning the wall
+		float cornerCheckPositionOffset = 0.5f; // how far to offset the position from the found corner
+		float minWidthToConsiderAValidPosition = 1f;
 
 		private TacticalPosition? GetHighPosAdjustedToCorner(Vector3 position, Vector3 hitNormal)
 		{
+			//return new TacticalPosition() { Position = position }; // Debug to see where the positions are starting from
+
+
 			Vector3 offsetPosition = position + hitNormal * cornerCheckRayWallOffset;
 			Vector3 leftDirection = Vector3.Cross(Vector3.up, hitNormal).normalized;
 
-			float distanceToLeftCorner = Mathf.Infinity;
-			float distanceToRightCorner = Mathf.Infinity;
-			Vector3 leftCornerPos = Vector3.zero;
-			Vector3 rightCornerPos = Vector3.zero;
-
-			float distanceClampedForObstacles = GetDistanceToClosestHit(position, leftDirection, cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
-
-			// Looking for left corner
-			for (float distance = 0; distance <= distanceClampedForObstacles; distance += cornerCheckRayStep)
+			// Return null if inside geometry
+			if (Physics.OverlapSphere(offsetPosition, cornerCheckRayWallOffset - 0.001f).Length > 0)
 			{
-				Vector3 adjustedPosition = offsetPosition + leftDirection * distance;
-				if (!Physics.Raycast(adjustedPosition, -hitNormal, cornerCheckRayWallOffset + rayLengthExtension, _gridSettings.RaycastMask))
-				{
-					distanceToLeftCorner = distance;
-					leftCornerPos = adjustedPosition - leftDirection * cornerCheckPositionOffset;
-				}
+				return null;
 			}
 
-			distanceClampedForObstacles = GetDistanceToClosestHit(position, -leftDirection, cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
-			// Looking for right corner
-			for (float distance = 0; distance <= distanceClampedForObstacles; distance += cornerCheckRayStep)
+			float distanceToLeftCorner = Mathf.Infinity;
+			float distanceToRightCorner = Mathf.Infinity;
+
+			// Looking for left and right corners
+			Vector3 leftCornerPos = FindCorner(position, hitNormal, offsetPosition, leftDirection, ref distanceToLeftCorner);
+			Vector3 rightCornerPos = FindCorner(position, hitNormal, offsetPosition, -leftDirection, ref distanceToRightCorner);
+
+			// If there is not enough space (do not want to have a cover position behind thin objects)
+			if (distanceToLeftCorner + distanceToRightCorner < minWidthToConsiderAValidPosition)
 			{
-				Vector3 adjustedPosition = offsetPosition - leftDirection * distance;
-				if (!Physics.Raycast(adjustedPosition, -hitNormal, cornerCheckRayWallOffset + rayLengthExtension, _gridSettings.RaycastMask))
-				{
-					distanceToRightCorner = distance;
-					rightCornerPos = adjustedPosition + leftDirection * cornerCheckPositionOffset;
-				}
+				return null;
 			}
 
 			if (distanceToLeftCorner != Mathf.Infinity || distanceToRightCorner != Mathf.Infinity)
@@ -283,6 +277,28 @@ namespace FPSDemo.NPC.Utilities
 
 			// This high cover position is just against some wall, not useful
 			return null;
+		}
+
+		private Vector3 FindCorner(Vector3 position, Vector3 hitNormal, Vector3 offsetPosition, Vector3 direction, ref float distanceToCorner)
+		{
+			float distanceClampedForObstacles = GetDistanceToClosestHit(position, direction, cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
+
+			for (float distance = 0; distance <= distanceClampedForObstacles; distance += cornerCheckRayStep)
+			{
+				Vector3 adjustedPosition = offsetPosition + direction * distance;
+				if (!Physics.Raycast(adjustedPosition, -hitNormal, cornerCheckRayWallOffset + rayLengthExtension, _gridSettings.RaycastMask))
+				{
+					distanceToCorner = distance;
+					return adjustedPosition - direction * cornerCheckPositionOffset;
+				}
+			}
+
+			if (cornerCheckRaySequenceDistance > distanceClampedForObstacles && distanceToCorner == Mathf.Infinity)
+			{
+				distanceToCorner = distanceClampedForObstacles;
+			}
+
+			return Vector3.zero;
 		}
 
 		private float GetDistanceToClosestHit(Vector3 origin, Vector3 direction, float maxRayDistance, LayerMask layerMask)
