@@ -24,5 +24,11 @@ MonoBehaviour:
   RaycastMask:
     serializedVersion: 2
     m_Bits: 1
+  cornerCheckRayWallOffset: 0.1
+  cornerCheckRayStep: 0.01
+  cornerCheckRaySequenceDistance: 2
+  cornerCheckPositionOffset: 0.25
+  minWidthToConsiderAValidPosition: 0.7
+  rayLengthBeyondWall: 0.25
   minHeightToConsiderHighCover: 1.85
   minHeightToConsiderLowCover: 0.95

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 namespace FPSDemo.NPC.Utilities
 {
@@ -15,6 +14,10 @@ namespace FPSDemo.NPC.Utilities
 		[SerializeField] private bool _useHandplacedTacticalProbes = true;
 		[SerializeField] private bool _generateAutoProbeGrid = true;
 		[SerializeField] private bool _showThePositionsInEditor = false;
+		[SerializeField] private bool generateDebugPositions = false;
+
+		[SerializeField] private GameObject parentOfDebugGameobjects;
+		[SerializeField] private GameObject debugGameobjectPrefab;
 
 
 		// ========================================================= PROPERTIES
@@ -75,6 +78,7 @@ namespace FPSDemo.NPC.Utilities
 			{
 				_tacticalPositionData.Positions.Clear();
 			}
+			ClearDebugGameObjects();
 
 			Debug.Log("Generating tactical positions for AI");
 
@@ -140,7 +144,7 @@ namespace FPSDemo.NPC.Utilities
 
 		private bool HaveSameSpecialCover(TacticalPosition position1, TacticalPosition position2)
 		{
-				return position1.specialCover.type == position2.specialCover.type;
+			return position1.specialCover.type == position2.specialCover.type;
 		}
 
 		private void CreateSpawnersAlongTheGrid()
@@ -173,7 +177,6 @@ namespace FPSDemo.NPC.Utilities
 			}
 		}
 
-		float rayLengthExtension = 0.001f; // To avoid situations of no hit, because the ray is 0.000001f short due to float imprecision
 		private void AddSpawnerIfValid(Vector3 position)
 		{
 			// Discard the position if it is too far from NavMesh
@@ -195,7 +198,7 @@ namespace FPSDemo.NPC.Utilities
 			// Discard the position if it spawned in the geometry
 			Vector3 rayCastOrigin = position + Vector3.up * _gridSettings.geometryCheckYOffset;
 
-			if (Physics.Raycast(rayCastOrigin, Vector3.down, out RaycastHit geometryHit, _gridSettings.geometryCheckYOffset + rayLengthExtension, _gridSettings.RaycastMask))
+			if (Physics.Raycast(rayCastOrigin, Vector3.down, out RaycastHit geometryHit, _gridSettings.geometryCheckYOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
 			{
 				if (!Mathf.Approximately(rayCastOrigin.y - geometryHit.point.y, rayCastOrigin.y - position.y))
 				{
@@ -241,22 +244,18 @@ namespace FPSDemo.NPC.Utilities
 			}
 		}
 
-		float cornerCheckRayWallOffset = 0.1f; // how far from the wall should the raycasts be fired from
-		readonly float cornerCheckRayStep = 0.01f; // how much distance between the individual raycasts when scanning the wall
-		float cornerCheckRaySequenceDistance = 2f; // how far to the side should the raycasts go when scanning the wall
-		float cornerCheckPositionOffset = 0.25f; // how far to offset the position from the found corner
-		readonly float minWidthToConsiderAValidPosition = 0.7f;
+
 
 		private TacticalPosition? GetHighPosAdjustedToCorner(Vector3 position, Vector3 hitNormal)
 		{
 			//return new TacticalPosition() { Position = position }; // Debug to see where the positions are starting from
 
 
-			Vector3 offsetPosition = position + hitNormal * cornerCheckRayWallOffset;
+			Vector3 offsetPosition = position + hitNormal * _gridSettings.cornerCheckRayWallOffset;
 			Vector3 leftDirection = Vector3.Cross(Vector3.up, hitNormal).normalized;
 
 			// Return null if inside geometry
-			if (Physics.OverlapSphere(offsetPosition, cornerCheckRayWallOffset - 0.001f).Length > 0)
+			if (Physics.OverlapSphere(offsetPosition, _gridSettings.cornerCheckRayWallOffset - 0.001f).Length > 0)
 			{
 				return null;
 			}
@@ -270,7 +269,7 @@ namespace FPSDemo.NPC.Utilities
 			Vector3 rightCornerPos = FindCorner(offsetPosition, hitNormal, -leftDirection, ref distanceToRightCorner);
 
 			// If there is not enough space (do not want to have a cover position behind thin objects)
-			if (distanceToLeftCorner + distanceToRightCorner < minWidthToConsiderAValidPosition)
+			if (distanceToLeftCorner + distanceToRightCorner < _gridSettings.minWidthToConsiderAValidPosition)
 			{
 				return null;
 			}
@@ -291,6 +290,29 @@ namespace FPSDemo.NPC.Utilities
 						specialCover = specialCoverFound
 					};
 
+					if (generateDebugPositions)
+					{
+						if (parentOfDebugGameobjects == null)
+						{
+							Debug.LogError("Parent of the debug gameObjects is null!");
+							return null;
+						}
+
+						if (debugGameobjectPrefab == null)
+						{
+							Debug.LogError("Debug gameObject prefab is null!");
+							return null;
+						}
+
+						GameObject newDebugGO = Instantiate(debugGameobjectPrefab, parentOfDebugGameobjects.transform);
+						newDebugGO.transform.position = leftCornerPos;
+						TacticalPosDebugGO debugGO = newDebugGO.GetComponent<TacticalPosDebugGO>();
+						debugGO.leftCornerDist = distanceToLeftCorner;
+						debugGO.rightCornerDist = distanceToRightCorner;
+						debugGO.specialCover = specialCoverFound;
+						debugGO.origCornerRayPos = offsetPosition;
+					}
+
 					return newPositionToAdd;
 				}
 				else
@@ -307,6 +329,29 @@ namespace FPSDemo.NPC.Utilities
 						specialCover = specialCoverFound
 					};
 
+					if (generateDebugPositions)
+					{
+						if (parentOfDebugGameobjects == null)
+						{
+							Debug.LogError("Parent of the debug gameObjects is null!");
+							return null;
+						}
+
+						if (debugGameobjectPrefab == null)
+						{
+							Debug.LogError("Debug gameObject prefab is null!");
+							return null;
+						}
+
+						GameObject newDebugGO = Instantiate(debugGameobjectPrefab, parentOfDebugGameobjects.transform);
+						newDebugGO.transform.position = rightCornerPos;
+						TacticalPosDebugGO debugGO = newDebugGO.GetComponent<TacticalPosDebugGO>();
+						debugGO.leftCornerDist = distanceToLeftCorner;
+						debugGO.rightCornerDist = distanceToRightCorner;
+						debugGO.specialCover = specialCoverFound;
+						debugGO.origCornerRayPos = offsetPosition;
+					}
+
 					return newPositionToAdd;
 				}
 			}
@@ -317,19 +362,21 @@ namespace FPSDemo.NPC.Utilities
 
 		private Vector3 FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, ref float distanceToCorner)
 		{
-			float distanceClampedForObstacles = GetDistanceToClosestHit(offsetPosition, direction, cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
 
-			for (float distance = 0; distance <= distanceClampedForObstacles; distance += cornerCheckRayStep)
+			float wallOffset = 0.01f; // Sometimes raycasts fired from the point of hit are inside the geometry 
+			float distanceClampedForObstacles = GetDistanceToClosestHit(offsetPosition, direction, _gridSettings.cornerCheckRaySequenceDistance, _gridSettings.RaycastMask) - wallOffset;
+
+			for (float distance = 0; distance <= distanceClampedForObstacles; distance += _gridSettings.cornerCheckRayStep)
 			{
 				Vector3 adjustedPosition = offsetPosition + direction * distance;
-				if (!Physics.Raycast(adjustedPosition, -hitNormal, cornerCheckRayWallOffset + rayLengthExtension, _gridSettings.RaycastMask))
+				if (!Physics.Raycast(adjustedPosition, -hitNormal, _gridSettings.cornerCheckRayWallOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
 				{
 					distanceToCorner = distance;
-					return adjustedPosition - direction * cornerCheckPositionOffset;
+					return adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
 				}
 			}
 
-			if (cornerCheckRaySequenceDistance > distanceClampedForObstacles && distanceToCorner == Mathf.Infinity)
+			if (_gridSettings.cornerCheckRaySequenceDistance > distanceClampedForObstacles && distanceToCorner == Mathf.Infinity)
 			{
 				distanceToCorner = distanceClampedForObstacles;
 			}
@@ -447,6 +494,26 @@ namespace FPSDemo.NPC.Utilities
 					Gizmos.color = Color.white;
 				}
 				Gizmos.DrawSphere(position.Position, 0.1f);
+			}
+		}
+
+		public void ClearDebugGameObjects()
+		{
+			if (parentOfDebugGameobjects == null)
+			{
+				Debug.LogError("Parent of the debug gameObjects is null!");
+				return;
+			}
+
+			if (Application.isPlaying)
+			{
+				Debug.Log("Cannot destroy them in play mode!");
+				return;
+			}
+
+			for (int i = parentOfDebugGameobjects.transform.childCount - 1; i >= 0; i--)
+			{
+				DestroyImmediate(parentOfDebugGameobjects.transform.GetChild(i).gameObject);
 			}
 		}
 	}
