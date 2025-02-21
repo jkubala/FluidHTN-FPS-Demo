@@ -27,7 +27,9 @@ namespace FPSDemo.NPC.Utilities
 		public float minAngleToConsiderCorner = 20f;
 		[Range(0.001f, 1f)]
 		public float rayLengthBeyondWall = 0.001f; // To avoid situations of no hit, because the ray is 0.000001f short due to float imprecision
-
+		public Vector2 sphereCastForFiringPositionCheckOffset = Vector2.one;
+		public float sphereCastForFiringPositionCheckRadius = 1f;
+		public float sphereCastForFiringPositionCheckDistance = 0.25f;
 
 		[Header("Tactical position settings")]
 		public float minHeightToConsiderHighCover = 1.25f;

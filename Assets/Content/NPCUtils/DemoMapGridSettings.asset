@@ -29,6 +29,10 @@ MonoBehaviour:
   cornerCheckRaySequenceDistance: 2
   cornerCheckPositionOffset: 0.25
   minWidthToConsiderAValidPosition: 0.7
+  minAngleToConsiderCorner: 20
   rayLengthBeyondWall: 0.25
+  sphereCastForFiringPositionCheckOffset: {x: 0.05, y: 0}
+  sphereCastForFiringPositionCheckRadius: 0.3
+  sphereCastForFiringPositionCheckDistance: 0.5
   minHeightToConsiderHighCover: 1.85
   minHeightToConsiderLowCover: 0.95

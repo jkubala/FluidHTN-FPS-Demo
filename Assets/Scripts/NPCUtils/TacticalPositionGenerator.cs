@@ -83,32 +83,27 @@ namespace FPSDemo.NPC.Utilities
 			Debug.Log("Generating tactical positions for AI");
 
 			CreateSpawnersAlongTheGrid();
-			StandardizePositionsOnYAxis();
 			RemoveDuplicates(0.2f);
 		}
 
-		private void StandardizePositionsOnYAxis()
+		private Vector3? StandardizePositionOnYAxis(Vector3 position, float distanceFromGround)
 		{
-			for (int i = _tacticalPositionData.Positions.Count - 1; i >= 0; i--) // Iterate from end to start
+			if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _gridSettings.RaycastMask))
 			{
-				TacticalPosition currentPos = _tacticalPositionData.Positions[i];
-				if (Physics.Raycast(currentPos.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _gridSettings.RaycastMask))
+				float standardizedHeight = hit.point.y + distanceFromGround;
+				float maxThresholdAboveGround = 2.5f;
+
+				if (position.y - standardizedHeight < 0 || position.y - standardizedHeight > maxThresholdAboveGround)
 				{
-					float standardizedHeight = hit.point.y + 1.8f;
-
-					float maxThresholdAboveGround = 2.5f;
-
-					if (currentPos.Position.y - standardizedHeight < 0 || currentPos.Position.y - standardizedHeight > maxThresholdAboveGround)
-					{
-						_tacticalPositionData.Positions.RemoveAt(i); // Remove by index
-					}
-					else
-					{
-						currentPos.Position.y = standardizedHeight;
-						_tacticalPositionData.Positions[i] = currentPos; // Update the position
-					}
+					return null;
+				}
+				else
+				{
+					position.y = standardizedHeight;
+					return position;
 				}
 			}
+			return null;
 		}
 
 		private void RemoveDuplicates(float distanceThreshold)
@@ -270,6 +265,7 @@ namespace FPSDemo.NPC.Utilities
 			Vector3 rightCornerPos = FindCorner(offsetPosition, hitNormal, -leftDirection, ref distanceToRightCorner);
 
 			// If there is not enough space (do not want to have a cover position behind thin objects)
+			// TODO calculate from corner positions?
 			if (distanceToLeftCorner + distanceToRightCorner < _gridSettings.minWidthToConsiderAValidPosition)
 			{
 				return null;
@@ -361,35 +357,89 @@ namespace FPSDemo.NPC.Utilities
 			return null;
 		}
 
+		private bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection)
+		{
+			float additionalOffset = 0.01f;
+			Vector3 sphereCastOrigin = cornerPosition +
+				-cornerNormal * (_gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset) +
+				cornerOutDirection * (_gridSettings.sphereCastForFiringPositionCheckOffset.x + _gridSettings.cornerCheckPositionOffset + _gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset)
+				+ Vector3.up * _gridSettings.sphereCastForFiringPositionCheckOffset.y;
+
+
+			if (Physics.SphereCast(sphereCastOrigin,
+				_gridSettings.sphereCastForFiringPositionCheckRadius,
+				cornerNormal, out _,
+				_gridSettings.sphereCastForFiringPositionCheckDistance + _gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset,
+				_gridSettings.RaycastMask))
+			{
+				return true;
+			}
+			return false;
+		}
+
 		private Vector3 FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, ref float distanceToCorner)
 		{
-
 			float wallOffset = 0.01f; // Sometimes raycasts fired from the point of hit are inside the geometry 
-			float distanceClampedForObstacles = GetDistanceToClosestHit(offsetPosition, direction, _gridSettings.cornerCheckRaySequenceDistance, _gridSettings.RaycastMask) - wallOffset;
+			float distanceToHorizontalObstacle = GetDistanceToClosestHit(offsetPosition, direction, _gridSettings.cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
 			Vector2 projectedHitNormal = new Vector2(hitNormal.x, hitNormal.z).normalized;
-
-			for (float distance = 0; distance <= distanceClampedForObstacles; distance += _gridSettings.cornerCheckRayStep)
+			for (float distance = 0; distance <= distanceToHorizontalObstacle - wallOffset; distance += _gridSettings.cornerCheckRayStep)
 			{
 				Vector3 adjustedPosition = offsetPosition + direction * distance;
 				if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit hit, _gridSettings.cornerCheckRayWallOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
 				{
 					Vector2 newProjectedHitNormal = new Vector2(hit.normal.x, hit.normal.z).normalized;
+					Vector3 cornerPos = adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
 					if (Vector2.Angle(projectedHitNormal, newProjectedHitNormal) > _gridSettings.minAngleToConsiderCorner)
 					{
+						Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerPos, 1.6f);
+
+						if (!yStandardCornerPos.HasValue)
+						{
+							return Vector3.zero;
+						}
+
+						cornerPos = yStandardCornerPos.Value;
+						Vector3 newHitNormalDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
+						// TODO cornerPos needs to be offset based on the angle and corner offset
+
+						if (Vector3.Dot(direction, newHitNormalDirection) < 0)
+						{
+							newHitNormalDirection = -newHitNormalDirection;
+						}
+
+						if (ObstacleInFiringPosition(cornerPos, -hit.normal, newHitNormalDirection))
+						{
+							return Vector3.zero;
+						}
+
 						distanceToCorner = distance;
-						return adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
+						return cornerPos;
 					}
 				}
 				else
 				{
+					Vector3 cornerPos = adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
+
+					Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerPos, 1.6f);
+
+					if(!yStandardCornerPos.HasValue)
+					{
+						return Vector3.zero;
+					}
+
+					cornerPos = yStandardCornerPos.Value;
+					if (ObstacleInFiringPosition(cornerPos, -hitNormal, direction))
+					{
+						return Vector3.zero;
+					}
 					distanceToCorner = distance;
-					return adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
+					return cornerPos;
 				}
 			}
 
-			if (_gridSettings.cornerCheckRaySequenceDistance > distanceClampedForObstacles && distanceToCorner == Mathf.Infinity)
+			if (_gridSettings.cornerCheckRaySequenceDistance > distanceToHorizontalObstacle && distanceToCorner == Mathf.Infinity)
 			{
-				distanceToCorner = distanceClampedForObstacles;
+				distanceToCorner = distanceToHorizontalObstacle - wallOffset;
 			}
 
 			return Vector3.zero;
