@@ -24,6 +24,7 @@ namespace FPSDemo.NPC.Utilities
 		public float cornerCheckRaySequenceDistance = 2f; // how far to the side should the raycasts go when scanning the wall
 		public float cornerCheckPositionOffset = 0.25f; // how far to offset the position from the found corner
 		public float minWidthToConsiderAValidPosition = 0.7f;
+		public float minAngleToConsiderCorner = 20f;
 		[Range(0.001f, 1f)]
 		public float rayLengthBeyondWall = 0.001f; // To avoid situations of no hit, because the ray is 0.000001f short due to float imprecision
 

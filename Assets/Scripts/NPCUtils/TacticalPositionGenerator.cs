@@ -94,10 +94,11 @@ namespace FPSDemo.NPC.Utilities
 				TacticalPosition currentPos = _tacticalPositionData.Positions[i];
 				if (Physics.Raycast(currentPos.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _gridSettings.RaycastMask))
 				{
-					float standardizedHeight = currentPos.Position.y;
-					standardizedHeight = hit.point.y + 1.8f;
+					float standardizedHeight = hit.point.y + 1.8f;
 
-					if (currentPos.Position.y - standardizedHeight < 0)
+					float maxThresholdAboveGround = 2.5f;
+
+					if (currentPos.Position.y - standardizedHeight < 0 || currentPos.Position.y - standardizedHeight > maxThresholdAboveGround)
 					{
 						_tacticalPositionData.Positions.RemoveAt(i); // Remove by index
 					}
@@ -365,11 +366,21 @@ namespace FPSDemo.NPC.Utilities
 
 			float wallOffset = 0.01f; // Sometimes raycasts fired from the point of hit are inside the geometry 
 			float distanceClampedForObstacles = GetDistanceToClosestHit(offsetPosition, direction, _gridSettings.cornerCheckRaySequenceDistance, _gridSettings.RaycastMask) - wallOffset;
+			Vector2 projectedHitNormal = new Vector2(hitNormal.x, hitNormal.z).normalized;
 
 			for (float distance = 0; distance <= distanceClampedForObstacles; distance += _gridSettings.cornerCheckRayStep)
 			{
 				Vector3 adjustedPosition = offsetPosition + direction * distance;
-				if (!Physics.Raycast(adjustedPosition, -hitNormal, _gridSettings.cornerCheckRayWallOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
+				if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit hit, _gridSettings.cornerCheckRayWallOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
+				{
+					Vector2 newProjectedHitNormal = new Vector2(hit.normal.x, hit.normal.z).normalized;
+					if (Vector2.Angle(projectedHitNormal, newProjectedHitNormal) > _gridSettings.minAngleToConsiderCorner)
+					{
+						distanceToCorner = distance;
+						return adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
+					}
+				}
+				else
 				{
 					distanceToCorner = distance;
 					return adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
