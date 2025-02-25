@@ -16,6 +16,7 @@ namespace FPSDemo.NPC.Utilities
 		public int NumberOfRaysPosition = 8;
 		public float RequiredProximityToNavMesh = 0.1f;
 		public float geometryCheckYOffset = 1.0f;
+		public float distanceToRemoveDuplicates = 0.2f;
 		public LayerMask RaycastMask = 1 << 0;
 
 		[Header("Corner detection settings")]

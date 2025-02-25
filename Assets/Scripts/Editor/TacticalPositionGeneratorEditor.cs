@@ -64,11 +64,6 @@ namespace FPSDemo.NPC.Utilities
 				}
 			}
 
-			if (GUILayout.Button("Clear debug gameObjects"))
-			{
-				posGenerator.ClearDebugGameObjects();
-			}
-
 			base.OnInspectorGUI();
 		}
 	}

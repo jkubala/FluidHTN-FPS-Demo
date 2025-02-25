@@ -14,10 +14,6 @@ namespace FPSDemo.NPC.Utilities
 		[SerializeField] private bool _useHandplacedTacticalProbes = true;
 		[SerializeField] private bool _generateAutoProbeGrid = true;
 		[SerializeField] private bool _showThePositionsInEditor = false;
-		[SerializeField] private bool generateDebugPositions = false;
-
-		[SerializeField] private GameObject parentOfDebugGameobjects;
-		[SerializeField] private GameObject debugGameobjectPrefab;
 
 
 		// ========================================================= PROPERTIES
@@ -78,32 +74,11 @@ namespace FPSDemo.NPC.Utilities
 			{
 				_tacticalPositionData.Positions.Clear();
 			}
-			ClearDebugGameObjects();
 
 			Debug.Log("Generating tactical positions for AI");
 
 			CreateSpawnersAlongTheGrid();
-			RemoveDuplicates(0.2f);
-		}
-
-		private Vector3? StandardizePositionOnYAxis(Vector3 position, float distanceFromGround)
-		{
-			if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _gridSettings.RaycastMask))
-			{
-				float standardizedHeight = hit.point.y + distanceFromGround;
-				float maxThresholdAboveGround = 2.5f;
-
-				if (position.y - standardizedHeight < 0 || position.y - standardizedHeight > maxThresholdAboveGround)
-				{
-					return null;
-				}
-				else
-				{
-					position.y = standardizedHeight;
-					return position;
-				}
-			}
-			return null;
+			RemoveDuplicates(_gridSettings.distanceToRemoveDuplicates);
 		}
 
 		private void RemoveDuplicates(float distanceThreshold)
@@ -218,7 +193,7 @@ namespace FPSDemo.NPC.Utilities
 			{
 				if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
 				{
-					TacticalPosition? newPosition = GetHighPosAdjustedToCorner(highHit.point, highHit.normal);
+					TacticalPosition? newPosition = CoverPositioner.GetHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings);
 
 					if (newPosition.HasValue)
 					{
@@ -238,264 +213,6 @@ namespace FPSDemo.NPC.Utilities
 
 				direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
 			}
-		}
-
-
-
-		private TacticalPosition? GetHighPosAdjustedToCorner(Vector3 position, Vector3 hitNormal)
-		{
-			//return new TacticalPosition() { Position = position }; // Debug to see where the positions are starting from
-
-
-			Vector3 offsetPosition = position + hitNormal * _gridSettings.cornerCheckRayWallOffset;
-			Vector3 leftDirection = Vector3.Cross(Vector3.up, hitNormal).normalized;
-
-			// Return null if inside geometry
-			if (Physics.OverlapSphere(offsetPosition, _gridSettings.cornerCheckRayWallOffset - 0.001f).Length > 0)
-			{
-				return null;
-			}
-
-
-			float distanceToLeftCorner = Mathf.Infinity;
-			float distanceToRightCorner = Mathf.Infinity;
-
-			// Looking for left and right corners
-			Vector3 leftCornerPos = FindCorner(offsetPosition, hitNormal, leftDirection, ref distanceToLeftCorner);
-			Vector3 rightCornerPos = FindCorner(offsetPosition, hitNormal, -leftDirection, ref distanceToRightCorner);
-
-			// If there is not enough space (do not want to have a cover position behind thin objects)
-			// TODO calculate from corner positions?
-			if (distanceToLeftCorner + distanceToRightCorner < _gridSettings.minWidthToConsiderAValidPosition)
-			{
-				return null;
-			}
-
-			if (distanceToLeftCorner != Mathf.Infinity || distanceToRightCorner != Mathf.Infinity)
-			{
-				if (distanceToLeftCorner < distanceToRightCorner)
-				{
-					SpecialCover specialCoverFound = new()
-					{
-						rotationToAlignWithCover = Quaternion.Euler(hitNormal),
-						type = SpecialCoverType.LeftCorner
-					};
-
-					TacticalPosition newPositionToAdd = new()
-					{
-						Position = leftCornerPos,
-						specialCover = specialCoverFound
-					};
-
-					if (generateDebugPositions)
-					{
-						if (parentOfDebugGameobjects == null)
-						{
-							Debug.LogError("Parent of the debug gameObjects is null!");
-							return null;
-						}
-
-						if (debugGameobjectPrefab == null)
-						{
-							Debug.LogError("Debug gameObject prefab is null!");
-							return null;
-						}
-
-						GameObject newDebugGO = Instantiate(debugGameobjectPrefab, parentOfDebugGameobjects.transform);
-						newDebugGO.transform.position = leftCornerPos;
-						TacticalPosDebugGO debugGO = newDebugGO.GetComponent<TacticalPosDebugGO>();
-						debugGO.leftCornerDist = distanceToLeftCorner;
-						debugGO.rightCornerDist = distanceToRightCorner;
-						debugGO.specialCover = specialCoverFound;
-						debugGO.origCornerRayPos = offsetPosition;
-					}
-
-					return newPositionToAdd;
-				}
-				else
-				{
-					SpecialCover specialCoverFound = new()
-					{
-						rotationToAlignWithCover = Quaternion.Euler(hitNormal),
-						type = SpecialCoverType.RightCorner
-					};
-
-					TacticalPosition newPositionToAdd = new()
-					{
-						Position = rightCornerPos,
-						specialCover = specialCoverFound
-					};
-
-					if (generateDebugPositions)
-					{
-						if (parentOfDebugGameobjects == null)
-						{
-							Debug.LogError("Parent of the debug gameObjects is null!");
-							return null;
-						}
-
-						if (debugGameobjectPrefab == null)
-						{
-							Debug.LogError("Debug gameObject prefab is null!");
-							return null;
-						}
-
-						GameObject newDebugGO = Instantiate(debugGameobjectPrefab, parentOfDebugGameobjects.transform);
-						newDebugGO.transform.position = rightCornerPos;
-						TacticalPosDebugGO debugGO = newDebugGO.GetComponent<TacticalPosDebugGO>();
-						debugGO.leftCornerDist = distanceToLeftCorner;
-						debugGO.rightCornerDist = distanceToRightCorner;
-						debugGO.specialCover = specialCoverFound;
-						debugGO.origCornerRayPos = offsetPosition;
-					}
-
-					return newPositionToAdd;
-				}
-			}
-
-			// This high cover position is just against some wall, not useful
-			return null;
-		}
-
-		private bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection)
-		{
-			float additionalOffset = 0.01f;
-			Vector3 sphereCastOrigin = cornerPosition +
-				-cornerNormal * (_gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset) +
-				cornerOutDirection * (_gridSettings.sphereCastForFiringPositionCheckOffset.x + _gridSettings.cornerCheckPositionOffset + _gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset)
-				+ Vector3.up * _gridSettings.sphereCastForFiringPositionCheckOffset.y;
-
-
-			if (Physics.SphereCast(sphereCastOrigin,
-				_gridSettings.sphereCastForFiringPositionCheckRadius,
-				cornerNormal, out _,
-				_gridSettings.sphereCastForFiringPositionCheckDistance + _gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset,
-				_gridSettings.RaycastMask))
-			{
-				return true;
-			}
-			return false;
-		}
-
-		private Vector3 FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, ref float distanceToCorner)
-		{
-			float wallOffset = 0.01f; // Sometimes raycasts fired from the point of hit are inside the geometry 
-			float distanceToHorizontalObstacle = GetDistanceToClosestHit(offsetPosition, direction, _gridSettings.cornerCheckRaySequenceDistance, _gridSettings.RaycastMask);
-			Vector2 projectedHitNormal = new Vector2(hitNormal.x, hitNormal.z).normalized;
-			for (float distance = 0; distance <= distanceToHorizontalObstacle - wallOffset; distance += _gridSettings.cornerCheckRayStep)
-			{
-				Vector3 adjustedPosition = offsetPosition + direction * distance;
-				if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit hit, _gridSettings.cornerCheckRayWallOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
-				{
-					Vector2 newProjectedHitNormal = new Vector2(hit.normal.x, hit.normal.z).normalized;
-					Vector3 cornerPos = adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
-					if (Vector2.Angle(projectedHitNormal, newProjectedHitNormal) > _gridSettings.minAngleToConsiderCorner)
-					{
-						Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerPos, 1.6f);
-
-						if (!yStandardCornerPos.HasValue)
-						{
-							return Vector3.zero;
-						}
-
-						cornerPos = yStandardCornerPos.Value;
-						Vector3 newHitNormalDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
-						// TODO cornerPos needs to be offset based on the angle and corner offset
-
-						if (Vector3.Dot(direction, newHitNormalDirection) < 0)
-						{
-							newHitNormalDirection = -newHitNormalDirection;
-						}
-
-						if (ObstacleInFiringPosition(cornerPos, -hit.normal, newHitNormalDirection))
-						{
-							return Vector3.zero;
-						}
-
-						distanceToCorner = distance;
-						return cornerPos;
-					}
-				}
-				else
-				{
-					Vector3 cornerPos = adjustedPosition - direction * _gridSettings.cornerCheckPositionOffset;
-
-					Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerPos, 1.6f);
-
-					if(!yStandardCornerPos.HasValue)
-					{
-						return Vector3.zero;
-					}
-
-					cornerPos = yStandardCornerPos.Value;
-					if (ObstacleInFiringPosition(cornerPos, -hitNormal, direction))
-					{
-						return Vector3.zero;
-					}
-					distanceToCorner = distance;
-					return cornerPos;
-				}
-			}
-
-			if (_gridSettings.cornerCheckRaySequenceDistance > distanceToHorizontalObstacle && distanceToCorner == Mathf.Infinity)
-			{
-				distanceToCorner = distanceToHorizontalObstacle - wallOffset;
-			}
-
-			return Vector3.zero;
-		}
-
-		private float GetDistanceToClosestHit(Vector3 origin, Vector3 direction, float maxRayDistance, LayerMask layerMask)
-		{
-			if (Physics.Raycast(origin, direction, out RaycastHit hit, maxRayDistance, layerMask))
-			{
-				return Vector3.Distance(origin, hit.point);
-			}
-			else
-			{
-				return maxRayDistance;
-			}
-		}
-
-		// Returns null if no cover found
-		private CoverType[] GetCoverAround(Vector3 position)
-		{
-			float angleBetweenRays = 360f / _gridSettings.NumberOfRaysSpawner;
-			List<CoverType> coverStates = new();
-			Vector3 direction = Vector3.forward;
-			bool atLeastOneCoverFound = false;
-
-			Vector3 rayOriginForLowCover = position + Vector3.up * _gridSettings.minHeightToConsiderLowCover;
-			Vector3 rayOriginForHighCover = position + Vector3.up * _gridSettings.minHeightToConsiderHighCover;
-
-
-			for (int i = 0; i < _gridSettings.NumberOfRaysSpawner; i++)
-			{
-				CoverType newCoverType;
-				if (Physics.Raycast(rayOriginForHighCover, direction, out _, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
-				{
-					newCoverType = CoverType.HighCover;
-					atLeastOneCoverFound = true;
-				}
-				else if (Physics.Raycast(rayOriginForLowCover, direction, out _, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
-				{
-					newCoverType = CoverType.LowCover;
-					atLeastOneCoverFound = true;
-				}
-				else
-				{
-					newCoverType = CoverType.NoCover;
-				}
-				coverStates.Add(newCoverType);
-				direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
-			}
-
-			if (atLeastOneCoverFound)
-			{
-				return coverStates.ToArray();
-			}
-
-			return null;
 		}
 
 		private RaycastHit[] RaycastTrulyAll(Vector3 initialXZCoordToCheck, Vector3 direction, LayerMask layerMask, float offsetAfterHit, float maxLength)
@@ -555,26 +272,6 @@ namespace FPSDemo.NPC.Utilities
 					Gizmos.color = Color.white;
 				}
 				Gizmos.DrawSphere(position.Position, 0.1f);
-			}
-		}
-
-		public void ClearDebugGameObjects()
-		{
-			if (parentOfDebugGameobjects == null)
-			{
-				Debug.LogError("Parent of the debug gameObjects is null!");
-				return;
-			}
-
-			if (Application.isPlaying)
-			{
-				Debug.Log("Cannot destroy them in play mode!");
-				return;
-			}
-
-			for (int i = parentOfDebugGameobjects.transform.childCount - 1; i >= 0; i--)
-			{
-				DestroyImmediate(parentOfDebugGameobjects.transform.GetChild(i).gameObject);
 			}
 		}
 	}

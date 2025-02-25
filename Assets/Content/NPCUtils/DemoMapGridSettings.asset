@@ -21,6 +21,7 @@ MonoBehaviour:
   NumberOfRaysPosition: 8
   RequiredProximityToNavMesh: 0.2
   geometryCheckYOffset: 3
+  distanceToRemoveDuplicates: 0.2
   RaycastMask:
     serializedVersion: 2
     m_Bits: 1
@@ -32,7 +33,7 @@ MonoBehaviour:
   minAngleToConsiderCorner: 20
   rayLengthBeyondWall: 0.25
   sphereCastForFiringPositionCheckOffset: {x: 0.05, y: 0}
-  sphereCastForFiringPositionCheckRadius: 0.3
+  sphereCastForFiringPositionCheckRadius: 0.15
   sphereCastForFiringPositionCheckDistance: 0.5
   minHeightToConsiderHighCover: 1.85
   minHeightToConsiderLowCover: 0.95

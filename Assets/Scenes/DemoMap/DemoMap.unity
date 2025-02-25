@@ -13890,9 +13890,6 @@ MonoBehaviour:
   _useHandplacedTacticalProbes: 0
   _generateAutoProbeGrid: 1
   _showThePositionsInEditor: 1
-  generateDebugPositions: 0
-  parentOfDebugGameobjects: {fileID: 1130869014}
-  debugGameobjectPrefab: {fileID: 1725634254696360293, guid: a8f6e3ffc6fe7c940ba2d8de5e5434c8, type: 3}
 --- !u!1 &1557896659
 GameObject:
   m_ObjectHideFlags: 0
