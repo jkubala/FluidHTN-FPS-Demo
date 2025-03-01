@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +13,12 @@ namespace FPSDemo.NPC.Utilities
 		[SerializeField] private bool _useHandplacedTacticalProbes = true;
 		[SerializeField] private bool _generateAutoProbeGrid = true;
 		[SerializeField] private bool _showThePositionsInEditor = false;
+
+		[SerializeField] private bool _createDebguGameObjects = false;
+		[SerializeField] private Vector3 _debugGameObjectsSpawn;
+		[SerializeField] private float _debugGameObjectsSpawnRadius = 5f;
+		[SerializeField] private GameObject _debugGameObject;
+		[SerializeField] private GameObject _debugGameObjectParent;
 
 
 		// ========================================================= PROPERTIES
@@ -77,6 +82,15 @@ namespace FPSDemo.NPC.Utilities
 
 			Debug.Log("Generating tactical positions for AI");
 
+
+			if (_debugGameObjectParent.transform.childCount > 0)
+			{
+				for (int i = _debugGameObjectParent.transform.childCount - 1; i >= 0; i--)
+				{
+					DestroyImmediate(_debugGameObjectParent.transform.GetChild(i).gameObject);
+				}
+			}
+
 			CreateSpawnersAlongTheGrid();
 			RemoveDuplicates(_gridSettings.distanceToRemoveDuplicates);
 		}
@@ -84,7 +98,7 @@ namespace FPSDemo.NPC.Utilities
 		private void RemoveDuplicates(float distanceThreshold)
 		{
 			// List to store unique positions
-			List<TacticalPosition> uniquePositions = new List<TacticalPosition>();
+			List<TacticalPosition> uniquePositions = new();
 
 			// Iterate over each position
 			for (int i = 0; i < _tacticalPositionData.Positions.Count; i++)
@@ -188,12 +202,26 @@ namespace FPSDemo.NPC.Utilities
 			Vector3 rayOriginForLowCover = position + Vector3.up * _gridSettings.minHeightToConsiderLowCover;
 			Vector3 rayOriginForHighCover = position + Vector3.up * _gridSettings.minHeightToConsiderHighCover;
 
-
 			for (int i = 0; i < _gridSettings.NumberOfRaysSpawner; i++)
 			{
 				if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
 				{
-					TacticalPosition? newPosition = CoverPositioner.GetHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings);
+					TacticalPosition? newPosition;
+					if (_createDebguGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
+					{
+						GameObject debugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
+						TacticalPosDebugGO debugData = debugGO.GetComponent<TacticalPosDebugGO>();
+						debugData.gridSettings = _gridSettings;
+						newPosition = CoverPositioner.GetHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings, debugData);
+						if (!newPosition.HasValue)
+						{
+							DestroyImmediate(debugGO);
+						}
+					}
+					else
+					{
+						newPosition = CoverPositioner.GetHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings);
+					}
 
 					if (newPosition.HasValue)
 					{
