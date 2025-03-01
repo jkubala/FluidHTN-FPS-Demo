@@ -14,7 +14,7 @@ namespace FPSDemo.NPC.Utilities
 		[SerializeField] private bool _generateAutoProbeGrid = true;
 		[SerializeField] private bool _showThePositionsInEditor = false;
 
-		[SerializeField] private bool _createDebguGameObjects = false;
+		[SerializeField] private bool _createDebugGameObjects = false;
 		[SerializeField] private Vector3 _debugGameObjectsSpawn;
 		[SerializeField] private float _debugGameObjectsSpawnRadius = 5f;
 		[SerializeField] private GameObject _debugGameObject;
@@ -207,7 +207,7 @@ namespace FPSDemo.NPC.Utilities
 				if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
 				{
 					TacticalPosition? newPosition;
-					if (_createDebguGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
+					if (_createDebugGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
 					{
 						GameObject debugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
 						TacticalPosDebugGO debugData = debugGO.GetComponent<TacticalPosDebugGO>();

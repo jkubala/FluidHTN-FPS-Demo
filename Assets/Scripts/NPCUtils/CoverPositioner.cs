@@ -132,7 +132,8 @@ namespace FPSDemo.NPC.Utilities
 		private static CornerDetectionInfo FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, bool checkingLeftCorner, TacticalGridGenerationSettings gridSettings, TacticalPosDebugGO debugData)
 		{
 			float distanceToHorizontalObstacle = GetDistanceToClosestHit(offsetPosition, direction, gridSettings.cornerCheckRaySequenceDistance, gridSettings.RaycastMask);
-			Vector2 projectedHitNormal = new Vector2(hitNormal.x, hitNormal.z).normalized;
+			
+			Vector3 projectedHitNormal = Vector3.ProjectOnPlane(hitNormal, Vector3.up).normalized;
 			CornerDetectionInfo cornerInfo = new()
 			{
 				cornerType = CornerType.NoCorner,
@@ -147,9 +148,9 @@ namespace FPSDemo.NPC.Utilities
 				Vector3 adjustedPosition = offsetPosition + direction * distance;
 				if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit hit, gridSettings.cornerCheckRayWallOffset + gridSettings.rayLengthBeyondWall, gridSettings.RaycastMask))
 				{
-					Vector2 newProjectedHitNormal = new Vector2(hit.normal.x, hit.normal.z).normalized;
+					Vector3 newProjectedHitNormal = Vector3.ProjectOnPlane(hit.normal, Vector3.up).normalized;
 
-					if (Vector2.Angle(projectedHitNormal, newProjectedHitNormal) > gridSettings.minAngleToConsiderCorner)
+					if (Vector3.SignedAngle(projectedHitNormal, newProjectedHitNormal, Vector3.up) > gridSettings.minAngleToConsiderCorner)
 					{
 						cornerInfo.position = adjustedPosition - direction * gridSettings.cornerCheckPositionOffset;
 						cornerInfo.cornerType = CornerType.Convex;
@@ -184,7 +185,7 @@ namespace FPSDemo.NPC.Utilities
 			}
 			else
 			{
-				cornerInfo = ValidateCornerPosition(cornerInfo, gridSettings);
+				cornerInfo = ValidateCornerPosition(cornerInfo, gridSettings, checkingLeftCorner, debugData);
 			}
 
 			if (debugData != null)
@@ -223,7 +224,7 @@ namespace FPSDemo.NPC.Utilities
 			}
 		}
 
-		private static CornerDetectionInfo ValidateCornerPosition(CornerDetectionInfo cornerInfo, TacticalGridGenerationSettings gridSettings)
+		private static CornerDetectionInfo ValidateCornerPosition(CornerDetectionInfo cornerInfo, TacticalGridGenerationSettings gridSettings, bool checkingLeftCorner, TacticalPosDebugGO debugData)
 		{
 			if (!cornerInfo.position.HasValue)
 			{
@@ -238,10 +239,16 @@ namespace FPSDemo.NPC.Utilities
 				return cornerInfo;
 			}
 
-			if (ObstacleInFiringPosition(yStandardCornerPos.Value, cornerInfo.cornerNormal.Value, cornerInfo.cornerFiringPositionNormal.Value, gridSettings))
+			Vector3 cornerOutDirection = Vector3.Cross(Vector3.up, cornerInfo.cornerFiringPositionNormal.Value).normalized;
+			if (checkingLeftCorner)
 			{
-				cornerInfo.cornerType = CornerType.NoCorner;
-				return cornerInfo;
+				cornerOutDirection = -cornerOutDirection;
+			}
+
+			if (ObstacleInFiringPosition(yStandardCornerPos.Value, -cornerInfo.cornerNormal.Value, cornerOutDirection, gridSettings, debugData))
+			{
+				//cornerInfo.cornerType = CornerType.NoCorner;
+				//return cornerInfo;
 			}
 
 			cornerInfo.position = yStandardCornerPos;
@@ -268,14 +275,25 @@ namespace FPSDemo.NPC.Utilities
 			return null;
 		}
 
-		private static bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection, TacticalGridGenerationSettings gridSettings)
+		private static bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection, TacticalGridGenerationSettings gridSettings, TacticalPosDebugGO debugData)
 		{
 			float additionalOffset = 0.01f;
-			Vector3 sphereCastOrigin = cornerPosition +
-				-cornerNormal * (gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset) +
-				cornerOutDirection * (gridSettings.sphereCastForFiringPositionCheckOffset.x + gridSettings.cornerCheckPositionOffset + gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset)
+			//Vector3 sphereCastOrigin = cornerPosition +
+			//	- cornerNormal * (gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset) +
+			//	cornerOutDirection * (gridSettings.sphereCastForFiringPositionCheckOffset.x + gridSettings.cornerCheckPositionOffset + gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset)
+			//	+ Vector3.up * gridSettings.sphereCastForFiringPositionCheckOffset.y;
+
+			Vector3 sphereCastOrigin = cornerPosition - cornerNormal * (gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset)
+				+ cornerOutDirection * (gridSettings.sphereCastForFiringPositionCheckOffset.x + gridSettings.cornerCheckPositionOffset + gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset)
 				+ Vector3.up * gridSettings.sphereCastForFiringPositionCheckOffset.y;
 
+			if (debugData != null)
+			{
+				debugData.sphereCastAnchor = cornerPosition;
+				debugData.sphereCastOrigin = sphereCastOrigin;
+				debugData.sphereCastNormal = cornerNormal;
+				debugData.sphereCastDirection = cornerNormal * (gridSettings.sphereCastForFiringPositionCheckDistance + gridSettings.sphereCastForFiringPositionCheckRadius + additionalOffset);
+			}
 
 			if (Physics.SphereCast(sphereCastOrigin,
 				gridSettings.sphereCastForFiringPositionCheckRadius,

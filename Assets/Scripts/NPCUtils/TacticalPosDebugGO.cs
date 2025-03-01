@@ -11,6 +11,7 @@ namespace FPSDemo.NPC.Utilities
 		public TacticalGridGenerationSettings gridSettings;
 
 		public Vector3 offsetPosition, leftDirection, finalCornerPos;
+		public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal;
 		public float distanceToObstacleLeft, distanceToObstacleRight, maxDistLeft, maxDistRight;
 		public Vector3? leftCornerPos, rightCornerPos;
 
@@ -52,10 +53,17 @@ namespace FPSDemo.NPC.Utilities
 			DrawRay(finalCornerPos, specialCover.rotationToAlignWithCover.eulerAngles, Color.green);
 		}
 
+		private void ObstacleInFiringPositionDebug()
+		{
+			DrawSphere(sphereCastOrigin, 0.1f, Color.black);
+			DrawRay(sphereCastOrigin, sphereCastDirection, Color.blue);
+		}
+
 
 		void OnDrawGizmosSelected()
 		{
-			GetHighPosAdjustedToCornerDebug();
+			//GetHighPosAdjustedToCornerDebug();
+			ObstacleInFiringPositionDebug();
 		}
 	}
 }

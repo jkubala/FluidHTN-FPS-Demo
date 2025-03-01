@@ -34,6 +34,6 @@ MonoBehaviour:
   rayLengthBeyondWall: 0.25
   sphereCastForFiringPositionCheckOffset: {x: 0.1, y: 0}
   sphereCastForFiringPositionCheckRadius: 0.15
-  sphereCastForFiringPositionCheckDistance: 0.5
+  sphereCastForFiringPositionCheckDistance: 1
   minHeightToConsiderHighCover: 1.85
   minHeightToConsiderLowCover: 0.95
