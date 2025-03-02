@@ -5,7 +5,7 @@ namespace FPSDemo.NPC.Utilities
 {
 	public class TacticalPosDebugGO : MonoBehaviour
 	{
-		enum DebugMode { Corner, Non90DegreeCorner, Obstacle }
+		enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
 		[SerializeField] DebugMode debugMode;
 
 		public SpecialCover specialCover;
@@ -18,7 +18,10 @@ namespace FPSDemo.NPC.Utilities
 		public float distLeft2, distRight2;
 		public Vector3? leftCornerPos, rightCornerPos;
 		public List<Vector3> hitPositions;
-		public Vector3? firstNormal, secondNormal, secondNormalHit;
+		public Vector3? initCornerNormal, initCornerFiringNormal;
+
+		public Vector3 standardisationOrigin, standardisationDirection;
+		public float standardisationDistance;
 
 		private void DrawSphere(Vector3 position, float radius, Color color)
 		{
@@ -73,15 +76,19 @@ namespace FPSDemo.NPC.Utilities
 
 		private void Non90DegreeCornerDebug()
 		{
-			if (firstNormal.HasValue)
+			if (initCornerNormal.HasValue)
 			{
-				Debug.Log("HEHEE");
-				DrawRay(finalCornerPos, firstNormal.Value, Color.black);
+				DrawRay(finalCornerPos, initCornerNormal.Value, Color.black);
 			}
-			if (secondNormal.HasValue)
+			if (initCornerFiringNormal.HasValue)
 			{
-				DrawRay(secondNormalHit.Value, secondNormal.Value, Color.yellow);
+				DrawRay(finalCornerPos, initCornerFiringNormal.Value, Color.yellow);
 			}
+		}
+
+		private void StandardisationDebug()
+		{
+			DrawRay(standardisationOrigin, standardisationDirection * standardisationDistance, Color.black);
 		}
 
 
@@ -97,6 +104,9 @@ namespace FPSDemo.NPC.Utilities
 					break;
 				case DebugMode.Non90DegreeCorner:
 					Non90DegreeCornerDebug();
+					break;
+				case DebugMode.NormalStandardisation:
+					StandardisationDebug();
 					break;
 			}
 		}

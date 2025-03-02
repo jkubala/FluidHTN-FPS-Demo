@@ -6046,7 +6046,7 @@ Transform:
   m_GameObject: {fileID: 639755624}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.88, y: 0, z: -104.18}
+  m_LocalPosition: {x: -29.96, y: 0, z: -45.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13908,8 +13908,8 @@ MonoBehaviour:
   _generateAutoProbeGrid: 1
   _showThePositionsInEditor: 1
   _createDebugGameObjects: 0
-  _debugGameObjectsSpawn: {x: -50.575, y: 0.889, z: -25.335}
-  _debugGameObjectsSpawnRadius: 5
+  _debugGameObjectsSpawn: {x: -31.2, y: 1.5499984, z: -40.96}
+  _debugGameObjectsSpawnRadius: 10
   _debugGameObject: {fileID: 1725634254696360293, guid: a8f6e3ffc6fe7c940ba2d8de5e5434c8, type: 3}
   _debugGameObjectParent: {fileID: 1130869014}
 --- !u!1 &1557896659
