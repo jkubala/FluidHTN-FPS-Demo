@@ -264,7 +264,7 @@ namespace FPSDemo.NPC.Utilities
 				return cornerInfo;
 			}
 
-			Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo.position.Value, 1.6f, gridSettings.RaycastMask);
+			Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo.position.Value, 1.6f, gridSettings);
 
 			if (!yStandardCornerPos.HasValue)
 			{
@@ -326,9 +326,10 @@ namespace FPSDemo.NPC.Utilities
 			return null;
 		}
 
-		private static Vector3? StandardizePositionOnYAxis(Vector3 position, float distanceFromGround, LayerMask raycastMask)
+		private static Vector3? StandardizePositionOnYAxis(Vector3 position, float distanceFromGround, TacticalGridGenerationSettings gridSettings)
 		{
-			if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Mathf.Infinity, raycastMask))
+			float radiusOffset = 0.05f;
+			if (Physics.SphereCast(position, gridSettings.cornerCheckRayWallOffset - radiusOffset, Vector3.down, out RaycastHit hit, Mathf.Infinity, gridSettings.RaycastMask))
 			{
 				float standardizedHeight = hit.point.y + distanceFromGround;
 				float maxThresholdAboveGround = 2.5f;
@@ -344,6 +345,22 @@ namespace FPSDemo.NPC.Utilities
 				}
 			}
 			return null;
+			//if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Mathf.Infinity, raycastMask))
+			//{
+			//	float standardizedHeight = hit.point.y + distanceFromGround;
+			//	float maxThresholdAboveGround = 2.5f;
+
+			//	if (position.y - standardizedHeight < 0 || position.y - standardizedHeight > maxThresholdAboveGround)
+			//	{
+			//		return null;
+			//	}
+			//	else
+			//	{
+			//		position.y = standardizedHeight;
+			//		return position;
+			//	}
+			//}
+			//return null;
 		}
 
 		private static bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection, TacticalGridGenerationSettings gridSettings, TacticalPosDebugGO debugData)

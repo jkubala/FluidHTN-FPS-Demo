@@ -38,7 +38,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -71.68, y: 5.8499994, z: -53.20001}
+  - Position: {x: -71.68, y: 5.85, z: -53.20001}
     CoverDirections: 
     specialCover:
       type: 1
@@ -73,17 +73,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -68.90056, y: 1.85, z: -50.55}
+  - Position: {x: -68.90056, y: 2.0732694, z: -50.55}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -68.90056, y: 3.8510475, z: -46.04}
+  - Position: {x: -68.90056, y: 3.851047, z: -46.04}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -68.44799, y: 9.849999, z: -41.987988}
+  - Position: {x: -68.44799, y: 9.85, z: -41.987988}
     CoverDirections: 
     specialCover:
       type: 2
@@ -93,7 +93,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -68.46, y: 3.85, z: -45.590385}
+  - Position: {x: -68.46, y: 4.0732694, z: -45.590385}
     CoverDirections: 
     specialCover:
       type: 2
@@ -193,7 +193,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -64.4012, y: 5.85, z: -31.830002}
+  - Position: {x: -64.4012, y: 6.0612507, z: -31.830002}
     CoverDirections: 
     specialCover:
       type: 1
@@ -263,7 +263,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -63.807907, y: 9.849999, z: -44.0321}
+  - Position: {x: -63.807907, y: 9.85, z: -44.0321}
     CoverDirections: 
     specialCover:
       type: 2
@@ -383,7 +383,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -59.3, y: 9.850001, z: -38.33}
+  - Position: {x: -59.3, y: 9.85, z: -38.33}
     CoverDirections: 
     specialCover:
       type: 1
@@ -413,7 +413,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -59.3, y: 5.8499994, z: -33.33}
+  - Position: {x: -59.3, y: 5.85, z: -33.33}
     CoverDirections: 
     specialCover:
       type: 1
@@ -433,7 +433,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726534, w: 0.9999619}
-  - Position: {x: -59.3, y: 5.8500004, z: -31.340002}
+  - Position: {x: -59.3, y: 5.85, z: -31.340002}
     CoverDirections: 
     specialCover:
       type: 2
@@ -453,7 +453,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -59.3, y: 5.8500004, z: -15.059999}
+  - Position: {x: -59.3, y: 5.85, z: -15.059999}
     CoverDirections: 
     specialCover:
       type: 2
@@ -508,7 +508,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.00000084324205, y: 0.000000007358862, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -59.299995, y: 9.850001, z: -52.539993}
+  - Position: {x: -59.299995, y: 9.85, z: -52.539993}
     CoverDirections: 
     specialCover:
       type: 1
@@ -588,7 +588,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -58.698788, y: 5.8499994, z: -16.95143}
+  - Position: {x: -58.698788, y: 5.85, z: -16.95143}
     CoverDirections: 
     specialCover:
       type: 2
@@ -613,7 +613,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726534, y: -0.000000024068587, z: 0.0000027579872, w: 0.9999619}
-  - Position: {x: -55.098263, y: 3.85, z: -25.16}
+  - Position: {x: -55.098263, y: 4.0732694, z: -25.16}
     CoverDirections: 
     specialCover:
       type: 2
@@ -628,7 +628,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -54.651558, y: 3.85, z: -25.601559}
+  - Position: {x: -54.651558, y: 3.851047, z: -25.601559}
     CoverDirections: 
     specialCover:
       type: 1
@@ -878,7 +878,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726534, w: 0.9999619}
-  - Position: {x: -37.66, y: 5.8500004, z: -29.2}
+  - Position: {x: -37.66, y: 5.85, z: -29.2}
     CoverDirections: 
     specialCover:
       type: 2
@@ -1003,7 +1003,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -36.3, y: 5.8499994, z: -19.340002}
+  - Position: {x: -36.3, y: 5.85, z: -19.340002}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1408,7 +1408,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -32.495975, y: 1.6, z: -73.08406}
+  - Position: {x: -32.495975, y: 1.81125, z: -73.08406}
     CoverDirections: 
     specialCover:
       type: 2
@@ -1468,37 +1468,37 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -32.30001, y: 1.6000001, z: -134.6099}
+  - Position: {x: -32.30001, y: 1.6, z: -134.6099}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -32.30001, y: 1.6000001, z: -132.74988}
+  - Position: {x: -32.30001, y: 1.6, z: -132.74988}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -30.180145, y: 1.6000001, z: -129.60027}
+  - Position: {x: -30.180145, y: 1.6, z: -129.60027}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -30.179516, y: 1.6000001, z: -129.00037}
+  - Position: {x: -30.179516, y: 1.6, z: -129.00037}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -30.07994, y: 9.600002, z: -112.8}
+  - Position: {x: -30.07994, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000014042568, y: 1.1290257e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -30.089918, y: 5.600001, z: -112.8}
+  - Position: {x: -30.089918, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000014042489, y: 1.2254695e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -30.089895, y: 1.6000001, z: -112.8}
+  - Position: {x: -30.089895, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1558,7 +1558,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -28.702011, y: 5.600001, z: -125.450005}
+  - Position: {x: -28.702011, y: 5.6, z: -125.450005}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1573,17 +1573,17 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -27.16994, y: 9.600002, z: -112.8}
+  - Position: {x: -27.16994, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000014042576, y: 1.1288932e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -27.169918, y: 5.600001, z: -112.8}
+  - Position: {x: -27.169918, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000014042489, y: 1.2254695e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -27.169895, y: 1.6000001, z: -112.8}
+  - Position: {x: -27.169895, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -1593,11 +1593,6 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726534, w: 0.9999619}
-  - Position: {x: -28.690504, y: 1.5499964, z: -42.389496}
-    CoverDirections: 
-    specialCover:
-      type: 1
-      rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
   - Position: {x: -27.169966, y: 1.549991, z: -112.20001}
     CoverDirections: 
     specialCover:
@@ -1633,7 +1628,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -24.94948, y: 1.6000001, z: -129.00037}
+  - Position: {x: -24.94948, y: 1.6, z: -129.00037}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1653,17 +1648,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726534, w: 0.9999619}
-  - Position: {x: -28.102507, y: 5.600001, z: -125.44739}
+  - Position: {x: -28.102507, y: 5.6, z: -125.44739}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -25.103802, y: 1.6000001, z: -127.56}
+  - Position: {x: -25.103802, y: 1.6, z: -127.56}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: -25.103802, y: 1.6000001, z: -121.98}
+  - Position: {x: -25.103802, y: 1.6, z: -121.98}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1673,22 +1668,22 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -24.860826, y: 1.6000001, z: -121.425964}
+  - Position: {x: -24.860826, y: 1.6, z: -121.425964}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0058840704, y: 0.00003791981, z: 0.006444241, w: 0.999962}
-  - Position: {x: -25.179934, y: 9.600002, z: -112.8}
+  - Position: {x: -25.179934, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -25.179907, y: 5.600001, z: -112.8}
+  - Position: {x: -25.179907, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -25.17988, y: 1.6000001, z: -112.8}
+  - Position: {x: -25.17988, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1708,12 +1703,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008720004, y: -0.0003375508, z: -0.0000029435114, w: 0.9999619}
-  - Position: {x: -23.440048, y: 9.600002, z: -132.95}
+  - Position: {x: -23.440048, y: 9.6, z: -132.95}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000025162867, z: 0.000000022999481, w: 0.9999619}
-  - Position: {x: -23.440052, y: 9.600002, z: -121.810005}
+  - Position: {x: -23.440052, y: 9.6, z: -121.810005}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1728,12 +1723,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726534, w: 0.9999619}
-  - Position: {x: -22.169939, y: 9.600002, z: -112.8}
+  - Position: {x: -22.169939, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -22.169912, y: 5.600001, z: -112.8}
+  - Position: {x: -22.169912, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -1758,22 +1753,22 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -22.993034, y: 9.600002, z: -133.39311}
+  - Position: {x: -22.993034, y: 9.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -24.503536, y: 1.6000001, z: -129.45}
+  - Position: {x: -24.503536, y: 1.6, z: -129.45}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -24.503536, y: 1.6000001, z: -127.55635}
+  - Position: {x: -24.503536, y: 1.6, z: -127.55635}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -22.99093, y: 9.600003, z: -121.36899}
+  - Position: {x: -22.99093, y: 9.6, z: -121.36899}
     CoverDirections: 
     specialCover:
       type: 2
@@ -1798,7 +1793,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -21.250937, y: 9.600002, z: -121.36899}
+  - Position: {x: -21.250937, y: 9.6, z: -121.36899}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1828,7 +1823,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -23.901438, y: 1.6000013, z: 12.691436}
+  - Position: {x: -23.901438, y: 1.6000012, z: 12.691436}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1848,27 +1843,27 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -21.248652, y: 9.600002, z: -121.96873}
+  - Position: {x: -21.248652, y: 9.6, z: -121.96873}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -1.8582193e-11, y: -4.570478e-13, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -20.199287, y: 1.6000001, z: -114.25}
+  - Position: {x: -20.199287, y: 1.6, z: -114.25}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: -20.179937, y: 9.600002, z: -112.8}
+  - Position: {x: -20.179937, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -20.17991, y: 5.600001, z: -112.8}
+  - Position: {x: -20.17991, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -20.179888, y: 1.6000001, z: -112.8}
+  - Position: {x: -20.179888, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -1893,37 +1888,37 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726534, w: 0.9999619}
-  - Position: {x: -18.04215, y: 9.600002, z: -132.48994}
+  - Position: {x: -18.04215, y: 9.6, z: -132.48994}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726534, y: 0.000001984788, z: 0.000002822129, w: 0.9999619}
-  - Position: {x: -18.042194, y: 9.600002, z: -130.6}
+  - Position: {x: -18.042194, y: 9.6, z: -130.6}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000025151917, z: 0.000000022989923, w: 0.9999619}
-  - Position: {x: -19.358648, y: 9.600002, z: -121.96873}
+  - Position: {x: -19.358648, y: 9.6, z: -121.96873}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -19.849888, y: 1.6000001, z: -117.715454}
+  - Position: {x: -19.849888, y: 1.6, z: -117.715454}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0058302, y: 0.000037857033, z: -0.0064930175, w: 0.9999619}
-  - Position: {x: -19.360933, y: 9.600001, z: -121.36899}
+  - Position: {x: -19.360933, y: 9.6, z: -121.36899}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -1.3798601e-10, y: 1.500234e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -18.042265, y: 9.600002, z: -117.65}
+  - Position: {x: -18.042265, y: 9.6, z: -117.65}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0.000002192432, z: 0.000000020173243, w: 0.9999619}
-  - Position: {x: -18.10988, y: 1.6000001, z: -112.8}
+  - Position: {x: -18.10988, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -1983,12 +1978,12 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -17.159931, y: 9.600002, z: -112.8}
+  - Position: {x: -17.159931, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -17.159904, y: 5.600001, z: -112.8}
+  - Position: {x: -17.159904, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2008,12 +2003,12 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000030232559, y: -2.6383555e-11, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -19.598984, y: 1.6000001, z: -117.16088}
+  - Position: {x: -19.598984, y: 1.6, z: -117.16088}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -19.598984, y: 1.6000001, z: -114.250885}
+  - Position: {x: -19.598984, y: 1.6, z: -114.250885}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2038,7 +2033,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -17.598982, y: 9.600002, z: -117.20094}
+  - Position: {x: -17.598982, y: 9.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2148,32 +2143,32 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -17.443436, y: 9.600002, z: -132.49007}
+  - Position: {x: -17.443436, y: 9.6, z: -132.49007}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726534, y: -0.0000029926146, z: -0.0000024871495, w: 0.9999619}
-  - Position: {x: -17.44347, y: 9.600002, z: -130.59645}
+  - Position: {x: -17.44347, y: 9.6, z: -130.59645}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: -0.000002517363, z: 0.000000020928518, w: 0.9999619}
-  - Position: {x: -14.790663, y: 9.600002, z: -117.800735}
+  - Position: {x: -14.790663, y: 9.6, z: -117.800735}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -14.788979, y: 9.600002, z: -117.20094}
+  - Position: {x: -14.788979, y: 9.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -15.179929, y: 9.600002, z: -112.8}
+  - Position: {x: -15.179929, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -15.179902, y: 5.600001, z: -112.8}
+  - Position: {x: -15.179902, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2198,12 +2193,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726534, w: 0.9999619}
-  - Position: {x: -13.2099285, y: 9.600002, z: -112.8}
+  - Position: {x: -13.2099285, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -13.209902, y: 5.6000004, z: -112.8}
+  - Position: {x: -13.209902, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2378,7 +2373,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -15.832886, y: 1.5999985, z: -5.9771123}
+  - Position: {x: -15.832886, y: 1.5999986, z: -5.9771123}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2413,7 +2408,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -13.27737, y: 5.5993185, z: -8.53263}
+  - Position: {x: -13.27737, y: 5.599319, z: -8.53263}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2433,17 +2428,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -12.6382675, y: 1.5999986, z: -5.9800005}
+  - Position: {x: -12.6382675, y: 1.5999985, z: -5.9800005}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -12.900658, y: 9.600002, z: -117.800735}
+  - Position: {x: -12.900658, y: 9.6, z: -117.800735}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -12.898974, y: 9.600002, z: -117.20094}
+  - Position: {x: -12.898974, y: 9.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2453,17 +2448,17 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726534, w: 0.9999619}
-  - Position: {x: -11.219941, y: 9.600002, z: -112.8}
+  - Position: {x: -11.219941, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000013379382, y: 1.07368186e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -11.219921, y: 5.6000004, z: -112.8}
+  - Position: {x: -11.219921, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -11.619901, y: 1.6000001, z: -112.8}
+  - Position: {x: -11.619901, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2503,12 +2498,12 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -10.127251, y: 1.6000001, z: -117.36}
+  - Position: {x: -10.127251, y: 1.6, z: -117.36}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: -10.127251, y: 1.6000001, z: -114.25}
+  - Position: {x: -10.127251, y: 1.6, z: -114.25}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2663,7 +2658,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -10.279707, y: 5.5993185, z: -5.5302944}
+  - Position: {x: -10.279707, y: 5.599319, z: -5.5302944}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2673,17 +2668,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -8.106772, y: 9.600003, z: -132.79312}
+  - Position: {x: -8.106772, y: 9.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -9.68674, y: 1.6000001, z: -132.79312}
+  - Position: {x: -9.68674, y: 1.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -8.209872, y: 1.6000001, z: -112.8}
+  - Position: {x: -8.209872, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2698,27 +2693,27 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -8.113004, y: 9.600002, z: -133.39311}
+  - Position: {x: -8.113004, y: 9.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -9.682972, y: 1.6000001, z: -133.39311}
+  - Position: {x: -9.682972, y: 1.81125, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -9.680629, y: 1.6000001, z: -117.800735}
+  - Position: {x: -9.680629, y: 1.6, z: -117.800735}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000036897196, y: 3.2199694e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -8.209926, y: 9.600002, z: -112.8}
+  - Position: {x: -8.209926, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000013379382, y: 1.0737021e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -8.209898, y: 5.600001, z: -112.8}
+  - Position: {x: -8.209898, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2728,7 +2723,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -9.526965, y: 1.6000001, z: -114.2471}
+  - Position: {x: -9.526965, y: 1.6, z: -114.2471}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2753,22 +2748,22 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -8.289706, y: 9.5993185, z: -5.5302954}
+  - Position: {x: -8.289706, y: 9.599319, z: -5.5302954}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726534, w: 0.9999619}
-  - Position: {x: -8.289605, y: 5.599319, z: -5.5303307}
+  - Position: {x: -8.289605, y: 5.5993195, z: -5.5303307}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000012673833, y: -0.0000000015444321, z: 0.008726534, w: 0.9999619}
-  - Position: {x: -5.6489735, y: 9.600003, z: -117.20094}
+  - Position: {x: -5.6489735, y: 9.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -5.648916, y: 1.6000001, z: -117.20094}
+  - Position: {x: -5.648916, y: 1.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2793,12 +2788,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -6.447209, y: 9.59932, z: 9.740005}
+  - Position: {x: -6.447209, y: 9.599321, z: 9.740005}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000000015140412, z: 0.00000017348246, w: 0.9999619}
-  - Position: {x: -6.4476414, y: 5.5993214, z: 9.739999}
+  - Position: {x: -6.4476414, y: 5.599322, z: 9.739999}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2813,27 +2808,27 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.000000004027771, z: 0.00000046153684, w: 0.9999619}
-  - Position: {x: -6.2229996, y: 9.600002, z: -133.39311}
+  - Position: {x: -6.2229996, y: 9.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -5.8008366, y: 1.6000001, z: -129.16}
+  - Position: {x: -5.8008366, y: 1.6, z: -129.16}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: -6.219922, y: 9.600002, z: -112.8}
+  - Position: {x: -6.219922, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000088697805, y: -7.4314055e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -6.219893, y: 5.600001, z: -112.8}
+  - Position: {x: -6.219893, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.000000010679318, y: -9.319699e-11, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -6.2198653, y: 1.6000001, z: -112.8}
+  - Position: {x: -6.2198653, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -2858,16 +2853,11 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -5.642997, y: 9.600003, z: -133.39311}
+  - Position: {x: -5.642997, y: 9.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -5.8008385, y: 5.600001, z: -117.64904}
-    CoverDirections: 
-    specialCover:
-      type: 1
-      rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
   - Position: {x: -4.6898417, y: 5.6, z: -82.740166}
     CoverDirections: 
     specialCover:
@@ -2893,22 +2883,22 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -5.3601103, y: 1.6000001, z: -129.60025}
+  - Position: {x: -5.3601103, y: 1.6, z: -129.60025}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -3.209938, y: 9.600002, z: -112.8}
+  - Position: {x: -3.209938, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -3.209917, y: 5.600001, z: -112.8}
+  - Position: {x: -3.209917, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -3.2098956, y: 1.6000001, z: -112.8}
+  - Position: {x: -3.2098956, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2928,12 +2918,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -5.847365, y: 1.5999985, z: -5.972634}
+  - Position: {x: -5.847365, y: 1.5999986, z: -5.972634}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -3.0897655, y: 5.5993204, z: -1.640001}
+  - Position: {x: -3.0897655, y: 5.59932, z: -1.640001}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2963,17 +2953,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: -0.0000002830203, z: -0.0000004590317, w: 0.9999619}
-  - Position: {x: -5.2010007, y: 9.600002, z: -132.9489}
+  - Position: {x: -5.2010007, y: 9.6, z: -132.9489}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: -0.0000013859926, z: 0.000000011055196, w: 0.9999619}
-  - Position: {x: -5.2012954, y: 5.6000004, z: -117.64861}
+  - Position: {x: -5.2012954, y: 5.6, z: -117.64861}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: -5.201296, y: 1.6000001, z: -117.648575}
+  - Position: {x: -5.201296, y: 1.6, z: -117.648575}
     CoverDirections: 
     specialCover:
       type: 2
@@ -2993,7 +2983,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726534, w: 0.9999619}
-  - Position: {x: -3.2873693, y: 5.5993185, z: -8.532629}
+  - Position: {x: -3.2873693, y: 5.599319, z: -8.532629}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3013,21 +3003,16 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: -1.5996908, y: 9.600002, z: -132.95}
+  - Position: {x: -1.5996908, y: 9.6, z: -132.95}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000035192936, z: 0.000000031752588, w: 0.9999619}
-  - Position: {x: -1.6003532, y: 5.600001, z: -117.65}
+  - Position: {x: -1.6003532, y: 5.6, z: -117.65}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: -5.2008595, y: 9.600002, z: -117.640945}
-    CoverDirections: 
-    specialCover:
-      type: 2
-      rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
   - Position: {x: -2.700159, y: 5.6, z: -83.34016}
     CoverDirections: 
     specialCover:
@@ -3063,16 +3048,11 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 0.050515294, y: 1.6000001, z: -129.00037}
+  - Position: {x: 0.050515294, y: 1.6, z: -129.00037}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -1.5995866, y: 9.600002, z: -117.650314}
-    CoverDirections: 
-    specialCover:
-      type: 1
-      rotationToAlignWithCover: {x: -0.008726534, y: 0.0000034152356, z: 0.00000006563138, w: 0.9999619}
   - Position: {x: -3.26, y: 1.5999981, z: -8.532629}
     CoverDirections: 
     specialCover:
@@ -3083,7 +3063,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -2.2397065, y: 5.5993195, z: -5.5302944}
+  - Position: {x: -2.2397065, y: 5.599319, z: -5.5302944}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3093,37 +3073,37 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 0.049892545, y: 1.6000001, z: -129.60025}
+  - Position: {x: 0.049892545, y: 1.6, z: -129.60025}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -0.10093435, y: 1.6000001, z: -127.56}
+  - Position: {x: -0.10093435, y: 1.6, z: -127.56}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 0.056073785, y: 1.6000001, z: -120.305954}
+  - Position: {x: 0.056073785, y: 1.6, z: -120.305954}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -1.1589389, y: 5.600001, z: -117.20094}
+  - Position: {x: -1.1589389, y: 5.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -1.2099342, y: 9.600002, z: -112.8}
+  - Position: {x: -1.2099342, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -1.2099113, y: 5.600001, z: -112.8}
+  - Position: {x: -1.2099113, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -1.2098904, y: 1.6000001, z: -112.8}
+  - Position: {x: -1.2098904, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3188,7 +3168,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -0.11970657, y: 5.599319, z: -5.5302935}
+  - Position: {x: -0.11970657, y: 5.5993195, z: -5.5302935}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3198,22 +3178,22 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -2.4897206, y: 5.5993204, z: 8.269719}
+  - Position: {x: -2.4897206, y: 5.599321, z: 8.269719}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 1.8000646, y: 9.600002, z: -112.8}
+  - Position: {x: 1.8000646, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 1.7900844, y: 5.6000004, z: -112.8}
+  - Position: {x: 1.7900844, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 1.7901073, y: 1.6000001, z: -112.8}
+  - Position: {x: 1.7901073, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3233,42 +3213,42 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 1.6570415, y: 5.600001, z: -133.39311}
+  - Position: {x: 1.6570415, y: 5.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: -0.9999865, y: 9.600002, z: -132.9499}
+  - Position: {x: -0.9999865, y: 9.6, z: -132.9499}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: -0.0000035214653, z: 0.000000029691185, w: 0.9999619}
-  - Position: {x: 1.663273, y: 5.600001, z: -132.79312}
+  - Position: {x: 1.663273, y: 5.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 0.43975866, y: 5.600001, z: -129.40039}
+  - Position: {x: 0.43975866, y: 5.6, z: -129.40039}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 0.44031537, y: 5.600001, z: -128.80017}
+  - Position: {x: 0.44031537, y: 5.6, z: -128.80017}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: -0.99969304, y: 9.600002, z: -117.650154}
+  - Position: {x: -0.99969304, y: 9.6, z: -117.650154}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726534, y: -0.0000049194714, z: -0.000000281936, w: 0.9999619}
-  - Position: {x: 0.43935055, y: 9.600002, z: -117.800735}
+  - Position: {x: 0.43935055, y: 9.6, z: -117.800735}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 0.44103378, y: 9.600002, z: -117.20094}
+  - Position: {x: 0.44103378, y: 9.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3303,37 +3283,37 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 3.102522, y: 1.6000001, z: -135.12}
+  - Position: {x: 3.102522, y: 1.6, z: -135.12}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 3.103268, y: 9.600001, z: -133.24}
+  - Position: {x: 3.103268, y: 9.6, z: -133.24}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000035192934, z: 0.000000031752585, w: 0.9999619}
-  - Position: {x: 3.1025221, y: 5.600001, z: -133.24}
+  - Position: {x: 3.1025221, y: 5.6, z: -133.24}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 0.49953094, y: 1.6000001, z: -127.55936}
+  - Position: {x: 0.49953094, y: 1.6, z: -127.55936}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: 3.102521, y: 1.6000001, z: -127.56}
+  - Position: {x: 3.102521, y: 1.6, z: -127.56}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 0.49953112, y: 1.6000001, z: -120.74937}
+  - Position: {x: 0.49953112, y: 1.6, z: -120.74937}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: 3.1025212, y: 1.6000001, z: -120.75}
+  - Position: {x: 3.1025212, y: 1.6, z: -120.75}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3368,7 +3348,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 0.95134664, y: 1.5499943, z: -69.348656}
+  - Position: {x: 0.95134664, y: 1.6, z: -69.348656}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3378,37 +3358,37 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 3.5432415, y: 9.600003, z: -132.79312}
+  - Position: {x: 3.5432415, y: 9.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 3.5432768, y: 5.600001, z: -132.79312}
+  - Position: {x: 3.5432768, y: 5.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 3.5499318, y: 1.6000001, z: -129.60025}
+  - Position: {x: 3.5499318, y: 1.6, z: -129.60025}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 3.550554, y: 1.6000001, z: -129.00037}
+  - Position: {x: 3.550554, y: 1.6, z: -129.00037}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 3.7800703, y: 9.600002, z: -112.8}
+  - Position: {x: 3.7800703, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 3.7800932, y: 5.600001, z: -112.8}
+  - Position: {x: 3.7800932, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 3.7801151, y: 1.6000001, z: -112.8}
+  - Position: {x: 3.7801151, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3423,12 +3403,12 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 1.7085187, y: 1.6000006, z: -1.4414809}
+  - Position: {x: 1.7085187, y: 1.8212509, z: -1.4414809}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 3.5461164, y: 1.6000001, z: -120.305954}
+  - Position: {x: 3.5461164, y: 1.6, z: -120.305954}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3453,12 +3433,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 5.308519, y: 1.6000013, z: 12.69}
+  - Position: {x: 5.308519, y: 1.6000012, z: 12.69}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 3.7022324, y: 1.6000001, z: -135.11205}
+  - Position: {x: 3.7022324, y: 1.6, z: -135.11205}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3468,17 +3448,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: 6.7900715, y: 9.600002, z: -112.799995}
+  - Position: {x: 6.7900715, y: 9.6, z: -112.799995}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 6.780096, y: 5.6000004, z: -112.8}
+  - Position: {x: 6.780096, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 6.7801228, y: 1.6000001, z: -112.8}
+  - Position: {x: 6.7801228, y: 1.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3503,42 +3483,42 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 8.453242, y: 9.600001, z: -132.79312}
+  - Position: {x: 8.453242, y: 9.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 8.453279, y: 5.600001, z: -132.79312}
+  - Position: {x: 8.453279, y: 5.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 8.453315, y: 1.6000001, z: -132.79312}
+  - Position: {x: 8.453315, y: 1.6, z: -132.79312}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000000010402575, y: -9.0781905e-12, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 8.457013, y: 9.600002, z: -133.39311}
+  - Position: {x: 8.457013, y: 9.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 8.457049, y: 5.600001, z: -133.39311}
+  - Position: {x: 8.457049, y: 5.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 8.4570875, y: 1.6000001, z: -133.39311}
+  - Position: {x: 8.4570875, y: 1.6, z: -133.39311}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 8.459378, y: 5.600001, z: -117.800735}
+  - Position: {x: 8.459378, y: 5.6, z: -117.800735}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 8.451087, y: 5.600001, z: -117.20094}
+  - Position: {x: 8.451087, y: 5.6, z: -117.20094}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3568,22 +3548,22 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 5.9087586, y: 1.6000013, z: 12.691241}
+  - Position: {x: 5.9087586, y: 1.6000012, z: 12.691241}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 8.77007, y: 9.600002, z: -112.8}
+  - Position: {x: 8.77007, y: 9.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 8.770093, y: 5.600001, z: -112.8}
+  - Position: {x: 8.770093, y: 5.6, z: -112.8}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.0000000010402575, y: -9.0781905e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 8.770116, y: 1.6000001, z: -112.799995}
+  - Position: {x: 8.770116, y: 1.6, z: -112.799995}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3613,97 +3593,97 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726534, w: 0.9999619}
-  - Position: {x: 9.900753, y: 9.600002, z: -134.95}
+  - Position: {x: 9.900753, y: 9.6, z: -134.95}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726534, y: 0.0000035171036, z: 0.00000003173347, w: 0.9999619}
-  - Position: {x: 9.900009, y: 5.600001, z: -135.06}
+  - Position: {x: 9.900009, y: 5.6, z: -135.06}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900749, y: 9.600002, z: -132.18}
+  - Position: {x: 9.900749, y: 9.6, z: -132.18}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0.000003517104, z: 0.000000031733478, w: 0.9999619}
-  - Position: {x: 9.900007, y: 5.600001, z: -132.18}
+  - Position: {x: 9.900007, y: 5.6, z: -132.18}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900751, y: 9.600002, z: -130.19}
+  - Position: {x: 9.900751, y: 9.6, z: -130.19}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000035171038, z: 0.000000031733475, w: 0.9999619}
-  - Position: {x: 9.900009, y: 5.600001, z: -130.19}
+  - Position: {x: 9.900009, y: 5.6, z: -130.19}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900773, y: 9.600002, z: -127.17}
+  - Position: {x: 9.900773, y: 9.6, z: -127.17}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726534, y: 0.000003434892, z: 0.00000021333861, w: 0.9999619}
-  - Position: {x: 9.900007, y: 5.600001, z: -127.17}
+  - Position: {x: 9.900007, y: 5.6, z: -127.17}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900778, y: 9.600002, z: -125.18}
+  - Position: {x: 9.900778, y: 9.6, z: -125.18}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726534, y: 0.000003433301, z: 0.000000031002134, w: 0.9999619}
-  - Position: {x: 9.900009, y: 5.600001, z: -125.18}
+  - Position: {x: 9.900009, y: 5.6, z: -125.18}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.9007435, y: 9.600002, z: -122.17}
+  - Position: {x: 9.9007435, y: 9.6, z: -122.17}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000038098635, z: -0.00000015475895, w: 0.9999619}
-  - Position: {x: 9.900007, y: 5.600001, z: -122.17}
+  - Position: {x: 9.900007, y: 5.6, z: -122.17}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900763, y: 9.600002, z: -120.17998}
+  - Position: {x: 9.900763, y: 9.6, z: -120.17998}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726534, y: 0.0000035708288, z: 0.000000032202323, w: 0.9999619}
-  - Position: {x: 9.900007, y: 5.600001, z: -120.17997}
+  - Position: {x: 9.900007, y: 5.6, z: -120.17997}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900003, y: 5.600001, z: -117.16997}
+  - Position: {x: 9.900003, y: 5.6, z: -117.16997}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900007, y: 1.6000001, z: -117.16996}
+  - Position: {x: 9.900007, y: 1.6, z: -117.16996}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900749, y: 9.600002, z: -115.17998}
+  - Position: {x: 9.900749, y: 9.6, z: -115.17998}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.0000035171038, z: 0.000000031733475, w: 0.9999619}
-  - Position: {x: 9.900005, y: 5.600001, z: -115.17998}
+  - Position: {x: 9.900005, y: 5.6, z: -115.17998}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 9.0781905e-12, z: 0.0000000010402575, w: 0.9999619}
-  - Position: {x: 9.900005, y: 1.6000001, z: -115.17998}
+  - Position: {x: 9.900005, y: 1.6, z: -115.17998}
     CoverDirections: 
     specialCover:
       type: 2
@@ -3758,7 +3738,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 10.50001, y: 5.600001, z: -135.05992}
+  - Position: {x: 10.50001, y: 5.6, z: -135.05992}
     CoverDirections: 
     specialCover:
       type: 1
@@ -3783,15 +3763,10 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: 14.13363, y: 5.600001, z: -135.3}
+  - Position: {x: 14.13363, y: 5.6, z: -135.3}
     CoverDirections: 
     specialCover:
       type: 1
-      rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 14.1686535, y: 5.6, z: -82.9}
-    CoverDirections: 
-    specialCover:
-      type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
   - Position: {x: 14.168652, y: 5.6, z: -80.520004}
     CoverDirections: 
@@ -3813,7 +3788,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 14.1686535, y: 1.5499943, z: -69.340004}
+  - Position: {x: 14.1686535, y: 1.6, z: -69.340004}
     CoverDirections: 
     specialCover:
       type: 1
@@ -4303,12 +4278,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000027198557, y: 2.3735822e-11, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 28.459997, y: 5.6, z: -81.299995}
-    CoverDirections: 
-    specialCover:
-      type: 1
-      rotationToAlignWithCover: {x: 0.008726535, y: 0.000000009525412, z: -0.0000000017427365, w: 0.9999619}
-  - Position: {x: 32.060417, y: 1.6, z: -81.1}
+  - Position: {x: 32.060417, y: 1.81125, z: -81.1}
     CoverDirections: 
     specialCover:
       type: 2
@@ -4618,7 +4588,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 42.510002, y: 9.799989, z: -114.590004}
+  - Position: {x: 42.510002, y: 9.799988, z: -114.590004}
     CoverDirections: 
     specialCover:
       type: 2
@@ -4733,7 +4703,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000014927086, y: 0.000009825112, z: 0.00872653, w: 0.9999619}
-  - Position: {x: 47.312405, y: 5.7998185, z: -120.60252}
+  - Position: {x: 47.312405, y: 5.799819, z: -120.60252}
     CoverDirections: 
     specialCover:
       type: 1
@@ -4933,17 +4903,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 46.13505, y: 5.5999894, z: -27.875051}
+  - Position: {x: 46.13505, y: 5.59999, z: -27.875051}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 46.13505, y: 1.5999951, z: -27.865051}
+  - Position: {x: 46.13505, y: 1.5999953, z: -27.865051}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 46.13505, y: 5.5999894, z: -25.88505}
+  - Position: {x: 46.13505, y: 5.59999, z: -25.88505}
     CoverDirections: 
     specialCover:
       type: 1
@@ -4953,17 +4923,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 46.13505, y: 5.5999904, z: -22.875051}
+  - Position: {x: 46.13505, y: 5.599991, z: -22.875051}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 46.13505, y: 5.5999904, z: -20.87506}
+  - Position: {x: 46.13505, y: 5.599991, z: -20.87506}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 46.13505, y: 5.5999913, z: -17.865059}
+  - Position: {x: 46.13505, y: 5.599992, z: -17.865059}
     CoverDirections: 
     specialCover:
       type: 2
@@ -4973,12 +4943,12 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 49.195408, y: 9.799989, z: -121.204636}
+  - Position: {x: 49.195408, y: 9.799988, z: -121.204636}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.0000017388634, y: -0.000009822904, z: -0.00872653, w: 0.9999619}
-  - Position: {x: 49.19765, y: 5.7999897, z: -121.202385}
+  - Position: {x: 49.19765, y: 5.799989, z: -121.202385}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5003,7 +4973,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 49.738544, y: 5.5999885, z: -30.52}
+  - Position: {x: 49.738544, y: 5.599989, z: -30.52}
     CoverDirections: 
     specialCover:
       type: 2
@@ -5188,7 +5158,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 50.18194, y: 5.5999894, z: -30.968071}
+  - Position: {x: 50.18194, y: 5.599989, z: -30.968071}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5278,7 +5248,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 53.212734, y: 9.799989, z: -133.25}
+  - Position: {x: 53.212734, y: 9.799988, z: -133.25}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5323,7 +5293,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 50.348045, y: 5.5999904, z: -21.068047}
+  - Position: {x: 50.348045, y: 5.599991, z: -21.068047}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5468,12 +5438,12 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 53.76886, y: 1.5999966, z: -19.291145}
+  - Position: {x: 53.76886, y: 1.5999964, z: -19.291145}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 53.77088, y: 1.5999966, z: -18.690887}
+  - Position: {x: 53.77088, y: 1.8212502, z: -18.690887}
     CoverDirections: 
     specialCover:
       type: 2
@@ -5538,7 +5508,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 4.6025733e-10, y: 4.0166048e-12, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 56.555595, y: 9.799987, z: -106.2044}
+  - Position: {x: 56.555595, y: 9.799988, z: -106.2044}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5573,12 +5543,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 58.493904, y: 5.5999885, z: -34.30391}
+  - Position: {x: 58.493904, y: 5.599989, z: -34.30391}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 59.505966, y: 5.799733, z: -127.44001}
+  - Position: {x: 59.505966, y: 5.799734, z: -127.44001}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5603,7 +5573,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 60.14662, y: 1.7999893, z: -131.80339}
+  - Position: {x: 60.14662, y: 2.0112393, z: -131.80339}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5613,7 +5583,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 59.95516, y: 5.7999897, z: -127.00516}
+  - Position: {x: 59.95516, y: 5.799989, z: -127.00516}
     CoverDirections: 
     specialCover:
       type: 2
@@ -5653,7 +5623,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 61.4939, y: 5.5999885, z: -34.30391}
+  - Position: {x: 61.4939, y: 5.599989, z: -34.30391}
     CoverDirections: 
     specialCover:
       type: 1
@@ -5738,7 +5708,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726534, y: 0.00000004167102, z: 0.000000008261927, w: 0.9999619}
-  - Position: {x: 63.18686, y: 5.7999887, z: -109.70315}
+  - Position: {x: 63.18686, y: 5.799989, z: -109.70315}
     CoverDirections: 
     specialCover:
       type: 2
@@ -5813,7 +5783,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 61.551098, y: 1.5999908, z: -56.820007}
+  - Position: {x: 61.551098, y: 1.5999907, z: -56.820007}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6028,7 +5998,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 65.33506, y: 5.5999885, z: -32.86}
+  - Position: {x: 65.33506, y: 5.599989, z: -32.86}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6213,12 +6183,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 65.512695, y: 5.5979295, z: -71.91101}
+  - Position: {x: 65.512695, y: 5.59793, z: -71.91101}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726521, y: 0.0000001369053, z: -0.000015653608, w: 0.9999619}
-  - Position: {x: 65.512695, y: 1.5976446, z: -71.91101}
+  - Position: {x: 65.512695, y: 1.5976359, z: -71.91101}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6228,17 +6198,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 65.509995, y: 1.5999919, z: -69.92}
+  - Position: {x: 65.509995, y: 1.6, z: -69.92}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 69.66371, y: 5.799504, z: -127.606285}
+  - Position: {x: 69.66371, y: 6.01124, z: -127.606285}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.00000004063573, y: -0.0000046563946, z: -0.0087265335, w: 0.9999619}
-  - Position: {x: 69.66588, y: 5.7999835, z: -131.20593}
+  - Position: {x: 69.66588, y: 6.01124, z: -131.20593}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6253,17 +6223,17 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.0000000010152041, y: -0.000000116330874, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 67.5544, y: 1.5998647, z: -73.2144}
+  - Position: {x: 67.5544, y: 1.5998648, z: -73.2144}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.00000001475543, y: -0.00000007622198, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 68.095535, y: 5.6001525, z: -53.15555}
+  - Position: {x: 68.095535, y: 5.600153, z: -53.15555}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 68.09539, y: 1.600157, z: -53.15541}
+  - Position: {x: 68.09539, y: 1.6001571, z: -53.15541}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6288,7 +6258,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0.000000014166956, z: -0.0000016530614, w: 0.9999619}
-  - Position: {x: 65.93349, y: 5.6004295, z: -48.203285}
+  - Position: {x: 65.93349, y: 5.60043, z: -48.203285}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6313,17 +6283,17 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0.000000014544616, z: -0.0000016762775, w: 0.9999619}
-  - Position: {x: 65.934456, y: 9.600014, z: -43.2043}
+  - Position: {x: 65.934456, y: 9.600013, z: -43.2043}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0.000000014365571, z: -0.0000016762759, w: 0.9999619}
-  - Position: {x: 65.93445, y: 5.60015, z: -43.204292}
+  - Position: {x: 65.93445, y: 5.6001496, z: -43.204292}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0.000000014628675, z: -0.0000016762801, w: 0.9999619}
-  - Position: {x: 65.93445, y: 1.6001577, z: -43.204292}
+  - Position: {x: 65.93445, y: 1.600158, z: -43.204292}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6343,7 +6313,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0.0000000056134954, z: -0.00000064647224, w: 0.9999619}
-  - Position: {x: 65.935005, y: 9.599864, z: -38.21002}
+  - Position: {x: 65.935005, y: 9.599863, z: -38.21002}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6363,12 +6333,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 65.93505, y: 5.5999894, z: -36.215057}
+  - Position: {x: 65.93505, y: 5.59999, z: -36.215057}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 65.936264, y: 5.5999894, z: -34.745895}
+  - Position: {x: 65.936264, y: 5.599989, z: -34.745895}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6378,7 +6348,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 65.93505, y: 5.5994773, z: -32.855057}
+  - Position: {x: 65.93505, y: 5.5994754, z: -32.855057}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6458,16 +6428,11 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.000000005312039, y: 0.00000060869934, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 69.57543, y: 5.600162, z: -44.464573}
+  - Position: {x: 69.57543, y: 5.6001616, z: -44.464573}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.00000019687906, y: 0.0000026077967, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 69.57567, y: 5.599989, z: -39.665672}
-    CoverDirections: 
-    specialCover:
-      type: 2
-      rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
   - Position: {x: 69.77552, y: 1.5999933, z: -39.66552}
     CoverDirections: 
     specialCover:
@@ -6493,7 +6458,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 69.975426, y: 1.600157, z: -53.15542}
+  - Position: {x: 69.975426, y: 1.6001571, z: -53.15542}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6503,7 +6468,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.000000027553035, y: -0.00000041875316, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 69.66003, y: 5.8007135, z: -131.8055}
+  - Position: {x: 69.66003, y: 5.800713, z: -131.8055}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6518,7 +6483,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.00000019867716, z: -0.000000057742987, w: 0.9999619}
-  - Position: {x: 70.12, y: 1.5499893, z: -135.35999}
+  - Position: {x: 70.12, y: 1.5499892, z: -135.35999}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6528,7 +6493,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 9.0781905e-12, z: -0.0000000010402575, w: 0.9999619}
-  - Position: {x: 75.00582, y: 5.6007233, z: -97.87}
+  - Position: {x: 75.00582, y: 5.6007237, z: -97.87}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6543,22 +6508,22 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 75.00582, y: 5.6000004, z: -73.66}
+  - Position: {x: 75.00582, y: 5.6, z: -73.66}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 72.659935, y: 5.60043, z: -48.149933}
+  - Position: {x: 72.659935, y: 5.6004305, z: -48.149933}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: -0.00000011388215, z: -0.000000027967504, w: 0.9999619}
-  - Position: {x: 72.65992, y: 5.6003466, z: -46.259926}
+  - Position: {x: 72.65992, y: 5.600347, z: -46.259926}
     CoverDirections: 
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: -0.00000020103722, z: 0.00000021690347, w: 0.9999619}
-  - Position: {x: 76.15908, y: 5.6000004, z: -98.31092}
+  - Position: {x: 76.15908, y: 5.6, z: -98.31092}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6583,17 +6548,12 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 75.60543, y: 5.6, z: -73.654564}
-    CoverDirections: 
-    specialCover:
-      type: 2
-      rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
   - Position: {x: 79.97558, y: 1.6, z: -73.814415}
     CoverDirections: 
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -6.640048e-10, y: 0.00000007608741, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 79.9744, y: 1.5998647, z: -73.21441}
+  - Position: {x: 79.9744, y: 1.5998648, z: -73.21441}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6608,7 +6568,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: -0.008726535, y: 0.000000013283355, z: 0.0000015133024, w: 0.9999619}
-  - Position: {x: 79.684364, y: 5.6000013, z: -40.26564}
+  - Position: {x: 79.684364, y: 5.600002, z: -40.26564}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6663,7 +6623,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -5.8100424e-10, y: -0.00000006657649, z: 0.008726535, w: 0.9999619}
-  - Position: {x: 79.69001, y: 5.5999894, z: -39.665672}
+  - Position: {x: 79.69001, y: 5.599989, z: -39.665672}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6693,7 +6653,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726535, y: 0.000000012743469, z: -0.000001468817, w: 0.9999619}
-  - Position: {x: 80.133644, y: 1.6000817, z: -41.713634}
+  - Position: {x: 80.133644, y: 1.6000816, z: -41.713634}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6708,7 +6668,7 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: 0.008726534, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 84.55589, y: 5.600162, z: -44.464005}
+  - Position: {x: 84.55589, y: 5.6001616, z: -44.464005}
     CoverDirections: 
     specialCover:
       type: 2
@@ -6738,7 +6698,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 84.8644, y: 1.5998647, z: -73.21441}
+  - Position: {x: 84.8644, y: 1.5998648, z: -73.21441}
     CoverDirections: 
     specialCover:
       type: 1
@@ -6788,11 +6748,6 @@ MonoBehaviour:
     specialCover:
       type: 1
       rotationToAlignWithCover: {x: -6.225045e-10, y: 0.000000071331954, z: -0.008726535, w: 0.9999619}
-  - Position: {x: 84.71008, y: 5.6, z: -73.66008}
-    CoverDirections: 
-    specialCover:
-      type: 1
-      rotationToAlignWithCover: {x: -0.008726535, y: 0, z: 0, w: 0.9999619}
   - Position: {x: 86.445786, y: 5.6001616, z: -44.464214}
     CoverDirections: 
     specialCover:
@@ -6828,7 +6783,7 @@ MonoBehaviour:
     specialCover:
       type: 2
       rotationToAlignWithCover: {x: 0.008726535, y: 0, z: 0, w: 0.9999619}
-  - Position: {x: 85.31056, y: 1.5999941, z: -73.66}
+  - Position: {x: 85.31056, y: 1.6, z: -73.66}
     CoverDirections: 
     specialCover:
       type: 2
