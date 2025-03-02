@@ -111,7 +111,8 @@ namespace FPSDemo.NPC.Utilities
 				{
 					// If the distance between currentPos and any unique position is less than the threshold, it's a duplicate
 					if (Vector3.Distance(currentPos.Position, uniquePositions[j].Position) < distanceThreshold
-						&& HaveSameSpecialCover(currentPos, uniquePositions[j]))
+						&& HaveSameSpecialCover(currentPos, uniquePositions[j])
+						&& NoObstacleBetween(currentPos.Position, uniquePositions[j].Position))
 					{
 						isDuplicate = true;
 						break; // No need to check further, it's already a duplicate
@@ -125,6 +126,19 @@ namespace FPSDemo.NPC.Utilities
 			}
 
 			_tacticalPositionData.Positions = uniquePositions;
+		}
+
+		public bool NoObstacleBetween(Vector3 start, Vector3 end)
+		{
+			Vector3 direction = end - start;
+			float distance = direction.magnitude;
+
+			if (Physics.Raycast(start, direction.normalized, out _, distance, _gridSettings.RaycastMask))
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		private bool HaveSameSpecialCover(TacticalPosition position1, TacticalPosition position2)

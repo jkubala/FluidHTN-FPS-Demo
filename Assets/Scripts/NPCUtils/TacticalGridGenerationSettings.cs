@@ -31,6 +31,7 @@ namespace FPSDemo.NPC.Utilities
 		public Vector2 sphereCastForFiringPositionCheckOffset = Vector2.one;
 		public float sphereCastForFiringPositionCheckRadius = 1f;
 		public float sphereCastForFiringPositionCheckDistance = 0.25f;
+		public int nOfHitsOfDifferentNormalToConsiderCorner = 3;
 
 		[Header("Tactical position settings")]
 		public float minHeightToConsiderHighCover = 1.25f;

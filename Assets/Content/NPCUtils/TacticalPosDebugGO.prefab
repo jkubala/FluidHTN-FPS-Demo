@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7804836397173391181}
   - component: {fileID: 2477149576254374902}
   - component: {fileID: 6883089559394446041}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TacticalPosDebugGO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,3 +121,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5d2aad4bb708a4f872af4a2e097588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
+  specialCover:
+    type: 0
+    rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+  origCornerRayPos: {x: 0, y: 0, z: 0}
+  gridSettings: {fileID: 0}
+  offsetPosition: {x: 0, y: 0, z: 0}
+  leftDirection: {x: 0, y: 0, z: 0}
+  finalCornerPos: {x: 0, y: 0, z: 0}
+  sphereCastAnchor: {x: 0, y: 0, z: 0}
+  sphereCastOrigin: {x: 0, y: 0, z: 0}
+  sphereCastDirection: {x: 0, y: 0, z: 0}
+  sphereCastNormal: {x: 0, y: 0, z: 0}
+  cornerNormal: {x: 0, y: 0, z: 0}
+  cornerFiringNormal: {x: 0, y: 0, z: 0}
+  distanceToObstacleLeft: 0
+  distanceToObstacleRight: 0
+  maxDistLeft: 0
+  maxDistRight: 0

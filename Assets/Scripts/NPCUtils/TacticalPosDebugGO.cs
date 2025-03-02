@@ -1,19 +1,24 @@
-using Codice.CM.Common;
-using FPSDemo.NPC.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FPSDemo.NPC.Utilities
 {
 	public class TacticalPosDebugGO : MonoBehaviour
 	{
+		enum DebugMode { Corner, Non90DegreeCorner, Obstacle }
+		[SerializeField] DebugMode debugMode;
+
 		public SpecialCover specialCover;
 		public Vector3 origCornerRayPos;
 		public TacticalGridGenerationSettings gridSettings;
 
 		public Vector3 offsetPosition, leftDirection, finalCornerPos;
-		public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal;
+		public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
 		public float distanceToObstacleLeft, distanceToObstacleRight, maxDistLeft, maxDistRight;
+		public float distLeft2, distRight2;
 		public Vector3? leftCornerPos, rightCornerPos;
+		public List<Vector3> hitPositions;
+		public Vector3? firstNormal, secondNormal, secondNormalHit;
 
 		private void DrawSphere(Vector3 position, float radius, Color color)
 		{
@@ -50,6 +55,11 @@ namespace FPSDemo.NPC.Utilities
 				DrawSphere(rightCornerPos.Value, 0.1f, Color.cyan);
 			}
 
+			foreach (Vector3 pos in hitPositions)
+			{
+				DrawSphere(pos, 0.01f, Color.red);
+			}
+
 			DrawRay(finalCornerPos, specialCover.rotationToAlignWithCover.eulerAngles, Color.green);
 		}
 
@@ -57,13 +67,38 @@ namespace FPSDemo.NPC.Utilities
 		{
 			DrawSphere(sphereCastOrigin, 0.1f, Color.black);
 			DrawRay(sphereCastOrigin, sphereCastDirection, Color.blue);
+			DrawRay(finalCornerPos, cornerNormal, Color.cyan);
+			DrawRay(finalCornerPos, cornerFiringNormal, Color.black);
+		}
+
+		private void Non90DegreeCornerDebug()
+		{
+			if (firstNormal.HasValue)
+			{
+				Debug.Log("HEHEE");
+				DrawRay(finalCornerPos, firstNormal.Value, Color.black);
+			}
+			if (secondNormal.HasValue)
+			{
+				DrawRay(secondNormalHit.Value, secondNormal.Value, Color.yellow);
+			}
 		}
 
 
 		void OnDrawGizmosSelected()
 		{
-			//GetHighPosAdjustedToCornerDebug();
-			ObstacleInFiringPositionDebug();
+			switch (debugMode)
+			{
+				case DebugMode.Corner:
+					GetHighPosAdjustedToCornerDebug();
+					break;
+				case DebugMode.Obstacle:
+					ObstacleInFiringPositionDebug();
+					break;
+				case DebugMode.Non90DegreeCorner:
+					Non90DegreeCornerDebug();
+					break;
+			}
 		}
 	}
 }
