@@ -63,7 +63,11 @@ public class ThirdPersonControllerEditor : Editor
 		{
 			npcController.Uncrouch();
 		}
+        if (GUILayout.Button("Die"))
+        {
+            npcController.Death();
+        }
 
-		DrawDefaultInspector();
+        DrawDefaultInspector();
 	}
 }

@@ -2920,8 +2920,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aff599749b5f554abbe8d8992965865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponPosChangeSpeed: 15
-  _weaponRotChangeSpeed: 5
+  _weaponPosChangeSpeed: 25
+  _weaponRotChangeSpeed: 8
   _lookSway: {x: 4, y: 2, z: -2}
   _movementSway: {x: 0, y: 0, z: 0.2}
   _maxSway: 4
@@ -3037,7 +3037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b79b493e3108045a23ab5e9989e34f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprintSpeed: 5
+  _sprintSpeed: 7
   _player: {fileID: 639755639}
 --- !u!114 &639755638
 MonoBehaviour:
@@ -3106,11 +3106,11 @@ MonoBehaviour:
   _castOriginOffsetDistance: 0.05
   _groundedPosUpdateInterval: 1
   _stairCastMultiplier: 3
-  _accelerationGround: 8
-  _backwardSpeedPercentage: 0.4
-  _strafeSpeedPercentage: 0.8
-  _moveToSpeed: 2
-  _terminalVelocity: 30
+  _accelerationGround: 12
+  _backwardSpeedPercentage: 0.6
+  _strafeSpeedPercentage: 0.9
+  _moveToSpeed: 4
+  _terminalVelocity: 40
   _gravityMultiplierOnFall: 2
   _defaultGravityMultiplier: 2
   _maxVelocityChange: 5

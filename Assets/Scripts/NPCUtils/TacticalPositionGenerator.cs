@@ -291,7 +291,7 @@ namespace FPSDemo.NPC.Utilities
 
 		// ========================================================= DEBUG
 
-		void OnDrawGizmos()
+		void OnDrawGizmosSelected()
 		{
 			if (_tacticalPositionData == null || !_showThePositionsInEditor)
 			{

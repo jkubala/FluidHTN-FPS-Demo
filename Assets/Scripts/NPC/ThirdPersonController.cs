@@ -88,9 +88,10 @@ namespace FPSDemo.NPC
 		private int _animY;
 		private int _animIsShooting;
 		private int _animReload;
+        private int _animDeath;
 
-		// crouching
-		private IEnumerator _crouchCoroutine;
+        // crouching
+        private IEnumerator _crouchCoroutine;
 		private float _crouchAmount;
 
 		// target
@@ -144,7 +145,9 @@ namespace FPSDemo.NPC
 			_animCrouched = Animator.StringToHash("Crouched");
 			_animIsShooting = Animator.StringToHash("IsShooting");
 			_animReload = Animator.StringToHash("Reload");
-		}
+            _animDeath = Animator.StringToHash("Death");
+
+        }
 
 
 		// ========================================================= RESET / CLEAR
@@ -360,12 +363,26 @@ namespace FPSDemo.NPC
 			SetDestination(_playerTransform.position);
 		}
 
+        // ========================================================= DEATH BEHAVIORS
 
-		// ========================================================= COROUTINES
+        public void Death()
+        {
+            _isReloading = true;
 
-		// TODO: We want to move these into tick and stop using coroutines (they're super expensive performance wise)
-		// TODO: E.g. TickCrouchTransition()
-		private IEnumerator SimulateCrouching()
+            if (_isShooting)
+            {
+                StopShooting();
+            }
+
+            _animator.SetTrigger(_animDeath);
+        }
+
+
+        // ========================================================= COROUTINES
+
+        // TODO: We want to move these into tick and stop using coroutines (they're super expensive performance wise)
+        // TODO: E.g. TickCrouchTransition()
+        private IEnumerator SimulateCrouching()
 		{
 			while (_crouchAmount < 1f)
 			{
