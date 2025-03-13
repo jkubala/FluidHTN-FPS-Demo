@@ -18,54 +18,53 @@ namespace FPSDemo.NPC.Utilities
 					return;
 				}
 
-                if (posGenerator.UseHandplacedTacticalProbes)
-                {
-                    var probes = FindObjectsByType<TacticalProbe>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-                    if (probes != null && probes.Length > 0)
-                    {
-                        posGenerator.AddTacticalProbes(clearPositions:true, probes);
-                        if (probes.Length == 1)
-                        {
-                            Debug.Log($"Added 1 tactical probe from scene!");
-                        }
-                        else
-                        {
-                            Debug.Log($"Added {probes.Length} tactical probes from scene!");
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("Found 0 tactical probes in scene!");
-                        return;
-                    }
-                }
+				if (posGenerator.UseHandplacedTacticalProbes)
+				{
+					var probes = FindObjectsByType<TacticalProbe>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+					if (probes != null && probes.Length > 0)
+					{
+						posGenerator.AddTacticalProbes(clearPositions: true, probes);
+						if (probes.Length == 1)
+						{
+							Debug.Log($"Added 1 tactical probe from scene!");
+						}
+						else
+						{
+							Debug.Log($"Added {probes.Length} tactical probes from scene!");
+						}
+					}
+					else
+					{
+						Debug.LogError("Found 0 tactical probes in scene!");
+						return;
+					}
+				}
 
-                if (posGenerator.GenerateAutoProbeGrid)
-                {
-                    posGenerator.GenerateTacticalPositions(clearPositions: posGenerator.UseHandplacedTacticalProbes == false);
-                }
+				if (posGenerator.GenerateAutoProbeGrid)
+				{
+					posGenerator.GenerateTacticalPositionSpawners(clearPositions: posGenerator.UseHandplacedTacticalProbes == false);
+				}
 
-                EditorUtility.SetDirty(posGenerator.TacticalPositionData);
+				EditorUtility.SetDirty(posGenerator.TacticalPositionData);
 				AssetDatabase.SaveAssetIfDirty(posGenerator.TacticalPositionData);
 			}
 
-            if (GUILayout.Button("Clear generated tactical positions for AI"))
-            {
-                if (posGenerator.TacticalPositionData != null && posGenerator.TacticalPositionData.Positions.Count > 0)
-                {
-                    Debug.Log("TacticalPositionData cleared!");
-                    posGenerator.TacticalPositionData.Positions.Clear();
-                    EditorUtility.SetDirty(posGenerator.TacticalPositionData);
-                    AssetDatabase.SaveAssetIfDirty(posGenerator.TacticalPositionData);
-                    return;
-                }
-                else
-                {
-                    Debug.Log("TacticalPositionData already cleared.");
-                }
-            }
+			if (GUILayout.Button("Clear generated tactical positions for AI"))
+			{
+				if (posGenerator.TacticalPositionData != null && posGenerator.TacticalPositionData.Positions.Count > 0)
+				{
+					Debug.Log("TacticalPositionData cleared!");
+					posGenerator.TacticalPositionData.Positions.Clear();
+					EditorUtility.SetDirty(posGenerator.TacticalPositionData);
+					AssetDatabase.SaveAssetIfDirty(posGenerator.TacticalPositionData);
+				}
+				else
+				{
+					Debug.Log("TacticalPositionData already cleared.");
+				}
+			}
 
-            base.OnInspectorGUI();
+			base.OnInspectorGUI();
 		}
 	}
 }
