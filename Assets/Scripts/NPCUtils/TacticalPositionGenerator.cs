@@ -34,6 +34,7 @@ namespace FPSDemo.NPC.Utilities
 
 		// ========================================================= GENERATION
 
+		// TODO this approach not done, just the GenerateTacticalPositionSpawners below
 		public void AddTacticalProbes(bool clearPositions, TacticalProbe[] probes)
 		{
 			if (probes == null || probes.Length == 0)
@@ -41,7 +42,10 @@ namespace FPSDemo.NPC.Utilities
 				return;
 			}
 
-			ValidateParams();
+			if (!ValidateParams())
+			{
+				return;
+			}
 
 			if (_tacticalPositionData.Positions == null)
 			{
@@ -69,8 +73,18 @@ namespace FPSDemo.NPC.Utilities
 
 		public void GenerateTacticalPositionSpawners(bool clearPositions)
 		{
-			ValidateParams();
+			if (!ValidateParams())
+			{
+				return;
+			}
 
+			InitTacticalPositionData(clearPositions);
+			CreateSpawnersAlongTheGrid();
+			RemoveDuplicates(_gridSettings.distanceToRemoveDuplicates);
+		}
+
+		private void InitTacticalPositionData(bool clearPositions)
+		{
 			if (_tacticalPositionData.Positions == null)
 			{
 				_tacticalPositionData.Positions = new();
@@ -80,9 +94,6 @@ namespace FPSDemo.NPC.Utilities
 				_tacticalPositionData.Positions.Clear();
 			}
 
-			Debug.Log("Generating tactical positions for AI");
-
-
 			if (_debugGameObjectParent.transform.childCount > 0)
 			{
 				for (int i = _debugGameObjectParent.transform.childCount - 1; i >= 0; i--)
@@ -90,9 +101,40 @@ namespace FPSDemo.NPC.Utilities
 					DestroyImmediate(_debugGameObjectParent.transform.GetChild(i).gameObject);
 				}
 			}
+		}
 
-			CreateSpawnersAlongTheGrid();
-			RemoveDuplicates(_gridSettings.distanceToRemoveDuplicates);
+		private void CreateSpawnersAlongTheGrid()
+		{
+			Debug.Log("Generating tactical positions for AI");
+			Vector3 currentPos = _gridSettings.StartPos;
+			bool otherRow = false;
+			while (currentPos.x < _gridSettings.EndPos.x)
+			{
+				currentPos.z = _gridSettings.StartPos.z;
+
+				if (_gridSettings.OffsetEveryOtherRow)
+				{
+					if (otherRow)
+					{
+						currentPos.z += _gridSettings.DistanceBetweenPositions / 2;
+					}
+					otherRow = !otherRow;
+				}
+
+				while (currentPos.z < _gridSettings.EndPos.z)
+				{
+					RaycastHit[] hitsToConvertToPos = RaycastTrulyAll(currentPos, Vector3.down, _gridSettings.RaycastMask, 0.1f, 100f);
+					foreach (var hit in hitsToConvertToPos)
+					{
+						if (PositionValid(hit.point))
+						{
+							CreatePositionsAtHitsAround(hit.point);
+						}
+					}
+					currentPos.z += _gridSettings.DistanceBetweenPositions;
+				}
+				currentPos.x += _gridSettings.DistanceBetweenPositions;
+			}
 		}
 
 		private void RemoveDuplicates(float distanceThreshold)
@@ -111,7 +153,7 @@ namespace FPSDemo.NPC.Utilities
 				{
 					// If the distance between currentPos and any unique position is less than the threshold, it's a duplicate
 					if (Vector3.Distance(currentPos.Position, uniquePositions[j].Position) < distanceThreshold
-						&& HaveSameSpecialCover(currentPos, uniquePositions[j])
+						&& currentPos.specialCover?.type == uniquePositions[j].specialCover?.type
 						&& NoObstacleBetween(currentPos.Position, uniquePositions[j].Position))
 					{
 						isDuplicate = true;
@@ -141,42 +183,7 @@ namespace FPSDemo.NPC.Utilities
 			return true;
 		}
 
-		private bool HaveSameSpecialCover(TacticalPosition position1, TacticalPosition position2)
-		{
-			return position1.specialCover.type == position2.specialCover.type;
-		}
-
-		private void CreateSpawnersAlongTheGrid()
-		{
-			Vector3 currentPos = _gridSettings.StartPos;
-			bool otherRow = false;
-			while (currentPos.x < _gridSettings.EndPos.x)
-			{
-				currentPos.z = _gridSettings.StartPos.z;
-
-				if (_gridSettings.OffsetEveryOtherRow)
-				{
-					if (otherRow)
-					{
-						currentPos.z += _gridSettings.DistanceBetweenPositions / 2;
-					}
-					otherRow = !otherRow;
-				}
-
-				while (currentPos.z < _gridSettings.EndPos.z)
-				{
-					RaycastHit[] hitsToConvertToPos = RaycastTrulyAll(currentPos, Vector3.down, _gridSettings.RaycastMask, 0.1f, 100f);
-					foreach (var hit in hitsToConvertToPos)
-					{
-						AddSpawnerIfValid(hit.point);
-					}
-					currentPos.z += _gridSettings.DistanceBetweenPositions;
-				}
-				currentPos.x += _gridSettings.DistanceBetweenPositions;
-			}
-		}
-
-		private void AddSpawnerIfValid(Vector3 position)
+		private bool PositionValid(Vector3 position)
 		{
 			// Discard the position if it is too far from NavMesh
 			if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, _gridSettings.RaycastMask))
@@ -186,12 +193,12 @@ namespace FPSDemo.NPC.Utilities
 
 				if (Vector3.Distance(heightAdjustedHit, position) > _gridSettings.RequiredProximityToNavMesh)
 				{
-					return;
+					return false;
 				}
 			}
 			else
 			{
-				return;
+				return false;
 			}
 
 			// Discard the position if it spawned in the geometry
@@ -201,11 +208,11 @@ namespace FPSDemo.NPC.Utilities
 			{
 				if (!Mathf.Approximately(rayCastOrigin.y - geometryHit.point.y, rayCastOrigin.y - position.y))
 				{
-					return;
+					return false;
 				}
 			}
 
-			CreatePositionsAtHitsAround(position);
+			return true;
 		}
 
 		private void CreatePositionsAtHitsAround(Vector3 position)
@@ -222,7 +229,7 @@ namespace FPSDemo.NPC.Utilities
 				{
 					if (_createDebugGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
 					{
-						// TODO sort this out
+						// TODO figure out the debug logic out
 						//GameObject debugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
 						//TacticalPosDebugGO debugData = debugGO.GetComponent<TacticalPosDebugGO>();
 						//debugData.gridSettings = _gridSettings;
@@ -234,17 +241,12 @@ namespace FPSDemo.NPC.Utilities
 					}
 					else
 					{
-						CoverPositioner.AddHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings, _tacticalPositionData.Positions);
+						CoverPositioner.AddHighPosAdjustedToCornerAtHit(highHit, _gridSettings, _tacticalPositionData.Positions);
 					}
 				}
 				//else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
 				//{
-				//	TacticalPosition newPosition = new()
-				//	{
-				//		Position = lowHit.point
-				//	};
-				//	// Try to find special cover for low cover
-				//	_tacticalPositionData.Positions.Add(newPosition);
+				//	// Try to find low cover
 				//}
 
 				direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
@@ -267,19 +269,21 @@ namespace FPSDemo.NPC.Utilities
 			return _raycasts.ToArray();
 		}
 
-		private void ValidateParams()
+		private bool ValidateParams()
 		{
 			if (_gridSettings == null)
 			{
 				Debug.LogError("Could not generate the grid of tactical positions. The grid settings are not assigned!");
-				return;
+				return false;
 			}
 
 			if (_gridSettings.DistanceBetweenPositions < 0.5f)
 			{
 				Debug.LogError("Could not generate the grid of tactical positions. The distance between positions is too small!");
-				return;
+				return false;
 			}
+
+			return true;
 		}
 
 
@@ -295,11 +299,11 @@ namespace FPSDemo.NPC.Utilities
 			Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
 			foreach (TacticalPosition position in _tacticalPositionData.Positions)
 			{
-				if (position.specialCover.type == SpecialCoverType.LeftCorner)
+				if (position.specialCover?.type == SpecialCoverType.LeftCorner)
 				{
 					Gizmos.color = Color.red;
 				}
-				else if (position.specialCover.type == SpecialCoverType.RightCorner)
+				else if (position.specialCover?.type == SpecialCoverType.RightCorner)
 				{
 					Gizmos.color = Color.blue;
 				}

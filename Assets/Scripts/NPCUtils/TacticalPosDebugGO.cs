@@ -8,7 +8,7 @@ namespace FPSDemo.NPC.Utilities
 		enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
 		[SerializeField] DebugMode debugMode;
 
-		public SpecialCover specialCover;
+		public TacticalPosition tacticalPosition;
 		public Vector3 origCornerRayPos;
 		public TacticalGridGenerationSettings gridSettings;
 
@@ -63,7 +63,7 @@ namespace FPSDemo.NPC.Utilities
 				DrawSphere(pos, 0.01f, Color.red);
 			}
 
-			DrawRay(finalCornerPos, specialCover.rotationToAlignWithCover.eulerAngles, Color.green);
+			DrawRay(finalCornerPos, tacticalPosition.specialCover.Value.rotationToAlignWithCover.eulerAngles, Color.green);
 		}
 
 		private void ObstacleInFiringPositionDebug()

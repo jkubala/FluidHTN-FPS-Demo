@@ -13,7 +13,7 @@ namespace FPSDemo.NPC.Utilities
 	{
 		public Vector3 Position;
 		public CoverType[] CoverDirections;
-		public SpecialCover specialCover;
+		public SpecialCover? specialCover;
 	}
 
 
@@ -25,7 +25,7 @@ namespace FPSDemo.NPC.Utilities
 
 	public enum SpecialCoverType
 	{
-		None, LeftCorner, RightCorner, Window
+		LeftCorner, RightCorner, Window
 	}
 
 	[System.Serializable]
