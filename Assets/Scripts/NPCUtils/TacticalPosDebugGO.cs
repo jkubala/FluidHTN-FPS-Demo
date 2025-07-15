@@ -15,7 +15,7 @@ namespace FPSDemo.NPC.Utilities
 		public Vector3 offsetPosition, leftDirection, finalCornerPos;
 		public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
 		public float distanceToObstacleLeft, distanceToObstacleRight, maxDistLeft, maxDistRight;
-		public float distLeft2, distRight2;
+		public float distToLCorner, distToRCorner;
 		public Vector3? leftCornerPos, rightCornerPos;
 		public List<Vector3> hitPositions;
 		public Vector3? initCornerNormal, initCornerFiringNormal;

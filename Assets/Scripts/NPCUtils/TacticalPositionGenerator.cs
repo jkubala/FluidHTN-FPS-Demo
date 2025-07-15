@@ -220,27 +220,21 @@ namespace FPSDemo.NPC.Utilities
 			{
 				if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
 				{
-					TacticalPosition? newPosition;
 					if (_createDebugGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
 					{
-						GameObject debugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
-						TacticalPosDebugGO debugData = debugGO.GetComponent<TacticalPosDebugGO>();
-						debugData.gridSettings = _gridSettings;
-						newPosition = CoverPositioner.GetHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings, debugData);
-						if (!newPosition.HasValue)
-						{
-							DestroyImmediate(debugGO);
-						}
+						// TODO sort this out
+						//GameObject debugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
+						//TacticalPosDebugGO debugData = debugGO.GetComponent<TacticalPosDebugGO>();
+						//debugData.gridSettings = _gridSettings;
+						//CoverPositioner.AddHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings, _tacticalPositionData.Positions, debugData);
+						//if (!newPosition.HasValue)
+						//{
+						//	DestroyImmediate(debugGO);
+						//}
 					}
 					else
 					{
-						newPosition = CoverPositioner.GetHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings);
-					}
-
-					if (newPosition.HasValue)
-					{
-						// Try to find special cover for high cover
-						_tacticalPositionData.Positions.Add(newPosition.Value);
+						CoverPositioner.AddHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings, _tacticalPositionData.Positions);
 					}
 				}
 				//else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))

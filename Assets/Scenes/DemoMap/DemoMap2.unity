@@ -5338,7 +5338,7 @@ MonoBehaviour:
   _showThePositionsInEditor: 1
   _createDebugGameObjects: 0
   _debugGameObjectsSpawn: {x: -31.2, y: 1.5499984, z: -40.96}
-  _debugGameObjectsSpawnRadius: 10
+  _debugGameObjectsSpawnRadius: 100
   _debugGameObject: {fileID: 1725634254696360293, guid: a8f6e3ffc6fe7c940ba2d8de5e5434c8, type: 3}
   _debugGameObjectParent: {fileID: 1130869014}
 --- !u!1 &1586249291
