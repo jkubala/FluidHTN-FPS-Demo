@@ -65,6 +65,7 @@ namespace FPSDemo.NPC.FSMs.WeaponStates
             if (c.ThisController.IsShooting == false)
             {
                 c.SetState(AIWorldState.IsShooting, true, EffectType.Permanent);
+                c.ThisController.ApplyPlayerAsAimAtPoint();
                 c.ThisController.StartShooting();
                 _lastShotTime = Time.time;
             }
@@ -76,6 +77,7 @@ namespace FPSDemo.NPC.FSMs.WeaponStates
             {
                 c.SetState(AIWorldState.IsShooting, false, EffectType.Permanent);
                 c.ThisController.StopShooting();
+                //c.ThisController.ClearAimAtPoint();
             }
         }
     }
