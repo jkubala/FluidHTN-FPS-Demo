@@ -1,6 +1,6 @@
+using FluidHTN;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.VersionControl.Asset;
 
 namespace FPSDemo.FSM
 {
@@ -28,7 +28,7 @@ namespace FPSDemo.FSM
             return state;
         }
 
-        public bool ChangeState(int stateId)
+        public bool ChangeState(int stateId, IContext ctx)
         {
             if (States.ContainsKey(stateId) == false)
             {
@@ -38,17 +38,17 @@ namespace FPSDemo.FSM
 
             if (_currentState != null)
             {
-                _currentState.Exit(this);
+                _currentState.Exit(this, ctx);
             }
 
             _currentState = States[stateId];
-            _currentState.Enter(this);
+            _currentState.Enter(this, ctx);
             return true;
         }
 
-        public void Tick()
+        public void Tick(IContext ctx)
         {
-            _currentState?.Tick(this);
+            _currentState?.Tick(this, ctx);
         }
     }
 }

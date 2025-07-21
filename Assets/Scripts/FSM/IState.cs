@@ -1,3 +1,4 @@
+using FluidHTN;
 using UnityEngine;
 
 namespace FPSDemo.FSM
@@ -6,8 +7,8 @@ namespace FPSDemo.FSM
     {
         int Id { get; }
 
-        void Enter(IFiniteStateMachine mgr);
-        void Exit(IFiniteStateMachine mgr);
-        void Tick(IFiniteStateMachine mgr);
+        void Enter(IFiniteStateMachine mgr, IContext ctx);
+        void Exit(IFiniteStateMachine mgr, IContext ctx);
+        void Tick(IFiniteStateMachine mgr, IContext ctx);
     }
 }

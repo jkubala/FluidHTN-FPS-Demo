@@ -4,6 +4,9 @@
     {
         AwareOfEnemy,
         HasEnemyInSight,
-        IsPursuingEnemy
+        IsPursuingEnemy,
+        WeaponState,
+        IsShooting,
+        IsReloading,
     }
 }

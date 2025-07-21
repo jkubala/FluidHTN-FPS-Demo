@@ -1,5 +1,7 @@
 
 using FluidHTN;
+using FPSDemo.NPC.FSMs;
+using FPSDemo.NPC.FSMs.WeaponStates;
 using FPSDemo.NPC.Sensors;
 using FPSDemo.Target;
 using UnityEngine;
@@ -24,6 +26,7 @@ namespace FPSDemo.NPC
         private Domain<AIContext> _domain;
         private Planner<AIContext> _planner;
 
+        private WeaponFsm _weaponFsm;
 
         // ========================================================= PUBLIC PROPERTIES
 
@@ -42,17 +45,25 @@ namespace FPSDemo.NPC
             _sensory = new SensorySystem(this);
             _planner = new Planner<AIContext>();
             _domain = _settings.AIDomain.Create();
+
+            _weaponFsm = new WeaponFsm();
         }
 
 		public void Start()
 		{
 			_context.Init(_settings);
-		}
+
+            // NPC starts off holding their fire, until the planner decides otherwise.
+            _context.SetWeaponState(WeaponStateType.HoldYourFire, EffectType.Permanent);
+            _weaponFsm.ChangeState((int)WeaponStateType.HoldYourFire, _context);
+        }
 
         public void Update()
         {
 			_sensory.Tick(_context);
             _planner.Tick(_domain, _context);
+
+            _weaponFsm.Tick(_context);
         }
     }
 }

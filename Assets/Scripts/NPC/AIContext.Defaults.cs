@@ -4,6 +4,7 @@ using FluidHTN;
 using FluidHTN.Conditions;
 using FluidHTN.Debug;
 using FluidHTN.Factory;
+using FPSDemo.NPC.FSMs.WeaponStates;
 
 namespace FPSDemo.NPC
 {
@@ -46,6 +47,22 @@ namespace FPSDemo.NPC
         public byte GetState(AIWorldState state)
         {
             return GetState((int)state);
+        }
+
+        // Weapon state convenience
+        public void SetWeaponState(WeaponStateType weaponState, EffectType type)
+        {
+            SetState(AIWorldState.WeaponState, (byte)weaponState, type);
+        }
+
+        public WeaponStateType GetWeaponState()
+        {
+            return (WeaponStateType)GetState(AIWorldState.WeaponState);
+        }
+
+        public bool HasWeaponState(WeaponStateType weaponState)
+        {
+            return HasState(AIWorldState.WeaponState, (byte)weaponState);
         }
     }
 }

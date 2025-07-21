@@ -1,4 +1,6 @@
-﻿namespace FPSDemo.FSM
+﻿using FluidHTN;
+
+namespace FPSDemo.FSM
 {
     public interface IFiniteStateMachine
     {
@@ -9,7 +11,7 @@
 
         // --------------------------------- STATE HANDLING
         T AddState<T>() where T : IState, new();
-        bool ChangeState(int stateId);
-        void Tick();
+        bool ChangeState(int stateId, IContext ctx);
+        void Tick(IContext ctx);
     }
 }

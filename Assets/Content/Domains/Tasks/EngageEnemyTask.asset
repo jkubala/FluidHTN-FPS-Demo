@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TaskName: Engage Enemy
   SelectionOfTasks:
+  - {fileID: 11400000, guid: 2dfbcde1d945f8040a588d76e0485228, type: 2}
   - {fileID: 11400000, guid: 3922ac96f41233945b739f86f5d0b7cf, type: 2}
   Conditions:
   - State: 0
