@@ -4522,6 +4522,60 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320770054}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1320903567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1320903569}
+  - component: {fileID: 1320903568}
+  m_Layer: 0
+  m_Name: TacticalPositions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1320903568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320903567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d039b793bcfc42a47792ff46aa68d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tacticalPositionData: {fileID: 11400000, guid: a8e0757be36b3444e85d1dfc003990cb, type: 2}
+  _gridSettings: {fileID: 11400000, guid: a734d3d90ff7c0143b1c5086a4d04382, type: 2}
+  _useHandplacedTacticalProbes: 0
+  _generateAutoProbeGrid: 1
+  _showThePositionsInEditor: 1
+  _createDebugGameObjects: 1
+  _debugGameObjectsSpawn: {x: 0, y: 0, z: 0}
+  _debugGameObjectsSpawnRadius: 5
+  _debugGameObject: {fileID: 1725634254696360293, guid: a8f6e3ffc6fe7c940ba2d8de5e5434c8, type: 3}
+  _debugGameObjectParent: {fileID: 1320903567}
+--- !u!4 &1320903569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320903567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -28.23382, y: 3.5094576, z: -32.42748}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325501517
 GameObject:
   m_ObjectHideFlags: 0
@@ -7013,3 +7067,4 @@ SceneRoots:
   - {fileID: 974476710}
   - {fileID: 154116032}
   - {fileID: 1246466892}
+  - {fileID: 1320903569}
