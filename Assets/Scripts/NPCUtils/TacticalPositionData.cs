@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
-	[CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositionGrid/Data")]
+	[CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositions/Data")]
 	public class TacticalPositionData : ScriptableObject
 	{
 		public List<TacticalPosition> Positions;

@@ -13904,6 +13904,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tacticalPositionData: {fileID: 11400000, guid: b94514ec79c5099429cbbe581fb4c80a, type: 2}
   _gridSettings: {fileID: 11400000, guid: 7f1a61b3308fdd7468f2c930d8b37226, type: 2}
+  _cornerSettings: {fileID: 11400000, guid: 821bdb256ccdeb247b4a52adcde71292, type: 2}
+  _positionSettings: {fileID: 11400000, guid: 575799178b16a2b4abcab36bf782a0b3, type: 2}
+  _raycastMask:
+    serializedVersion: 2
+    m_Bits: 1
   _useHandplacedTacticalProbes: 0
   _generateAutoProbeGrid: 1
   _showThePositionsInEditor: 1

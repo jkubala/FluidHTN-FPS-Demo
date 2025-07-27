@@ -4553,6 +4553,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tacticalPositionData: {fileID: 11400000, guid: a8e0757be36b3444e85d1dfc003990cb, type: 2}
   _gridSettings: {fileID: 11400000, guid: a734d3d90ff7c0143b1c5086a4d04382, type: 2}
+  _cornerSettings: {fileID: 0}
+  _positionSettings: {fileID: 0}
+  _raycastMask:
+    serializedVersion: 2
+    m_Bits: 0
   _useHandplacedTacticalProbes: 0
   _generateAutoProbeGrid: 1
   _showThePositionsInEditor: 1
@@ -5387,6 +5392,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tacticalPositionData: {fileID: 11400000, guid: a8e0757be36b3444e85d1dfc003990cb, type: 2}
   _gridSettings: {fileID: 11400000, guid: a734d3d90ff7c0143b1c5086a4d04382, type: 2}
+  _cornerSettings: {fileID: 11400000, guid: 821bdb256ccdeb247b4a52adcde71292, type: 2}
+  _positionSettings: {fileID: 11400000, guid: 575799178b16a2b4abcab36bf782a0b3, type: 2}
+  _raycastMask:
+    serializedVersion: 2
+    m_Bits: 1
   _useHandplacedTacticalProbes: 0
   _generateAutoProbeGrid: 1
   _showThePositionsInEditor: 1
@@ -7046,6 +7056,10 @@ PrefabInstance:
     - target: {fileID: 5439009070061047518, guid: 23de12ab5dc74804c8823a5f590f88db, type: 3}
       propertyPath: m_Name
       value: GroundPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799441832365682443, guid: 23de12ab5dc74804c8823a5f590f88db, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5799441832365682443, guid: 23de12ab5dc74804c8823a5f590f88db, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

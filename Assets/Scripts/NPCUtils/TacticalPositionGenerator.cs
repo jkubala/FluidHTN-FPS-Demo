@@ -10,7 +10,10 @@ namespace FPSDemo.NPC.Utilities
 
 		[SerializeField] private TacticalPositionData _tacticalPositionData;
 		[SerializeField] private TacticalGridGenerationSettings _gridSettings;
-		[SerializeField] private bool _useHandplacedTacticalProbes = true;
+		[SerializeField] private TacticalCornerSettings _cornerSettings;
+		[SerializeField] private TacticalPositionSettings _positionSettings;
+		[SerializeField] private LayerMask _raycastMask = 1 << 0;
+        [SerializeField] private bool _useHandplacedTacticalProbes = true;
 		[SerializeField] private bool _generateAutoProbeGrid = true;
 		[SerializeField] private bool _showThePositionsInEditor = false;
 
@@ -20,10 +23,9 @@ namespace FPSDemo.NPC.Utilities
 		[SerializeField] private GameObject _debugGameObject;
 		[SerializeField] private GameObject _debugGameObjectParent;
 
+        // ========================================================= PROPERTIES
 
-		// ========================================================= PROPERTIES
-
-		public TacticalPositionData TacticalPositionData
+        public TacticalPositionData TacticalPositionData
 		{
 			get { return _tacticalPositionData; }
 			set { _tacticalPositionData = value; }
@@ -80,7 +82,7 @@ namespace FPSDemo.NPC.Utilities
 
 			InitTacticalPositionData(clearPositions);
 			CreateSpawnersAlongTheGrid();
-			RemoveDuplicates(_gridSettings.distanceToRemoveDuplicates);
+			RemoveDuplicates(_positionSettings.distanceToRemoveDuplicates);
 		}
 
 		private void InitTacticalPositionData(bool clearPositions)
@@ -123,7 +125,7 @@ namespace FPSDemo.NPC.Utilities
 
 				while (currentPos.z < _gridSettings.EndPos.z)
 				{
-					RaycastHit[] hitsToConvertToPos = RaycastTrulyAll(currentPos, Vector3.down, _gridSettings.RaycastMask, 0.1f, 100f);
+					RaycastHit[] hitsToConvertToPos = RaycastTrulyAll(currentPos, Vector3.down, _raycastMask, 0.1f, 100f);
 					foreach (var hit in hitsToConvertToPos)
 					{
 						if (PositionValid(hit.point))
@@ -175,7 +177,7 @@ namespace FPSDemo.NPC.Utilities
 			Vector3 direction = end - start;
 			float distance = direction.magnitude;
 
-			if (Physics.Raycast(start, direction.normalized, out _, distance, _gridSettings.RaycastMask))
+			if (Physics.Raycast(start, direction.normalized, out _, distance, _raycastMask))
 			{
 				return false;
 			}
@@ -186,12 +188,12 @@ namespace FPSDemo.NPC.Utilities
 		private bool PositionValid(Vector3 position)
 		{
 			// Discard the position if it is too far from NavMesh
-			if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, _gridSettings.RaycastMask))
+			if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, _raycastMask))
 			{
 				Vector3 heightAdjustedHit = hit.position;
 				heightAdjustedHit.y = position.y;
 
-				if (Vector3.Distance(heightAdjustedHit, position) > _gridSettings.RequiredProximityToNavMesh)
+				if (Vector3.Distance(heightAdjustedHit, position) > _positionSettings.RequiredProximityToNavMesh)
 				{
 					return false;
 				}
@@ -202,9 +204,9 @@ namespace FPSDemo.NPC.Utilities
 			}
 
 			// Discard the position if it spawned in the geometry
-			Vector3 rayCastOrigin = position + Vector3.up * _gridSettings.geometryCheckYOffset;
+			Vector3 rayCastOrigin = position + Vector3.up * _positionSettings.geometryCheckYOffset;
 
-			if (Physics.Raycast(rayCastOrigin, Vector3.down, out RaycastHit geometryHit, _gridSettings.geometryCheckYOffset + _gridSettings.rayLengthBeyondWall, _gridSettings.RaycastMask))
+			if (Physics.Raycast(rayCastOrigin, Vector3.down, out RaycastHit geometryHit, _positionSettings.geometryCheckYOffset + _cornerSettings.rayLengthBeyondWall, _raycastMask))
 			{
 				if (!Mathf.Approximately(rayCastOrigin.y - geometryHit.point.y, rayCastOrigin.y - position.y))
 				{
@@ -220,12 +222,12 @@ namespace FPSDemo.NPC.Utilities
 			float angleBetweenRays = 360f / _gridSettings.NumberOfRaysSpawner;
 			Vector3 direction = Vector3.forward;
 
-			Vector3 rayOriginForLowCover = position + Vector3.up * _gridSettings.minHeightToConsiderLowCover;
-			Vector3 rayOriginForHighCover = position + Vector3.up * _gridSettings.minHeightToConsiderHighCover;
+			Vector3 rayOriginForLowCover = position + Vector3.up * _positionSettings.minHeightToConsiderLowCover;
+			Vector3 rayOriginForHighCover = position + Vector3.up * _positionSettings.minHeightToConsiderHighCover;
 
 			for (int i = 0; i < _gridSettings.NumberOfRaysSpawner; i++)
 			{
-				if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
+				if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
 				{
 					if (_createDebugGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
 					{
@@ -241,13 +243,13 @@ namespace FPSDemo.NPC.Utilities
 					}
 					else
 					{
-						CoverPositioner.AddHighPosAdjustedToCornerAtHit(highHit, _gridSettings, _tacticalPositionData.Positions);
+						CoverPositioner.GetCoverPositioner.AddHighPosAdjustedToCornerAtHit(highHit, _cornerSettings, _raycastMask, _tacticalPositionData.Positions);
 					}
 				}
-				//else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _gridSettings.RaycastMask))
-				//{
-				//	// Try to find low cover
-				//}
+				else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
+				{
+                    //CoverPositioner.AddLowPosAdjustedToCornerAtHit(lowHit, _gridSettings, _tacticalPositionData.Positions);
+                }
 
 				direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
 			}
