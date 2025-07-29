@@ -39,13 +39,23 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -68.90056, y: 2.0732694, z: -50.55}
     CoverDirections: 
+  - Position: {x: -68.90056, y: 1.4732693, z: -50.55}
+    CoverDirections: 
   - Position: {x: -68.90056, y: 3.851047, z: -46.04}
+    CoverDirections: 
+  - Position: {x: -68.90056, y: 3.2510471, z: -46.04}
     CoverDirections: 
   - Position: {x: -68.44799, y: 9.85, z: -41.987988}
     CoverDirections: 
+  - Position: {x: -68.44799, y: 9.25, z: -41.987988}
+    CoverDirections: 
   - Position: {x: -68.6, y: 9.85, z: -43.739998}
     CoverDirections: 
+  - Position: {x: -68.6, y: 9.25, z: -43.739998}
+    CoverDirections: 
   - Position: {x: -66.68001, y: 1.85, z: -64.00001}
+    CoverDirections: 
+  - Position: {x: -66.68001, y: 1.25, z: -64.00001}
     CoverDirections: 
   - Position: {x: -66.68, y: 9.85, z: -53.200005}
     CoverDirections: 
@@ -55,25 +65,43 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -68.46, y: 4.07327, z: -45.590385}
     CoverDirections: 
+  - Position: {x: -68.46, y: 3.4732695, z: -45.590385}
+    CoverDirections: 
   - Position: {x: -66.679985, y: 1.5499947, z: -63.40001}
+    CoverDirections: 
+  - Position: {x: -66.679985, y: 0.9499947, z: -63.40001}
     CoverDirections: 
   - Position: {x: -66.67999, y: 1.5499954, z: -53.8}
     CoverDirections: 
   - Position: {x: -68.15587, y: 9.85, z: -44.185867}
     CoverDirections: 
+  - Position: {x: -68.15587, y: 9.25, z: -44.185867}
+    CoverDirections: 
   - Position: {x: -68.30083, y: 1.8500204, z: -50.54999}
+    CoverDirections: 
+  - Position: {x: -68.300705, y: 1.2500204, z: -50.54999}
     CoverDirections: 
   - Position: {x: -64.25434, y: 9.85, z: -43.585667}
     CoverDirections: 
+  - Position: {x: -64.25434, y: 9.25, z: -43.58567}
+    CoverDirections: 
   - Position: {x: -68.00001, y: 9.85, z: -41.539997}
+    CoverDirections: 
+  - Position: {x: -68.00001, y: 9.25, z: -41.539997}
     CoverDirections: 
   - Position: {x: -64.78999, y: 1.85, z: -64.00001}
     CoverDirections: 
+  - Position: {x: -64.78999, y: 1.25, z: -64.00001}
+    CoverDirections: 
   - Position: {x: -64.789986, y: 1.5499947, z: -63.40001}
+    CoverDirections: 
+  - Position: {x: -64.789986, y: 0.9499947, z: -63.40001}
     CoverDirections: 
   - Position: {x: -64.69, y: 1.5499954, z: -53.8}
     CoverDirections: 
   - Position: {x: -64.40779, y: 9.85, z: -52.44}
+    CoverDirections: 
+  - Position: {x: -64.40779, y: 9.25, z: -52.44}
     CoverDirections: 
   - Position: {x: -64.689995, y: 9.85, z: -53.200005}
     CoverDirections: 
@@ -83,21 +111,39 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -64.40779, y: 9.85, z: -50.55}
     CoverDirections: 
+  - Position: {x: -64.40779, y: 9.25, z: -50.55}
+    CoverDirections: 
   - Position: {x: -63.75022, y: 1.85, z: -46.190216}
+    CoverDirections: 
+  - Position: {x: -63.75022, y: 1.25, z: -46.190216}
     CoverDirections: 
   - Position: {x: -64.4012, y: 6.0612507, z: -31.830002}
     CoverDirections: 
+  - Position: {x: -64.4012, y: 5.461251, z: -31.830002}
+    CoverDirections: 
   - Position: {x: -62.550007, y: 1.5499954, z: -53.8}
+    CoverDirections: 
+  - Position: {x: -62.55, y: 0.94999546, z: -53.8}
     CoverDirections: 
   - Position: {x: -62.55, y: 1.85, z: -53.200005}
     CoverDirections: 
+  - Position: {x: -62.55, y: 1.25, z: -53.200005}
+    CoverDirections: 
   - Position: {x: -62.546093, y: 1.8497788, z: -41.38391}
+    CoverDirections: 
+  - Position: {x: -62.544765, y: 1.2497787, z: -41.38524}
     CoverDirections: 
   - Position: {x: -62.550007, y: 5.85, z: -29.800003}
     CoverDirections: 
+  - Position: {x: -62.550007, y: 5.25, z: -29.800003}
+    CoverDirections: 
   - Position: {x: -62.55, y: 5.85, z: -29.2}
     CoverDirections: 
+  - Position: {x: -62.55, y: 5.25, z: -29.2}
+    CoverDirections: 
   - Position: {x: -61.639996, y: 1.85, z: -88.20001}
+    CoverDirections: 
+  - Position: {x: -61.639996, y: 1.25, z: -88.20001}
     CoverDirections: 
   - Position: {x: -61.67001, y: 1.85, z: -64.00001}
     CoverDirections: 
@@ -109,29 +155,55 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -62.549988, y: 5.85, z: -41.987988}
     CoverDirections: 
+  - Position: {x: -62.549988, y: 5.25, z: -41.987988}
+    CoverDirections: 
   - Position: {x: -63.807907, y: 9.85, z: -52.439995}
+    CoverDirections: 
+  - Position: {x: -63.807907, y: 9.25, z: -52.439995}
     CoverDirections: 
   - Position: {x: -63.807907, y: 9.85, z: -50.55}
     CoverDirections: 
+  - Position: {x: -63.807907, y: 9.25, z: -50.55}
+    CoverDirections: 
   - Position: {x: -63.807907, y: 9.85, z: -44.0321}
+    CoverDirections: 
+  - Position: {x: -63.807907, y: 9.25, z: -44.032097}
     CoverDirections: 
   - Position: {x: -62.54201, y: 5.85, z: -41.387997}
     CoverDirections: 
+  - Position: {x: -62.54201, y: 5.25, z: -41.387993}
+    CoverDirections: 
   - Position: {x: -63.80126, y: 5.85, z: -31.830002}
+    CoverDirections: 
+  - Position: {x: -63.80126, y: 5.25, z: -31.830002}
     CoverDirections: 
   - Position: {x: -60.66, y: 1.85, z: -53.200005}
     CoverDirections: 
+  - Position: {x: -60.66, y: 1.25, z: -53.200005}
+    CoverDirections: 
   - Position: {x: -63.30025, y: 1.8499985, z: -45.749752}
+    CoverDirections: 
+  - Position: {x: -63.300262, y: 1.2499985, z: -45.74974}
     CoverDirections: 
   - Position: {x: -62.55, y: 1.8502213, z: -41.98832}
     CoverDirections: 
+  - Position: {x: -62.55, y: 1.2502213, z: -41.989647}
+    CoverDirections: 
   - Position: {x: -60.65201, y: 5.85, z: -41.387993}
     CoverDirections: 
+  - Position: {x: -60.65201, y: 5.25, z: -41.387993}
+    CoverDirections: 
   - Position: {x: -60.66, y: 5.85, z: -29.2}
+    CoverDirections: 
+  - Position: {x: -60.66, y: 5.25, z: -29.2}
     CoverDirections: 
   - Position: {x: -60.660004, y: 1.5499954, z: -53.8}
     CoverDirections: 
   - Position: {x: -59.140003, y: 1.5499954, z: -53.8}
+    CoverDirections: 
+  - Position: {x: -60.660004, y: 0.94999546, z: -53.8}
+    CoverDirections: 
+  - Position: {x: -59.140003, y: 0.94999546, z: -53.8}
     CoverDirections: 
   - Position: {x: -59.3, y: 9.85, z: -52.54}
     CoverDirections: 
@@ -163,6 +235,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -60.65799, y: 5.85, z: -41.987988}
     CoverDirections: 
+  - Position: {x: -60.65799, y: 5.25, z: -41.987988}
+    CoverDirections: 
   - Position: {x: -59.299995, y: 9.85, z: -40.55}
     CoverDirections: 
   - Position: {x: -59.3, y: 1.85, z: -40.55}
@@ -189,19 +263,31 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -60.660004, y: 5.85, z: -29.800003}
     CoverDirections: 
+  - Position: {x: -60.660004, y: 5.25, z: -29.800003}
+    CoverDirections: 
   - Position: {x: -59.3, y: 5.85, z: -31.340002}
     CoverDirections: 
   - Position: {x: -59.3, y: 1.85, z: -31.340002}
     CoverDirections: 
   - Position: {x: -59.299995, y: 5.85, z: -16.95}
     CoverDirections: 
+  - Position: {x: -59.299995, y: 5.25, z: -16.95}
+    CoverDirections: 
   - Position: {x: -59.299995, y: 1.85, z: -16.95}
+    CoverDirections: 
+  - Position: {x: -59.299995, y: 1.25, z: -16.95}
     CoverDirections: 
   - Position: {x: -59.3, y: 5.85, z: -15.059999}
     CoverDirections: 
+  - Position: {x: -59.299995, y: 5.25, z: -15.059999}
+    CoverDirections: 
   - Position: {x: -59.299995, y: 1.85, z: -15.059999}
     CoverDirections: 
+  - Position: {x: -59.299995, y: 1.25, z: -15.059999}
+    CoverDirections: 
   - Position: {x: -59.759995, y: 1.85, z: -88.20001}
+    CoverDirections: 
+  - Position: {x: -59.759995, y: 1.25, z: -88.20001}
     CoverDirections: 
   - Position: {x: -59.780006, y: 1.85, z: -64.00001}
     CoverDirections: 
@@ -212,6 +298,8 @@ MonoBehaviour:
   - Position: {x: -59.78, y: 5.85, z: -53.20001}
     CoverDirections: 
   - Position: {x: -59.759914, y: 1.5499928, z: -88.79998}
+    CoverDirections: 
+  - Position: {x: -59.759914, y: 0.9499928, z: -88.79998}
     CoverDirections: 
   - Position: {x: -56.74978, y: 1.5499928, z: -88.79969}
     CoverDirections: 
@@ -224,6 +312,8 @@ MonoBehaviour:
   - Position: {x: -58.700005, y: 1.5499954, z: -53.35999}
     CoverDirections: 
   - Position: {x: -58.700005, y: 1.5499955, z: -52.53999}
+    CoverDirections: 
+  - Position: {x: -58.700005, y: 0.94999546, z: -53.35999}
     CoverDirections: 
   - Position: {x: -58.700005, y: 1.5499957, z: -50.55}
     CoverDirections: 
@@ -245,21 +335,37 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -58.698788, y: 5.85, z: -16.95143}
     CoverDirections: 
+  - Position: {x: -58.69879, y: 5.25, z: -16.95143}
+    CoverDirections: 
   - Position: {x: -58.6988, y: 1.85, z: -16.951351}
+    CoverDirections: 
+  - Position: {x: -58.698795, y: 1.25, z: -16.951351}
     CoverDirections: 
   - Position: {x: -54.94555, y: 1.85, z: -20.004452}
     CoverDirections: 
+  - Position: {x: -54.94555, y: 1.25, z: -20.004452}
+    CoverDirections: 
   - Position: {x: -58.69961, y: 5.85, z: -15.060266}
+    CoverDirections: 
+  - Position: {x: -58.69961, y: 5.25, z: -15.060266}
     CoverDirections: 
   - Position: {x: -58.69961, y: 1.85, z: -15.060266}
     CoverDirections: 
+  - Position: {x: -58.69961, y: 1.25, z: -15.060266}
+    CoverDirections: 
   - Position: {x: -55.098263, y: 4.0732694, z: -25.16}
+    CoverDirections: 
+  - Position: {x: -55.098263, y: 3.4732695, z: -25.16}
     CoverDirections: 
   - Position: {x: -54.760002, y: 1.5499928, z: -88.8}
     CoverDirections: 
   - Position: {x: -54.760006, y: 1.85, z: -64.00001}
     CoverDirections: 
+  - Position: {x: -53.679993, y: 0.9499947, z: -63.40001}
+    CoverDirections: 
   - Position: {x: -54.651558, y: 3.851047, z: -25.601559}
+    CoverDirections: 
+  - Position: {x: -54.651558, y: 3.2510471, z: -25.601559}
     CoverDirections: 
   - Position: {x: -54.759995, y: 1.85, z: -88.20001}
     CoverDirections: 
@@ -271,11 +377,17 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -54.497818, y: 1.85, z: -20.452187}
     CoverDirections: 
+  - Position: {x: -54.497818, y: 1.25, z: -20.452187}
+    CoverDirections: 
   - Position: {x: -50.140007, y: 1.5499928, z: -88.8}
+    CoverDirections: 
+  - Position: {x: -50.140007, y: 0.9499928, z: -88.8}
     CoverDirections: 
   - Position: {x: -51.25206, y: 1.85, z: -66.3515}
     CoverDirections: 
   - Position: {x: -50.151573, y: 2.0732694, z: -25.601559}
+    CoverDirections: 
+  - Position: {x: -50.151573, y: 1.4732693, z: -25.601559}
     CoverDirections: 
   - Position: {x: -50.300003, y: 1.85, z: -86.37}
     CoverDirections: 
@@ -297,9 +409,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -53.120205, y: 1.5499947, z: -63.634842}
     CoverDirections: 
+  - Position: {x: -53.120205, y: 0.9499946, z: -63.63485}
+    CoverDirections: 
   - Position: {x: -49.649998, y: 1.5499973, z: -29.800003}
     CoverDirections: 
   - Position: {x: -50.14817, y: 1.85, z: -25.001831}
+    CoverDirections: 
+  - Position: {x: -50.14817, y: 1.25, z: -25.001833}
     CoverDirections: 
   - Position: {x: -49.649994, y: 1.85, z: -29.2}
     CoverDirections: 
@@ -307,7 +423,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -50.82778, y: 1.5499946, z: -65.92726}
     CoverDirections: 
+  - Position: {x: -49.929756, y: 0.94999444, z: -66.825294}
+    CoverDirections: 
   - Position: {x: -49.70001, y: 1.5499928, z: -88.36}
+    CoverDirections: 
+  - Position: {x: -49.70001, y: 0.94999284, z: -88.36}
     CoverDirections: 
   - Position: {x: -49.70001, y: 1.549993, z: -86.37001}
     CoverDirections: 
@@ -327,6 +447,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -49.70001, y: 1.5499945, z: -67.380005}
     CoverDirections: 
+  - Position: {x: -49.70001, y: 0.94999444, z: -67.380005}
+    CoverDirections: 
   - Position: {x: -47.660004, y: 1.5499973, z: -29.800003}
     CoverDirections: 
   - Position: {x: -49.65, y: 5.85, z: -29.2}
@@ -343,11 +465,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -44.602417, y: 1.5499911, z: -110.31975}
     CoverDirections: 
+  - Position: {x: -44.602417, y: 0.94999117, z: -110.31975}
+    CoverDirections: 
   - Position: {x: -42.66, y: 5.85, z: -29.2}
     CoverDirections: 
   - Position: {x: -42.66, y: 1.85, z: -29.2}
     CoverDirections: 
   - Position: {x: -44.410862, y: 1.5499911, z: -110.87963}
+    CoverDirections: 
+  - Position: {x: -44.410862, y: 0.94999117, z: -110.87963}
     CoverDirections: 
   - Position: {x: -42.660004, y: 1.5499973, z: -29.800003}
     CoverDirections: 
@@ -361,6 +487,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -36.14, y: 1.5499973, z: -29.800003}
     CoverDirections: 
+  - Position: {x: -36.14, y: 0.94999725, z: -29.800003}
+    CoverDirections: 
   - Position: {x: -37.66, y: 5.85, z: -29.2}
     CoverDirections: 
   - Position: {x: -37.66, y: 1.85, z: -29.2}
@@ -368,6 +496,8 @@ MonoBehaviour:
   - Position: {x: -36.139996, y: 1.549993, z: -85.43001}
     CoverDirections: 
   - Position: {x: -36.139996, y: 1.549993, z: -85.90001}
+    CoverDirections: 
+  - Position: {x: -36.139996, y: 0.949993, z: -85.90001}
     CoverDirections: 
   - Position: {x: -36.139996, y: 1.5499932, z: -83.450005}
     CoverDirections: 
@@ -381,7 +511,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -36.139996, y: 1.5499942, z: -69.6}
     CoverDirections: 
+  - Position: {x: -36.139996, y: 0.94999427, z: -69.34}
+    CoverDirections: 
   - Position: {x: -36.139996, y: 1.5499951, z: -58.859997}
+    CoverDirections: 
+  - Position: {x: -36.14, y: 0.94999504, z: -58.859997}
     CoverDirections: 
   - Position: {x: -36.139996, y: 1.5499953, z: -56.62}
     CoverDirections: 
@@ -397,9 +531,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -36.139996, y: 1.5499964, z: -42.390003}
     CoverDirections: 
+  - Position: {x: -36.139996, y: 0.9499963, z: -42.390003}
+    CoverDirections: 
   - Position: {x: -36.3, y: 5.85, z: -27.050001}
     CoverDirections: 
   - Position: {x: -36.3, y: 1.85, z: -27.050001}
+    CoverDirections: 
+  - Position: {x: -36.3, y: 1.25, z: -27.050001}
     CoverDirections: 
   - Position: {x: -36.3, y: 5.85, z: -24.34}
     CoverDirections: 
@@ -408,6 +546,8 @@ MonoBehaviour:
   - Position: {x: -36.3, y: 1.85, z: -24.34}
     CoverDirections: 
   - Position: {x: -36.3, y: 1.85, z: -25.16}
+    CoverDirections: 
+  - Position: {x: -36.3, y: 1.25, z: -25.16}
     CoverDirections: 
   - Position: {x: -36.3, y: 5.85, z: -22.36}
     CoverDirections: 
@@ -433,29 +573,45 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -35.230156, y: 1.549993, z: -86.34016}
     CoverDirections: 
+  - Position: {x: -35.690155, y: 0.949993, z: -86.34016}
+    CoverDirections: 
   - Position: {x: -36.140015, y: 5.6, z: -78.47012}
     CoverDirections: 
+  - Position: {x: -36.14002, y: 4.9999967, z: -78.470116}
+    CoverDirections: 
   - Position: {x: -36.139996, y: 5.6, z: -76.58}
+    CoverDirections: 
+  - Position: {x: -36.139996, y: 5, z: -76.58}
     CoverDirections: 
   - Position: {x: -35.230194, y: 1.5499943, z: -68.89981}
     CoverDirections: 
   - Position: {x: -35.690193, y: 1.5499943, z: -68.89981}
     CoverDirections: 
+  - Position: {x: -35.690193, y: 0.94999427, z: -68.89981}
+    CoverDirections: 
   - Position: {x: -35.7, y: 1.5499951, z: -59.3}
     CoverDirections: 
   - Position: {x: -35.230003, y: 1.5499951, z: -59.3}
     CoverDirections: 
+  - Position: {x: -35.7, y: 0.94999504, z: -59.3}
+    CoverDirections: 
   - Position: {x: -36.14, y: 5.6, z: -50.12}
+    CoverDirections: 
+  - Position: {x: -36.139996, y: 5, z: -50.12}
     CoverDirections: 
   - Position: {x: -36.139996, y: 5.6, z: -46.62}
     CoverDirections: 
   - Position: {x: -36.139996, y: 5.6, z: -48.23}
+    CoverDirections: 
+  - Position: {x: -36.139996, y: 5, z: -48.23}
     CoverDirections: 
   - Position: {x: -36.139996, y: 5.6, z: -44.629997}
     CoverDirections: 
   - Position: {x: -35.22984, y: 1.5499964, z: -41.940163}
     CoverDirections: 
   - Position: {x: -35.69984, y: 1.5499964, z: -41.940163}
+    CoverDirections: 
+  - Position: {x: -35.699844, y: 0.94999635, z: -41.940163}
     CoverDirections: 
   - Position: {x: -33.139996, y: 1.5499945, z: -67.590004}
     CoverDirections: 
@@ -467,11 +623,17 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -35.700005, y: 1.5499973, z: -29.36}
     CoverDirections: 
+  - Position: {x: -35.700005, y: 0.94999725, z: -29.36}
+    CoverDirections: 
   - Position: {x: -35.700005, y: 1.5499974, z: -27.050007}
+    CoverDirections: 
+  - Position: {x: -35.700005, y: 0.9499975, z: -27.050007}
     CoverDirections: 
   - Position: {x: -35.700005, y: 1.5499976, z: -25.160002}
     CoverDirections: 
   - Position: {x: -35.700005, y: 1.5499977, z: -24.340002}
+    CoverDirections: 
+  - Position: {x: -35.700005, y: 0.9499976, z: -25.160002}
     CoverDirections: 
   - Position: {x: -35.700005, y: 1.5499978, z: -22.35001}
     CoverDirections: 
@@ -485,7 +647,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -32.900005, y: 1.5499895, z: -132.75002}
     CoverDirections: 
+  - Position: {x: -32.900005, y: 0.94998944, z: -132.75002}
+    CoverDirections: 
   - Position: {x: -32.90001, y: 1.549991, z: -112.64001}
+    CoverDirections: 
+  - Position: {x: -32.90001, y: 0.949991, z: -112.64001}
     CoverDirections: 
   - Position: {x: -33.25016, y: 1.549993, z: -86.34016}
     CoverDirections: 
@@ -503,9 +669,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -35.53963, y: 5.6, z: -78.47028}
     CoverDirections: 
+  - Position: {x: -35.53963, y: 5, z: -78.47028}
+    CoverDirections: 
   - Position: {x: -35.54, y: 1.6, z: -78.51}
     CoverDirections: 
   - Position: {x: -35.53961, y: 5.6, z: -76.58039}
+    CoverDirections: 
+  - Position: {x: -35.53961, y: 5, z: -76.58039}
     CoverDirections: 
   - Position: {x: -35.540592, y: 1.6, z: -76.52827}
     CoverDirections: 
@@ -537,15 +707,23 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -35.54, y: 5.6, z: -50.12}
     CoverDirections: 
+  - Position: {x: -35.54, y: 5, z: -50.12}
+    CoverDirections: 
   - Position: {x: -34.09268, y: 5.6, z: -50.272682}
+    CoverDirections: 
+  - Position: {x: -34.092686, y: 5, z: -50.272682}
     CoverDirections: 
   - Position: {x: -35.54, y: 1.6, z: -49.629993}
     CoverDirections: 
   - Position: {x: -34.08712, y: 5.6, z: -49.67288}
     CoverDirections: 
+  - Position: {x: -34.08712, y: 5, z: -49.67288}
+    CoverDirections: 
   - Position: {x: -35.540005, y: 5.6, z: -48.23}
     CoverDirections: 
   - Position: {x: -35.540005, y: 5.6, z: -46.62}
+    CoverDirections: 
+  - Position: {x: -35.54, y: 5, z: -48.23}
     CoverDirections: 
   - Position: {x: -35.54, y: 1.6, z: -46.62}
     CoverDirections: 
@@ -567,21 +745,31 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -32.459972, y: 1.549991, z: -112.20001}
     CoverDirections: 
+  - Position: {x: -32.459972, y: 0.949991, z: -112.20001}
+    CoverDirections: 
   - Position: {x: -33.24984, y: 5.6, z: -85.74016}
     CoverDirections: 
   - Position: {x: -33.24984, y: 1.6, z: -85.74016}
     CoverDirections: 
   - Position: {x: -32.49076, y: 1.6, z: -73.70076}
     CoverDirections: 
+  - Position: {x: -32.490765, y: 1, z: -73.70076}
+    CoverDirections: 
   - Position: {x: -32.495975, y: 1.81125, z: -73.08406}
+    CoverDirections: 
+  - Position: {x: -32.495975, y: 1.21125, z: -73.08406}
     CoverDirections: 
   - Position: {x: -32.980003, y: 5.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: -33.24, y: 5.6, z: -58.700005}
     CoverDirections: 
+  - Position: {x: -32.980003, y: 5, z: -58.700005}
+    CoverDirections: 
   - Position: {x: -32.980003, y: 1.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: -33.24, y: 1.6, z: -58.700005}
+    CoverDirections: 
+  - Position: {x: -32.980003, y: 1, z: -58.700005}
     CoverDirections: 
   - Position: {x: -30.23017, y: 1.549993, z: -86.34016}
     CoverDirections: 
@@ -597,11 +785,19 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -32.30001, y: 1.6, z: -134.61}
     CoverDirections: 
+  - Position: {x: -32.30001, y: 1, z: -134.61}
+    CoverDirections: 
   - Position: {x: -32.30001, y: 1.6, z: -132.74988}
+    CoverDirections: 
+  - Position: {x: -32.30001, y: 1, z: -132.74988}
     CoverDirections: 
   - Position: {x: -30.180145, y: 1.6, z: -129.60027}
     CoverDirections: 
+  - Position: {x: -30.180145, y: 1, z: -129.60027}
+    CoverDirections: 
   - Position: {x: -30.179516, y: 1.6, z: -129.00037}
+    CoverDirections: 
+  - Position: {x: -30.179516, y: 1, z: -129.00037}
     CoverDirections: 
   - Position: {x: -30.07994, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -627,15 +823,23 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -32.540005, y: 5.6, z: -59.140003}
     CoverDirections: 
+  - Position: {x: -32.540005, y: 5, z: -59.140003}
+    CoverDirections: 
   - Position: {x: -32.54, y: 1.6, z: -60.61}
     CoverDirections: 
   - Position: {x: -32.54, y: 1.6, z: -59.140003}
     CoverDirections: 
+  - Position: {x: -32.540005, y: 1, z: -59.140003}
+    CoverDirections: 
   - Position: {x: -28.702011, y: 5.6, z: -125.450005}
+    CoverDirections: 
+  - Position: {x: -28.70201, y: 5, z: -125.450005}
     CoverDirections: 
   - Position: {x: -30.089956, y: 1.549991, z: -112.20001}
     CoverDirections: 
   - Position: {x: -28.490526, y: 1.6, z: -46.33}
+    CoverDirections: 
+  - Position: {x: -28.490526, y: 1, z: -46.33}
     CoverDirections: 
   - Position: {x: -27.16994, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -655,6 +859,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -28.042088, y: 1.6, z: -46.77208}
     CoverDirections: 
+  - Position: {x: -28.042088, y: 1, z: -46.77208}
+    CoverDirections: 
   - Position: {x: -28.250162, y: 5.5999994, z: -42.540157}
     CoverDirections: 
   - Position: {x: -28.249838, y: 1.5499964, z: -41.940163}
@@ -663,19 +869,33 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -24.94948, y: 1.6, z: -129.00037}
     CoverDirections: 
+  - Position: {x: -24.949482, y: 1, z: -129.00037}
+    CoverDirections: 
   - Position: {x: -25.380167, y: 5.6, z: -86.34016}
     CoverDirections: 
+  - Position: {x: -25.380167, y: 5, z: -86.34016}
+    CoverDirections: 
   - Position: {x: -25.379845, y: 5.6, z: -85.74016}
+    CoverDirections: 
+  - Position: {x: -25.379845, y: 5, z: -85.74016}
     CoverDirections: 
   - Position: {x: -25.439844, y: 1.6, z: -85.74016}
     CoverDirections: 
   - Position: {x: -28.102507, y: 5.6, z: -125.44739}
     CoverDirections: 
+  - Position: {x: -28.102507, y: 5, z: -125.44739}
+    CoverDirections: 
   - Position: {x: -25.103802, y: 1.6, z: -127.56}
+    CoverDirections: 
+  - Position: {x: -25.103802, y: 1, z: -127.56}
     CoverDirections: 
   - Position: {x: -25.103802, y: 1.6, z: -121.98}
     CoverDirections: 
+  - Position: {x: -25.103802, y: 1, z: -121.98}
+    CoverDirections: 
   - Position: {x: -24.860826, y: 1.6, z: -121.425964}
+    CoverDirections: 
+  - Position: {x: -24.860826, y: 1, z: -121.425964}
     CoverDirections: 
   - Position: {x: -25.179934, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -687,15 +907,27 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -24.45796, y: 1.5477774, z: -5.6901937}
     CoverDirections: 
+  - Position: {x: -24.444628, y: 0.94777733, z: -5.6901937}
+    CoverDirections: 
   - Position: {x: -24.470821, y: 1.5461321, z: 10.799999}
+    CoverDirections: 
+  - Position: {x: -24.447594, y: 0.9461321, z: 10.799999}
     CoverDirections: 
   - Position: {x: -23.440048, y: 9.600029, z: -132.95}
     CoverDirections: 
+  - Position: {x: -23.440224, y: 9.000029, z: -132.95}
+    CoverDirections: 
   - Position: {x: -23.440052, y: 9.600029, z: -121.810005}
+    CoverDirections: 
+  - Position: {x: -23.440224, y: 9.000029, z: -121.810005}
     CoverDirections: 
   - Position: {x: -22.780758, y: 1.6, z: -73.70076}
     CoverDirections: 
+  - Position: {x: -22.780754, y: 1, z: -73.70076}
+    CoverDirections: 
   - Position: {x: -24.010002, y: 1.5499991, z: -6.13}
+    CoverDirections: 
+  - Position: {x: -24.000002, y: 0.94999903, z: -6.13}
     CoverDirections: 
   - Position: {x: -22.169939, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -709,19 +941,35 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -22.77713, y: 5.6, z: -49.67288}
     CoverDirections: 
+  - Position: {x: -22.777128, y: 5, z: -49.67288}
+    CoverDirections: 
   - Position: {x: -22.993034, y: 9.6, z: -133.39311}
+    CoverDirections: 
+  - Position: {x: -22.993034, y: 9, z: -133.39311}
     CoverDirections: 
   - Position: {x: -24.503536, y: 1.6, z: -129.45}
     CoverDirections: 
+  - Position: {x: -24.503534, y: 1, z: -129.45}
+    CoverDirections: 
   - Position: {x: -24.503536, y: 1.6, z: -127.55635}
+    CoverDirections: 
+  - Position: {x: -24.503536, y: 1, z: -127.55635}
     CoverDirections: 
   - Position: {x: -21.250933, y: 9.6, z: -121.36899}
     CoverDirections: 
   - Position: {x: -22.99093, y: 9.6, z: -121.36899}
     CoverDirections: 
+  - Position: {x: -21.250933, y: 9, z: -121.36899}
+    CoverDirections: 
+  - Position: {x: -22.99093, y: 9, z: -121.36899}
+    CoverDirections: 
   - Position: {x: -23.500162, y: 5.6, z: -86.34016}
     CoverDirections: 
+  - Position: {x: -23.500162, y: 5, z: -86.34016}
+    CoverDirections: 
   - Position: {x: -23.499846, y: 5.6, z: -85.74016}
+    CoverDirections: 
+  - Position: {x: -23.499846, y: 5, z: -85.74016}
     CoverDirections: 
   - Position: {x: -23.449842, y: 1.6, z: -85.74016}
     CoverDirections: 
@@ -741,13 +989,21 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -23.901436, y: 1.6000011, z: 10.799997}
     CoverDirections: 
+  - Position: {x: -23.901434, y: 1.0000011, z: 10.799997}
+    CoverDirections: 
   - Position: {x: -23.901438, y: 1.6000012, z: 12.691436}
+    CoverDirections: 
+  - Position: {x: -23.901436, y: 1.0000012, z: 12.691435}
     CoverDirections: 
   - Position: {x: -20.630161, y: 5.6, z: -86.34016}
     CoverDirections: 
   - Position: {x: -21.24992, y: 9.6, z: -121.96873}
     CoverDirections: 
+  - Position: {x: -21.24992, y: 9, z: -121.96873}
+    CoverDirections: 
   - Position: {x: -20.199287, y: 1.6, z: -114.25}
+    CoverDirections: 
+  - Position: {x: -20.199287, y: 1, z: -114.25}
     CoverDirections: 
   - Position: {x: -20.179937, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -757,9 +1013,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -22.333883, y: 1.6, z: -73.26}
     CoverDirections: 
+  - Position: {x: -22.333883, y: 1, z: -73.26}
+    CoverDirections: 
   - Position: {x: -22.333883, y: 5.6, z: -50.113884}
     CoverDirections: 
+  - Position: {x: -22.333883, y: 5, z: -50.113884}
+    CoverDirections: 
   - Position: {x: -18.10989, y: 1.6, z: -112.8}
+    CoverDirections: 
+  - Position: {x: -18.10989, y: 1, z: -112.8}
     CoverDirections: 
   - Position: {x: -20.179964, y: 1.549991, z: -112.20001}
     CoverDirections: 
@@ -767,15 +1029,27 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -18.04215, y: 9.600023, z: -132.48994}
     CoverDirections: 
+  - Position: {x: -18.042295, y: 9.000034, z: -132.49}
+    CoverDirections: 
   - Position: {x: -18.042194, y: 9.600029, z: -130.6}
+    CoverDirections: 
+  - Position: {x: -18.042368, y: 9.000029, z: -130.6}
     CoverDirections: 
   - Position: {x: -19.358648, y: 9.6, z: -121.96873}
     CoverDirections: 
+  - Position: {x: -19.358648, y: 9, z: -121.96873}
+    CoverDirections: 
   - Position: {x: -19.849888, y: 1.6, z: -117.715454}
+    CoverDirections: 
+  - Position: {x: -19.849888, y: 1, z: -117.715454}
     CoverDirections: 
   - Position: {x: -19.360933, y: 9.6, z: -121.36899}
     CoverDirections: 
+  - Position: {x: -19.360933, y: 9, z: -121.36899}
+    CoverDirections: 
   - Position: {x: -18.042265, y: 9.600025, z: -117.65}
+    CoverDirections: 
+  - Position: {x: -18.042416, y: 9.000025, z: -117.65}
     CoverDirections: 
   - Position: {x: -17.159933, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -783,19 +1057,33 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -18.109968, y: 1.549991, z: -112.20001}
     CoverDirections: 
+  - Position: {x: -18.109966, y: 0.94999105, z: -112.20001}
+    CoverDirections: 
   - Position: {x: -18.65016, y: 1.549993, z: -86.34016}
     CoverDirections: 
   - Position: {x: -17.789804, y: 5.6, z: -69.4998}
     CoverDirections: 
+  - Position: {x: -17.789804, y: 5, z: -69.4998}
+    CoverDirections: 
   - Position: {x: -17.789804, y: 1.6, z: -69.4998}
+    CoverDirections: 
+  - Position: {x: -17.789806, y: 1, z: -69.4998}
     CoverDirections: 
   - Position: {x: -17.790192, y: 5.6, z: -68.89981}
     CoverDirections: 
+  - Position: {x: -17.790194, y: 5, z: -68.89981}
+    CoverDirections: 
   - Position: {x: -17.790192, y: 1.6, z: -68.89981}
+    CoverDirections: 
+  - Position: {x: -17.790192, y: 1, z: -68.89981}
     CoverDirections: 
   - Position: {x: -17.792084, y: 1.6, z: -46.77208}
     CoverDirections: 
+  - Position: {x: -17.792086, y: 1, z: -46.77208}
+    CoverDirections: 
   - Position: {x: -17.787785, y: 1.6, z: -46.172226}
+    CoverDirections: 
+  - Position: {x: -17.78778, y: 1, z: -46.172226}
     CoverDirections: 
   - Position: {x: -19.279709, y: 9.599319, z: -5.5302944}
     CoverDirections: 
@@ -811,7 +1099,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -19.598984, y: 1.6, z: -117.16088}
     CoverDirections: 
+  - Position: {x: -19.598984, y: 1, z: -117.16088}
+    CoverDirections: 
   - Position: {x: -19.598984, y: 1.6, z: -114.250885}
+    CoverDirections: 
+  - Position: {x: -19.598984, y: 1, z: -114.250885}
     CoverDirections: 
   - Position: {x: -15.540159, y: 1.549993, z: -86.34016}
     CoverDirections: 
@@ -819,23 +1111,37 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -16.279705, y: 9.599319, z: -5.5302954}
     CoverDirections: 
+  - Position: {x: -16.279705, y: 8.999319, z: -5.5302954}
+    CoverDirections: 
   - Position: {x: -16.279707, y: 5.599319, z: -5.5302935}
+    CoverDirections: 
+  - Position: {x: -16.279707, y: 4.999319, z: -5.5302935}
     CoverDirections: 
   - Position: {x: -16.279707, y: 1.5999986, z: -5.5302935}
     CoverDirections: 
+  - Position: {x: -16.279709, y: 0.99999857, z: -5.5302935}
+    CoverDirections: 
   - Position: {x: -17.598982, y: 9.6, z: -117.20094}
+    CoverDirections: 
+  - Position: {x: -17.598982, y: 9, z: -117.20094}
     CoverDirections: 
   - Position: {x: -15.5398445, y: 5.6, z: -85.74016}
     CoverDirections: 
   - Position: {x: -16.34, y: 1.6, z: -78.96}
     CoverDirections: 
+  - Position: {x: -16.340002, y: 1, z: -78.96}
+    CoverDirections: 
   - Position: {x: -16.339998, y: 5.6, z: -67.590004}
     CoverDirections: 
   - Position: {x: -16.339998, y: 5.6, z: -69.05}
     CoverDirections: 
+  - Position: {x: -16.339998, y: 5, z: -69.05}
+    CoverDirections: 
   - Position: {x: -16.34, y: 1.6, z: -67.590004}
     CoverDirections: 
   - Position: {x: -16.34, y: 1.6, z: -69.05}
+    CoverDirections: 
+  - Position: {x: -16.340002, y: 1, z: -69.05}
     CoverDirections: 
   - Position: {x: -16.34, y: 5.6, z: -65.6}
     CoverDirections: 
@@ -849,35 +1155,57 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -16.340002, y: 5.6, z: -60.61}
     CoverDirections: 
+  - Position: {x: -16.34, y: 5, z: -59.14}
+    CoverDirections: 
   - Position: {x: -16.339998, y: 1.6, z: -59.14}
     CoverDirections: 
   - Position: {x: -16.339998, y: 1.6, z: -60.61}
+    CoverDirections: 
+  - Position: {x: -16.34, y: 1, z: -59.14}
     CoverDirections: 
   - Position: {x: -15.630182, y: 1.6, z: -42.540157}
     CoverDirections: 
   - Position: {x: -16.433207, y: 1.5499989, z: -8.69}
     CoverDirections: 
+  - Position: {x: -16.433205, y: 0.94999886, z: -8.69}
+    CoverDirections: 
   - Position: {x: -14.78898, y: 9.6, z: -117.20094}
     CoverDirections: 
+  - Position: {x: -14.78898, y: 9, z: -117.20094}
+    CoverDirections: 
   - Position: {x: -15.896032, y: 1.6, z: -78.51397}
+    CoverDirections: 
+  - Position: {x: -15.89603, y: 1, z: -78.51397}
     CoverDirections: 
   - Position: {x: -15.899807, y: 5.6, z: -69.4998}
     CoverDirections: 
   - Position: {x: -15.539807, y: 5.6, z: -69.4998}
     CoverDirections: 
+  - Position: {x: -15.899807, y: 5, z: -69.4998}
+    CoverDirections: 
   - Position: {x: -15.899807, y: 1.6, z: -69.4998}
     CoverDirections: 
   - Position: {x: -15.539807, y: 1.6, z: -69.4998}
+    CoverDirections: 
+  - Position: {x: -15.899807, y: 1, z: -69.4998}
     CoverDirections: 
   - Position: {x: -15.992344, y: 1.5499989, z: -9.1323395}
     CoverDirections: 
   - Position: {x: -15.252345, y: 1.5499989, z: -9.1323395}
     CoverDirections: 
+  - Position: {x: -15.992342, y: 0.9499988, z: -9.1323395}
+    CoverDirections: 
   - Position: {x: -17.443436, y: 9.599966, z: -132.49007}
+    CoverDirections: 
+  - Position: {x: -17.443642, y: 8.999971, z: -132.49}
     CoverDirections: 
   - Position: {x: -17.44347, y: 9.599972, z: -130.59645}
     CoverDirections: 
+  - Position: {x: -17.443642, y: 8.999971, z: -130.59627}
+    CoverDirections: 
   - Position: {x: -14.790663, y: 9.6, z: -117.800735}
+    CoverDirections: 
+  - Position: {x: -14.790663, y: 9, z: -117.800735}
     CoverDirections: 
   - Position: {x: -15.179929, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -887,9 +1215,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -15.9, y: 5.6, z: -58.700005}
     CoverDirections: 
+  - Position: {x: -15.9, y: 5, z: -58.700005}
+    CoverDirections: 
   - Position: {x: -15.63, y: 1.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: -15.9, y: 1.6, z: -58.700005}
+    CoverDirections: 
+  - Position: {x: -15.9, y: 1, z: -58.700005}
     CoverDirections: 
   - Position: {x: -13.209929, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -898,6 +1230,8 @@ MonoBehaviour:
   - Position: {x: -13.550156, y: 1.549993, z: -86.34016}
     CoverDirections: 
   - Position: {x: -13.180156, y: 1.549993, z: -86.34016}
+    CoverDirections: 
+  - Position: {x: -13.180158, y: 0.949993, z: -86.34016}
     CoverDirections: 
   - Position: {x: -13.339998, y: 5.6, z: -85.43}
     CoverDirections: 
@@ -909,13 +1243,23 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -13.339998, y: 1.6, z: -83.45}
     CoverDirections: 
+  - Position: {x: -13.339998, y: 1, z: -83.19}
+    CoverDirections: 
   - Position: {x: -13.183498, y: 1.6, z: -79.113495}
+    CoverDirections: 
+  - Position: {x: -13.1835, y: 1, z: -79.113495}
     CoverDirections: 
   - Position: {x: -13.339998, y: 5.6, z: -78.26}
     CoverDirections: 
+  - Position: {x: -13.339998, y: 5, z: -78.26}
+    CoverDirections: 
   - Position: {x: -13.339998, y: 5.6, z: -76.37}
     CoverDirections: 
+  - Position: {x: -13.339998, y: 5, z: -76.37}
+    CoverDirections: 
   - Position: {x: -13.339998, y: 1.6, z: -73.950005}
+    CoverDirections: 
+  - Position: {x: -13.339998, y: 1, z: -73.950005}
     CoverDirections: 
   - Position: {x: -13.339998, y: 5.6, z: -71.590004}
     CoverDirections: 
@@ -923,11 +1267,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -13.339998, y: 1.6, z: -72.06}
     CoverDirections: 
+  - Position: {x: -13.339998, y: 1, z: -72.06}
+    CoverDirections: 
   - Position: {x: -15.739996, y: 1.5499945, z: -67.590004}
     CoverDirections: 
   - Position: {x: -13.180187, y: 1.5499943, z: -68.89981}
     CoverDirections: 
   - Position: {x: -13.550186, y: 1.5499943, z: -68.89981}
+    CoverDirections: 
+  - Position: {x: -13.180189, y: 0.94999427, z: -68.89981}
     CoverDirections: 
   - Position: {x: -15.739996, y: 1.5499946, z: -65.6}
     CoverDirections: 
@@ -937,9 +1285,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -13.34, y: 5.6, z: -56.57}
     CoverDirections: 
+  - Position: {x: -13.34, y: 5, z: -56.57}
+    CoverDirections: 
   - Position: {x: -13.34, y: 1.6, z: -56.620003}
     CoverDirections: 
   - Position: {x: -13.34, y: 5.6, z: -54.68}
+    CoverDirections: 
+  - Position: {x: -13.34, y: 5, z: -54.68}
     CoverDirections: 
   - Position: {x: -13.34, y: 1.6, z: -54.63}
     CoverDirections: 
@@ -961,25 +1313,39 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -13.649844, y: 1.5499964, z: -41.940163}
     CoverDirections: 
+  - Position: {x: -13.189844, y: 0.94999635, z: -41.940163}
+    CoverDirections: 
   - Position: {x: -12.482342, y: 1.5499989, z: -9.1323395}
+    CoverDirections: 
+  - Position: {x: -12.482342, y: 0.9499988, z: -9.1323395}
     CoverDirections: 
   - Position: {x: -15.27, y: 9.599319, z: -8.532631}
     CoverDirections: 
   - Position: {x: -15.832886, y: 9.599319, z: -5.9771147}
     CoverDirections: 
+  - Position: {x: -15.832886, y: 8.999319, z: -5.9771137}
+    CoverDirections: 
   - Position: {x: -15.27, y: 5.599319, z: -8.532631}
     CoverDirections: 
   - Position: {x: -15.832888, y: 5.599319, z: -5.9771147}
+    CoverDirections: 
+  - Position: {x: -15.832884, y: 4.999319, z: -5.9771137}
     CoverDirections: 
   - Position: {x: -15.250002, y: 1.5999981, z: -8.53263}
     CoverDirections: 
   - Position: {x: -15.832886, y: 1.5999986, z: -5.9771147}
     CoverDirections: 
+  - Position: {x: -15.832884, y: 0.9999985, z: -5.9771137}
+    CoverDirections: 
   - Position: {x: -12.890005, y: 1.6, z: -72.5}
+    CoverDirections: 
+  - Position: {x: -12.890003, y: 1, z: -72.5}
     CoverDirections: 
   - Position: {x: -13.650001, y: 1.5499951, z: -59.299995}
     CoverDirections: 
   - Position: {x: -13.18, y: 1.5499951, z: -59.299995}
+    CoverDirections: 
+  - Position: {x: -13.18, y: 0.94999504, z: -59.3}
     CoverDirections: 
   - Position: {x: -13.649999, y: 5.6, z: -58.700005}
     CoverDirections: 
@@ -987,21 +1353,33 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -12.6382675, y: 9.599319, z: -5.980002}
     CoverDirections: 
+  - Position: {x: -12.6382675, y: 8.999319, z: -5.980002}
+    CoverDirections: 
   - Position: {x: -13.277369, y: 9.599319, z: -8.532631}
     CoverDirections: 
   - Position: {x: -12.6382675, y: 5.599319, z: -5.980001}
+    CoverDirections: 
+  - Position: {x: -12.638266, y: 4.999319, z: -5.980001}
     CoverDirections: 
   - Position: {x: -13.27737, y: 5.599319, z: -8.53263}
     CoverDirections: 
   - Position: {x: -12.6382675, y: 1.5999985, z: -5.980001}
     CoverDirections: 
+  - Position: {x: -12.638266, y: 0.9999985, z: -5.980001}
+    CoverDirections: 
   - Position: {x: -13.257372, y: 1.5999981, z: -8.532629}
     CoverDirections: 
   - Position: {x: -12.900658, y: 9.6, z: -117.800735}
     CoverDirections: 
+  - Position: {x: -12.900658, y: 9, z: -117.800735}
+    CoverDirections: 
   - Position: {x: -12.898974, y: 9.6, z: -117.20094}
     CoverDirections: 
+  - Position: {x: -12.898974, y: 9, z: -117.20094}
+    CoverDirections: 
   - Position: {x: -12.899839, y: 1.6, z: -82.740166}
+    CoverDirections: 
+  - Position: {x: -12.899836, y: 1, z: -82.740166}
     CoverDirections: 
   - Position: {x: -11.219941, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1009,27 +1387,43 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -11.619901, y: 1.6, z: -112.8}
     CoverDirections: 
+  - Position: {x: -11.619901, y: 1, z: -112.8}
+    CoverDirections: 
   - Position: {x: -11.619954, y: 1.549991, z: -112.200005}
+    CoverDirections: 
+  - Position: {x: -11.619954, y: 0.949991, z: -112.200005}
     CoverDirections: 
   - Position: {x: -10.279706, y: 9.599319, z: -5.5302954}
     CoverDirections: 
   - Position: {x: -12.189705, y: 9.599319, z: -5.5302954}
     CoverDirections: 
+  - Position: {x: -12.189705, y: 8.999319, z: -5.5302954}
+    CoverDirections: 
   - Position: {x: -10.279708, y: 5.599319, z: -5.5302935}
     CoverDirections: 
   - Position: {x: -12.189707, y: 5.599319, z: -5.5302935}
+    CoverDirections: 
+  - Position: {x: -12.189707, y: 4.999319, z: -5.5302935}
     CoverDirections: 
   - Position: {x: -10.25971, y: 1.5999986, z: -5.5302935}
     CoverDirections: 
   - Position: {x: -12.189709, y: 1.5999986, z: -5.5302935}
     CoverDirections: 
+  - Position: {x: -12.189707, y: 0.99999857, z: -5.5302935}
+    CoverDirections: 
   - Position: {x: -10.127251, y: 1.6, z: -117.36}
     CoverDirections: 
+  - Position: {x: -10.127251, y: 1, z: -117.36}
+    CoverDirections: 
   - Position: {x: -10.127251, y: 1.6, z: -114.25}
+    CoverDirections: 
+  - Position: {x: -10.127251, y: 1, z: -114.25}
     CoverDirections: 
   - Position: {x: -12.739996, y: 1.549993, z: -85.90001}
     CoverDirections: 
   - Position: {x: -12.739996, y: 1.549993, z: -85.43001}
+    CoverDirections: 
+  - Position: {x: -12.739994, y: 0.949993, z: -85.90001}
     CoverDirections: 
   - Position: {x: -9.680155, y: 1.5499933, z: -83.34016}
     CoverDirections: 
@@ -1039,11 +1433,19 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -12.739994, y: 5.6, z: -78.26001}
     CoverDirections: 
+  - Position: {x: -12.739994, y: 5, z: -78.26001}
+    CoverDirections: 
   - Position: {x: -12.739994, y: 1.6, z: -78.670006}
+    CoverDirections: 
+  - Position: {x: -12.739994, y: 1, z: -78.670006}
     CoverDirections: 
   - Position: {x: -12.739996, y: 5.6, z: -76.37}
     CoverDirections: 
+  - Position: {x: -12.739994, y: 5, z: -76.37}
+    CoverDirections: 
   - Position: {x: -12.739994, y: 1.6, z: -73.950005}
+    CoverDirections: 
+  - Position: {x: -12.739994, y: 1, z: -73.950005}
     CoverDirections: 
   - Position: {x: -9.680004, y: 5.6, z: -72.5}
     CoverDirections: 
@@ -1057,13 +1459,21 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -12.739992, y: 1.5499943, z: -69.34001}
     CoverDirections: 
+  - Position: {x: -12.739994, y: 0.94999427, z: -69.34001}
+    CoverDirections: 
   - Position: {x: -12.739996, y: 1.5499951, z: -58.859993}
+    CoverDirections: 
+  - Position: {x: -12.739996, y: 0.94999504, z: -58.859997}
     CoverDirections: 
   - Position: {x: -12.739996, y: 1.5499953, z: -56.62}
     CoverDirections: 
   - Position: {x: -12.739996, y: 5.6, z: -56.569996}
     CoverDirections: 
+  - Position: {x: -12.739996, y: 5, z: -56.569996}
+    CoverDirections: 
   - Position: {x: -12.739996, y: 5.6, z: -54.680004}
+    CoverDirections: 
+  - Position: {x: -12.739996, y: 5, z: -54.680004}
     CoverDirections: 
   - Position: {x: -12.739996, y: 1.5499954, z: -54.630005}
     CoverDirections: 
@@ -1085,9 +1495,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -12.739996, y: 1.5499964, z: -42.390003}
     CoverDirections: 
+  - Position: {x: -12.739996, y: 0.9499963, z: -42.390003}
+    CoverDirections: 
   - Position: {x: -8.106772, y: 9.6, z: -132.79312}
     CoverDirections: 
+  - Position: {x: -8.106772, y: 9, z: -132.79312}
+    CoverDirections: 
   - Position: {x: -9.68674, y: 1.6, z: -132.79312}
+    CoverDirections: 
+  - Position: {x: -9.68674, y: 1, z: -132.79312}
     CoverDirections: 
   - Position: {x: -8.209927, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1099,15 +1515,25 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -12.038183, y: 1.5499989, z: -8.69}
     CoverDirections: 
+  - Position: {x: -12.038183, y: 0.94999886, z: -8.69}
+    CoverDirections: 
   - Position: {x: -8.113004, y: 9.6, z: -133.39311}
+    CoverDirections: 
+  - Position: {x: -8.113005, y: 9, z: -133.39311}
     CoverDirections: 
   - Position: {x: -9.682972, y: 1.81125, z: -133.39311}
     CoverDirections: 
+  - Position: {x: -9.682971, y: 1.21125, z: -133.39311}
+    CoverDirections: 
   - Position: {x: -9.680629, y: 1.6, z: -117.800735}
+    CoverDirections: 
+  - Position: {x: -9.680629, y: 1, z: -117.800735}
     CoverDirections: 
   - Position: {x: -8.209957, y: 1.549991, z: -112.200005}
     CoverDirections: 
   - Position: {x: -9.526965, y: 1.6, z: -114.25289}
+    CoverDirections: 
+  - Position: {x: -9.526965, y: 1, z: -114.25289}
     CoverDirections: 
   - Position: {x: -7.7001495, y: 1.5499933, z: -83.34016}
     CoverDirections: 
@@ -1123,9 +1549,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -6.28971, y: 1.5999986, z: -5.5302935}
     CoverDirections: 
+  - Position: {x: -6.28971, y: 0.99999857, z: -5.5302935}
+    CoverDirections: 
   - Position: {x: -5.6489735, y: 9.6, z: -117.20094}
     CoverDirections: 
   - Position: {x: -5.648916, y: 1.6, z: -117.20094}
+    CoverDirections: 
+  - Position: {x: -5.648916, y: 1, z: -117.20094}
     CoverDirections: 
   - Position: {x: -7.6998405, y: 5.6, z: -82.74016}
     CoverDirections: 
@@ -1133,21 +1563,39 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -6.447678, y: 1.5499989, z: -8.690001}
     CoverDirections: 
+  - Position: {x: -6.447678, y: 0.94999886, z: -8.690001}
+    CoverDirections: 
   - Position: {x: -6.447209, y: 9.599321, z: 9.740005}
+    CoverDirections: 
+  - Position: {x: -6.447209, y: 8.999321, z: 9.740005}
     CoverDirections: 
   - Position: {x: -6.4476414, y: 5.5993204, z: 9.739999}
     CoverDirections: 
+  - Position: {x: -6.447631, y: 4.9993205, z: 9.739999}
+    CoverDirections: 
   - Position: {x: -6.4471717, y: 9.599323, z: 11.63}
     CoverDirections: 
+  - Position: {x: -6.4471717, y: 8.999323, z: 11.63}
+    CoverDirections: 
   - Position: {x: -6.4476647, y: 5.599322, z: 11.630012}
+    CoverDirections: 
+  - Position: {x: -6.4476643, y: 4.999322, z: 11.630012}
     CoverDirections: 
   - Position: {x: -6.2229996, y: 9.6, z: -133.39311}
     CoverDirections: 
   - Position: {x: -5.643, y: 9.6, z: -133.39311}
     CoverDirections: 
+  - Position: {x: -6.223, y: 9, z: -133.39311}
+    CoverDirections: 
+  - Position: {x: -5.6430006, y: 9, z: -133.39311}
+    CoverDirections: 
   - Position: {x: -6.216766, y: 9.6, z: -132.79312}
     CoverDirections: 
+  - Position: {x: -6.216766, y: 9, z: -132.79312}
+    CoverDirections: 
   - Position: {x: -5.8008366, y: 1.6, z: -129.16}
+    CoverDirections: 
+  - Position: {x: -5.800838, y: 1, z: -129.16}
     CoverDirections: 
   - Position: {x: -6.219922, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1169,11 +1617,17 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -5.252343, y: 1.5499989, z: -9.1323395}
     CoverDirections: 
+  - Position: {x: -6.002342, y: 0.9499988, z: -9.132339}
+    CoverDirections: 
   - Position: {x: -4.6898417, y: 5.6, z: -82.740166}
+    CoverDirections: 
+  - Position: {x: -4.689841, y: 5, z: -82.74016}
     CoverDirections: 
   - Position: {x: -4.6898417, y: 1.6, z: -82.740166}
     CoverDirections: 
   - Position: {x: -5.3601103, y: 1.6, z: -129.60025}
+    CoverDirections: 
+  - Position: {x: -5.360111, y: 1, z: -129.60025}
     CoverDirections: 
   - Position: {x: -3.209938, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1185,6 +1639,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -4.6901593, y: 5.6, z: -83.34016}
     CoverDirections: 
+  - Position: {x: -4.6901593, y: 5, z: -83.34016}
+    CoverDirections: 
   - Position: {x: -5.270001, y: 9.599319, z: -8.532631}
     CoverDirections: 
   - Position: {x: -5.27, y: 5.599319, z: -8.532629}
@@ -1193,23 +1649,43 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -5.847365, y: 1.5999986, z: -5.972636}
     CoverDirections: 
+  - Position: {x: -5.847365, y: 0.9999985, z: -5.972636}
+    CoverDirections: 
   - Position: {x: -3.0897655, y: 5.59932, z: -1.640001}
+    CoverDirections: 
+  - Position: {x: -3.0897653, y: 4.99932, z: -1.640001}
     CoverDirections: 
   - Position: {x: -3.089765, y: 5.599321, z: 8.269997}
     CoverDirections: 
+  - Position: {x: -3.0897655, y: 4.999321, z: 8.269997}
+    CoverDirections: 
   - Position: {x: -5.8474298, y: 9.599321, z: 9.737421}
+    CoverDirections: 
+  - Position: {x: -5.8474298, y: 8.999321, z: 9.737419}
     CoverDirections: 
   - Position: {x: -5.8474, y: 5.5993204, z: 9.737398}
     CoverDirections: 
+  - Position: {x: -5.8474107, y: 4.9993205, z: 9.737406}
+    CoverDirections: 
   - Position: {x: -5.8473945, y: 9.599323, z: 11.629998}
+    CoverDirections: 
+  - Position: {x: -5.8473945, y: 8.999323, z: 11.629998}
     CoverDirections: 
   - Position: {x: -5.847422, y: 5.5993185, z: 11.629989}
     CoverDirections: 
+  - Position: {x: -5.847441, y: 4.9993186, z: 11.629989}
+    CoverDirections: 
   - Position: {x: -5.2010007, y: 9.599984, z: -132.9489}
+    CoverDirections: 
+  - Position: {x: -5.2010956, y: 8.999984, z: -132.9488}
     CoverDirections: 
   - Position: {x: -5.2012954, y: 5.6, z: -117.64861}
     CoverDirections: 
+  - Position: {x: -5.2012954, y: 5, z: -117.64861}
+    CoverDirections: 
   - Position: {x: -5.2012954, y: 1.6, z: -117.64858}
+    CoverDirections: 
+  - Position: {x: -5.2012954, y: 1, z: -117.64858}
     CoverDirections: 
   - Position: {x: -2.7001572, y: 1.5499933, z: -83.34016}
     CoverDirections: 
@@ -1217,23 +1693,39 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -2.4923415, y: 1.5499989, z: -9.1323395}
     CoverDirections: 
+  - Position: {x: -2.4823415, y: 0.9499988, z: -9.13234}
+    CoverDirections: 
   - Position: {x: -2.686019, y: 9.599319, z: -5.980002}
+    CoverDirections: 
+  - Position: {x: -2.686019, y: 8.999319, z: -5.980002}
     CoverDirections: 
   - Position: {x: -3.2873683, y: 9.599319, z: -8.532631}
     CoverDirections: 
   - Position: {x: -2.686019, y: 5.599319, z: -5.980001}
     CoverDirections: 
+  - Position: {x: -2.686019, y: 4.999319, z: -5.980001}
+    CoverDirections: 
   - Position: {x: -3.2873693, y: 5.599319, z: -8.532629}
     CoverDirections: 
   - Position: {x: -2.686019, y: 1.5999985, z: -5.980001}
     CoverDirections: 
+  - Position: {x: -2.686019, y: 0.9999985, z: -5.980001}
+    CoverDirections: 
   - Position: {x: -1.5996908, y: 9.60004, z: -132.95}
+    CoverDirections: 
+  - Position: {x: -1.599934, y: 9.00004, z: -132.95}
     CoverDirections: 
   - Position: {x: -1.6003532, y: 5.6, z: -117.65}
     CoverDirections: 
+  - Position: {x: -1.6003532, y: 5, z: -117.65}
+    CoverDirections: 
   - Position: {x: -2.700159, y: 5.6, z: -83.34016}
     CoverDirections: 
+  - Position: {x: -2.700159, y: 5, z: -83.34016}
+    CoverDirections: 
   - Position: {x: -2.6998415, y: 5.6, z: -82.74016}
+    CoverDirections: 
+  - Position: {x: -2.6998405, y: 5, z: -82.740166}
     CoverDirections: 
   - Position: {x: -2.6998415, y: 1.6, z: -82.740166}
     CoverDirections: 
@@ -1245,23 +1737,41 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: -2.6429245, y: 5.59932, z: -2.082926}
     CoverDirections: 
+  - Position: {x: -2.6429243, y: 4.99932, z: -2.082926}
+    CoverDirections: 
   - Position: {x: 0.050515294, y: 1.6, z: -129.00037}
+    CoverDirections: 
+  - Position: {x: 0.05051434, y: 1, z: -129.00037}
     CoverDirections: 
   - Position: {x: -3.26, y: 1.5999981, z: -8.532629}
     CoverDirections: 
   - Position: {x: -2.2397053, y: 9.599319, z: -5.5302954}
     CoverDirections: 
+  - Position: {x: -2.2397058, y: 8.999319, z: -5.5302963}
+    CoverDirections: 
   - Position: {x: -2.2397065, y: 5.599319, z: -5.5302944}
+    CoverDirections: 
+  - Position: {x: -2.2397072, y: 4.999319, z: -5.5302944}
     CoverDirections: 
   - Position: {x: -2.2397084, y: 1.5999986, z: -5.5302935}
     CoverDirections: 
+  - Position: {x: -2.239708, y: 0.99999857, z: -5.5302935}
+    CoverDirections: 
   - Position: {x: 0.049892545, y: 1.6, z: -129.60025}
+    CoverDirections: 
+  - Position: {x: 0.049892545, y: 1, z: -129.60025}
     CoverDirections: 
   - Position: {x: -0.10093435, y: 1.6, z: -127.56}
     CoverDirections: 
+  - Position: {x: -0.100933395, y: 1, z: -127.56}
+    CoverDirections: 
   - Position: {x: 0.056073785, y: 1.6, z: -120.305954}
     CoverDirections: 
+  - Position: {x: 0.056073785, y: 1, z: -120.305954}
+    CoverDirections: 
   - Position: {x: -1.1589389, y: 5.6, z: -117.20094}
+    CoverDirections: 
+  - Position: {x: -1.1589389, y: 5, z: -117.20094}
     CoverDirections: 
   - Position: {x: -1.2099342, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1274,6 +1784,8 @@ MonoBehaviour:
   - Position: {x: 0.5598475, y: 1.5499933, z: -83.34016}
     CoverDirections: 
   - Position: {x: 0.509997, y: 1.6, z: -72.5}
+    CoverDirections: 
+  - Position: {x: 0.509997, y: 1, z: -72.5}
     CoverDirections: 
   - Position: {x: -0.11970699, y: 9.599319, z: -5.5302954}
     CoverDirections: 
@@ -1289,13 +1801,21 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 0.3513463, y: 5.6, z: -81.29}
     CoverDirections: 
+  - Position: {x: 0.3513468, y: 5, z: -81.29}
+    CoverDirections: 
   - Position: {x: 0.3513463, y: 1.5499943, z: -69.340004}
     CoverDirections: 
+  - Position: {x: 0.3513463, y: 0.94999427, z: -69.340004}
+    CoverDirections: 
   - Position: {x: -2.0481877, y: 1.5522206, z: -8.690001}
+    CoverDirections: 
+  - Position: {x: -2.0348542, y: 0.9522205, z: -8.69}
     CoverDirections: 
   - Position: {x: -0.06999835, y: 1.5499991, z: -6.129999}
     CoverDirections: 
   - Position: {x: -2.4897206, y: 5.599321, z: 8.269719}
+    CoverDirections: 
+  - Position: {x: -2.4897206, y: 4.999321, z: 8.269719}
     CoverDirections: 
   - Position: {x: 1.8000646, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1307,23 +1827,43 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 1.1085186, y: 1.6000006, z: -1.439997}
     CoverDirections: 
+  - Position: {x: 1.1085186, y: 1.0000006, z: -1.439996}
+    CoverDirections: 
   - Position: {x: 1.1085187, y: 1.6000009, z: 8.269998}
+    CoverDirections: 
+  - Position: {x: 1.1085186, y: 1.0000008, z: 8.269998}
     CoverDirections: 
   - Position: {x: 1.6570415, y: 5.6, z: -133.39311}
     CoverDirections: 
+  - Position: {x: 1.6570415, y: 5, z: -133.39311}
+    CoverDirections: 
   - Position: {x: -0.9999865, y: 9.59996, z: -132.9499}
+    CoverDirections: 
+  - Position: {x: -1.0002288, y: 8.99996, z: -132.94966}
     CoverDirections: 
   - Position: {x: 1.6632789, y: 5.6, z: -132.79312}
     CoverDirections: 
+  - Position: {x: 1.663278, y: 5, z: -132.79312}
+    CoverDirections: 
   - Position: {x: 0.43975866, y: 5.6, z: -129.40039}
+    CoverDirections: 
+  - Position: {x: 0.43975866, y: 5, z: -129.40039}
     CoverDirections: 
   - Position: {x: 0.44031537, y: 5.6, z: -128.80017}
     CoverDirections: 
+  - Position: {x: 0.44031537, y: 5, z: -128.80017}
+    CoverDirections: 
   - Position: {x: -0.99969304, y: 9.599944, z: -117.650154}
+    CoverDirections: 
+  - Position: {x: -1.0000316, y: 8.999944, z: -117.64982}
     CoverDirections: 
   - Position: {x: 0.43935055, y: 9.6, z: -117.800735}
     CoverDirections: 
+  - Position: {x: 0.43935245, y: 9, z: -117.800735}
+    CoverDirections: 
   - Position: {x: 0.44103378, y: 9.6, z: -117.20094}
+    CoverDirections: 
+  - Position: {x: 0.4410357, y: 9, z: -117.20094}
     CoverDirections: 
   - Position: {x: 2.549849, y: 1.5499933, z: -83.34016}
     CoverDirections: 
@@ -1337,19 +1877,35 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 1.5485309, y: 1.6000009, z: 8.711468}
     CoverDirections: 
+  - Position: {x: 1.548531, y: 1.0000008, z: 8.711468}
+    CoverDirections: 
   - Position: {x: 3.1025221, y: 1.6, z: -135.12}
+    CoverDirections: 
+  - Position: {x: 3.1025221, y: 1, z: -135.12}
     CoverDirections: 
   - Position: {x: 3.103268, y: 9.60004, z: -133.24}
     CoverDirections: 
+  - Position: {x: 3.1030266, y: 9.00004, z: -133.24}
+    CoverDirections: 
   - Position: {x: 3.1025221, y: 5.6, z: -133.24}
+    CoverDirections: 
+  - Position: {x: 3.102523, y: 5, z: -133.24}
     CoverDirections: 
   - Position: {x: 0.49953094, y: 1.6, z: -127.55936}
     CoverDirections: 
+  - Position: {x: 0.49953094, y: 1, z: -127.55936}
+    CoverDirections: 
   - Position: {x: 3.102521, y: 1.6, z: -127.56}
+    CoverDirections: 
+  - Position: {x: 3.102521, y: 1, z: -127.56}
     CoverDirections: 
   - Position: {x: 0.49953112, y: 1.6, z: -120.74937}
     CoverDirections: 
+  - Position: {x: 0.49953112, y: 1, z: -120.74937}
+    CoverDirections: 
   - Position: {x: 3.1025212, y: 1.6, z: -120.75}
+    CoverDirections: 
+  - Position: {x: 3.1025212, y: 1, z: -120.75}
     CoverDirections: 
   - Position: {x: 2.5498405, y: 5.6, z: -83.34016}
     CoverDirections: 
@@ -1357,23 +1913,37 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 0.95134664, y: 5.6, z: -81.29}
     CoverDirections: 
+  - Position: {x: 0.95134664, y: 5, z: -81.29}
+    CoverDirections: 
   - Position: {x: 2.550159, y: 1.6, z: -82.740166}
     CoverDirections: 
   - Position: {x: 0.95134664, y: 5.6, z: -71.590004}
     CoverDirections: 
   - Position: {x: 0.9513471, y: 1.6, z: -72.05135}
     CoverDirections: 
+  - Position: {x: 0.9513471, y: 1, z: -72.05135}
+    CoverDirections: 
   - Position: {x: 0.9513471, y: 1.6, z: -69.340004}
+    CoverDirections: 
+  - Position: {x: 0.95134616, y: 1, z: -69.340004}
     CoverDirections: 
   - Position: {x: 0.95134664, y: 5.6, z: -69.60865}
     CoverDirections: 
   - Position: {x: 3.5432415, y: 9.6, z: -132.79312}
     CoverDirections: 
+  - Position: {x: 3.5432415, y: 9, z: -132.79312}
+    CoverDirections: 
   - Position: {x: 3.5432768, y: 5.6, z: -132.79312}
+    CoverDirections: 
+  - Position: {x: 3.5432768, y: 5, z: -132.79312}
     CoverDirections: 
   - Position: {x: 3.5499318, y: 1.6, z: -129.60025}
     CoverDirections: 
+  - Position: {x: 3.5499318, y: 1, z: -129.60025}
+    CoverDirections: 
   - Position: {x: 3.550554, y: 1.6, z: -129.00037}
+    CoverDirections: 
+  - Position: {x: 3.550554, y: 1, z: -129.00037}
     CoverDirections: 
   - Position: {x: 3.7800703, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1385,9 +1955,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 5.459999, y: 1.5499991, z: -6.13}
     CoverDirections: 
+  - Position: {x: 5.459999, y: 0.94999903, z: -6.13}
+    CoverDirections: 
   - Position: {x: 1.7085187, y: 1.8212509, z: -1.4414809}
     CoverDirections: 
+  - Position: {x: 1.7085187, y: 1.2212509, z: -1.4414809}
+    CoverDirections: 
   - Position: {x: 3.5461164, y: 1.6, z: -120.305954}
+    CoverDirections: 
+  - Position: {x: 3.5461164, y: 1, z: -120.305954}
     CoverDirections: 
   - Position: {x: 3.7800486, y: 1.549991, z: -112.200005}
     CoverDirections: 
@@ -1403,47 +1979,85 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 5.308519, y: 1.600001, z: 10.169999}
     CoverDirections: 
+  - Position: {x: 5.308519, y: 1.000001, z: 10.169999}
+    CoverDirections: 
   - Position: {x: 5.308519, y: 1.6000012, z: 12.69}
+    CoverDirections: 
+  - Position: {x: 5.308519, y: 1.0000012, z: 12.69}
     CoverDirections: 
   - Position: {x: 3.7022326, y: 1.6, z: -135.11205}
     CoverDirections: 
+  - Position: {x: 3.7022326, y: 1, z: -135.11205}
+    CoverDirections: 
   - Position: {x: 3.7022302, y: 1.6, z: -127.552055}
+    CoverDirections: 
+  - Position: {x: 3.7022312, y: 1, z: -127.552055}
     CoverDirections: 
   - Position: {x: 6.7800465, y: 1.549991, z: -112.200005}
     CoverDirections: 
   - Position: {x: 6.619839, y: 5.6, z: -83.34016}
     CoverDirections: 
+  - Position: {x: 6.619839, y: 5, z: -83.34016}
+    CoverDirections: 
   - Position: {x: 6.620159, y: 5.6, z: -82.74016}
+    CoverDirections: 
+  - Position: {x: 6.6201596, y: 5, z: -82.740166}
     CoverDirections: 
   - Position: {x: 6.57016, y: 1.6, z: -82.740166}
     CoverDirections: 
   - Position: {x: 8.453242, y: 9.6, z: -132.79312}
     CoverDirections: 
+  - Position: {x: 8.453242, y: 9, z: -132.79312}
+    CoverDirections: 
   - Position: {x: 8.453279, y: 5.6, z: -132.79312}
+    CoverDirections: 
+  - Position: {x: 8.453277, y: 5, z: -132.79312}
     CoverDirections: 
   - Position: {x: 8.453315, y: 1.6, z: -132.79312}
     CoverDirections: 
+  - Position: {x: 8.453315, y: 1, z: -132.79312}
+    CoverDirections: 
   - Position: {x: 8.457013, y: 9.6, z: -133.39311}
+    CoverDirections: 
+  - Position: {x: 8.457013, y: 9, z: -133.39311}
     CoverDirections: 
   - Position: {x: 8.457049, y: 5.6, z: -133.39311}
     CoverDirections: 
+  - Position: {x: 8.457049, y: 5, z: -133.39311}
+    CoverDirections: 
   - Position: {x: 8.4570875, y: 1.6, z: -133.39311}
+    CoverDirections: 
+  - Position: {x: 8.4570875, y: 1, z: -133.39311}
     CoverDirections: 
   - Position: {x: 8.459378, y: 5.6, z: -117.800735}
     CoverDirections: 
+  - Position: {x: 8.459376, y: 5, z: -117.800735}
+    CoverDirections: 
   - Position: {x: 8.451087, y: 5.6, z: -117.20094}
+    CoverDirections: 
+  - Position: {x: 8.451087, y: 5, z: -117.20094}
     CoverDirections: 
   - Position: {x: 8.559848, y: 1.5499933, z: -83.34016}
     CoverDirections: 
   - Position: {x: 5.9087586, y: 1.5499991, z: -5.69}
     CoverDirections: 
+  - Position: {x: 5.9087586, y: 0.94999903, z: -5.69}
+    CoverDirections: 
   - Position: {x: 7.5099993, y: 1.5499995, z: -0.09062745}
+    CoverDirections: 
+  - Position: {x: 7.5099993, y: 0.9499995, z: -0.09062739}
     CoverDirections: 
   - Position: {x: 7.510917, y: 1.5999994, z: 0.50908154}
     CoverDirections: 
+  - Position: {x: 7.510917, y: 0.99999946, z: 0.50908154}
+    CoverDirections: 
   - Position: {x: 5.9087586, y: 1.600001, z: 10.169998}
     CoverDirections: 
+  - Position: {x: 5.908758, y: 1.000001, z: 10.169998}
+    CoverDirections: 
   - Position: {x: 5.9087586, y: 1.6000012, z: 12.691241}
+    CoverDirections: 
+  - Position: {x: 5.9087586, y: 1.0000012, z: 12.691241}
     CoverDirections: 
   - Position: {x: 8.77007, y: 9.6, z: -112.8}
     CoverDirections: 
@@ -1455,9 +2069,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 8.770047, y: 1.549991, z: -112.200005}
     CoverDirections: 
+  - Position: {x: 10.050046, y: 0.949991, z: -112.200005}
+    CoverDirections: 
   - Position: {x: 8.50984, y: 5.6, z: -83.34016}
     CoverDirections: 
+  - Position: {x: 8.50984, y: 5, z: -83.34016}
+    CoverDirections: 
   - Position: {x: 8.510159, y: 5.6, z: -82.740166}
+    CoverDirections: 
+  - Position: {x: 8.5101595, y: 5, z: -82.740166}
     CoverDirections: 
   - Position: {x: 8.560159, y: 1.6, z: -82.740166}
     CoverDirections: 
@@ -1466,6 +2086,8 @@ MonoBehaviour:
   - Position: {x: 9.900753, y: 9.60004, z: -134.95}
     CoverDirections: 
   - Position: {x: 9.900009, y: 5.6, z: -135.06}
+    CoverDirections: 
+  - Position: {x: 9.900009, y: 5, z: -135.06}
     CoverDirections: 
   - Position: {x: 9.900749, y: 9.60004, z: -132.18}
     CoverDirections: 
@@ -1503,7 +2125,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 9.399373, y: 1.5499995, z: -0.09062742}
     CoverDirections: 
+  - Position: {x: 9.399373, y: 0.9499995, z: -0.09062739}
+    CoverDirections: 
   - Position: {x: 9.400918, y: 1.5999994, z: 0.50908154}
+    CoverDirections: 
+  - Position: {x: 9.400918, y: 0.99999946, z: 0.50908154}
     CoverDirections: 
   - Position: {x: 11.659372, y: 1.5499995, z: -0.09062739}
     CoverDirections: 
@@ -1521,6 +2147,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 10.50001, y: 5.6, z: -135.05992}
     CoverDirections: 
+  - Position: {x: 10.50001, y: 5, z: -135.05992}
+    CoverDirections: 
   - Position: {x: 10.50001, y: 5.179671, z: -132.17993}
     CoverDirections: 
   - Position: {x: 10.500008, y: 1.5499907, z: -117.16996}
@@ -1529,17 +2157,27 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 10.500006, y: 1.549991, z: -112.64996}
     CoverDirections: 
+  - Position: {x: 10.500006, y: 0.949991, z: -112.64996}
+    CoverDirections: 
   - Position: {x: 14.13363, y: 5.6, z: -135.3}
     CoverDirections: 
   - Position: {x: 14.1686535, y: 5.6, z: -80.520004}
     CoverDirections: 
+  - Position: {x: 14.168653, y: 5, z: -80.520004}
+    CoverDirections: 
   - Position: {x: 14.168653, y: 5.6, z: -78.64}
+    CoverDirections: 
+  - Position: {x: 14.168653, y: 5, z: -78.64}
     CoverDirections: 
   - Position: {x: 14.1686535, y: 5.6, z: -71.590004}
     CoverDirections: 
   - Position: {x: 14.168653, y: 1.6, z: -72.06}
     CoverDirections: 
+  - Position: {x: 14.168653, y: 1, z: -72.06}
+    CoverDirections: 
   - Position: {x: 14.1686535, y: 1.6, z: -69.340004}
+    CoverDirections: 
+  - Position: {x: 14.168653, y: 1, z: -69.340004}
     CoverDirections: 
   - Position: {x: 14.1686535, y: 5.6, z: -69.61}
     CoverDirections: 
@@ -1555,23 +2193,35 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 14.609997, y: 1.6, z: -72.5}
     CoverDirections: 
+  - Position: {x: 14.609998, y: 1, z: -72.5}
+    CoverDirections: 
   - Position: {x: 17.819847, y: 1.5499933, z: -83.34016}
     CoverDirections: 
   - Position: {x: 17.819996, y: 1.6, z: -72.5}
     CoverDirections: 
   - Position: {x: 17.81984, y: 5.6, z: -83.34016}
     CoverDirections: 
+  - Position: {x: 17.81984, y: 5, z: -83.34016}
+    CoverDirections: 
   - Position: {x: 14.797208, y: 5.6, z: -80.51655}
     CoverDirections: 
+  - Position: {x: 14.797208, y: 5, z: -80.51655}
+    CoverDirections: 
   - Position: {x: 17.820158, y: 5.6, z: -82.740166}
+    CoverDirections: 
+  - Position: {x: 17.820158, y: 5, z: -82.740166}
     CoverDirections: 
   - Position: {x: 17.820158, y: 1.6, z: -82.740166}
     CoverDirections: 
   - Position: {x: 14.768654, y: 5.6, z: -78.63865}
     CoverDirections: 
+  - Position: {x: 14.768654, y: 5, z: -78.63865}
+    CoverDirections: 
   - Position: {x: 17.819998, y: 5.6, z: -72.5}
     CoverDirections: 
   - Position: {x: 14.768654, y: 1.5499943, z: -69.34865}
+    CoverDirections: 
+  - Position: {x: 14.768655, y: 0.94999427, z: -69.34865}
     CoverDirections: 
   - Position: {x: 17.819994, y: 1.5499941, z: -71.9}
     CoverDirections: 
@@ -1579,7 +2229,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 19.809841, y: 5.6, z: -83.34016}
     CoverDirections: 
+  - Position: {x: 19.809841, y: 5, z: -83.34016}
+    CoverDirections: 
   - Position: {x: 19.81016, y: 5.6, z: -82.740166}
+    CoverDirections: 
+  - Position: {x: 19.810162, y: 5, z: -82.740166}
     CoverDirections: 
   - Position: {x: 19.81016, y: 1.6, z: -82.740166}
     CoverDirections: 
@@ -1607,6 +2261,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 25.54, y: 1.5499991, z: -5.8399982}
     CoverDirections: 
+  - Position: {x: 25.54, y: 0.94999903, z: -5.8399982}
+    CoverDirections: 
   - Position: {x: 24.810163, y: 5.6, z: -82.740166}
     CoverDirections: 
   - Position: {x: 24.810162, y: 1.6, z: -82.74016}
@@ -1617,21 +2273,37 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 25.764038, y: 1.549999, z: -6.400477}
     CoverDirections: 
+  - Position: {x: 25.764038, y: 0.94999903, z: -6.400477}
+    CoverDirections: 
   - Position: {x: 28.010157, y: 5.6, z: -82.740166}
     CoverDirections: 
+  - Position: {x: 28.010159, y: 5, z: -82.740166}
+    CoverDirections: 
   - Position: {x: 28.010159, y: 1.6, z: -82.740166}
+    CoverDirections: 
+  - Position: {x: 28.010159, y: 1, z: -82.740166}
     CoverDirections: 
   - Position: {x: 27.859999, y: 1.549993, z: -85.43}
     CoverDirections: 
   - Position: {x: 27.859999, y: 1.549993, z: -85.9}
     CoverDirections: 
+  - Position: {x: 27.86, y: 0.949993, z: -85.9}
+    CoverDirections: 
   - Position: {x: 27.859993, y: 5.6, z: -81.3}
+    CoverDirections: 
+  - Position: {x: 27.859995, y: 5, z: -81.3}
     CoverDirections: 
   - Position: {x: 27.859993, y: 1.6, z: -81.3}
     CoverDirections: 
+  - Position: {x: 27.859991, y: 1, z: -81.3}
+    CoverDirections: 
   - Position: {x: 27.859993, y: 1.5499943, z: -69.340004}
     CoverDirections: 
+  - Position: {x: 27.859993, y: 0.94999427, z: -69.340004}
+    CoverDirections: 
   - Position: {x: 27.859995, y: 1.5499951, z: -58.86}
+    CoverDirections: 
+  - Position: {x: 27.859993, y: 0.94999504, z: -58.86}
     CoverDirections: 
   - Position: {x: 27.859995, y: 1.5499953, z: -56.620007}
     CoverDirections: 
@@ -1647,23 +2319,37 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 27.859995, y: 1.5499964, z: -42.390003}
     CoverDirections: 
+  - Position: {x: 27.859995, y: 0.9499963, z: -42.390003}
+    CoverDirections: 
   - Position: {x: 28.309843, y: 1.549993, z: -86.34016}
     CoverDirections: 
   - Position: {x: 28.759842, y: 1.549993, z: -86.34016}
     CoverDirections: 
+  - Position: {x: 28.309841, y: 0.949993, z: -86.34016}
+    CoverDirections: 
   - Position: {x: 28.309816, y: 1.5499943, z: -68.89981}
+    CoverDirections: 
+  - Position: {x: 28.30982, y: 0.94999427, z: -68.89981}
     CoverDirections: 
   - Position: {x: 27.859995, y: 5.6, z: -46.56001}
     CoverDirections: 
+  - Position: {x: 27.859995, y: 5, z: -46.56001}
+    CoverDirections: 
   - Position: {x: 27.859997, y: 5.6, z: -44.680004}
+    CoverDirections: 
+  - Position: {x: 27.859995, y: 5, z: -44.680004}
     CoverDirections: 
   - Position: {x: 28.760157, y: 1.5499964, z: -41.940163}
     CoverDirections: 
   - Position: {x: 28.300158, y: 1.5499964, z: -41.940163}
     CoverDirections: 
+  - Position: {x: 28.30016, y: 0.94999635, z: -41.940163}
+    CoverDirections: 
   - Position: {x: 28.299995, y: 1.5499951, z: -59.3}
     CoverDirections: 
   - Position: {x: 28.759996, y: 1.5499951, z: -59.3}
+    CoverDirections: 
+  - Position: {x: 28.299995, y: 0.94999504, z: -59.3}
     CoverDirections: 
   - Position: {x: 30.75985, y: 1.549993, z: -86.34016}
     CoverDirections: 
@@ -1679,11 +2365,17 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 28.459995, y: 5.6, z: -83.189995}
     CoverDirections: 
+  - Position: {x: 28.459997, y: 5, z: -83.189995}
+    CoverDirections: 
   - Position: {x: 28.459997, y: 1.6, z: -83.45}
     CoverDirections: 
   - Position: {x: 28.459997, y: 1.6, z: -83.189995}
     CoverDirections: 
+  - Position: {x: 28.459997, y: 1, z: -83.189995}
+    CoverDirections: 
   - Position: {x: 28.459997, y: 1.6, z: -81.3}
+    CoverDirections: 
+  - Position: {x: 28.459997, y: 1, z: -81.3}
     CoverDirections: 
   - Position: {x: 28.459995, y: 5.6007237, z: -71.560005}
     CoverDirections: 
@@ -1691,7 +2383,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 28.500002, y: 1.5499941, z: -71.100006}
     CoverDirections: 
+  - Position: {x: 28.500002, y: 0.94999415, z: -71.100006}
+    CoverDirections: 
   - Position: {x: 32.02, y: 1.5499941, z: -71.100006}
+    CoverDirections: 
+  - Position: {x: 32.02, y: 0.94999415, z: -71.100006}
     CoverDirections: 
   - Position: {x: 30.859995, y: 1.5499945, z: -67.590004}
     CoverDirections: 
@@ -1719,11 +2415,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 28.459997, y: 5.6, z: -46.560005}
     CoverDirections: 
+  - Position: {x: 28.46, y: 5, z: -46.560005}
+    CoverDirections: 
   - Position: {x: 28.460001, y: 1.6, z: -46.62}
     CoverDirections: 
   - Position: {x: 28.759998, y: 5.6, z: -42.540157}
     CoverDirections: 
   - Position: {x: 28.46, y: 5.6, z: -44.68}
+    CoverDirections: 
+  - Position: {x: 28.460001, y: 5, z: -44.68}
     CoverDirections: 
   - Position: {x: 28.759998, y: 1.6, z: -42.540157}
     CoverDirections: 
@@ -1739,19 +2439,31 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 32.060417, y: 1.81125, z: -81.1}
     CoverDirections: 
+  - Position: {x: 32.060417, y: 1.21125, z: -81.1}
+    CoverDirections: 
   - Position: {x: 31.02, y: 5.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: 30.76, y: 5.6, z: -58.700005}
+    CoverDirections: 
+  - Position: {x: 31.020002, y: 5, z: -58.700005}
     CoverDirections: 
   - Position: {x: 31.02, y: 1.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: 30.76, y: 1.6, z: -58.700005}
     CoverDirections: 
+  - Position: {x: 31.020002, y: 1, z: -58.700005}
+    CoverDirections: 
   - Position: {x: 29.90689, y: 5.6, z: -50.27311}
+    CoverDirections: 
+  - Position: {x: 29.906889, y: 5, z: -50.27311}
     CoverDirections: 
   - Position: {x: 29.902874, y: 5.6, z: -49.672874}
     CoverDirections: 
+  - Position: {x: 29.902874, y: 5, z: -49.672874}
+    CoverDirections: 
   - Position: {x: 31.508003, y: 1.6, z: -46.741993}
+    CoverDirections: 
+  - Position: {x: 31.508005, y: 1, z: -46.74199}
     CoverDirections: 
   - Position: {x: 30.759838, y: 5.6, z: -42.540157}
     CoverDirections: 
@@ -1763,7 +2475,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 31.501991, y: 1.6, z: -46.142}
     CoverDirections: 
+  - Position: {x: 31.501993, y: 1, z: -46.141994}
+    CoverDirections: 
   - Position: {x: 33.759926, y: 1.5499984, z: -14.72795}
+    CoverDirections: 
+  - Position: {x: 33.759926, y: 0.9499984, z: -14.72795}
     CoverDirections: 
   - Position: {x: 31.459997, y: 5.6, z: -67.590004}
     CoverDirections: 
@@ -1781,9 +2497,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 31.46, y: 5.6, z: -59.14}
     CoverDirections: 
+  - Position: {x: 31.46, y: 5, z: -59.14}
+    CoverDirections: 
   - Position: {x: 31.46, y: 1.6, z: -60.609997}
     CoverDirections: 
   - Position: {x: 31.46, y: 1.6, z: -59.14}
+    CoverDirections: 
+  - Position: {x: 31.46, y: 1, z: -59.14}
     CoverDirections: 
   - Position: {x: 33.329998, y: 5.6, z: -86.34016}
     CoverDirections: 
@@ -1791,7 +2511,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 32.660408, y: 1.6, z: -81.10041}
     CoverDirections: 
+  - Position: {x: 32.660408, y: 1, z: -81.10041}
+    CoverDirections: 
   - Position: {x: 34.32261, y: 1.5499984, z: -14.967392}
+    CoverDirections: 
+  - Position: {x: 34.32261, y: 0.9499984, z: -14.967392}
     CoverDirections: 
   - Position: {x: 35.30984, y: 5.6, z: -86.34016}
     CoverDirections: 
@@ -1803,19 +2527,31 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 38.38984, y: 5.6, z: -86.34016}
     CoverDirections: 
+  - Position: {x: 38.38984, y: 5, z: -86.34016}
+    CoverDirections: 
   - Position: {x: 38.39016, y: 5.6, z: -85.74016}
+    CoverDirections: 
+  - Position: {x: 38.39016, y: 5, z: -85.74016}
     CoverDirections: 
   - Position: {x: 38.34016, y: 1.6, z: -85.74016}
     CoverDirections: 
   - Position: {x: 39.840195, y: 5.6, z: -69.4998}
     CoverDirections: 
+  - Position: {x: 39.840195, y: 5, z: -69.4998}
+    CoverDirections: 
   - Position: {x: 39.842876, y: 5.6, z: -49.672874}
     CoverDirections: 
+  - Position: {x: 39.842873, y: 5, z: -49.67288}
+    CoverDirections: 
   - Position: {x: 41.258015, y: 1.6, z: -46.74199}
+    CoverDirections: 
+  - Position: {x: 41.258015, y: 1, z: -46.741993}
     CoverDirections: 
   - Position: {x: 40.329853, y: 1.549993, z: -86.34016}
     CoverDirections: 
   - Position: {x: 41.910004, y: 1.5499909, z: -114.59001}
+    CoverDirections: 
+  - Position: {x: 41.910004, y: 0.94999105, z: -112.05}
     CoverDirections: 
   - Position: {x: 41.910004, y: 1.5499911, z: -112.05}
     CoverDirections: 
@@ -1823,21 +2559,33 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 40.279846, y: 5.6, z: -86.34016}
     CoverDirections: 
+  - Position: {x: 40.27985, y: 5, z: -86.34016}
+    CoverDirections: 
   - Position: {x: 40.28016, y: 5.6, z: -85.74016}
+    CoverDirections: 
+  - Position: {x: 40.28016, y: 5, z: -85.74016}
     CoverDirections: 
   - Position: {x: 40.33016, y: 1.6, z: -85.74016}
     CoverDirections: 
   - Position: {x: 42.420197, y: 1.6, z: -69.4998}
     CoverDirections: 
+  - Position: {x: 42.420197, y: 1, z: -69.4998}
+    CoverDirections: 
   - Position: {x: 42.41981, y: 1.6, z: -68.89981}
+    CoverDirections: 
+  - Position: {x: 42.419815, y: 1, z: -68.89981}
     CoverDirections: 
   - Position: {x: 42.50425, y: 1.5499911, z: -111.1323}
     CoverDirections: 
   - Position: {x: 42.143627, y: 1.5499911, z: -111.492935}
     CoverDirections: 
+  - Position: {x: 42.143627, y: 0.94999105, z: -111.492935}
+    CoverDirections: 
   - Position: {x: 43.359844, y: 1.549993, z: -86.34016}
     CoverDirections: 
   - Position: {x: 41.73019, y: 5.6, z: -69.4998}
+    CoverDirections: 
+  - Position: {x: 41.73019, y: 5, z: -69.4998}
     CoverDirections: 
   - Position: {x: 43.360157, y: 1.5499964, z: -41.940163}
     CoverDirections: 
@@ -1849,9 +2597,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 40.28591, y: 5.6, z: -69.05591}
     CoverDirections: 
+  - Position: {x: 40.28591, y: 5, z: -69.05591}
+    CoverDirections: 
   - Position: {x: 41.729805, y: 5.6, z: -68.89981}
     CoverDirections: 
+  - Position: {x: 41.7298, y: 5, z: -68.89981}
+    CoverDirections: 
   - Position: {x: 40.285915, y: 5.6, z: -50.11592}
+    CoverDirections: 
+  - Position: {x: 40.28591, y: 5, z: -50.11592}
     CoverDirections: 
   - Position: {x: 43.359856, y: 5.6, z: -42.540157}
     CoverDirections: 
@@ -1859,7 +2613,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 44.3098, y: 1.6, z: -68.89981}
     CoverDirections: 
+  - Position: {x: 44.309803, y: 1, z: -68.89981}
+    CoverDirections: 
   - Position: {x: 41.706776, y: 1.6, z: -46.296776}
+    CoverDirections: 
+  - Position: {x: 41.70677, y: 1, z: -46.296776}
     CoverDirections: 
   - Position: {x: 43.36, y: 1.6, z: -42.540157}
     CoverDirections: 
@@ -1881,9 +2639,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 44.300186, y: 1.6, z: -69.4998}
     CoverDirections: 
+  - Position: {x: 44.30019, y: 1, z: -69.4998}
+    CoverDirections: 
   - Position: {x: 45.534874, y: 1.5499971, z: -32.86016}
     CoverDirections: 
   - Position: {x: 45.536133, y: 1.5499969, z: -34.46016}
+    CoverDirections: 
+  - Position: {x: 45.536133, y: 0.9499969, z: -34.46016}
     CoverDirections: 
   - Position: {x: 45.535053, y: 1.5499972, z: -30.869999}
     CoverDirections: 
@@ -1892,6 +2654,8 @@ MonoBehaviour:
   - Position: {x: 45.535053, y: 1.5499976, z: -25.88}
     CoverDirections: 
   - Position: {x: 45.690914, y: -2.4000006, z: 0.50908154}
+    CoverDirections: 
+  - Position: {x: 45.690918, y: -3.0000005, z: 0.509082}
     CoverDirections: 
   - Position: {x: 45.34984, y: 5.6, z: -86.34016}
     CoverDirections: 
@@ -1907,23 +2671,39 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 47.305344, y: 9.799923, z: -121.204735}
     CoverDirections: 
+  - Position: {x: 47.305984, y: 9.199875, z: -121.20401}
+    CoverDirections: 
   - Position: {x: 47.3076, y: 5.799936, z: -121.20247}
+    CoverDirections: 
+  - Position: {x: 47.308132, y: 5.199896, z: -121.20186}
     CoverDirections: 
   - Position: {x: 47.310123, y: 1.7999893, z: -121.199875}
     CoverDirections: 
+  - Position: {x: 47.310123, y: 1.1999893, z: -121.199875}
+    CoverDirections: 
   - Position: {x: 47.30464, y: 9.8001, z: -120.604774}
+    CoverDirections: 
+  - Position: {x: 47.314014, y: 9.200052, z: -120.60402}
     CoverDirections: 
   - Position: {x: 47.312405, y: 5.7999125, z: -120.60252}
     CoverDirections: 
+  - Position: {x: 47.31189, y: 5.1998715, z: -120.6019}
+    CoverDirections: 
   - Position: {x: 47.31, y: 1.7999893, z: -120.600006}
+    CoverDirections: 
+  - Position: {x: 47.31, y: 1.1999893, z: -120.600006}
     CoverDirections: 
   - Position: {x: 44.337364, y: 9.799942, z: -110.152115}
     CoverDirections: 
   - Position: {x: 44.337364, y: 1.7999893, z: -110.14772}
     CoverDirections: 
+  - Position: {x: 47.803284, y: 0.9499915, z: -105.83327}
+    CoverDirections: 
   - Position: {x: 45.976414, y: 1.5499969, z: -34.90358}
     CoverDirections: 
   - Position: {x: 46.496414, y: 1.5499969, z: -34.90358}
+    CoverDirections: 
+  - Position: {x: 45.976414, y: 0.9499969, z: -34.903584}
     CoverDirections: 
   - Position: {x: 46.45915, y: 9.799942, z: -108.03032}
     CoverDirections: 
@@ -1959,9 +2739,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 47.660004, y: 5.6, z: -60.61}
     CoverDirections: 
+  - Position: {x: 47.660004, y: 5, z: -59.14}
+    CoverDirections: 
   - Position: {x: 47.660004, y: 1.6, z: -59.14}
     CoverDirections: 
   - Position: {x: 47.660004, y: 1.6, z: -60.61}
+    CoverDirections: 
+  - Position: {x: 47.660004, y: 1, z: -59.14}
     CoverDirections: 
   - Position: {x: 48.36984, y: 5.6, z: -42.540157}
     CoverDirections: 
@@ -1977,17 +2761,21 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 48.360004, y: 1.5499915, z: -105.600006}
     CoverDirections: 
+  - Position: {x: 48.360004, y: 0.9499915, z: -105.600006}
+    CoverDirections: 
   - Position: {x: 48.37, y: 5.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: 48.1, y: 5.6, z: -58.700005}
+    CoverDirections: 
+  - Position: {x: 48.1, y: 5, z: -58.700005}
     CoverDirections: 
   - Position: {x: 48.37, y: 1.6, z: -58.700005}
     CoverDirections: 
   - Position: {x: 48.1, y: 1.6, z: -58.700005}
     CoverDirections: 
-  - Position: {x: 48.486412, y: 1.5499969, z: -34.903584}
+  - Position: {x: 48.1, y: 1, z: -58.700005}
     CoverDirections: 
-  - Position: {x: 46.496098, y: 5.599989, z: -34.30391}
+  - Position: {x: 48.486412, y: 1.5499969, z: -34.903584}
     CoverDirections: 
   - Position: {x: 46.13505, y: 5.599989, z: -32.88}
     CoverDirections: 
@@ -2021,33 +2809,59 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 46.135048, y: -2.4000006, z: 0.0649451}
     CoverDirections: 
+  - Position: {x: 46.13505, y: -3.0000005, z: 0.0649451}
+    CoverDirections: 
   - Position: {x: 49.195408, y: 9.799875, z: -121.204636}
+    CoverDirections: 
+  - Position: {x: 49.196083, y: 9.199875, z: -121.20396}
     CoverDirections: 
   - Position: {x: 49.19765, y: 5.799896, z: -121.202385}
     CoverDirections: 
+  - Position: {x: 49.19821, y: 5.199896, z: -121.20182}
+    CoverDirections: 
   - Position: {x: 49.200127, y: 1.7999893, z: -121.199875}
+    CoverDirections: 
+  - Position: {x: 49.200127, y: 1.1999893, z: -121.199875}
     CoverDirections: 
   - Position: {x: 49.194813, y: 9.8001, z: -120.60482}
     CoverDirections: 
+  - Position: {x: 49.194138, y: 9.2001, z: -120.60414}
+    CoverDirections: 
   - Position: {x: 49.19255, y: 5.7999125, z: -120.602554}
+    CoverDirections: 
+  - Position: {x: 49.19199, y: 5.1999116, z: -120.60199}
     CoverDirections: 
   - Position: {x: 49.200005, y: 1.7999893, z: -120.600006}
     CoverDirections: 
+  - Position: {x: 49.200005, y: 1.1999893, z: -120.600006}
+    CoverDirections: 
   - Position: {x: 49.738544, y: 5.599989, z: -30.52}
+    CoverDirections: 
+  - Position: {x: 49.738544, y: 4.999989, z: -30.52}
     CoverDirections: 
   - Position: {x: 49.738544, y: 1.5999948, z: -30.51}
     CoverDirections: 
+  - Position: {x: 49.738544, y: 0.99999475, z: -30.51}
+    CoverDirections: 
   - Position: {x: 49.738544, y: 5.599991, z: -22.96}
     CoverDirections: 
+  - Position: {x: 49.738544, y: 4.999991, z: -22.96}
+    CoverDirections: 
   - Position: {x: 49.738544, y: 5.599991, z: -21.070002}
+    CoverDirections: 
+  - Position: {x: 49.738544, y: 4.999991, z: -21.07}
     CoverDirections: 
   - Position: {x: 47.869736, y: 9.799942, z: -106.619736}
     CoverDirections: 
   - Position: {x: 47.86754, y: 1.7999893, z: -106.61754}
     CoverDirections: 
+  - Position: {x: 51.77, y: 0.9499915, z: -105.600006}
+    CoverDirections: 
   - Position: {x: 50.359844, y: 1.549993, z: -86.34016}
     CoverDirections: 
   - Position: {x: 50.819843, y: 1.549993, z: -86.34016}
+    CoverDirections: 
+  - Position: {x: 50.81984, y: 0.949993, z: -86.34016}
     CoverDirections: 
   - Position: {x: 50.660004, y: 5.6, z: -85.43}
     CoverDirections: 
@@ -2059,9 +2873,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 50.660004, y: 5.6, z: -78.46}
     CoverDirections: 
+  - Position: {x: 50.660004, y: 5, z: -78.46}
+    CoverDirections: 
   - Position: {x: 50.660004, y: 1.6, z: -78.51}
     CoverDirections: 
   - Position: {x: 50.66159, y: 5.6, z: -76.57868}
+    CoverDirections: 
+  - Position: {x: 50.66159, y: 5, z: -76.57868}
     CoverDirections: 
   - Position: {x: 50.660587, y: 1.6, z: -76.52951}
     CoverDirections: 
@@ -2087,9 +2905,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 50.660004, y: 5.6, z: -51.57}
     CoverDirections: 
+  - Position: {x: 50.660004, y: 5, z: -51.57}
+    CoverDirections: 
   - Position: {x: 50.660004, y: 1.6, z: -51.620003}
     CoverDirections: 
   - Position: {x: 50.66, y: 5.6, z: -49.68}
+    CoverDirections: 
+  - Position: {x: 50.660004, y: 5, z: -49.68}
     CoverDirections: 
   - Position: {x: 50.660007, y: 1.6, z: -49.63}
     CoverDirections: 
@@ -2105,11 +2927,17 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 50.35016, y: 1.5499964, z: -41.940163}
     CoverDirections: 
+  - Position: {x: 50.810158, y: 0.94999635, z: -41.940163}
+    CoverDirections: 
   - Position: {x: 51.49641, y: 1.5499969, z: -34.903587}
     CoverDirections: 
   - Position: {x: 50.18194, y: 5.599989, z: -30.968071}
     CoverDirections: 
+  - Position: {x: 50.18194, y: 4.999989, z: -30.968071}
+    CoverDirections: 
   - Position: {x: 50.18492, y: 1.5999948, z: -30.955082}
+    CoverDirections: 
+  - Position: {x: 50.18492, y: 0.9999947, z: -30.955082}
     CoverDirections: 
   - Position: {x: 51.50092, y: 1.5999942, z: -34.29092}
     CoverDirections: 
@@ -2118,6 +2946,8 @@ MonoBehaviour:
   - Position: {x: 50.859997, y: 1.7999893, z: -106.2}
     CoverDirections: 
   - Position: {x: 51.769997, y: 1.7999893, z: -106.2}
+    CoverDirections: 
+  - Position: {x: 51.769997, y: 1.1999893, z: -106.2}
     CoverDirections: 
   - Position: {x: 51.77, y: 1.5499915, z: -105.600006}
     CoverDirections: 
@@ -2135,9 +2965,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 50.35981, y: 1.5499943, z: -68.89981}
     CoverDirections: 
+  - Position: {x: 50.819805, y: 0.94999427, z: -68.89981}
+    CoverDirections: 
   - Position: {x: 50.360004, y: 1.5499951, z: -59.3}
     CoverDirections: 
   - Position: {x: 50.820004, y: 1.5499951, z: -59.3}
+    CoverDirections: 
+  - Position: {x: 50.820004, y: 0.94999504, z: -59.299995}
     CoverDirections: 
   - Position: {x: 50.36, y: 5.6, z: -58.700005}
     CoverDirections: 
@@ -2149,17 +2983,29 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 53.212734, y: 9.799988, z: -133.25}
     CoverDirections: 
+  - Position: {x: 53.212734, y: 9.199987, z: -133.25}
+    CoverDirections: 
   - Position: {x: 53.21273, y: 5.7999897, z: -133.96}
+    CoverDirections: 
+  - Position: {x: 53.21273, y: 5.19999, z: -133.96}
     CoverDirections: 
   - Position: {x: 53.21273, y: 1.7999893, z: -133.96}
     CoverDirections: 
+  - Position: {x: 53.21273, y: 1.1999893, z: -133.96}
+    CoverDirections: 
   - Position: {x: 53.212734, y: 9.799988, z: -131.36}
+    CoverDirections: 
+  - Position: {x: 53.212734, y: 9.199987, z: -131.36}
     CoverDirections: 
   - Position: {x: 51.5, y: 5.599989, z: -34.30391}
     CoverDirections: 
   - Position: {x: 50.348045, y: 5.599991, z: -22.960001}
     CoverDirections: 
+  - Position: {x: 50.34805, y: 4.999991, z: -22.960003}
+    CoverDirections: 
   - Position: {x: 50.348045, y: 5.599991, z: -21.068047}
+    CoverDirections: 
+  - Position: {x: 50.34804, y: 4.999991, z: -21.068047}
     CoverDirections: 
   - Position: {x: 54.565598, y: 9.799924, z: -106.2044}
     CoverDirections: 
@@ -2167,13 +3013,19 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 51.26, y: 1.549993, z: -85.43}
     CoverDirections: 
+  - Position: {x: 51.26, y: 0.949993, z: -85.9}
+    CoverDirections: 
   - Position: {x: 51.26, y: 1.5499932, z: -83.45001}
     CoverDirections: 
   - Position: {x: 51.26, y: 5.6, z: -78.46001}
     CoverDirections: 
+  - Position: {x: 51.26, y: 5, z: -78.46001}
+    CoverDirections: 
   - Position: {x: 51.26, y: 1.5499936, z: -78.51}
     CoverDirections: 
   - Position: {x: 51.259995, y: 5.6, z: -76.579994}
+    CoverDirections: 
+  - Position: {x: 51.26, y: 5, z: -76.579994}
     CoverDirections: 
   - Position: {x: 51.26, y: 1.5499938, z: -76.529976}
     CoverDirections: 
@@ -2183,7 +3035,11 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 51.26, y: 1.5499943, z: -69.34}
     CoverDirections: 
+  - Position: {x: 51.26, y: 0.94999427, z: -69.34}
+    CoverDirections: 
   - Position: {x: 51.26, y: 1.5499951, z: -58.86}
+    CoverDirections: 
+  - Position: {x: 51.26, y: 0.94999504, z: -58.86}
     CoverDirections: 
   - Position: {x: 51.26, y: 1.5499953, z: -56.620003}
     CoverDirections: 
@@ -2191,9 +3047,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 51.26, y: 5.6, z: -51.57}
     CoverDirections: 
+  - Position: {x: 51.26, y: 5, z: -51.57}
+    CoverDirections: 
   - Position: {x: 51.259995, y: 1.5499957, z: -51.62}
     CoverDirections: 
   - Position: {x: 51.26, y: 5.6, z: -49.68}
+    CoverDirections: 
+  - Position: {x: 51.26, y: 5, z: -49.68}
     CoverDirections: 
   - Position: {x: 51.26, y: 1.5499958, z: -49.630005}
     CoverDirections: 
@@ -2203,13 +3063,19 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 51.26, y: 1.5499964, z: -42.390003}
     CoverDirections: 
+  - Position: {x: 51.26, y: 0.9499963, z: -42.390003}
+    CoverDirections: 
   - Position: {x: 53.659996, y: 1.7999893, z: -106.2}
     CoverDirections: 
   - Position: {x: 54.569996, y: 1.7999893, z: -106.2}
     CoverDirections: 
+  - Position: {x: 53.659996, y: 1.1999893, z: -106.2}
+    CoverDirections: 
   - Position: {x: 54.569996, y: 1.5499915, z: -105.600006}
     CoverDirections: 
   - Position: {x: 53.659996, y: 1.5499915, z: -105.600006}
+    CoverDirections: 
+  - Position: {x: 53.659996, y: 0.9499915, z: -105.600006}
     CoverDirections: 
   - Position: {x: 53.486404, y: 1.5499969, z: -34.903587}
     CoverDirections: 
@@ -2219,27 +3085,43 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 53.76886, y: 1.5999964, z: -19.291145}
     CoverDirections: 
+  - Position: {x: 53.76886, y: 0.9999965, z: -19.291145}
+    CoverDirections: 
   - Position: {x: 53.77088, y: 1.8212502, z: -18.690887}
     CoverDirections: 
-  - Position: {x: 56.49641, y: 1.5499969, z: -34.903584}
+  - Position: {x: 53.770885, y: 1.2212502, z: -18.690887}
     CoverDirections: 
-  - Position: {x: 56.503906, y: 5.599989, z: -34.30391}
+  - Position: {x: 56.49641, y: 1.5499969, z: -34.903584}
     CoverDirections: 
   - Position: {x: 56.500908, y: 1.5999942, z: -34.290916}
     CoverDirections: 
   - Position: {x: 53.812912, y: 9.799988, z: -133.25291}
     CoverDirections: 
+  - Position: {x: 53.812912, y: 9.199987, z: -133.25291}
+    CoverDirections: 
   - Position: {x: 53.812912, y: 5.7999887, z: -133.96292}
+    CoverDirections: 
+  - Position: {x: 53.81291, y: 5.199989, z: -133.96292}
     CoverDirections: 
   - Position: {x: 53.812912, y: 1.7999893, z: -133.96292}
     CoverDirections: 
+  - Position: {x: 53.812912, y: 1.1999893, z: -133.96292}
+    CoverDirections: 
   - Position: {x: 53.812912, y: 9.799988, z: -131.36292}
+    CoverDirections: 
+  - Position: {x: 53.812912, y: 9.199987, z: -131.36292}
     CoverDirections: 
   - Position: {x: 55.91, y: 9.799923, z: -121.20428}
     CoverDirections: 
+  - Position: {x: 55.91, y: 9.199923, z: -121.20389}
+    CoverDirections: 
   - Position: {x: 55.91, y: 5.799936, z: -121.20208}
     CoverDirections: 
+  - Position: {x: 55.91, y: 5.199936, z: -121.20176}
+    CoverDirections: 
   - Position: {x: 55.91, y: 1.7999893, z: -121.199875}
+    CoverDirections: 
+  - Position: {x: 55.91, y: 1.1999893, z: -121.199875}
     CoverDirections: 
   - Position: {x: 56.555595, y: 9.799924, z: -106.2044}
     CoverDirections: 
@@ -2247,17 +3129,27 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 56.55998, y: 1.5499915, z: -105.600006}
     CoverDirections: 
+  - Position: {x: 56.500004, y: 5.599989, z: -34.30391}
+    CoverDirections: 
   - Position: {x: 56.469933, y: 9.799936, z: -121.01638}
+    CoverDirections: 
+  - Position: {x: 56.469933, y: 9.199936, z: -121.016}
     CoverDirections: 
   - Position: {x: 56.469933, y: 5.799947, z: -121.01419}
     CoverDirections: 
+  - Position: {x: 56.469933, y: 5.199947, z: -121.01387}
+    CoverDirections: 
   - Position: {x: 56.469933, y: 1.7999893, z: -121.01198}
+    CoverDirections: 
+  - Position: {x: 56.469933, y: 1.1999893, z: -121.01198}
     CoverDirections: 
   - Position: {x: 58.486404, y: 1.5499969, z: -34.903584}
     CoverDirections: 
   - Position: {x: 58.493904, y: 5.599989, z: -34.30391}
     CoverDirections: 
   - Position: {x: 59.505966, y: 5.7997346, z: -127.44001}
+    CoverDirections: 
+  - Position: {x: 59.505962, y: 5.1997347, z: -127.44001}
     CoverDirections: 
   - Position: {x: 58.490913, y: 1.5999942, z: -34.290916}
     CoverDirections: 
@@ -2271,57 +3163,93 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 60.14662, y: 2.0112393, z: -131.80339}
     CoverDirections: 
+  - Position: {x: 60.14662, y: 1.4112393, z: -131.80339}
+    CoverDirections: 
   - Position: {x: 60.152943, y: 1.7999893, z: -131.20293}
     CoverDirections: 
+  - Position: {x: 60.152943, y: 1.1999893, z: -131.20293}
+    CoverDirections: 
   - Position: {x: 59.95516, y: 5.8000426, z: -127.00516}
+    CoverDirections: 
+  - Position: {x: 59.954838, y: 5.2000427, z: -127.00484}
     CoverDirections: 
   - Position: {x: 60.9511, y: 1.5499946, z: -62.5}
     CoverDirections: 
   - Position: {x: 60.9511, y: 1.5499945, z: -63.11}
     CoverDirections: 
+  - Position: {x: 60.951107, y: 0.9499945, z: -63.11}
+    CoverDirections: 
   - Position: {x: 60.951103, y: 1.5499947, z: -60.51}
     CoverDirections: 
   - Position: {x: 60.9511, y: 1.5499948, z: -58.71}
+    CoverDirections: 
+  - Position: {x: 60.951103, y: 0.94999486, z: -58.710007}
     CoverDirections: 
   - Position: {x: 60.9511, y: 1.5499951, z: -56.21}
     CoverDirections: 
   - Position: {x: 60.9511, y: 1.549995, z: -56.82}
     CoverDirections: 
+  - Position: {x: 60.9511, y: 0.9499948, z: -56.82}
+    CoverDirections: 
   - Position: {x: 60.951107, y: 1.5499953, z: -53.6}
     CoverDirections: 
   - Position: {x: 60.951107, y: 1.5499952, z: -54.22}
+    CoverDirections: 
+  - Position: {x: 60.951103, y: 0.9499952, z: -53.6}
     CoverDirections: 
   - Position: {x: 61.4939, y: 5.599989, z: -34.30391}
     CoverDirections: 
   - Position: {x: 61.894913, y: 1.5999948, z: -30.955082}
     CoverDirections: 
+  - Position: {x: 61.894913, y: 0.9999947, z: -30.955082}
+    CoverDirections: 
   - Position: {x: 61.50091, y: 1.5999942, z: -34.29092}
     CoverDirections: 
   - Position: {x: 61.885338, y: 1.5999948, z: -30.355343}
+    CoverDirections: 
+  - Position: {x: 61.88533, y: 0.99999475, z: -30.355335}
     CoverDirections: 
   - Position: {x: 62.515465, y: 1.5500026, z: -53.15549}
     CoverDirections: 
   - Position: {x: 61.395466, y: 1.5500026, z: -53.155476}
     CoverDirections: 
+  - Position: {x: 61.395424, y: 0.95000243, z: -53.155434}
+    CoverDirections: 
   - Position: {x: 61.394535, y: 1.5499877, z: -63.555473}
     CoverDirections: 
   - Position: {x: 62.514534, y: 1.5499877, z: -63.555473}
     CoverDirections: 
+  - Position: {x: 61.394573, y: 0.9499877, z: -63.555428}
+    CoverDirections: 
   - Position: {x: 63.18686, y: 9.799988, z: -111.6}
+    CoverDirections: 
+  - Position: {x: 63.18686, y: 9.199987, z: -111.6}
     CoverDirections: 
   - Position: {x: 63.18686, y: 1.7999893, z: -111.590004}
     CoverDirections: 
+  - Position: {x: 63.18686, y: 1.1999893, z: -111.590004}
+    CoverDirections: 
   - Position: {x: 63.18686, y: 9.799988, z: -109.71}
     CoverDirections: 
+  - Position: {x: 63.18686, y: 9.199987, z: -109.71}
+    CoverDirections: 
   - Position: {x: 63.18686, y: 1.7999893, z: -109.7}
+    CoverDirections: 
+  - Position: {x: 63.18686, y: 1.1999893, z: -109.7}
     CoverDirections: 
   - Position: {x: 62.51458, y: 1.5999858, z: -53.755432}
     CoverDirections: 
   - Position: {x: 63.888855, y: 5.599991, z: -19.291145}
     CoverDirections: 
+  - Position: {x: 63.888855, y: 4.999991, z: -19.291145}
+    CoverDirections: 
   - Position: {x: 63.18686, y: 5.7999897, z: -111.593155}
     CoverDirections: 
+  - Position: {x: 63.186855, y: 5.19999, z: -111.593155}
+    CoverDirections: 
   - Position: {x: 63.18686, y: 5.7999897, z: -109.70315}
+    CoverDirections: 
+  - Position: {x: 63.186855, y: 5.19999, z: -109.70315}
     CoverDirections: 
   - Position: {x: 61.342213, y: 5.799936, z: -106.2022}
     CoverDirections: 
@@ -2347,6 +3275,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 61.55109, y: 1.5999908, z: -58.711105}
     CoverDirections: 
+  - Position: {x: 61.551098, y: 0.9999909, z: -58.711105}
+    CoverDirections: 
   - Position: {x: 61.551098, y: 9.599847, z: -56.211105}
     CoverDirections: 
   - Position: {x: 61.551098, y: 5.599986, z: -56.211105}
@@ -2354,6 +3284,8 @@ MonoBehaviour:
   - Position: {x: 61.551098, y: 1.5999911, z: -56.820007}
     CoverDirections: 
   - Position: {x: 61.5511, y: 1.5999913, z: -56.210007}
+    CoverDirections: 
+  - Position: {x: 61.551098, y: 0.999991, z: -56.820004}
     CoverDirections: 
   - Position: {x: 62.51001, y: 9.599832, z: -53.75587}
     CoverDirections: 
@@ -2371,6 +3303,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 63.784912, y: 1.5999948, z: -30.955082}
     CoverDirections: 
+  - Position: {x: 63.784916, y: 0.9999947, z: -30.955082}
+    CoverDirections: 
   - Position: {x: 63.480907, y: 1.5999942, z: -34.290916}
     CoverDirections: 
   - Position: {x: 64.91, y: 1.5499921, z: -99.07001}
@@ -2385,9 +3319,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 64.91, y: 1.5499928, z: -88.869995}
     CoverDirections: 
+  - Position: {x: 64.91, y: 0.9499929, z: -87.85999}
+    CoverDirections: 
   - Position: {x: 64.91, y: 1.5499934, z: -81.35}
     CoverDirections: 
   - Position: {x: 64.91, y: 1.5499933, z: -82.36}
+    CoverDirections: 
+  - Position: {x: 64.91, y: 0.94999325, z: -82.36}
     CoverDirections: 
   - Position: {x: 64.91, y: 1.5499935, z: -79.36}
     CoverDirections: 
@@ -2401,6 +3339,8 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 64.91, y: 1.5499942, z: -69.92}
     CoverDirections: 
+  - Position: {x: 64.91, y: 0.94999427, z: -69.35}
+    CoverDirections: 
   - Position: {x: 64.505936, y: 9.599862, z: -62.955925}
     CoverDirections: 
   - Position: {x: 64.50567, y: 5.599985, z: -62.955666}
@@ -2411,15 +3351,23 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 65.493904, y: 5.5999527, z: -34.30391}
     CoverDirections: 
+  - Position: {x: 65.493904, y: 4.999953, z: -34.30391}
+    CoverDirections: 
   - Position: {x: 65.49091, y: 1.5999942, z: -34.290916}
     CoverDirections: 
+  - Position: {x: 65.49091, y: 0.99999416, z: -34.29092}
+    CoverDirections: 
   - Position: {x: 63.785343, y: 1.5999948, z: -30.35534}
+    CoverDirections: 
+  - Position: {x: 63.785343, y: 0.99999475, z: -30.35534}
     CoverDirections: 
   - Position: {x: 64.50453, y: 1.5499877, z: -63.555473}
     CoverDirections: 
   - Position: {x: 64.50419, y: 9.599832, z: -53.755825}
     CoverDirections: 
   - Position: {x: 65.494194, y: 9.599832, z: -53.75581}
+    CoverDirections: 
+  - Position: {x: 65.494286, y: 8.999831, z: -53.755714}
     CoverDirections: 
   - Position: {x: 64.504456, y: 5.599987, z: -53.755558}
     CoverDirections: 
@@ -2441,29 +3389,53 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 65.33506, y: 5.599989, z: -32.86}
     CoverDirections: 
+  - Position: {x: 65.33506, y: 4.999989, z: -32.86}
+    CoverDirections: 
   - Position: {x: 65.33506, y: 1.5999944, z: -32.85}
+    CoverDirections: 
+  - Position: {x: 65.33506, y: 0.9999944, z: -32.85}
     CoverDirections: 
   - Position: {x: 63.890007, y: 5.599991, z: -18.690887}
     CoverDirections: 
+  - Position: {x: 63.890007, y: 4.999991, z: -18.690887}
+    CoverDirections: 
   - Position: {x: 63.7866, y: 9.799988, z: -111.6}
+    CoverDirections: 
+  - Position: {x: 63.7866, y: 9.199987, z: -111.6}
     CoverDirections: 
   - Position: {x: 63.786594, y: 5.7999887, z: -111.6}
     CoverDirections: 
+  - Position: {x: 63.786594, y: 5.199989, z: -111.6}
+    CoverDirections: 
   - Position: {x: 63.786594, y: 1.7999893, z: -111.590004}
+    CoverDirections: 
+  - Position: {x: 63.786594, y: 1.1999893, z: -111.590004}
     CoverDirections: 
   - Position: {x: 63.7866, y: 9.799988, z: -109.706604}
     CoverDirections: 
+  - Position: {x: 63.7866, y: 9.199987, z: -109.706604}
+    CoverDirections: 
   - Position: {x: 63.7866, y: 5.7999887, z: -109.706604}
+    CoverDirections: 
+  - Position: {x: 63.786594, y: 5.199989, z: -109.7066}
     CoverDirections: 
   - Position: {x: 63.786594, y: 1.7999893, z: -109.706604}
     CoverDirections: 
+  - Position: {x: 63.786594, y: 1.1999893, z: -109.706604}
+    CoverDirections: 
   - Position: {x: 65.35, y: 1.5499927, z: -101.30999}
+    CoverDirections: 
+  - Position: {x: 65.34999, y: 0.9499928, z: -101.31}
     CoverDirections: 
   - Position: {x: 65.350006, y: 1.5499911, z: -100.71}
     CoverDirections: 
   - Position: {x: 65.34999, y: 1.5499936, z: -68.909996}
     CoverDirections: 
+  - Position: {x: 65.35, y: 0.9499935, z: -68.91}
+    CoverDirections: 
   - Position: {x: 63.75418, y: 1.549998, z: -18.689987}
+    CoverDirections: 
+  - Position: {x: 63.75418, y: 0.9499981, z: -18.689987}
     CoverDirections: 
   - Position: {x: 67.89452, y: 1.5499877, z: -63.555466}
     CoverDirections: 
@@ -2475,9 +3447,15 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 68.09447, y: 5.599987, z: -53.755535}
     CoverDirections: 
+  - Position: {x: 68.094475, y: 4.999987, z: -53.75554}
+    CoverDirections: 
   - Position: {x: 68.09461, y: 1.5999868, z: -53.755413}
     CoverDirections: 
+  - Position: {x: 68.09464, y: 0.9999833, z: -53.755363}
+    CoverDirections: 
   - Position: {x: 68.09538, y: 1.6001619, z: -53.155388}
+    CoverDirections: 
+  - Position: {x: 68.09535, y: 1.000162, z: -53.155357}
     CoverDirections: 
   - Position: {x: 65.509995, y: 5.6, z: -99.07}
     CoverDirections: 
@@ -2497,9 +3475,13 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 65.509995, y: 1.6, z: -87.86}
     CoverDirections: 
+  - Position: {x: 65.509995, y: 1, z: -87.86}
+    CoverDirections: 
   - Position: {x: 65.509995, y: 1.6, z: -82.36}
     CoverDirections: 
   - Position: {x: 65.509995, y: 1.6, z: -81.350006}
+    CoverDirections: 
+  - Position: {x: 65.509995, y: 1, z: -82.36}
     CoverDirections: 
   - Position: {x: 65.509995, y: 1.6, z: -79.36}
     CoverDirections: 
@@ -2508,6 +3490,8 @@ MonoBehaviour:
   - Position: {x: 65.509995, y: 1.6, z: -76.350006}
     CoverDirections: 
   - Position: {x: 67.55558, y: 1.6000016, z: -73.814415}
+    CoverDirections: 
+  - Position: {x: 67.55557, y: 1.0000015, z: -73.81442}
     CoverDirections: 
   - Position: {x: 65.509995, y: 5.6, z: -74.36}
     CoverDirections: 
@@ -2523,15 +3507,27 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 69.66371, y: 6.0111866, z: -127.606285}
     CoverDirections: 
+  - Position: {x: 69.664024, y: 5.4111867, z: -127.60597}
+    CoverDirections: 
   - Position: {x: 69.66588, y: 6.0112934, z: -131.20593}
+    CoverDirections: 
+  - Position: {x: 69.665565, y: 5.4112935, z: -131.20561}
     CoverDirections: 
   - Position: {x: 67.55907, y: 1.6000015, z: -98.31093}
     CoverDirections: 
+  - Position: {x: 67.55906, y: 1.0000014, z: -98.310936}
+    CoverDirections: 
   - Position: {x: 67.561195, y: 1.5999987, z: -97.7112}
+    CoverDirections: 
+  - Position: {x: 67.5612, y: 0.9999987, z: -97.711205}
     CoverDirections: 
   - Position: {x: 67.5544, y: 1.599864, z: -73.2144}
     CoverDirections: 
+  - Position: {x: 67.55441, y: 0.9998633, z: -73.21442}
+    CoverDirections: 
   - Position: {x: 68.095535, y: 5.600153, z: -53.15554}
+    CoverDirections: 
+  - Position: {x: 68.095535, y: 5.000153, z: -53.15555}
     CoverDirections: 
   - Position: {x: 65.93292, y: 9.600489, z: -51.21301}
     CoverDirections: 
@@ -2575,31 +3571,59 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 65.93505, y: 5.599989, z: -34.74506}
     CoverDirections: 
+  - Position: {x: 65.93505, y: 4.999989, z: -34.745056}
+    CoverDirections: 
   - Position: {x: 65.93505, y: 1.5999942, z: -34.734947}
+    CoverDirections: 
+  - Position: {x: 65.93505, y: 0.99999416, z: -34.734943}
     CoverDirections: 
   - Position: {x: 65.93505, y: 5.5994754, z: -32.855057}
     CoverDirections: 
+  - Position: {x: 65.93505, y: 4.9994755, z: -32.85506}
+    CoverDirections: 
   - Position: {x: 65.93505, y: 1.5999944, z: -32.845062}
+    CoverDirections: 
+  - Position: {x: 65.93505, y: 0.9999944, z: -32.845062}
     CoverDirections: 
   - Position: {x: 69.66515, y: 5.8000426, z: -127.00516}
     CoverDirections: 
+  - Position: {x: 69.66483, y: 5.2000427, z: -127.00484}
+    CoverDirections: 
   - Position: {x: 70.25898, y: 9.799923, z: -115.70109}
+    CoverDirections: 
+  - Position: {x: 70.25964, y: 9.199875, z: -115.700356}
     CoverDirections: 
   - Position: {x: 70.26124, y: 5.799936, z: -115.698814}
     CoverDirections: 
+  - Position: {x: 70.26179, y: 5.199896, z: -115.69821}
+    CoverDirections: 
   - Position: {x: 70.26378, y: 1.7999893, z: -115.69622}
+    CoverDirections: 
+  - Position: {x: 70.26378, y: 1.1999893, z: -115.69622}
     CoverDirections: 
   - Position: {x: 70.2613, y: 9.8001, z: -115.10148}
     CoverDirections: 
+  - Position: {x: 70.26071, y: 9.200052, z: -115.100716}
+    CoverDirections: 
   - Position: {x: 70.25906, y: 5.8000827, z: -115.09923}
+    CoverDirections: 
+  - Position: {x: 70.25858, y: 5.2000427, z: -115.09859}
     CoverDirections: 
   - Position: {x: 70.25669, y: 1.7999893, z: -115.0967}
     CoverDirections: 
+  - Position: {x: 70.2567, y: 1.1999893, z: -115.0967}
+    CoverDirections: 
   - Position: {x: 68.58419, y: 9.599832, z: -53.755802}
+    CoverDirections: 
+  - Position: {x: 68.58429, y: 8.99983, z: -53.755714}
     CoverDirections: 
   - Position: {x: 68.58581, y: 9.600046, z: -53.155804}
     CoverDirections: 
+  - Position: {x: 68.58571, y: 9.000047, z: -53.15571}
+    CoverDirections: 
   - Position: {x: 69.1324, y: 5.6001554, z: -44.020004}
+    CoverDirections: 
+  - Position: {x: 69.13239, y: 5.0001554, z: -44.02}
     CoverDirections: 
   - Position: {x: 69.13239, y: 5.599992, z: -40.11}
     CoverDirections: 
@@ -2611,59 +3635,113 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 69.57543, y: 5.6001916, z: -44.464573}
     CoverDirections: 
+  - Position: {x: 69.57524, y: 5.0001917, z: -44.46475}
+    CoverDirections: 
   - Position: {x: 69.77552, y: 1.5999981, z: -39.66552}
+    CoverDirections: 
+  - Position: {x: 69.77549, y: 0.99999815, z: -39.66549}
     CoverDirections: 
   - Position: {x: 69.78452, y: 1.5499877, z: -63.555466}
     CoverDirections: 
   - Position: {x: 69.97443, y: 5.599987, z: -53.755566}
     CoverDirections: 
+  - Position: {x: 69.97443, y: 4.999987, z: -53.755566}
+    CoverDirections: 
   - Position: {x: 69.97455, y: 1.5999843, z: -53.75543}
+    CoverDirections: 
+  - Position: {x: 69.974594, y: 0.9999833, z: -53.755375}
     CoverDirections: 
   - Position: {x: 69.97555, y: 5.600153, z: -53.155544}
     CoverDirections: 
+  - Position: {x: 69.97555, y: 5.000153, z: -53.15554}
+    CoverDirections: 
   - Position: {x: 69.975426, y: 1.6001655, z: -53.15542}
+    CoverDirections: 
+  - Position: {x: 69.97537, y: 1.0001655, z: -53.155373}
     CoverDirections: 
   - Position: {x: 69.77452, y: 1.6000057, z: -40.265484}
     CoverDirections: 
+  - Position: {x: 69.77454, y: 1.0000057, z: -40.265457}
+    CoverDirections: 
   - Position: {x: 69.66003, y: 5.8006597, z: -131.8055}
+    CoverDirections: 
+  - Position: {x: 69.66003, y: 5.2006598, z: -131.80518}
     CoverDirections: 
   - Position: {x: 72.06038, y: 5.6004324, z: -48.15}
     CoverDirections: 
+  - Position: {x: 72.06037, y: 5.0004315, z: -48.15}
+    CoverDirections: 
   - Position: {x: 72.06038, y: 5.6003494, z: -46.260002}
+    CoverDirections: 
+  - Position: {x: 72.06037, y: 5.0003495, z: -46.260002}
     CoverDirections: 
   - Position: {x: 70.12, y: 1.5499892, z: -135.35999}
     CoverDirections: 
+  - Position: {x: 70.12, y: 0.94998926, z: -135.35999}
+    CoverDirections: 
   - Position: {x: 70.12, y: 1.5499896, z: -131.84998}
+    CoverDirections: 
+  - Position: {x: 70.12, y: 0.94998956, z: -131.84998}
     CoverDirections: 
   - Position: {x: 75.00582, y: 5.6007237, z: -97.87}
     CoverDirections: 
+  - Position: {x: 75.00582, y: 5.000724, z: -97.87}
+    CoverDirections: 
   - Position: {x: 75.00582, y: 1.6, z: -86.85}
+    CoverDirections: 
+  - Position: {x: 75.00582, y: 1, z: -86.85}
     CoverDirections: 
   - Position: {x: 75.00582, y: 1.6, z: -83.37}
     CoverDirections: 
+  - Position: {x: 75.00582, y: 1, z: -83.37}
+    CoverDirections: 
   - Position: {x: 75.00582, y: 5.6, z: -73.66}
+    CoverDirections: 
+  - Position: {x: 75.00582, y: 5, z: -73.66}
     CoverDirections: 
   - Position: {x: 72.659935, y: 5.600429, z: -48.149933}
     CoverDirections: 
+  - Position: {x: 72.65992, y: 5.000428, z: -48.14992}
+    CoverDirections: 
   - Position: {x: 72.65992, y: 5.6003447, z: -46.259926}
+    CoverDirections: 
+  - Position: {x: 72.65991, y: 5.0003448, z: -46.25991}
     CoverDirections: 
   - Position: {x: 75.44908, y: 5.600002, z: -98.310905}
     CoverDirections: 
   - Position: {x: 76.15908, y: 5.600002, z: -98.31092}
     CoverDirections: 
+  - Position: {x: 75.44908, y: 5, z: -98.31092}
+    CoverDirections: 
+  - Position: {x: 76.15908, y: 5, z: -98.31091}
+    CoverDirections: 
   - Position: {x: 76.16, y: 5.6, z: -97.71118}
+    CoverDirections: 
+  - Position: {x: 76.16, y: 4.999998, z: -97.71119}
     CoverDirections: 
   - Position: {x: 75.60543, y: 1.6, z: -86.85544}
     CoverDirections: 
+  - Position: {x: 75.60543, y: 1, z: -86.85544}
+    CoverDirections: 
   - Position: {x: 75.60543, y: 1.6, z: -83.36543}
+    CoverDirections: 
+  - Position: {x: 75.60543, y: 1, z: -83.36543}
     CoverDirections: 
   - Position: {x: 79.97558, y: 1.6000009, z: -73.814415}
     CoverDirections: 
+  - Position: {x: 79.97557, y: 1.0000008, z: -73.81442}
+    CoverDirections: 
   - Position: {x: 79.9744, y: 1.599864, z: -73.21441}
+    CoverDirections: 
+  - Position: {x: 79.97441, y: 0.9998639, z: -73.21442}
     CoverDirections: 
   - Position: {x: 79.53181, y: 1.6006275, z: -50.699986}
     CoverDirections: 
   - Position: {x: 79.53175, y: 1.6006558, z: -51.709984}
+    CoverDirections: 
+  - Position: {x: 79.53175, y: 1.0006558, z: -51.709988}
+    CoverDirections: 
+  - Position: {x: 79.53369, y: 1.0000814, z: -41.70998}
     CoverDirections: 
   - Position: {x: 79.53366, y: 1.6000814, z: -41.709976}
     CoverDirections: 
@@ -2671,35 +3749,67 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 79.684364, y: 5.600002, z: -40.26564}
     CoverDirections: 
+  - Position: {x: 79.684364, y: 5.000002, z: -40.26564}
+    CoverDirections: 
   - Position: {x: 79.68449, y: 1.6000022, z: -40.26552}
+    CoverDirections: 
+  - Position: {x: 79.68453, y: 1.0000021, z: -40.265465}
     CoverDirections: 
   - Position: {x: 78.649086, y: 5.6, z: -98.31091}
     CoverDirections: 
+  - Position: {x: 78.649086, y: 5, z: -98.31091}
+    CoverDirections: 
   - Position: {x: 78.651184, y: 5.6, z: -97.71119}
+    CoverDirections: 
+  - Position: {x: 78.651184, y: 5, z: -97.71119}
     CoverDirections: 
   - Position: {x: 79.73189, y: 9.600562, z: -50.209946}
     CoverDirections: 
+  - Position: {x: 79.73189, y: 9.000562, z: -50.209946}
+    CoverDirections: 
   - Position: {x: 79.73401, y: 9.599927, z: -38.71}
+    CoverDirections: 
+  - Position: {x: 79.734, y: 8.999927, z: -38.71}
     CoverDirections: 
   - Position: {x: 81.66908, y: 5.6, z: -98.31091}
     CoverDirections: 
+  - Position: {x: 81.66908, y: 5, z: -98.31091}
+    CoverDirections: 
   - Position: {x: 81.66119, y: 5.6, z: -97.71119}
+    CoverDirections: 
+  - Position: {x: 81.66119, y: 5, z: -97.71119}
     CoverDirections: 
   - Position: {x: 81.42066, y: 1.6, z: -73.36964}
     CoverDirections: 
+  - Position: {x: 81.42066, y: 1, z: -73.36964}
+    CoverDirections: 
   - Position: {x: 81.42058, y: 5.6, z: -70.950005}
+    CoverDirections: 
+  - Position: {x: 81.42058, y: 5, z: -70.950005}
     CoverDirections: 
   - Position: {x: 82.51998, y: 1.5499936, z: -68.909996}
     CoverDirections: 
+  - Position: {x: 82.51999, y: 0.9499935, z: -68.91}
+    CoverDirections: 
   - Position: {x: 79.69001, y: 5.599989, z: -39.665672}
     CoverDirections: 
+  - Position: {x: 79.69002, y: 4.999989, z: -39.665676}
+    CoverDirections: 
   - Position: {x: 81.865585, y: 1.6000009, z: -73.814415}
+    CoverDirections: 
+  - Position: {x: 81.86558, y: 1.0000008, z: -73.81442}
     CoverDirections: 
   - Position: {x: 80.13181, y: 1.6006277, z: -50.701775}
     CoverDirections: 
   - Position: {x: 80.131744, y: 1.6006556, z: -51.70182}
     CoverDirections: 
+  - Position: {x: 80.131744, y: 1.0006555, z: -51.701817}
+    CoverDirections: 
   - Position: {x: 80.33399, y: 9.600561, z: -50.204006}
+    CoverDirections: 
+  - Position: {x: 80.33399, y: 9.000561, z: -50.20401}
+    CoverDirections: 
+  - Position: {x: 80.13368, y: 1.0000815, z: -41.71005}
     CoverDirections: 
   - Position: {x: 80.133484, y: 1.6001582, z: -42.713516}
     CoverDirections: 
@@ -2707,57 +3817,111 @@ MonoBehaviour:
     CoverDirections: 
   - Position: {x: 80.33398, y: 9.599927, z: -38.710003}
     CoverDirections: 
+  - Position: {x: 80.33398, y: 8.999927, z: -38.710003}
+    CoverDirections: 
   - Position: {x: 80.133995, y: 1.6000055, z: -39.824}
+    CoverDirections: 
+  - Position: {x: 80.134, y: 1.0000055, z: -39.824005}
     CoverDirections: 
   - Position: {x: 84.55589, y: 5.600191, z: -44.464005}
     CoverDirections: 
+  - Position: {x: 84.555534, y: 5.0002284, z: -44.464443}
+    CoverDirections: 
   - Position: {x: 84.869064, y: 1.6000009, z: -98.31093}
+    CoverDirections: 
+  - Position: {x: 84.86906, y: 1.0000008, z: -98.310936}
     CoverDirections: 
   - Position: {x: 84.710075, y: 5.6, z: -99.17}
     CoverDirections: 
+  - Position: {x: 84.710075, y: 5, z: -99.17}
+    CoverDirections: 
   - Position: {x: 84.71008, y: 1.6, z: -94.15}
     CoverDirections: 
+  - Position: {x: 84.71008, y: 1, z: -94.15}
+    CoverDirections: 
   - Position: {x: 84.71008, y: 1.6, z: -74.57}
+    CoverDirections: 
+  - Position: {x: 84.71008, y: 1, z: -74.57}
     CoverDirections: 
   - Position: {x: 83.174385, y: 5.599998, z: -73.214386}
     CoverDirections: 
   - Position: {x: 82.02018, y: 5.6, z: -70.94982}
     CoverDirections: 
+  - Position: {x: 82.02018, y: 5, z: -70.94982}
+    CoverDirections: 
   - Position: {x: 82.52, y: 1.6000009, z: -69.50998}
+    CoverDirections: 
+  - Position: {x: 82.52, y: 1.0000008, z: -69.50999}
     CoverDirections: 
   - Position: {x: 84.8644, y: 1.599864, z: -73.21441}
     CoverDirections: 
+  - Position: {x: 84.86441, y: 0.9998639, z: -73.21442}
+    CoverDirections: 
   - Position: {x: 84.554535, y: 5.600007, z: -43.86441}
+    CoverDirections: 
+  - Position: {x: 84.55489, y: 5.0000443, z: -43.864872}
     CoverDirections: 
   - Position: {x: 84.149086, y: 5.6, z: -98.31091}
     CoverDirections: 
+  - Position: {x: 84.149086, y: 5, z: -98.31091}
+    CoverDirections: 
   - Position: {x: 84.151184, y: 5.6, z: -97.71119}
+    CoverDirections: 
+  - Position: {x: 84.151184, y: 5, z: -97.71119}
     CoverDirections: 
   - Position: {x: 84.41001, y: 1.6000016, z: -69.50999}
     CoverDirections: 
+  - Position: {x: 84.41, y: 1.0000008, z: -69.509995}
+    CoverDirections: 
   - Position: {x: 84.409996, y: 1.5499936, z: -68.909996}
     CoverDirections: 
+  - Position: {x: 84.41, y: 0.94999295, z: -68.91}
+    CoverDirections: 
   - Position: {x: 85.15666, y: 1.5999993, z: -93.706665}
+    CoverDirections: 
+  - Position: {x: 85.15666, y: 0.9999992, z: -93.70667}
     CoverDirections: 
   - Position: {x: 85.156944, y: 1.6000009, z: -75.013054}
     CoverDirections: 
   - Position: {x: 86.266945, y: 1.6000009, z: -75.013054}
     CoverDirections: 
+  - Position: {x: 85.156944, y: 1.0000008, z: -75.013054}
+    CoverDirections: 
+  - Position: {x: 86.266945, y: 1.0000008, z: -75.013054}
+    CoverDirections: 
   - Position: {x: 86.445786, y: 5.6002283, z: -44.464214}
+    CoverDirections: 
+  - Position: {x: 86.44537, y: 5.0002284, z: -44.464615}
     CoverDirections: 
   - Position: {x: 86.69254, y: 1.5999892, z: -36.067455}
     CoverDirections: 
+  - Position: {x: 86.69259, y: 0.9999856, z: -36.067398}
+    CoverDirections: 
   - Position: {x: 86.69713, y: 1.6000024, z: -35.467144}
+    CoverDirections: 
+  - Position: {x: 86.69708, y: 0.9999988, z: -35.467087}
     CoverDirections: 
   - Position: {x: 86.27, y: 1.5999993, z: -93.706665}
     CoverDirections: 
+  - Position: {x: 86.27, y: 0.9999992, z: -93.70667}
+    CoverDirections: 
   - Position: {x: 86.444565, y: 5.600074, z: -43.864395}
+    CoverDirections: 
+  - Position: {x: 86.4449, y: 5.000007, z: -43.864826}
     CoverDirections: 
   - Position: {x: 85.31056, y: 5.6, z: -99.17056}
     CoverDirections: 
+  - Position: {x: 85.31056, y: 5, z: -99.17056}
+    CoverDirections: 
   - Position: {x: 85.31056, y: 1.6, z: -97.87057}
+    CoverDirections: 
+  - Position: {x: 85.31056, y: 1, z: -97.87057}
     CoverDirections: 
   - Position: {x: 85.31056, y: 5.6, z: -73.66}
     CoverDirections: 
+  - Position: {x: 85.31056, y: 5, z: -73.66}
+    CoverDirections: 
   - Position: {x: 85.31056, y: 1.6, z: -73.66}
+    CoverDirections: 
+  - Position: {x: 85.31056, y: 1, z: -73.66}
     CoverDirections: 

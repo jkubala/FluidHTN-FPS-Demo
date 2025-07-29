@@ -9,9 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e339ba524ff0ba439801a87d7fc6402, type: 3}
-  m_Name: DemoMap2TacticalCornerSettings
+  m_Script: {fileID: 11500000, guid: 8c298f29c9ec4134dadc4b24b43f5cdb, type: 3}
+  m_Name: GridSettings
   m_EditorClassIdentifier: 
+  StartPos: {x: -80, y: 50, z: -140}
+  EndPos: {x: 95, y: 50, z: 15}
+  DistanceBetweenPositions: 0.75
+  DistanceOfRaycasts: 3
+  OffsetEveryOtherRow: 0
+  NumberOfRaysSpawner: 8
+  NumberOfRaysPosition: 8
+  RequiredProximityToNavMesh: 0.2
+  geometryCheckYOffset: 3
+  distanceToRemoveDuplicates: 1
+  RaycastMask:
+    serializedVersion: 2
+    m_Bits: 1
   cornerCheckRayWallOffset: 0.1
   cornerCheckRayStep: 0.01
   cornerCheckRaySequenceDistance: 2
@@ -23,5 +36,5 @@ MonoBehaviour:
   sphereCastForFiringPositionCheckRadius: 0.15
   sphereCastForFiringPositionCheckDistance: 1
   nOfHitsOfDifferentNormalToConsiderCorner: 3
-  heightOfHighFiringPosition: 1.6
-  heightOfLowFiringPosition: 0.5
+  minHeightToConsiderHighCover: 1.85
+  minHeightToConsiderLowCover: 0.95

@@ -42,8 +42,9 @@ namespace FPSDemo.NPC.Utilities
         {
         }
 
-        public void AddHighPosAdjustedToCornerAtHit(RaycastHit hit, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo)
+        public void FindCornerPos(RaycastHit hit, CoverHeight coverHeight, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo)
         {
+            // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
             Vector3 leftDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
 
@@ -58,6 +59,7 @@ namespace FPSDemo.NPC.Utilities
             CornerDetectionInfo leftCornerInfo = FindCorner(offsetPosition, hit.normal, leftDirection, true, cornerSettings, raycastMask);
             CornerDetectionInfo rightCornerInfo = FindCorner(offsetPosition, hit.normal, -leftDirection, false, cornerSettings, raycastMask);
 
+            // Infinity if there is no corner
             float distanceToLeftCorner = CalculateCornerDistance(leftCornerInfo, offsetPosition);
             float distanceToRightCorner = CalculateCornerDistance(rightCornerInfo, offsetPosition);
 
@@ -67,8 +69,8 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            AddCornerIfConvex(leftCornerInfo, SpecialCoverType.LeftCorner, -leftDirection, cornerSettings.cornerCheckPositionOffset, listToAddTo);
-            AddCornerIfConvex(rightCornerInfo, SpecialCoverType.RightCorner, leftDirection, cornerSettings.cornerCheckPositionOffset, listToAddTo);
+            AddCornerIfConvex(leftCornerInfo, MainCoverType.LeftCorner, coverHeight, -leftDirection, cornerSettings.cornerCheckPositionOffset, listToAddTo);
+            AddCornerIfConvex(rightCornerInfo, MainCoverType.RightCorner, coverHeight, leftDirection, cornerSettings.cornerCheckPositionOffset, listToAddTo);
         }
 
         private CornerDetectionInfo FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, bool checkingLeftCorner, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
@@ -173,7 +175,7 @@ namespace FPSDemo.NPC.Utilities
                 return cornerInfo;
             }
 
-            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo.position.Value, 1.6f, cornerSettings, raycastMask);
+            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo.position.Value, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
 
             if (!yStandardCornerPos.HasValue)
             {
@@ -218,7 +220,7 @@ namespace FPSDemo.NPC.Utilities
 
             Vector3 origin = position - sideDirection * cornerSettings.cornerCheckRayStep;
 
-            if (Physics.Raycast(origin, -cornerInfo.cornerWallNormal, out _, cornerSettings.cornerCheckRayWallOffset + 0.1f, raycastMask))
+            if (Physics.Raycast(origin, -cornerInfo.cornerWallNormal, out _, cornerSettings.cornerCheckRayWallOffset + cornerSettings.floatPrecisionBuffer, raycastMask))
             {
                 return position + cornerInfo.cornerWallNormal * cornerSettings.cornerCheckRayWallOffset;
             }
@@ -288,7 +290,7 @@ namespace FPSDemo.NPC.Utilities
 
         private float CalculateCornerDistance(CornerDetectionInfo cornerInfo, Vector3 offsetPosition)
         {
-            // TODO MAYBE return -1 instead?
+            // Corner does not exist, so return infinity
             if (!cornerInfo.position.HasValue)
             {
                 return Mathf.Infinity;
@@ -299,17 +301,18 @@ namespace FPSDemo.NPC.Utilities
             return Vector3.Distance(offsetPosition, cornerPosYAdjusted);
         }
 
-        private void AddCornerIfConvex(CornerDetectionInfo cornerInfo, SpecialCoverType coverType, Vector3 direction, float cornerCheckPositionOffset, List<TacticalPosition> listToAddTo)
+        private void AddCornerIfConvex(CornerDetectionInfo cornerInfo, MainCoverType coverType, CoverHeight coverHeight, Vector3 direction, float cornerCheckPositionOffset, List<TacticalPosition> listToAddTo)
         {
             if (cornerInfo.cornerType != CornerType.Convex)
             {
                 return;
             }
 
-            SpecialCover specialCover = new()
+            MainCover specialCover = new()
             {
-                rotationToAlignWithCover = Quaternion.Euler(cornerInfo.cornerWallNormal),
-                type = coverType
+                type = coverType,
+                height = coverHeight,
+                rotationToAlignWithCover = Quaternion.Euler(cornerInfo.cornerWallNormal)
             };
 
             TacticalPosition newTacticalPos = new()

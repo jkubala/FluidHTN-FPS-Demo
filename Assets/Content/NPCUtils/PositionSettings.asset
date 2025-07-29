@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55cab30719c3c8f46a57c5018f91cf6c, type: 3}
-  m_Name: DemoMap2PositionSettings
+  m_Name: PositionSettings
   m_EditorClassIdentifier: 
   RequiredProximityToNavMesh: 0.2
   geometryCheckYOffset: 3
   distanceToRemoveDuplicates: 1
   minHeightToConsiderHighCover: 1.85
-  minHeightToConsiderLowCover: 0.95
+  minHeightToConsiderLowCover: 1.25

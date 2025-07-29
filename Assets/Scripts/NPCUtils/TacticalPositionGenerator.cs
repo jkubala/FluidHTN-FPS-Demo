@@ -10,8 +10,9 @@ namespace FPSDemo.NPC.Utilities
 
 		[SerializeField] private TacticalPositionData _tacticalPositionData;
 		[SerializeField] private TacticalGridGenerationSettings _gridSettings;
-		[SerializeField] private TacticalCornerSettings _cornerSettings;
-		[SerializeField] private TacticalPositionSettings _positionSettings;
+		[SerializeField] private TacticalCornerSettings _highCornerSettings;
+		[SerializeField] private TacticalCornerSettings _lowCornerSettings;
+        [SerializeField] private TacticalPositionSettings _positionSettings;
 		[SerializeField] private LayerMask _raycastMask = 1 << 0;
         [SerializeField] private bool _useHandplacedTacticalProbes = true;
 		[SerializeField] private bool _generateAutoProbeGrid = true;
@@ -63,7 +64,7 @@ namespace FPSDemo.NPC.Utilities
 				_tacticalPositionData.Positions.Add(new TacticalPosition
 				{
 					Position = probe.transform.position,
-					CoverDirections = new CoverType[1]
+					CoverDirections = new CoverHeight[1]
 					{
 						new() {
 
@@ -156,7 +157,8 @@ namespace FPSDemo.NPC.Utilities
 					// If the distance between currentPos and any unique position is less than the threshold, it's a duplicate
 					if (Vector3.Distance(currentPos.Position, uniquePositions[j].Position) < distanceThreshold
 						&& currentPos.specialCover?.type == uniquePositions[j].specialCover?.type
-						&& NoObstacleBetween(currentPos.Position, uniquePositions[j].Position))
+						&& currentPos.specialCover?.height == uniquePositions[j].specialCover?.height
+                        && NoObstacleBetween(currentPos.Position, uniquePositions[j].Position))
 					{
 						isDuplicate = true;
 						break; // No need to check further, it's already a duplicate
@@ -206,7 +208,7 @@ namespace FPSDemo.NPC.Utilities
 			// Discard the position if it spawned in the geometry
 			Vector3 rayCastOrigin = position + Vector3.up * _positionSettings.geometryCheckYOffset;
 
-			if (Physics.Raycast(rayCastOrigin, Vector3.down, out RaycastHit geometryHit, _positionSettings.geometryCheckYOffset + _cornerSettings.rayLengthBeyondWall, _raycastMask))
+			if (Physics.Raycast(rayCastOrigin, Vector3.down, out RaycastHit geometryHit, _positionSettings.geometryCheckYOffset + _highCornerSettings.rayLengthBeyondWall, _raycastMask))
 			{
 				if (!Mathf.Approximately(rayCastOrigin.y - geometryHit.point.y, rayCastOrigin.y - position.y))
 				{
@@ -243,15 +245,15 @@ namespace FPSDemo.NPC.Utilities
 					}
 					else
 					{
-						CoverPositioner.GetCoverPositioner.AddHighPosAdjustedToCornerAtHit(highHit, _cornerSettings, _raycastMask, _tacticalPositionData.Positions);
+						CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions);
 					}
 				}
-				else if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
+				if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
 				{
-                    //CoverPositioner.AddLowPosAdjustedToCornerAtHit(lowHit, _gridSettings, _tacticalPositionData.Positions);
+                    CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
                 }
 
-				direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
+                direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
 			}
 		}
 
@@ -301,11 +303,11 @@ namespace FPSDemo.NPC.Utilities
 			Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
 			foreach (TacticalPosition position in _tacticalPositionData.Positions)
 			{
-				if (position.specialCover?.type == SpecialCoverType.LeftCorner)
+				if (position.specialCover?.type == MainCoverType.LeftCorner)
 				{
 					Gizmos.color = Color.red;
 				}
-				else if (position.specialCover?.type == SpecialCoverType.RightCorner)
+				else if (position.specialCover?.type == MainCoverType.RightCorner)
 				{
 					Gizmos.color = Color.blue;
 				}
