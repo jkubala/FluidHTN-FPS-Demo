@@ -156,8 +156,8 @@ namespace FPSDemo.NPC.Utilities
 				{
 					// If the distance between currentPos and any unique position is less than the threshold, it's a duplicate
 					if (Vector3.Distance(currentPos.Position, uniquePositions[j].Position) < distanceThreshold
-						&& currentPos.specialCover?.type == uniquePositions[j].specialCover?.type
-						&& currentPos.specialCover?.height == uniquePositions[j].specialCover?.height
+						&& currentPos.mainCover.type == uniquePositions[j].mainCover.type
+						&& currentPos.mainCover.height == uniquePositions[j].mainCover.height
                         && NoObstacleBetween(currentPos.Position, uniquePositions[j].Position))
 					{
 						isDuplicate = true;
@@ -303,11 +303,11 @@ namespace FPSDemo.NPC.Utilities
 			Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
 			foreach (TacticalPosition position in _tacticalPositionData.Positions)
 			{
-				if (position.specialCover?.type == MainCoverType.LeftCorner)
+				if (position.mainCover.type == MainCoverType.LeftCorner)
 				{
 					Gizmos.color = Color.red;
 				}
-				else if (position.specialCover?.type == MainCoverType.RightCorner)
+				else if (position.mainCover.type == MainCoverType.RightCorner)
 				{
 					Gizmos.color = Color.blue;
 				}

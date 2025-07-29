@@ -308,7 +308,7 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            MainCover specialCover = new()
+            MainCover mainCover = new()
             {
                 type = coverType,
                 height = coverHeight,
@@ -318,7 +318,7 @@ namespace FPSDemo.NPC.Utilities
             TacticalPosition newTacticalPos = new()
             {
                 Position = cornerInfo.position.Value + direction * cornerCheckPositionOffset,
-                specialCover = specialCover
+                mainCover = mainCover
             };
 
             listToAddTo.Add(newTacticalPos);

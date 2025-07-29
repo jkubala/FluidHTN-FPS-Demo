@@ -12,8 +12,8 @@ namespace FPSDemo.NPC.Utilities
 	public struct TacticalPosition
 	{
 		public Vector3 Position;
+		public MainCover mainCover;
 		public CoverHeight[] CoverDirections;
-		public MainCover? specialCover;
 	}
 
 
