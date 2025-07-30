@@ -69,8 +69,8 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            AddCornerIfConvex(leftCornerInfo, MainCoverType.LeftCorner, coverHeight, -leftDirection, cornerSettings.cornerCheckPositionOffset, listToAddTo);
-            AddCornerIfConvex(rightCornerInfo, MainCoverType.RightCorner, coverHeight, leftDirection, cornerSettings.cornerCheckPositionOffset, listToAddTo);
+            AddCornerIfConvex(leftCornerInfo, MainCoverType.LeftCorner, coverHeight, -leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo);
+            AddCornerIfConvex(rightCornerInfo, MainCoverType.RightCorner, coverHeight, leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo);
         }
 
         private CornerDetectionInfo FindCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 direction, bool checkingLeftCorner, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
@@ -301,7 +301,7 @@ namespace FPSDemo.NPC.Utilities
             return Vector3.Distance(offsetPosition, cornerPosYAdjusted);
         }
 
-        private void AddCornerIfConvex(CornerDetectionInfo cornerInfo, MainCoverType coverType, CoverHeight coverHeight, Vector3 direction, float cornerCheckPositionOffset, List<TacticalPosition> listToAddTo)
+        private void AddCornerIfConvex(CornerDetectionInfo cornerInfo, MainCoverType coverType, CoverHeight coverHeight, Vector3 direction, float cornerCheckPositionOffset, LayerMask raycastMask, List<TacticalPosition> listToAddTo)
         {
             if (cornerInfo.cornerType != CornerType.Convex)
             {
@@ -312,13 +312,14 @@ namespace FPSDemo.NPC.Utilities
             {
                 type = coverType,
                 height = coverHeight,
-                rotationToAlignWithCover = Quaternion.Euler(cornerInfo.cornerWallNormal)
+                rotationToAlignWithCover = Quaternion.Euler(cornerInfo.cornerWallNormal),
             };
 
             TacticalPosition newTacticalPos = new()
             {
                 Position = cornerInfo.position.Value + direction * cornerCheckPositionOffset,
-                mainCover = mainCover
+                mainCover = mainCover,
+                isOutside = SimpleIsOutsideCheck(cornerInfo.position.Value, raycastMask)
             };
 
             listToAddTo.Add(newTacticalPos);
@@ -364,5 +365,15 @@ namespace FPSDemo.NPC.Utilities
 
         //	return null;
         //}
+
+        bool SimpleIsOutsideCheck(Vector3 position, LayerMask raycastMask)
+        {
+            if (Physics.Raycast(position, Vector3.up, Mathf.Infinity, raycastMask))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

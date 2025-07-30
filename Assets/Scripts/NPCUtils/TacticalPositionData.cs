@@ -14,6 +14,7 @@ namespace FPSDemo.NPC.Utilities
 		public Vector3 Position;
 		public MainCover mainCover;
 		public CoverHeight[] CoverDirections;
+		public bool isOutside;
 	}
 
 
