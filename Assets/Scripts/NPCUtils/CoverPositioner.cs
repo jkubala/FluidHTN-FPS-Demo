@@ -42,6 +42,11 @@ namespace FPSDemo.NPC.Utilities
         {
         }
 
+        public void FindLowCoverPos()
+        {
+
+        }
+
         public void FindCornerPos(RaycastHit hit, CoverHeight coverHeight, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo)
         {
             // Offset self from the wall in the direction of its normal
@@ -53,7 +58,6 @@ namespace FPSDemo.NPC.Utilities
             {
                 return;
             }
-
 
             // Looking for left and right corners
             CornerDetectionInfo leftCornerInfo = FindCorner(offsetPosition, hit.normal, leftDirection, true, cornerSettings, raycastMask);
@@ -312,7 +316,7 @@ namespace FPSDemo.NPC.Utilities
             {
                 type = coverType,
                 height = coverHeight,
-                rotationToAlignWithCover = Quaternion.Euler(cornerInfo.cornerWallNormal),
+                rotationToAlignWithCover = Quaternion.LookRotation(-cornerInfo.cornerWallNormal, Vector3.up)
             };
 
             TacticalPosition newTacticalPos = new()

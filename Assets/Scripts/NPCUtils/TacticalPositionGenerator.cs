@@ -86,6 +86,40 @@ namespace FPSDemo.NPC.Utilities
             RemoveDuplicates(_positionSettings.distanceToRemoveDuplicates);
         }
 
+        public void VerifyPositionsCover()
+        {
+            for (int i = _tacticalPositionData.Positions.Count - 1; i >= 0; i--)
+            {
+                VerifyCoverOfAPosition(TacticalPositionData.Positions[i]);
+            }
+        }
+
+        private void VerifyCoverOfAPosition(TacticalPosition position)
+        {
+            RaycastHit hit;
+            if (!Physics.Raycast(position.Position, Vector3.down, out hit, Mathf.Infinity, _raycastMask))
+            {
+                Debug.LogError($"Position at {position.Position} did not have a solid ground underneath! Skipping validation!");
+                return;
+            }
+
+            Vector3 direction = position.mainCover.rotationToAlignWithCover * Vector3.forward;
+            Vector3 origin = hit.point;
+            for (float currentHeight = hit.point.y + _positionSettings.bottomRaycastBuffer; currentHeight < position.Position.y; currentHeight += _positionSettings.verticalStepToCheckForCover)
+            {
+                origin.y = currentHeight;
+                if (!Physics.Raycast(origin, direction, _positionSettings.distanceToCheckForCover, _raycastMask))
+                {
+                    Debug.LogWarning($"Position at {position.Position} did not have a continuous cover to the ground! Removing it!");
+
+                    GameObject newDebugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
+                    newDebugGO.transform.position = position.Position;
+                    _tacticalPositionData.Positions.Remove(position);
+                    return;
+                }
+            }
+        }
+
         private void InitTacticalPositionData(bool clearPositions)
         {
             if (_tacticalPositionData.Positions == null)
@@ -324,6 +358,8 @@ namespace FPSDemo.NPC.Utilities
                 {
                     Gizmos.DrawWireSphere(position.Position, 0.1f);
                 }
+
+                Gizmos.DrawRay(position.Position, position.mainCover.rotationToAlignWithCover * Vector3.forward);
             }
         }
     }

@@ -64,6 +64,19 @@ namespace FPSDemo.NPC.Utilities
 				}
 			}
 
+			if(GUILayout.Button("Verify cover of tactical positions"))
+			{
+                if (posGenerator.TacticalPositionData != null && posGenerator.TacticalPositionData.Positions.Count > 0)
+                {
+                    Debug.Log("Verifying cover of tactical positions.");
+					posGenerator.VerifyPositionsCover();
+                }
+                else
+                {
+                    Debug.Log("There are no positions to verify!");
+                }
+            }
+
 			base.OnInspectorGUI();
 		}
 	}

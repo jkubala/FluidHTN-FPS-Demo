@@ -8,4 +8,10 @@ public class TacticalPositionSettings : ScriptableObject
     public float distanceToRemoveDuplicates = 1f;
     public float minHeightToConsiderHighCover = 1.85f;
     public float minHeightToConsiderLowCover = 0.95f;
+
+    [Range(0.05f, 0.2f)]
+    public float verticalStepToCheckForCover = 0.1f;
+    public float bottomRaycastBuffer = 0.1f; // Added to the ground so that it will not raycast through it
+    [Range(0.5f, 2f)]
+    public float distanceToCheckForCover = 1f;
 }
