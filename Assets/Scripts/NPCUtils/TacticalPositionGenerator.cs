@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FPSDemo.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -96,8 +97,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void VerifyCoverOfAPosition(TacticalPosition position)
         {
-            RaycastHit hit;
-            if (!Physics.Raycast(position.Position, Vector3.down, out hit, Mathf.Infinity, _raycastMask))
+            if (!Physics.Raycast(position.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _raycastMask))
             {
                 Debug.LogError($"Position at {position.Position} did not have a solid ground underneath! Skipping validation!");
                 return;
@@ -160,7 +160,7 @@ namespace FPSDemo.NPC.Utilities
 
                 while (currentPos.z < _gridSettings.EndPos.z)
                 {
-                    RaycastHit[] hitsToConvertToPos = RaycastTrulyAll(currentPos, Vector3.down, _raycastMask, 0.1f, 100f);
+                    RaycastHit[] hitsToConvertToPos = PhysicsUtils.RaycastTrulyAll(currentPos, Vector3.down, _raycastMask, 0.1f, 100f);
                     foreach (var hit in hitsToConvertToPos)
                     {
                         if (PositionValid(hit.point))
@@ -289,22 +289,6 @@ namespace FPSDemo.NPC.Utilities
 
                 direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
             }
-        }
-
-        private RaycastHit[] RaycastTrulyAll(Vector3 initialXZCoordToCheck, Vector3 direction, LayerMask layerMask, float offsetAfterHit, float maxLength)
-        {
-            List<RaycastHit> _raycasts = new();
-
-            var thisRayOrigin = initialXZCoordToCheck;
-
-            // TODO: Ensure this can't go infinite loop. I'd prefer a maxIteration failsafe mechanic here just to make sure it can't.
-            while (Physics.Raycast(thisRayOrigin, direction, out var hit, maxLength, layerMask) && (initialXZCoordToCheck - hit.point).magnitude < maxLength)
-            {
-                _raycasts.Add(hit);
-                thisRayOrigin = hit.point + direction * offsetAfterHit;
-            }
-
-            return _raycasts.ToArray();
         }
 
         private bool ValidateParams()

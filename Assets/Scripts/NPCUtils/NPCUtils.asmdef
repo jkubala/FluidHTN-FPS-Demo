@@ -1,7 +1,9 @@
 {
     "name": "NPCUtils",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:6d605134195099548b3b009524f8d09c"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
