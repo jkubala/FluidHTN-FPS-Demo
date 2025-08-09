@@ -16690,10 +16690,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7d039b793bcfc42a47792ff46aa68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  genMode: 0
   _tacticalPositionData: {fileID: 11400000, guid: b94514ec79c5099429cbbe581fb4c80a, type: 2}
   _gridSettings: {fileID: 11400000, guid: 7f1a61b3308fdd7468f2c930d8b37226, type: 2}
   _highCornerSettings: {fileID: 11400000, guid: 821bdb256ccdeb247b4a52adcde71292, type: 2}
   _lowCornerSettings: {fileID: 11400000, guid: 41bad24ddf5599f47a4c56985921d4ca, type: 2}
+  _lowCoverSettings: {fileID: 11400000, guid: 0f36221c8ffcad645944bc4313cd3c8a, type: 2}
   _positionSettings: {fileID: 11400000, guid: 575799178b16a2b4abcab36bf782a0b3, type: 2}
   _raycastMask:
     serializedVersion: 2

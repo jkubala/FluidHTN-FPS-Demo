@@ -16,4 +16,7 @@ MonoBehaviour:
   geometryCheckYOffset: 3
   distanceToRemoveDuplicates: 1
   minHeightToConsiderHighCover: 1.85
-  minHeightToConsiderLowCover: 1.25
+  minHeightToConsiderLowCover: 1
+  verticalStepToCheckForCover: 0.1
+  bottomRaycastBuffer: 0.1
+  distanceToCheckForCover: 1

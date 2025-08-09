@@ -7,12 +7,15 @@ namespace FPSDemo.NPC.Utilities
 {
     public class TacticalPositionGenerator : MonoBehaviour
     {
+        enum CoverGenMode { low, corners }
         // ========================================================= INSPECTOR FIELDS
 
+        [SerializeField] CoverGenMode genMode = CoverGenMode.low;
         [SerializeField] private TacticalPositionData _tacticalPositionData;
         [SerializeField] private TacticalGridGenerationSettings _gridSettings;
         [SerializeField] private TacticalCornerSettings _highCornerSettings;
         [SerializeField] private TacticalCornerSettings _lowCornerSettings;
+        [SerializeField] private TacticalCornerSettings _lowCoverSettings;
         [SerializeField] private TacticalPositionSettings _positionSettings;
         [SerializeField] private LayerMask _raycastMask = 1 << 0;
         [SerializeField] private bool _useHandplacedTacticalProbes = true;
@@ -188,11 +191,13 @@ namespace FPSDemo.NPC.Utilities
                 // Compare with every other position
                 for (int j = 0; j < uniquePositions.Count; j++)
                 {
+                    float angleDifference = Vector3.Angle(currentPos.mainCover.rotationToAlignWithCover * Vector3.forward, uniquePositions[j].mainCover.rotationToAlignWithCover * Vector3.forward);
                     // If the distance between currentPos and any unique position is less than the threshold, it's a duplicate
                     if (Vector3.Distance(currentPos.Position, uniquePositions[j].Position) < distanceThreshold
                         && currentPos.mainCover.type == uniquePositions[j].mainCover.type
                         && currentPos.mainCover.height == uniquePositions[j].mainCover.height
-                        && NoObstacleBetween(currentPos.Position, uniquePositions[j].Position))
+                        && NoObstacleBetween(currentPos.Position, uniquePositions[j].Position)
+                        && angleDifference < _positionSettings.maxAngleDifferenceToRemoveDuplicates)
                     {
                         isDuplicate = true;
                         break; // No need to check further, it's already a duplicate
@@ -279,12 +284,23 @@ namespace FPSDemo.NPC.Utilities
                     }
                     else
                     {
-                        CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                        if (genMode == CoverGenMode.corners)
+                        {
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                        }
                     }
                 }
                 if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
                 {
-                    CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                    if (genMode == CoverGenMode.corners)
+                    {
+                        CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                    }
+                    else if (genMode == CoverGenMode.low)
+                    {
+                        Debug.Log("HAAAAAAA!");
+                        CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
+                    }
                 }
 
                 direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
@@ -321,11 +337,11 @@ namespace FPSDemo.NPC.Utilities
             Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
             foreach (TacticalPosition position in _tacticalPositionData.Positions)
             {
-                if (position.mainCover.type == MainCoverType.LeftCorner)
+                if (position.mainCover.type == CoverType.LeftCorner)
                 {
                     Gizmos.color = Color.red;
                 }
-                else if (position.mainCover.type == MainCoverType.RightCorner)
+                else if (position.mainCover.type == CoverType.RightCorner)
                 {
                     Gizmos.color = Color.blue;
                 }
