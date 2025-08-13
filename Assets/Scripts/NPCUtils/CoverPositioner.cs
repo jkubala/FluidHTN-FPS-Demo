@@ -43,7 +43,7 @@ namespace FPSDemo.NPC.Utilities
         }
 
         // Find corner vertically
-        public void FindLowCoverPos(RaycastHit hit, CoverHeight coverHeight, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo)
+        public void FindLowCoverPos(RaycastHit hit, CoverHeight coverHeight, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
         {
             // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
@@ -160,12 +160,12 @@ namespace FPSDemo.NPC.Utilities
 
             if (leftCornerInfo.HasValue)
             {
-                AddCornerIfConvex(leftCornerInfo.Value, CoverType.LeftCorner, coverHeight, -leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo);
+                AddCornerIfConvex(leftCornerInfo.Value, CoverType.LeftCorner, coverHeight, -leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo, debugData);
             }
 
             if (rightCornerInfo.HasValue)
             {
-                AddCornerIfConvex(rightCornerInfo.Value, CoverType.RightCorner, coverHeight, leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo);
+                AddCornerIfConvex(rightCornerInfo.Value, CoverType.RightCorner, coverHeight, leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo, debugData);
             }
         }
 
@@ -432,6 +432,7 @@ namespace FPSDemo.NPC.Utilities
             {
                 debugData.tacticalPosition = newTacticalPos;
                 debugData.finalCornerPos = newTacticalPos.Position;
+                debugData.finishedPosition = true;
             }
 
             listToAddTo.Add(newTacticalPos);

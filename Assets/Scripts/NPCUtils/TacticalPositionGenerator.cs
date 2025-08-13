@@ -31,7 +31,7 @@ namespace FPSDemo.NPC.Utilities
         [SerializeField] private TacticalPosDebugGO _gizmoShowGameObject;
         [SerializeField] private float distanceToCreateGizmos = 10f;
         [Range(0.01f, 0.25f)][SerializeField] private float maxDistanceToConsiderSamePosition = 0.05f;
-        [SerializeField] private float maxRotationDifferenceToConsiderSamePosition = 5f;
+        [SerializeField] private float maxRotationDifferenceToConsiderSamePosition = 1f;
 
         // ========================================================= PROPERTIES
 
@@ -103,7 +103,6 @@ namespace FPSDemo.NPC.Utilities
 
         private void CompareTheNewPositions(List<TacticalPosition> copyOfOldPositions)
         {
-            LoggingUtils.ClearConsole();
             List<TacticalPosition> copyOfNew = new(_tacticalPositionData.Positions);
             List<TacticalPosition> modifiedPositions = new();
             FilterListsForChanges(copyOfOldPositions, copyOfNew, modifiedPositions);
@@ -268,6 +267,7 @@ namespace FPSDemo.NPC.Utilities
             else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
             {
                 _tacticalPositionData.Positions.Clear();
+                _gizmoShowGameObject.tacticalDebugDataOfAllPositions.Clear();
             }
 
             if (_debugGameObjectParent.transform.childCount > 0)
@@ -408,7 +408,7 @@ namespace FPSDemo.NPC.Utilities
                 {
                     if (genMode == CoverGenMode.corners)
                     {
-                        if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        if (_createDebugGameObjects && Vector3.Distance(highHit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                         {
                             CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
                         }
@@ -422,9 +422,9 @@ namespace FPSDemo.NPC.Utilities
                 {
                     if (genMode == CoverGenMode.corners)
                     {
-                        if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        if (_createDebugGameObjects && Vector3.Distance(lowHit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
                         }
                         else
                         {
@@ -435,10 +435,11 @@ namespace FPSDemo.NPC.Utilities
                     {
                         if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                         {
-                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
+                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
                         }
                         else
                         {
+                            Debug.Log("SUSIK 3");
                             CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
                         }
                     }

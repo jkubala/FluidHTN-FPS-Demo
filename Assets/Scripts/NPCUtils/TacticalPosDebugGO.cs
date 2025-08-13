@@ -6,7 +6,9 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalPosDebugGO : MonoBehaviour
     {
         enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
+        enum FinishedMode { All, OnlyFinished, OnlyUnfinished }
         [SerializeField] DebugMode debugMode;
+        [SerializeField] FinishedMode finishedMode;
         public List<TacticalDebugData> tacticalDebugDataOfAllPositions = new();
 
         private void DrawSphere(Vector3 position, float radius, Color color)
@@ -81,6 +83,10 @@ namespace FPSDemo.NPC.Utilities
             Debug.Log($"Overall tactical debug positions: {tacticalDebugDataOfAllPositions.Count}");
             foreach (TacticalDebugData tacticalDebugData in tacticalDebugDataOfAllPositions)
             {
+                if((finishedMode == FinishedMode.OnlyUnfinished && tacticalDebugData.finishedPosition) || (finishedMode == FinishedMode.OnlyFinished && !tacticalDebugData.finishedPosition))
+                {
+                    continue;
+                }
                 switch (debugMode)
                 {
                     case DebugMode.Corner:
@@ -104,6 +110,7 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalDebugData
     {
         public TacticalPosition tacticalPosition;
+        public bool finishedPosition;
         public Vector3 offsetPosition, leftDirection, finalCornerPos;
         public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
         public float distanceToCornerLeft, distanceToCornerRight;
