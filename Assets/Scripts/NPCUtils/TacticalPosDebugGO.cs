@@ -49,7 +49,7 @@ namespace FPSDemo.NPC.Utilities
                 DrawSphere(pos, 0.01f, Color.red);
             }
 
-            DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.tacticalPosition.mainCover.rotationToAlignWithCover.eulerAngles, Color.green);
+            //DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.tacticalPosition.mainCover.rotationToAlignWithCover.eulerAngles, Color.green);
         }
 
         private void ObstacleInFiringPositionDebug(TacticalDebugData tacticalDebugData)

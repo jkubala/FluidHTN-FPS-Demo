@@ -48,6 +48,17 @@ namespace FPSDemo.NPC.Utilities
             // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
 
+            TacticalDebugData debugData = debugDataToAddTo != null ? new TacticalDebugData() : null;
+
+            Vector3 leftDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
+            if (debugData != null)
+            {
+                debugDataToAddTo.Add(debugData);
+                debugData.offsetPosition = offsetPosition;
+                debugData.leftDirection = leftDirection;
+                debugData.hitPositions = new();
+            }
+
             // Return if inside geometry
             if (Physics.OverlapSphereNonAlloc(offsetPosition, cornerSettings.cornerCheckRayWallOffset - cornerSettings.floatPrecisionBuffer, nonAllocColBuffer) > 0)
             {
@@ -55,7 +66,7 @@ namespace FPSDemo.NPC.Utilities
             }
 
             // Vertical corner "over" the cover
-            PositionDetectionInfo? cornerInfo = FindConvexCorner(offsetPosition, hit.normal, Vector3.up, cornerSettings, raycastMask);
+            PositionDetectionInfo? cornerInfo = FindConvexCorner(offsetPosition, hit.normal, Vector3.up, cornerSettings, raycastMask, debugData);
 
             // No corner found
             if (cornerInfo == null)
@@ -121,6 +132,7 @@ namespace FPSDemo.NPC.Utilities
                 debugDataToAddTo.Add(debugData);
                 debugData.offsetPosition = offsetPosition;
                 debugData.leftDirection = leftDirection;
+                debugData.hitPositions = new();
             }
 
             // Return if inside geometry
@@ -130,8 +142,8 @@ namespace FPSDemo.NPC.Utilities
             }
 
             // Looking for left and right corners
-            PositionDetectionInfo? leftCornerInfo = FindConvexCorner(offsetPosition, hit.normal, leftDirection, cornerSettings, raycastMask);
-            PositionDetectionInfo? rightCornerInfo = FindConvexCorner(offsetPosition, hit.normal, -leftDirection, cornerSettings, raycastMask);
+            PositionDetectionInfo? leftCornerInfo = FindConvexCorner(offsetPosition, hit.normal, leftDirection, cornerSettings, raycastMask, debugData);
+            PositionDetectionInfo? rightCornerInfo = FindConvexCorner(offsetPosition, hit.normal, -leftDirection, cornerSettings, raycastMask, debugData);
 
             if (leftCornerInfo.HasValue && leftCornerInfo.Value.cornerType == CornerType.Convex)
             {
@@ -169,7 +181,7 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        private PositionDetectionInfo? FindConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private PositionDetectionInfo? FindConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalCornerSettings cornerSettings, LayerMask raycastMask, TacticalDebugData debugDataToAddTo = null)
         {
             float distanceToObstacleAlongTheAxis = cornerSettings.cornerCheckRaySequenceDistance;
             if (Physics.Raycast(offsetPosition, axis, out RaycastHit hit, cornerSettings.cornerCheckRaySequenceDistance, raycastMask))
@@ -177,7 +189,7 @@ namespace FPSDemo.NPC.Utilities
                 distanceToObstacleAlongTheAxis = Vector3.Distance(offsetPosition, hit.point);
             }
 
-            if (ScanForConvexCorner(offsetPosition, hitNormal, axis, cornerSettings, raycastMask, distanceToObstacleAlongTheAxis, out Vector3? detectedPosition, out Vector3? detectedFiringDirection))
+            if (ScanForConvexCorner(offsetPosition, hitNormal, axis, cornerSettings, raycastMask, distanceToObstacleAlongTheAxis, out Vector3? detectedPosition, out Vector3? detectedFiringDirection, debugDataToAddTo))
             {
                 CoverType coverType;
                 if (axis == Vector3.up)
@@ -218,7 +230,7 @@ namespace FPSDemo.NPC.Utilities
             return null;
         }
 
-        private bool ScanForConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalCornerSettings cornerSettings, LayerMask raycastMask, float maxDistance, out Vector3? detectedPosition, out Vector3? detectedFiringDirection)
+        private bool ScanForConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalCornerSettings cornerSettings, LayerMask raycastMask, float maxDistance, out Vector3? detectedPosition, out Vector3? detectedFiringDirection, TacticalDebugData debugDataToAddTo = null)
         {
             detectedPosition = null;
             detectedFiringDirection = null;
@@ -240,6 +252,7 @@ namespace FPSDemo.NPC.Utilities
             {
                 if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit newHit, cornerSettings.cornerCheckRayWallOffset + cornerSettings.rayLengthBeyondWall, raycastMask))
                 {
+                    debugDataToAddTo?.hitPositions.Add(newHit.point);
                     Vector3 newProjectedHitNormal = Vector3.ProjectOnPlane(newHit.normal, Vector3.up).normalized;
                     float angleDifference = Mathf.Abs(Vector3.SignedAngle(hitNormal, newProjectedHitNormal, Vector3.up));
 

@@ -29,9 +29,9 @@ namespace FPSDemo.NPC.Utilities
         [SerializeField] private GameObject _debugGameObjectParent;
 
         [SerializeField] private TacticalPosDebugGO _gizmoShowGameObject;
-        [SerializeField] private float distanceToCreateGizmos = 10f;
+        [Range(1f, 5f)][SerializeField] private float distanceToCreateGizmos = 10f;
         [Range(0.01f, 0.25f)][SerializeField] private float maxDistanceToConsiderSamePosition = 0.05f;
-        [SerializeField] private float maxRotationDifferenceToConsiderSamePosition = 1f;
+        [Range(1f, 3f)][SerializeField] private float maxDegreesDifferenceToConsiderSamePosition = 1f;
 
         // ========================================================= PROPERTIES
 
@@ -145,7 +145,7 @@ namespace FPSDemo.NPC.Utilities
                     if (Vector3.Distance(pos1.Position, newList[j].Position) < maxDistanceToConsiderSamePosition)
                     {
                         // But does not have the same values
-                        if (!ArePositionsRoughlyEqual(pos1, newList[j], maxRotationDifferenceToConsiderSamePosition))
+                        if (!ArePositionsRoughlyEqual(pos1, newList[j], maxDegreesDifferenceToConsiderSamePosition))
                         {
                             modifiedList.Add(newList[j]);
                         }
