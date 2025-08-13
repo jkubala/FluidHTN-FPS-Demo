@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -91,7 +91,7 @@ namespace FPSDemo.NPC.Utilities
         private PositionDetectionInfo? AdjustLowPosition(PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
         {
 
-            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo.position, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
+            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
 
             if (!yStandardCornerPos.HasValue)
             {
@@ -283,7 +283,7 @@ namespace FPSDemo.NPC.Utilities
         private PositionDetectionInfo? AdjustCornerPosition(PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
         {
 
-            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo.position, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
+            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
 
             if (!yStandardCornerPos.HasValue)
             {
@@ -329,22 +329,34 @@ namespace FPSDemo.NPC.Utilities
             return null;
         }
 
-        private Vector3? StandardizePositionOnYAxis(Vector3 position, float distanceFromGround, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private Vector3? StandardizePositionOnYAxis(PositionDetectionInfo positionInfo, float distanceFromGround, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
         {
-            float radiusOffset = 0.05f; // TODO if replaced by floatPrecisionBuffer, we lose 3 positions in the DemoMap1. Find out which ones and decide whether to replace or not
-            if (Physics.SphereCast(position, cornerSettings.cornerCheckRayWallOffset - radiusOffset, Vector3.down, out RaycastHit hit, Mathf.Infinity, raycastMask))
+            Vector3 outward = Vector3.Cross(Vector3.up, positionInfo.coverWallNormal);
+            if (positionInfo.coverType == CoverType.LeftCorner)
+            {
+                outward = -outward;
+            }
+
+            // Not all walls are perfectly 90 degree ones. If the wall is leaning away from the cover position, the sphereCast needs to go along the wall normal, since it will hit the wall if it would go Vector3.down.
+            Vector3 downAlongWall = Vector3.ProjectOnPlane(Vector3.down, positionInfo.coverWallNormal).normalized;
+
+            // If the wall is leaning towards the cover position though, use straight Vector3.down, since it could be in the wall when standardizing it by a Y axis offset from the ground.
+            if (Vector3.Dot(outward, downAlongWall) < 0)
+                downAlongWall = Vector3.down;
+
+            if (Physics.SphereCast(positionInfo.position, cornerSettings.cornerCheckRayWallOffset - cornerSettings.floatPrecisionBuffer, downAlongWall, out RaycastHit hit, Mathf.Infinity, raycastMask))
             {
                 float standardizedHeight = hit.point.y + distanceFromGround;
                 float maxThresholdAboveGround = 2.5f;
 
-                if (position.y - standardizedHeight < 0 || position.y - standardizedHeight > maxThresholdAboveGround)
+                if (positionInfo.position.y - standardizedHeight < 0 || positionInfo.position.y - standardizedHeight > maxThresholdAboveGround)
                 {
                     return null;
                 }
                 else
                 {
-                    position.y = standardizedHeight;
-                    return position;
+                    positionInfo.position.y = standardizedHeight;
+                    return positionInfo.position;
                 }
             }
             return null;
