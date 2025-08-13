@@ -202,12 +202,15 @@ namespace FPSDemo.NPC.Utilities
                 // Stopped before reaching the full distance due to obstacle
                 if (!Mathf.Approximately(distanceToObstacleAlongTheAxis, cornerSettings.cornerCheckRaySequenceDistance))
                 {
+                    Vector3 flattenedFiringPosition = -hitNormal;
+                    flattenedFiringPosition.y = 0;
+                    flattenedFiringPosition.Normalize();
                     return new()
                     {
                         position = offsetPosition + axis * distanceToObstacleAlongTheAxis,
                         cornerType = CornerType.Concave,
                         coverWallNormal = hitNormal,
-                        positionFiringDirection = -hitNormal
+                        positionFiringDirection = flattenedFiringPosition
                     };
                 }
             }
@@ -407,11 +410,14 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
+            Vector3 flattenedWallNormal = cornerInfo.coverWallNormal;
+            flattenedWallNormal.y = 0;
+            flattenedWallNormal.Normalize();
             MainCover mainCover = new()
             {
                 type = coverType,
                 height = coverHeight,
-                rotationToAlignWithCover = Quaternion.LookRotation(-cornerInfo.coverWallNormal, Vector3.up)
+                rotationToAlignWithCover = Quaternion.LookRotation(-flattenedWallNormal, Vector3.up)
             };
 
             TacticalPosition newTacticalPos = new()
