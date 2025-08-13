@@ -15,8 +15,9 @@ MonoBehaviour:
   RequiredProximityToNavMesh: 0.2
   geometryCheckYOffset: 3
   distanceToRemoveDuplicates: 1
+  maxAngleDifferenceToRemoveDuplicates: 20
   minHeightToConsiderHighCover: 1.85
-  minHeightToConsiderLowCover: 1
+  minHeightToConsiderLowCover: 0.7
   verticalStepToCheckForCover: 0.1
   bottomRaycastBuffer: 0.1
   distanceToCheckForCover: 1

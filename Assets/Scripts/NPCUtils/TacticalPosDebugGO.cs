@@ -3,112 +3,115 @@ using UnityEngine;
 
 namespace FPSDemo.NPC.Utilities
 {
-	public class TacticalPosDebugGO : MonoBehaviour
-	{
-		enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
-		[SerializeField] DebugMode debugMode;
+    public class TacticalPosDebugGO : MonoBehaviour
+    {
+        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
+        [SerializeField] DebugMode debugMode;
+        public List<TacticalDebugData> tacticalDebugDataOfAllPositions = new();
 
-		public TacticalPosition tacticalPosition;
-		public Vector3 origCornerRayPos;
-		public TacticalGridGenerationSettings gridSettings;
+        private void DrawSphere(Vector3 position, float radius, Color color)
+        {
+            Color curColor = Gizmos.color;
+            Gizmos.color = color;
+            Gizmos.DrawSphere(position, radius);
+            Gizmos.color = curColor;
+        }
 
-		public Vector3 offsetPosition, leftDirection, finalCornerPos;
-		public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
-		public float distanceToObstacleLeft, distanceToObstacleRight, maxDistLeft, maxDistRight;
-		public float distToLCorner, distToRCorner;
-		public Vector3? leftCornerPos, rightCornerPos;
-		public List<Vector3> hitPositions;
-		public Vector3? initCornerNormal, initCornerFiringNormal;
+        private void DrawRay(Vector3 position, Vector3 direction, Color color)
+        {
+            Color curColor = Gizmos.color;
+            Gizmos.color = color;
+            Gizmos.DrawRay(position, direction);
+            Gizmos.color = curColor;
+        }
 
-		public Vector3 standardisationOrigin, standardisationDirection;
-		public float standardisationDistance;
+        private void GetHighPosAdjustedToCornerDebug(TacticalDebugData tacticalDebugData)
+        {
+            // Looking for left and right corners
+            DrawRay(tacticalDebugData.offsetPosition, tacticalDebugData.leftDirection * tacticalDebugData.distanceToCornerLeft, Color.black);
+            DrawRay(tacticalDebugData.offsetPosition, -tacticalDebugData.leftDirection * tacticalDebugData.distanceToCornerRight, Color.black);
+            DrawSphere(tacticalDebugData.offsetPosition, 0.1f, Color.black);
 
-		private void DrawSphere(Vector3 position, float radius, Color color)
-		{
-			Color curColor = Gizmos.color;
-			Gizmos.color = color;
-			Gizmos.DrawSphere(position, radius);
-			Gizmos.color = curColor;
-		}
+            if (tacticalDebugData.leftCornerPos.HasValue)
+            {
+                DrawSphere(tacticalDebugData.leftCornerPos.Value, 0.1f, Color.yellow);
+            }
 
-		private void DrawRay(Vector3 position, Vector3 direction, Color color)
-		{
-			Color curColor = Gizmos.color;
-			Gizmos.color = color;
-			Gizmos.DrawRay(position, direction);
-			Gizmos.color = curColor;
-		}
+            if (tacticalDebugData.rightCornerPos.HasValue)
+            {
+                DrawSphere(tacticalDebugData.rightCornerPos.Value, 0.1f, Color.cyan);
+            }
 
-		private void GetHighPosAdjustedToCornerDebug()
-		{
-			// Looking for left and right corners
-			DrawRay(offsetPosition, leftDirection * distanceToObstacleLeft, Color.black);
-			DrawRay(offsetPosition, -leftDirection * distanceToObstacleRight, Color.black);
-			DrawSphere(offsetPosition, 0.1f, Color.black);
-			DrawSphere(offsetPosition + leftDirection * maxDistLeft, 0.025f, Color.black);
-			DrawSphere(offsetPosition - leftDirection * maxDistRight, 0.025f, Color.black);
+            foreach (Vector3 pos in tacticalDebugData.hitPositions)
+            {
+                DrawSphere(pos, 0.01f, Color.red);
+            }
 
-			if (leftCornerPos.HasValue)
-			{
-				DrawSphere(leftCornerPos.Value, 0.1f, Color.yellow);
-			}
+            DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.tacticalPosition.mainCover.rotationToAlignWithCover.eulerAngles, Color.green);
+        }
 
-			if (rightCornerPos.HasValue)
-			{
-				DrawSphere(rightCornerPos.Value, 0.1f, Color.cyan);
-			}
+        private void ObstacleInFiringPositionDebug(TacticalDebugData tacticalDebugData)
+        {
+            DrawSphere(tacticalDebugData.sphereCastOrigin, 0.1f, Color.black);
+            DrawRay(tacticalDebugData.sphereCastOrigin, tacticalDebugData.sphereCastDirection, Color.blue);
+            DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.cornerNormal, Color.cyan);
+            DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.cornerFiringNormal, Color.black);
+        }
 
-			foreach (Vector3 pos in hitPositions)
-			{
-				DrawSphere(pos, 0.01f, Color.red);
-			}
+        private void Non90DegreeCornerDebug(TacticalDebugData tacticalDebugData)
+        {
+            if (tacticalDebugData.initCornerNormal.HasValue)
+            {
+                DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.initCornerNormal.Value, Color.black);
+            }
+            if (tacticalDebugData.initCornerFiringNormal.HasValue)
+            {
+                DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.initCornerFiringNormal.Value, Color.yellow);
+            }
+        }
 
-			DrawRay(finalCornerPos, tacticalPosition.mainCover.rotationToAlignWithCover.eulerAngles, Color.green);
-		}
-
-		private void ObstacleInFiringPositionDebug()
-		{
-			DrawSphere(sphereCastOrigin, 0.1f, Color.black);
-			DrawRay(sphereCastOrigin, sphereCastDirection, Color.blue);
-			DrawRay(finalCornerPos, cornerNormal, Color.cyan);
-			DrawRay(finalCornerPos, cornerFiringNormal, Color.black);
-		}
-
-		private void Non90DegreeCornerDebug()
-		{
-			if (initCornerNormal.HasValue)
-			{
-				DrawRay(finalCornerPos, initCornerNormal.Value, Color.black);
-			}
-			if (initCornerFiringNormal.HasValue)
-			{
-				DrawRay(finalCornerPos, initCornerFiringNormal.Value, Color.yellow);
-			}
-		}
-
-		private void StandardisationDebug()
-		{
-			DrawRay(standardisationOrigin, standardisationDirection * standardisationDistance, Color.black);
-		}
+        private void StandardisationDebug(TacticalDebugData tacticalDebugData)
+        {
+            DrawRay(tacticalDebugData.standardisationOrigin, tacticalDebugData.standardisationDirection * tacticalDebugData.standardisationDistance, Color.black);
+        }
 
 
-		void OnDrawGizmosSelected()
-		{
-			switch (debugMode)
-			{
-				case DebugMode.Corner:
-					GetHighPosAdjustedToCornerDebug();
-					break;
-				case DebugMode.Obstacle:
-					ObstacleInFiringPositionDebug();
-					break;
-				case DebugMode.Non90DegreeCorner:
-					Non90DegreeCornerDebug();
-					break;
-				case DebugMode.NormalStandardisation:
-					StandardisationDebug();
-					break;
-			}
-		}
-	}
+        void OnDrawGizmosSelected()
+        {
+            Debug.Log($"Overall tactical debug positions: {tacticalDebugDataOfAllPositions.Count}");
+            foreach (TacticalDebugData tacticalDebugData in tacticalDebugDataOfAllPositions)
+            {
+                switch (debugMode)
+                {
+                    case DebugMode.Corner:
+                        GetHighPosAdjustedToCornerDebug(tacticalDebugData);
+                        break;
+                    case DebugMode.Obstacle:
+                        ObstacleInFiringPositionDebug(tacticalDebugData);
+                        break;
+                    case DebugMode.Non90DegreeCorner:
+                        Non90DegreeCornerDebug(tacticalDebugData);
+                        break;
+                    case DebugMode.NormalStandardisation:
+                        StandardisationDebug(tacticalDebugData);
+                        break;
+                }
+            }
+        }
+    }
+
+    [System.Serializable]
+    public class TacticalDebugData
+    {
+        public TacticalPosition tacticalPosition;
+        public Vector3 offsetPosition, leftDirection, finalCornerPos;
+        public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
+        public float distanceToCornerLeft, distanceToCornerRight;
+        public Vector3? leftCornerPos, rightCornerPos;
+        public List<Vector3> hitPositions;
+        public Vector3? initCornerNormal, initCornerFiringNormal;
+
+        public Vector3 standardisationOrigin, standardisationDirection;
+        public float standardisationDistance;
+    }
 }

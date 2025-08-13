@@ -2,36 +2,53 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
-	[CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositions/Data")]
-	public class TacticalPositionData : ScriptableObject
-	{
-		public List<TacticalPosition> Positions;
-	}
+    [CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositions/Data")]
+    public class TacticalPositionData : ScriptableObject
+    {
+        public List<TacticalPosition> Positions;
+    }
 
-	[System.Serializable]
-	public struct TacticalPosition
-	{
-		public Vector3 Position;
-		public MainCover mainCover;
-		public CoverHeight[] CoverDirections;
-		public bool isOutside;
-	}
+    [System.Serializable]
+    public class TacticalPosition
+    {
+        public Vector3 Position;
+        public MainCover mainCover;
+        public CoverHeight[] CoverDirections;
+        public bool isOutside;
 
-	public enum CoverHeight
-	{
-		LowCover, HighCover, NoCover
-	}
+        public override string ToString()
+        {
+            string coverDirectionsStr = CoverDirections != null
+                ? string.Join(", ", CoverDirections)
+                : "null";
 
-	public enum CoverType
-	{
-		LeftCorner, RightCorner, Normal // Normal is for low cover with no corners, like over a stone fence
-	}
+            return $"Position: {Position}\n" +
+                   $"MainCover: {mainCover}\n" +
+                   $"CoverDirections: [{coverDirectionsStr}]\n" +
+                   $"IsOutside: {isOutside}";
+        }
+    }
 
-	[System.Serializable]
-	public struct MainCover
-	{
-		public CoverType type;
-		public CoverHeight height;
-		public Quaternion rotationToAlignWithCover;
-	}
+    public enum CoverHeight
+    {
+        LowCover, HighCover, NoCover
+    }
+
+    public enum CoverType
+    {
+        LeftCorner, RightCorner, Normal // Normal is for low cover with no corners, like over a stone fence
+    }
+
+    [System.Serializable]
+    public struct MainCover
+    {
+        public CoverType type;
+        public CoverHeight height;
+        public Quaternion rotationToAlignWithCover;
+
+        public override string ToString()
+        {
+            return $"Type: {type}, Height: {height}, Rotation: {rotationToAlignWithCover.eulerAngles}";
+        }
+    }
 }

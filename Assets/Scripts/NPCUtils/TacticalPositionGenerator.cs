@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FPSDemo.Utils;
 using UnityEngine;
@@ -24,9 +25,13 @@ namespace FPSDemo.NPC.Utilities
 
         [SerializeField] private bool _createDebugGameObjects = false;
         [SerializeField] private Vector3 _debugGameObjectsSpawn;
-        [SerializeField] private float _debugGameObjectsSpawnRadius = 5f;
         [SerializeField] private GameObject _debugGameObject;
         [SerializeField] private GameObject _debugGameObjectParent;
+
+        [SerializeField] private TacticalPosDebugGO _gizmoShowGameObject;
+        [SerializeField] private float distanceToCreateGizmos = 10f;
+        [Range(0.01f, 0.25f)][SerializeField] private float maxDistanceToConsiderSamePosition = 0.05f;
+        [SerializeField] private float maxRotationDifferenceToConsiderSamePosition = 5f;
 
         // ========================================================= PROPERTIES
 
@@ -85,10 +90,141 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
+            List<TacticalPosition> oldTacticalPositions = new(_tacticalPositionData.Positions);
+            if (_createDebugGameObjects)
+            {
+                _gizmoShowGameObject.tacticalDebugDataOfAllPositions.Clear();
+            }
             InitTacticalPositionData(clearPositions);
             CreateSpawnersAlongTheGrid();
             RemoveDuplicates(_positionSettings.distanceToRemoveDuplicates);
+            CompareTheNewPositions(oldTacticalPositions);
         }
+
+        private void CompareTheNewPositions(List<TacticalPosition> copyOfOldPositions)
+        {
+            LoggingUtils.ClearConsole();
+            List<TacticalPosition> copyOfNew = new(_tacticalPositionData.Positions);
+            List<TacticalPosition> modifiedPositions = new();
+            FilterListsForChanges(copyOfOldPositions, copyOfNew, modifiedPositions);
+
+            if (copyOfNew.Count == 0 && copyOfOldPositions.Count == 0 && modifiedPositions.Count == 0)
+            {
+                Debug.Log("The positions generated without any changes");
+            }
+            else
+            {
+                Debug.Log($"Added: {copyOfNew.Count}, Removed: {copyOfOldPositions.Count}, Modified: {modifiedPositions.Count}");
+            }
+
+            foreach (var pos in copyOfNew)
+            {
+                Debug.Log($"[ADDED] {pos}");
+            }
+
+            foreach (var pos in copyOfOldPositions)
+            {
+                Debug.Log($"[REMOVED] {pos}");
+            }
+
+            foreach (var pos in modifiedPositions)
+            {
+                Debug.Log($"[MODIFIED] {pos}");
+            }
+        }
+
+        private void FilterListsForChanges(List<TacticalPosition> oldList, List<TacticalPosition> newList, List<TacticalPosition> modifiedList)
+        {
+            for (int i = oldList.Count - 1; i >= 0; i--)
+            {
+                TacticalPosition pos1 = oldList[i];
+
+                // Look for exact match in list2
+                for (int j = 0; j < newList.Count; j++)
+                {
+                    // If it is in the same spot
+                    if (Vector3.Distance(pos1.Position, newList[j].Position) < maxDistanceToConsiderSamePosition)
+                    {
+                        // But does not have the same values
+                        if (!ArePositionsRoughlyEqual(pos1, newList[j], maxRotationDifferenceToConsiderSamePosition))
+                        {
+                            modifiedList.Add(newList[j]);
+                        }
+
+                        // They are equal, remove them
+                        oldList.RemoveAt(i);
+                        newList.RemoveAt(j);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void LogInvalidPositions(string errorMessage, TacticalPosition pos1, TacticalPosition pos2)
+        {
+            Debug.LogWarning($"{errorMessage}.\n{pos1}\n{pos2}");
+        }
+
+        private bool ArePositionsRoughlyEqual(TacticalPosition pos1, TacticalPosition pos2, float maxDifferenceInRotation)
+        {
+            if (pos1.mainCover.height != pos2.mainCover.height)
+            {
+                return false;
+            }
+
+            if (pos1.mainCover.type != pos2.mainCover.type)
+            {
+                return false;
+            }
+
+            if (Quaternion.Angle(pos1.mainCover.rotationToAlignWithCover, pos2.mainCover.rotationToAlignWithCover) > (maxDifferenceInRotation))
+            {
+                LogInvalidPositions("Positions rotationToAlignWithCover are not the same", pos1, pos2);
+                return false;
+            }
+
+            if (!CoverDirectionsApproximatelyEqual(pos1, pos2))
+            {
+                return false;
+            }
+
+            if (pos1.isOutside != pos2.isOutside)
+            {
+                LogInvalidPositions("Positions outside parameters are not the same", pos1, pos2);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CoverDirectionsApproximatelyEqual(TacticalPosition pos1, TacticalPosition pos2)
+        {
+            if (pos1.CoverDirections == null && pos2.CoverDirections == null)
+            {
+                return true;
+            }
+            if (pos1.CoverDirections == null || pos2.CoverDirections == null)
+            {
+                LogInvalidPositions("One CoverDirections array is null, while the other is not", pos1, pos2);
+                return false;
+            }
+            if (pos1.CoverDirections.Length != pos2.CoverDirections.Length)
+            {
+                LogInvalidPositions("CoverDirections length mismatch: {pos1.CoverDirections.Length} vs {pos2.CoverDirections.Length}", pos1, pos2);
+                return false;
+            }
+
+            for (int i = 0; i < pos1.CoverDirections.Length; i++)
+            {
+                if (pos1.CoverDirections[i] != pos2.CoverDirections[i])
+                {
+                    LogInvalidPositions("CoverDirections[{i}] mismatch: {pos1.CoverDirections[i]} vs {pos2.CoverDirections[i]}", pos1, pos2);
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
         public void VerifyPositionsCover()
         {
@@ -270,21 +406,13 @@ namespace FPSDemo.NPC.Utilities
             {
                 if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
                 {
-                    if (_createDebugGameObjects && Vector3.Distance(position, _debugGameObjectsSpawn) < _debugGameObjectsSpawnRadius)
+                    if (genMode == CoverGenMode.corners)
                     {
-                        // TODO figure out the debug logic out
-                        //GameObject debugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
-                        //TacticalPosDebugGO debugData = debugGO.GetComponent<TacticalPosDebugGO>();
-                        //debugData.gridSettings = _gridSettings;
-                        //CoverPositioner.AddHighPosAdjustedToCorner(highHit.point, highHit.normal, _gridSettings, _tacticalPositionData.Positions, debugData);
-                        //if (!newPosition.HasValue)
-                        //{
-                        //	DestroyImmediate(debugGO);
-                        //}
-                    }
-                    else
-                    {
-                        if (genMode == CoverGenMode.corners)
+                        if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        {
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
+                        }
+                        else
                         {
                             CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions);
                         }
@@ -294,12 +422,25 @@ namespace FPSDemo.NPC.Utilities
                 {
                     if (genMode == CoverGenMode.corners)
                     {
-                        CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                        if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        {
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                        }
+                        else
+                        {
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                        }
                     }
                     else if (genMode == CoverGenMode.low)
                     {
-                        Debug.Log("HAAAAAAA!");
-                        CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
+                        if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        {
+                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
+                        }
+                        else
+                        {
+                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
+                        }
                     }
                 }
 

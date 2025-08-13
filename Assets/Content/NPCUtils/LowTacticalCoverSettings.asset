@@ -20,7 +20,7 @@ MonoBehaviour:
   minAngleToConsiderCorner: 15
   rayLengthBeyondWall: 0.25
   floatPrecisionBuffer: 0.01
-  sphereCastForFiringPositionCheckOffset: {x: 0, y: 0.5}
+  sphereCastForFiringPositionCheckOffset: {x: 0, y: 0}
   sphereCastForFiringPositionCheckRadius: 0.15
   sphereCastForFiringPositionCheckDistance: 1
   nOfHitsOfDifferentNormalToConsiderCorner: 3
