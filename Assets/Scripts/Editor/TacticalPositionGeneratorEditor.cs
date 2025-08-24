@@ -56,7 +56,7 @@ namespace FPSDemo.NPC.Utilities
                 if (posGenerator.TacticalPositionData != null && posGenerator.TacticalPositionData.Positions.Count > 0)
                 {
                     Debug.Log("TacticalPositionData cleared!");
-                    posGenerator.TacticalPositionData.Positions.Clear();
+                    posGenerator.ClearTacticalData();
                     EditorUtility.SetDirty(posGenerator.TacticalPositionData);
                     AssetDatabase.SaveAssetIfDirty(posGenerator.TacticalPositionData);
                 }

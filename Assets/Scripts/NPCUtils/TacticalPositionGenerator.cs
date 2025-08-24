@@ -93,7 +93,7 @@ namespace FPSDemo.NPC.Utilities
             List<TacticalPosition> oldTacticalPositions = new(_tacticalPositionData.Positions);
             if (_createDebugGameObjects)
             {
-                _gizmoShowGameObject.tacticalDebugDataOfAllPositions.Clear();
+                _gizmoShowGameObject.ClearDebugData();
             }
             InitTacticalPositionData(clearPositions);
             CreateSpawnersAlongTheGrid();
@@ -258,6 +258,12 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
+        public void ClearTacticalData()
+        {
+            TacticalPositionData.Positions.Clear();
+            _gizmoShowGameObject.ClearDebugData();
+        }
+
         private void InitTacticalPositionData(bool clearPositions)
         {
             if (_tacticalPositionData.Positions == null)
@@ -267,7 +273,7 @@ namespace FPSDemo.NPC.Utilities
             else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
             {
                 _tacticalPositionData.Positions.Clear();
-                _gizmoShowGameObject.tacticalDebugDataOfAllPositions.Clear();
+                _gizmoShowGameObject.ClearDebugData();
             }
 
             if (_debugGameObjectParent.transform.childCount > 0)
@@ -410,7 +416,7 @@ namespace FPSDemo.NPC.Utilities
                     {
                         if (_createDebugGameObjects && Vector3.Distance(highHit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.GetDebugData());
                         }
                         else
                         {
@@ -424,7 +430,7 @@ namespace FPSDemo.NPC.Utilities
                     {
                         if (_createDebugGameObjects && Vector3.Distance(lowHit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.GetDebugData());
                         }
                         else
                         {
@@ -435,7 +441,7 @@ namespace FPSDemo.NPC.Utilities
                     {
                         if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                         {
-                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.tacticalDebugDataOfAllPositions);
+                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.GetDebugData());
                         }
                         else
                         {

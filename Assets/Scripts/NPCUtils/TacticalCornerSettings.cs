@@ -19,5 +19,6 @@ namespace FPSDemo.NPC.Utilities
         public float sphereCastForFiringPositionCheckDistance = 1f;
         public int nOfHitsOfDifferentNormalToConsiderCorner = 3;
         public float firingPositionHeight = 1.6f;
+        public float maxYDifferenceWhenAdjusting = 0.3f;
     }
 }

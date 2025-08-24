@@ -2724,17 +2724,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.56}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -2742,7 +2742,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 0.32573137
     hitPositions:
     - {x: -19.3, y: 0.69999725, z: -36.5}
     - {x: -19.3, y: 0.69999725, z: -36.5}
@@ -2980,17 +2980,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.56}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -2998,7 +2998,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 0.32573137
     hitPositions:
     - {x: -19.3, y: 0.69999725, z: -36.5}
     - {x: -19.3, y: 0.69999725, z: -36.5}
@@ -3748,17 +3748,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.559994}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.6999972, z: -35.799995}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.559994}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -3766,7 +3766,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 1.0149368
     hitPositions:
     - {x: -19.3, y: 0.6999972, z: -35.799995}
     - {x: -19.3, y: 0.6999972, z: -35.799995}
@@ -4004,17 +4004,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.56}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -4022,7 +4022,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 0.32573137
     hitPositions:
     - {x: -19.3, y: 0.69999725, z: -36.5}
     - {x: -19.3, y: 0.69999725, z: -36.5}
@@ -4260,25 +4260,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.56}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.69999737, z: -36.45}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.6675327
+    distanceToCornerRight: 0.37363154
     hitPositions:
     - {x: -19.3, y: 0.69999737, z: -36.45}
     - {x: -19.3, y: 0.69999737, z: -36.45}
@@ -4516,25 +4516,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060001, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.2, y: 0.6999974, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060001, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.9154777
+    distanceToCornerRight: 0.14866011
     hitPositions:
     - {x: -19.2, y: 0.6999974, z: -35.8}
     - {x: -19.2, y: 0.6999974, z: -35.8}
@@ -5028,17 +5028,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.559998}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.6999972, z: -36.55}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.559998}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -5046,7 +5046,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 0.27856633
     hitPositions:
     - {x: -19.3, y: 0.6999972, z: -36.55}
     - {x: -19.3, y: 0.6999972, z: -36.55}
@@ -5284,17 +5284,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.559998}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.69999725, z: -35.8}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.559998}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -5302,7 +5302,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 1.0149368
     hitPositions:
     - {x: -19.3, y: 0.69999725, z: -35.8}
     - {x: -19.3, y: 0.69999725, z: -35.8}
@@ -5540,17 +5540,17 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.56}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
@@ -5558,7 +5558,7 @@ MonoBehaviour:
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
     distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerRight: 0.32573137
     hitPositions:
     - {x: -19.3, y: 0.69999725, z: -36.5}
     - {x: -19.3, y: 0.69999725, z: -36.5}
@@ -5796,25 +5796,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.5, y: 0.9999972, z: -36.56}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.4, y: 0.6999973, z: -36.45}
     leftDirection: {x: 0, y: -0, z: 1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.5, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.6675327
+    distanceToCornerRight: 0.37363154
     hitPositions:
     - {x: -19.3, y: 0.6999973, z: -36.45}
     - {x: -19.3, y: 0.6999973, z: -36.45}
@@ -6052,25 +6052,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060003, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.200003, y: 0.69999737, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060003, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.9154777
+    distanceToCornerRight: 0.14866011
     hitPositions:
     - {x: -19.200003, y: 0.69999737, z: -35.8}
     - {x: -19.200003, y: 0.69999737, z: -35.8}
@@ -6308,25 +6308,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060001, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.450003, y: 0.6999974, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060001, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.18867868
+    distanceToCornerRight: 0.865793
     hitPositions:
     - {x: -18.450003, y: 0.6999974, z: -35.8}
     - {x: -18.450003, y: 0.6999974, z: -35.8}
@@ -7332,25 +7332,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.540003, y: 0.9999972, z: -36.999996}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.250002, y: 0.6999972, z: -36.899998}
     leftDirection: {x: -1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.540003, y: 0.9999972, z: -36.999996}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.116617456
+    distanceToCornerRight: 0.9651932
     hitPositions:
     - {x: -19.250002, y: 0.6999972, z: -36.8}
     - {x: -19.250002, y: 0.6999972, z: -36.8}
@@ -7588,25 +7588,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.54, y: 0.9999972, z: -36.999996}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.800001, y: 0.6999972, z: -36.899998}
     leftDirection: {x: -1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.54, y: 0.9999972, z: -36.999996}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.5197114
+    distanceToCornerRight: 0.5197114
     hitPositions:
     - {x: -18.800001, y: 0.6999972, z: -36.8}
     - {x: -18.800001, y: 0.6999972, z: -36.8}
@@ -7844,25 +7844,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060007, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.450008, y: 0.69999737, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060007, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.18867868
+    distanceToCornerRight: 0.865793
     hitPositions:
     - {x: -18.450008, y: 0.69999737, z: -35.8}
     - {x: -18.450008, y: 0.69999737, z: -35.8}
@@ -8100,25 +8100,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060003, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.250004, y: 0.69999737, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060003, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.9651932
+    distanceToCornerRight: 0.116617456
     hitPositions:
     - {x: -19.250004, y: 0.69999737, z: -35.8}
     - {x: -19.250004, y: 0.69999737, z: -35.8}
@@ -8356,25 +8356,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.25, y: 0.6999974, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.9651932
+    distanceToCornerRight: 0.116617456
     hitPositions:
     - {x: -19.25, y: 0.6999974, z: -35.8}
     - {x: -19.25, y: 0.6999974, z: -35.8}
@@ -8612,25 +8612,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.25, y: 0.6999975, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.9651932
+    distanceToCornerRight: 0.116617456
     hitPositions:
     - {x: -19.25, y: 0.6999975, z: -35.8}
     - {x: -19.25, y: 0.6999975, z: -35.8}
@@ -9636,25 +9636,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.54, y: 0.9999972, z: -36.999996}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.5, y: 0.6999972, z: -36.899998}
     leftDirection: {x: -1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.54, y: 0.9999972, z: -36.999996}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.81614876
+    distanceToCornerRight: 0.23259258
     hitPositions:
     - {x: -18.5, y: 0.6999972, z: -36.8}
     - {x: -18.5, y: 0.6999972, z: -36.8}
@@ -9892,25 +9892,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.54, y: 0.9999972, z: -36.999996}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.95, y: 0.6999972, z: -36.899998}
     leftDirection: {x: -1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.54, y: 0.9999972, z: -36.999996}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.373631
+    distanceToCornerRight: 0.6675324
     hitPositions:
     - {x: -18.95, y: 0.6999972, z: -36.8}
     - {x: -18.95, y: 0.6999972, z: -36.8}
@@ -10148,25 +10148,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.5, y: 0.69999737, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.23259258
+    distanceToCornerRight: 0.81614876
     hitPositions:
     - {x: -18.5, y: 0.69999737, z: -35.8}
     - {x: -18.5, y: 0.69999737, z: -35.8}
@@ -10404,25 +10404,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.3, y: 0.69999737, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 1.0149385
+    distanceToCornerRight: 0.10049726
     hitPositions:
     - {x: -19.3, y: 0.69999737, z: -35.8}
     - {x: -19.3, y: 0.69999737, z: -35.8}
@@ -10660,25 +10660,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.5, y: 0.6999974, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.23259258
+    distanceToCornerRight: 0.81614876
     hitPositions:
     - {x: -18.5, y: 0.6999974, z: -35.8}
     - {x: -18.5, y: 0.6999974, z: -35.8}
@@ -10916,25 +10916,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060001, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.500002, y: 0.6999975, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060001, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.23259258
+    distanceToCornerRight: 0.81614876
     hitPositions:
     - {x: -18.500002, y: 0.6999975, z: -35.8}
     - {x: -18.500002, y: 0.6999975, z: -35.8}
@@ -11428,24 +11428,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.6999972, z: -36.7}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.14866139
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.6999972, z: -36.7}
@@ -11684,24 +11684,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.32573137
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.69999725, z: -36.5}
@@ -11940,24 +11940,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.69999725, z: -35.95}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.8657951
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.69999725, z: -35.95}
@@ -12196,25 +12196,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999973, z: -36.04}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.6999973, z: -36.3}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999973, z: -36.04}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.5197099
+    distanceToCornerRight: 0.5197099
     hitPositions:
     - {x: -18.3, y: 0.6999973, z: -36.3}
     - {x: -18.3, y: 0.6999973, z: -36.3}
@@ -12452,25 +12452,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.55, y: 0.69999737, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.27856743
+    distanceToCornerRight: 0.7665507
     hitPositions:
     - {x: -18.55, y: 0.69999737, z: -35.8}
     - {x: -18.55, y: 0.69999737, z: -35.8}
@@ -12708,25 +12708,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.06, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -19.3, y: 0.6999974, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.06, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 1.0149385
+    distanceToCornerRight: 0.10049726
     hitPositions:
     - {x: -19.3, y: 0.6999974, z: -35.8}
     - {x: -19.3, y: 0.6999974, z: -35.8}
@@ -13476,24 +13476,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.6999972, z: -35.95}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.8657951
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.6999972, z: -35.95}
@@ -13732,24 +13732,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.32573137
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.69999725, z: -36.5}
@@ -13988,25 +13988,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999973, z: -36.04}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.69999737, z: -36.3}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999973, z: -36.04}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.5197099
+    distanceToCornerRight: 0.5197099
     hitPositions:
     - {x: -18.3, y: 0.69999737, z: -36.3}
     - {x: -18.3, y: 0.69999737, z: -36.3}
@@ -14244,25 +14244,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -19.060003, y: 0.9999973, z: -35.600002}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.550003, y: 0.6999974, z: -35.7}
     leftDirection: {x: 1, y: 0, z: 0}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -19.060003, y: 0.9999973, z: -35.600002}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.27856743
+    distanceToCornerRight: 0.7665507
     hitPositions:
     - {x: -18.550003, y: 0.6999974, z: -35.8}
     - {x: -18.550003, y: 0.6999974, z: -35.8}
@@ -15010,24 +15010,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.32573137
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.69999725, z: -36.5}
@@ -15266,25 +15266,25 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999973, z: -36.04}
       mainCover:
-        type: 0
+        type: 1
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.6999974, z: -36.3}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999973, z: -36.04}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
-    distanceToCornerRight: Infinity
+    distanceToCornerLeft: 0.5197099
+    distanceToCornerRight: 0.5197099
     hitPositions:
     - {x: -18.3, y: 0.6999974, z: -36.3}
     - {x: -18.3, y: 0.6999974, z: -36.3}
@@ -15522,24 +15522,24 @@ MonoBehaviour:
     standardisationDirection: {x: 0, y: 0, z: 0}
     standardisationDistance: 0
   - tacticalPosition:
-      Position: {x: 0, y: 0, z: 0}
+      Position: {x: -18.099998, y: 0.9999972, z: -36.56}
       mainCover:
         type: 0
         height: 0
-        rotationToAlignWithCover: {x: 0, y: 0, z: 0, w: 0}
+        rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
       CoverDirections: 
-      isOutside: 0
-    finishedPosition: 0
+      isOutside: 1
+    finishedPosition: 1
     offsetPosition: {x: -18.199999, y: 0.69999725, z: -36.5}
     leftDirection: {x: 0, y: 0, z: -1}
-    finalCornerPos: {x: 0, y: 0, z: 0}
+    finalCornerPos: {x: -18.099998, y: 0.9999972, z: -36.56}
     sphereCastAnchor: {x: 0, y: 0, z: 0}
     sphereCastOrigin: {x: 0, y: 0, z: 0}
     sphereCastDirection: {x: 0, y: 0, z: 0}
     sphereCastNormal: {x: 0, y: 0, z: 0}
     cornerNormal: {x: 0, y: 0, z: 0}
     cornerFiringNormal: {x: 0, y: 0, z: 0}
-    distanceToCornerLeft: Infinity
+    distanceToCornerLeft: 0.32573137
     distanceToCornerRight: Infinity
     hitPositions:
     - {x: -18.3, y: 0.69999725, z: -36.5}
@@ -17672,7 +17672,7 @@ MonoBehaviour:
   _gizmoShowGameObject: {fileID: 0}
   distanceToCreateGizmos: 10
   maxDistanceToConsiderSamePosition: 0.05
-  maxRotationDifferenceToConsiderSamePosition: 1
+  maxDegreesDifferenceToConsiderSamePosition: 1
 --- !u!4 &1320903569
 Transform:
   m_ObjectHideFlags: 0
@@ -18518,7 +18518,7 @@ MonoBehaviour:
   _gizmoShowGameObject: {fileID: 608155970}
   distanceToCreateGizmos: 3
   maxDistanceToConsiderSamePosition: 0.05
-  maxRotationDifferenceToConsiderSamePosition: 1
+  maxDegreesDifferenceToConsiderSamePosition: 1
 --- !u!1 &1586249291
 GameObject:
   m_ObjectHideFlags: 0

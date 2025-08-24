@@ -9,7 +9,17 @@ namespace FPSDemo.NPC.Utilities
         enum FinishedMode { All, OnlyFinished, OnlyUnfinished }
         [SerializeField] DebugMode debugMode;
         [SerializeField] FinishedMode finishedMode;
-        public List<TacticalDebugData> tacticalDebugDataOfAllPositions = new();
+        [SerializeField] List<TacticalDebugData> tacticalDebugDataOfAllPositions = new();
+
+        public void ClearDebugData()
+        {
+            tacticalDebugDataOfAllPositions.Clear();
+        }
+
+        public List<TacticalDebugData> GetDebugData()
+        {
+            return tacticalDebugDataOfAllPositions;
+        }
 
         private void DrawSphere(Vector3 position, float radius, Color color)
         {
@@ -83,7 +93,7 @@ namespace FPSDemo.NPC.Utilities
             Debug.Log($"Overall tactical debug positions: {tacticalDebugDataOfAllPositions.Count}");
             foreach (TacticalDebugData tacticalDebugData in tacticalDebugDataOfAllPositions)
             {
-                if((finishedMode == FinishedMode.OnlyUnfinished && tacticalDebugData.finishedPosition) || (finishedMode == FinishedMode.OnlyFinished && !tacticalDebugData.finishedPosition))
+                if ((finishedMode == FinishedMode.OnlyUnfinished && tacticalDebugData.finishedPosition) || (finishedMode == FinishedMode.OnlyFinished && !tacticalDebugData.finishedPosition))
                 {
                     continue;
                 }

@@ -102,7 +102,7 @@ namespace FPSDemo.NPC.Utilities
         private PositionDetectionInfo? AdjustLowPosition(PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
         {
 
-            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
+            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings, raycastMask);
 
             if (!yStandardCornerPos.HasValue)
             {
@@ -172,11 +172,19 @@ namespace FPSDemo.NPC.Utilities
 
             if (leftCornerInfo.HasValue)
             {
+                if (debugData != null)
+                {
+                    debugData.leftCornerPos = leftCornerInfo.Value.position;
+                }
                 AddCornerIfConvex(leftCornerInfo.Value, CoverType.LeftCorner, coverHeight, -leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo, debugData);
             }
 
             if (rightCornerInfo.HasValue)
             {
+                if (debugData != null)
+                {
+                    debugData.rightCornerPos = rightCornerInfo.Value.position;
+                }
                 AddCornerIfConvex(rightCornerInfo.Value, CoverType.RightCorner, coverHeight, leftDirection, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo, debugData);
             }
         }
@@ -299,7 +307,7 @@ namespace FPSDemo.NPC.Utilities
         private PositionDetectionInfo? AdjustCornerPosition(PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
         {
 
-            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings.firingPositionHeight, cornerSettings, raycastMask);
+            Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings, raycastMask);
 
             if (!yStandardCornerPos.HasValue)
             {
@@ -324,6 +332,7 @@ namespace FPSDemo.NPC.Utilities
             {
                 return null;
             }
+            
 
             return cornerInfo;
         }
@@ -345,7 +354,7 @@ namespace FPSDemo.NPC.Utilities
             return null;
         }
 
-        private Vector3? StandardizePositionOnYAxis(PositionDetectionInfo positionInfo, float distanceFromGround, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private Vector3? StandardizePositionOnYAxis(PositionDetectionInfo positionInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
         {
             Vector3 outward = Vector3.Cross(Vector3.up, positionInfo.coverWallNormal);
             if (positionInfo.coverType == CoverType.LeftCorner)
@@ -362,10 +371,9 @@ namespace FPSDemo.NPC.Utilities
 
             if (Physics.SphereCast(positionInfo.position, cornerSettings.cornerCheckRayWallOffset - cornerSettings.floatPrecisionBuffer, downAlongWall, out RaycastHit hit, Mathf.Infinity, raycastMask))
             {
-                float standardizedHeight = hit.point.y + distanceFromGround;
-                float maxThresholdAboveGround = 2.5f;
+                float standardizedHeight = hit.point.y + cornerSettings.firingPositionHeight;
 
-                if (positionInfo.position.y - standardizedHeight < 0 || positionInfo.position.y - standardizedHeight > maxThresholdAboveGround)
+                if (Mathf.Abs(positionInfo.position.y - standardizedHeight) > cornerSettings.maxYDifferenceWhenAdjusting)
                 {
                     return null;
                 }
