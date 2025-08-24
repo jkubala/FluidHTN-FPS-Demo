@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e339ba524ff0ba439801a87d7fc6402, type: 3}
   m_Name: LowTacticalCornerSettings
   m_EditorClassIdentifier: 
+  heightToScanThisAt: 0.95
   cornerCheckRayWallOffset: 0.1
   cornerCheckRayStep: 0.01
   cornerCheckRaySequenceDistance: 2
@@ -25,3 +26,4 @@ MonoBehaviour:
   sphereCastForFiringPositionCheckDistance: 1
   nOfHitsOfDifferentNormalToConsiderCorner: 3
   firingPositionHeight: 1
+  maxYDifferenceWhenAdjusting: 0.3

@@ -1,9 +1,11 @@
+using JetBrains.Annotations;
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
     [CreateAssetMenu(fileName = "New corner settings", menuName = "FPSDemo/TacticalPositions/CornerSettings")]
     public class TacticalCornerSettings : ScriptableObject
     {
+        public float heightToScanThisAt = 1.85f;
         [Header("Corner detection settings")]
         public float cornerCheckRayWallOffset = 0.1f; // how far from the wall should the raycasts be fired from
         public float cornerCheckRayStep = 0.01f; // how much distance between the individual raycasts when scanning the wall
@@ -20,5 +22,6 @@ namespace FPSDemo.NPC.Utilities
         public int nOfHitsOfDifferentNormalToConsiderCorner = 3;
         public float firingPositionHeight = 1.6f;
         public float maxYDifferenceWhenAdjusting = 0.3f;
+        public bool lowCover = false;
     }
 }

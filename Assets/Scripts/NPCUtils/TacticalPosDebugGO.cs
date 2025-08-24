@@ -9,16 +9,47 @@ namespace FPSDemo.NPC.Utilities
         enum FinishedMode { All, OnlyFinished, OnlyUnfinished }
         [SerializeField] DebugMode debugMode;
         [SerializeField] FinishedMode finishedMode;
-        [SerializeField] List<TacticalDebugData> tacticalDebugDataOfAllPositions = new();
+        [SerializeField] List<TacticalDebugData> tacticalDebugDataHighCorners = new();
+        [SerializeField] List<TacticalDebugData> tacticalDebugDataLowCorners = new();
+        [SerializeField] List<TacticalDebugData> tacticalDebugDataLowCover = new();
 
-        public void ClearDebugData()
+        public void ClearDebugData(TacticalPositionGenerator.CoverGenMode genMode)
         {
-            tacticalDebugDataOfAllPositions.Clear();
+            switch(genMode)
+            {
+                case TacticalPositionGenerator.CoverGenMode.highCorners:
+                    tacticalDebugDataHighCorners.Clear();
+                    break;
+                case TacticalPositionGenerator.CoverGenMode.lowCorners:
+                    tacticalDebugDataLowCorners.Clear();
+                    break;
+                case TacticalPositionGenerator.CoverGenMode.lowCover:
+                    tacticalDebugDataLowCover.Clear();
+                    break;
+                case TacticalPositionGenerator.CoverGenMode.all:
+                    tacticalDebugDataHighCorners.Clear();
+                    tacticalDebugDataLowCorners.Clear();
+                    tacticalDebugDataLowCover.Clear();
+                    break;
+                default:
+                    Debug.LogError("Invalid cover generation mode!");
+                    break;
+            }
         }
 
-        public List<TacticalDebugData> GetDebugData()
+        public List<TacticalDebugData> GetDebugDataHighCorners()
         {
-            return tacticalDebugDataOfAllPositions;
+            return tacticalDebugDataHighCorners;
+        }
+
+        public List<TacticalDebugData> GetDebugDataLowCorners()
+        {
+            return tacticalDebugDataLowCorners;
+        }
+
+        public List<TacticalDebugData> GetDebugDataLowCover()
+        {
+            return tacticalDebugDataLowCover;
         }
 
         private void DrawSphere(Vector3 position, float radius, Color color)
@@ -90,8 +121,8 @@ namespace FPSDemo.NPC.Utilities
 
         void OnDrawGizmosSelected()
         {
-            Debug.Log($"Overall tactical debug positions: {tacticalDebugDataOfAllPositions.Count}");
-            foreach (TacticalDebugData tacticalDebugData in tacticalDebugDataOfAllPositions)
+            Debug.Log($"Overall tactical debug positions: {tacticalDebugDataHighCorners.Count}");
+            foreach (TacticalDebugData tacticalDebugData in tacticalDebugDataHighCorners)
             {
                 if ((finishedMode == FinishedMode.OnlyUnfinished && tacticalDebugData.finishedPosition) || (finishedMode == FinishedMode.OnlyFinished && !tacticalDebugData.finishedPosition))
                 {

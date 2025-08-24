@@ -8,19 +8,19 @@ namespace FPSDemo.NPC.Utilities
 {
     public class TacticalPositionGenerator : MonoBehaviour
     {
-        enum CoverGenMode { low, corners }
+        public enum CoverGenMode { all, lowCover, lowCorners, highCorners }
         // ========================================================= INSPECTOR FIELDS
 
-        [SerializeField] CoverGenMode genMode = CoverGenMode.low;
+        public CoverGenMode genMode = CoverGenMode.lowCover;
         [SerializeField] private TacticalPositionData _tacticalPositionData;
         [SerializeField] private TacticalGridGenerationSettings _gridSettings;
-        [SerializeField] private TacticalCornerSettings _highCornerSettings;
-        [SerializeField] private TacticalCornerSettings _lowCornerSettings;
-        [SerializeField] private TacticalCornerSettings _lowCoverSettings;
+        [SerializeField] private TacticalGridSpawnerData _gridSpawnerData;
+        public TacticalCornerSettings _highCornerSettings;
+        public TacticalCornerSettings _lowCornerSettings;
+        public TacticalCornerSettings _lowCoverSettings;
         [SerializeField] private TacticalPositionSettings _positionSettings;
         [SerializeField] private LayerMask _raycastMask = 1 << 0;
         [SerializeField] private bool _useHandplacedTacticalProbes = true;
-        [SerializeField] private bool _generateAutoProbeGrid = true;
         [SerializeField] private bool _showThePositionsInEditor = false;
 
         [SerializeField] private bool _createDebugGameObjects = false;
@@ -38,10 +38,14 @@ namespace FPSDemo.NPC.Utilities
         public TacticalPositionData TacticalPositionData
         {
             get { return _tacticalPositionData; }
-            set { _tacticalPositionData = value; }
         }
+
+        public TacticalGridSpawnerData SpawnerData
+        {
+            get { return _gridSpawnerData; }
+        }
+
         public bool UseHandplacedTacticalProbes => _useHandplacedTacticalProbes;
-        public bool GenerateAutoProbeGrid => _generateAutoProbeGrid;
 
 
         // ========================================================= GENERATION
@@ -59,18 +63,18 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            if (_tacticalPositionData.Positions == null)
+            if (_tacticalPositionData.HighCornerPositions == null)
             {
-                _tacticalPositionData.Positions = new List<TacticalPosition>();
+                _tacticalPositionData.HighCornerPositions = new List<TacticalPosition>();
             }
-            else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
+            else if (clearPositions && _tacticalPositionData.HighCornerPositions.Count > 0)
             {
-                _tacticalPositionData.Positions.Clear();
+                _tacticalPositionData.HighCornerPositions.Clear();
             }
 
             foreach (var probe in probes)
             {
-                _tacticalPositionData.Positions.Add(new TacticalPosition
+                _tacticalPositionData.HighCornerPositions.Add(new TacticalPosition
                 {
                     Position = probe.transform.position,
                     CoverDirections = new CoverHeight[1]
@@ -83,27 +87,37 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        public void GenerateTacticalPositionSpawners(bool clearPositions)
+        public void GenerateTacticalPositions(List<TacticalPosition> targetData, TacticalCornerSettings cornerSettings, bool clearPositions)
         {
+            Debug.Log("Generating tactical positions for AI");
             if (!ValidateParams())
             {
                 return;
             }
 
-            List<TacticalPosition> oldTacticalPositions = new(_tacticalPositionData.Positions);
+            if (SpawnerData != null && SpawnerData.Positions.Count == 0)
+            {
+                CreateSpawnersAlongTheGrid();
+            }
+
+            List<TacticalPosition> oldTacticalPositions = new(targetData);
             if (_createDebugGameObjects)
             {
-                _gizmoShowGameObject.ClearDebugData();
+                _gizmoShowGameObject.ClearDebugData(genMode);
             }
-            InitTacticalPositionData(clearPositions);
-            CreateSpawnersAlongTheGrid();
-            RemoveDuplicates(_positionSettings.distanceToRemoveDuplicates);
-            CompareTheNewPositions(oldTacticalPositions);
+            InitTacticalPositionData(clearPositions, targetData);
+
+            foreach (Vector3 position in _gridSpawnerData.Positions)
+            {
+                CreatePositionsAtHitsAround(position, targetData, cornerSettings);
+            }
+            RemoveDuplicates(_positionSettings.distanceToRemoveDuplicates, targetData);
+            CompareTheNewPositions(oldTacticalPositions, targetData);
         }
 
-        private void CompareTheNewPositions(List<TacticalPosition> copyOfOldPositions)
+        private void CompareTheNewPositions(List<TacticalPosition> copyOfOldPositions, List<TacticalPosition> targetData)
         {
-            List<TacticalPosition> copyOfNew = new(_tacticalPositionData.Positions);
+            List<TacticalPosition> copyOfNew = new(targetData);
             List<TacticalPosition> modifiedPositions = new();
             FilterListsForChanges(copyOfOldPositions, copyOfNew, modifiedPositions);
 
@@ -225,15 +239,15 @@ namespace FPSDemo.NPC.Utilities
         }
 
 
-        public void VerifyPositionsCover()
+        public void VerifyPositionsCover(List<TacticalPosition> targetData)
         {
-            for (int i = _tacticalPositionData.Positions.Count - 1; i >= 0; i--)
+            for (int i = targetData.Count - 1; i >= 0; i--)
             {
-                VerifyCoverOfAPosition(TacticalPositionData.Positions[i]);
+                VerifyCoverOfAPosition(targetData[i], targetData);
             }
         }
 
-        private void VerifyCoverOfAPosition(TacticalPosition position)
+        private void VerifyCoverOfAPosition(TacticalPosition position, List<TacticalPosition> targetData)
         {
             if (!Physics.Raycast(position.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _raycastMask))
             {
@@ -252,28 +266,24 @@ namespace FPSDemo.NPC.Utilities
 
                     GameObject newDebugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
                     newDebugGO.transform.position = position.Position;
-                    _tacticalPositionData.Positions.Remove(position);
+                    targetData.Remove(position);
                     return;
                 }
             }
         }
 
-        public void ClearTacticalData()
+        public void ClearTacticalData(List<TacticalPosition> targetData)
         {
-            TacticalPositionData.Positions.Clear();
-            _gizmoShowGameObject.ClearDebugData();
+            targetData.Clear();
+            _gizmoShowGameObject.ClearDebugData(genMode);
         }
 
-        private void InitTacticalPositionData(bool clearPositions)
+        private void InitTacticalPositionData(bool clearPositions, List<TacticalPosition> targetData)
         {
-            if (_tacticalPositionData.Positions == null)
+            if (clearPositions && targetData.Count > 0)
             {
-                _tacticalPositionData.Positions = new();
-            }
-            else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
-            {
-                _tacticalPositionData.Positions.Clear();
-                _gizmoShowGameObject.ClearDebugData();
+                targetData.Clear();
+                _gizmoShowGameObject.ClearDebugData(genMode);
             }
 
             if (_debugGameObjectParent.transform.childCount > 0)
@@ -285,9 +295,10 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        private void CreateSpawnersAlongTheGrid()
+        public void CreateSpawnersAlongTheGrid()
         {
-            Debug.Log("Generating tactical positions for AI");
+            _gridSpawnerData.Positions.Clear();
+            Debug.Log("Generating tactical position spawners");
             Vector3 currentPos = _gridSettings.StartPos;
             bool otherRow = false;
             while (currentPos.x < _gridSettings.EndPos.x)
@@ -310,7 +321,7 @@ namespace FPSDemo.NPC.Utilities
                     {
                         if (PositionValid(hit.point))
                         {
-                            CreatePositionsAtHitsAround(hit.point);
+                            _gridSpawnerData.Positions.Add(hit.point);
                         }
                     }
                     currentPos.z += _gridSettings.DistanceBetweenPositions;
@@ -319,15 +330,15 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        private void RemoveDuplicates(float distanceThreshold)
+        private void RemoveDuplicates(float distanceThreshold, List<TacticalPosition> targetData)
         {
             // List to store unique positions
             List<TacticalPosition> uniquePositions = new();
 
             // Iterate over each position
-            for (int i = 0; i < _tacticalPositionData.Positions.Count; i++)
+            for (int i = 0; i < targetData.Count; i++)
             {
-                TacticalPosition currentPos = _tacticalPositionData.Positions[i];
+                TacticalPosition currentPos = targetData[i];
                 bool isDuplicate = false;
 
                 // Compare with every other position
@@ -350,9 +361,10 @@ namespace FPSDemo.NPC.Utilities
                 {
                     uniquePositions.Add(currentPos);
                 }
-            }
 
-            _tacticalPositionData.Positions = uniquePositions;
+            }
+            targetData.Clear();
+            targetData.AddRange(uniquePositions);
         }
 
         public bool NoObstacleBetween(Vector3 start, Vector3 end)
@@ -400,53 +412,36 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private void CreatePositionsAtHitsAround(Vector3 position)
+        private void CreatePositionsAtHitsAround(Vector3 position, List<TacticalPosition> targetData, TacticalCornerSettings cornerSettings)
         {
             float angleBetweenRays = 360f / _gridSettings.NumberOfRaysSpawner;
             Vector3 direction = Vector3.forward;
-
-            Vector3 rayOriginForLowCover = position + Vector3.up * _positionSettings.minHeightToConsiderLowCover;
-            Vector3 rayOriginForHighCover = position + Vector3.up * _positionSettings.minHeightToConsiderHighCover;
+            Vector3 rayOrigin = position + Vector3.up * cornerSettings.heightToScanThisAt;
 
             for (int i = 0; i < _gridSettings.NumberOfRaysSpawner; i++)
             {
-                if (Physics.Raycast(rayOriginForHighCover, direction, out RaycastHit highHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
+                if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, _gridSettings.DistanceOfRaycasts, _raycastMask))
                 {
-                    if (genMode == CoverGenMode.corners)
+                    if (_createDebugGameObjects && Vector3.Distance(hit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
                     {
-                        if (_createDebugGameObjects && Vector3.Distance(highHit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        if (cornerSettings.lowCover)
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.GetDebugData());
+                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, cornerSettings, _raycastMask, targetData, _gizmoShowGameObject.GetDebugDataHighCorners());
                         }
                         else
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(highHit, CoverHeight.HighCover, _highCornerSettings, _raycastMask, _tacticalPositionData.Positions);
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, cornerSettings, _raycastMask, targetData, _gizmoShowGameObject.GetDebugDataHighCorners());
                         }
                     }
-                }
-                if (Physics.Raycast(rayOriginForLowCover, direction, out RaycastHit lowHit, _gridSettings.DistanceOfRaycasts, _raycastMask))
-                {
-                    if (genMode == CoverGenMode.corners)
+                    else
                     {
-                        if (_createDebugGameObjects && Vector3.Distance(lowHit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                        if (cornerSettings.lowCover)
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.GetDebugData());
+                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, cornerSettings, _raycastMask, targetData);
                         }
                         else
                         {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(lowHit, CoverHeight.LowCover, _lowCornerSettings, _raycastMask, _tacticalPositionData.Positions);
-                        }
-                    }
-                    else if (genMode == CoverGenMode.low)
-                    {
-                        if (_createDebugGameObjects && Vector3.Distance(position, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
-                        {
-                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions, _gizmoShowGameObject.GetDebugData());
-                        }
-                        else
-                        {
-                            Debug.Log("SUSIK 3");
-                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(lowHit, CoverHeight.LowCover, _lowCoverSettings, _raycastMask, _tacticalPositionData.Positions);
+                            CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, cornerSettings, _raycastMask, targetData);
                         }
                     }
                 }
@@ -477,38 +472,53 @@ namespace FPSDemo.NPC.Utilities
 
         void OnDrawGizmosSelected()
         {
-            if (_tacticalPositionData == null || !_showThePositionsInEditor)
+            if (!_showThePositionsInEditor)
             {
                 return;
             }
 
-            Debug.Log($"Currently displaying {_tacticalPositionData.Positions.Count} positions");
-            foreach (TacticalPosition position in _tacticalPositionData.Positions)
+            int totalCount = 0;
+            totalCount += DisplayPositions(_tacticalPositionData.HighCornerPositions);
+            totalCount += DisplayPositions(_tacticalPositionData.LowCornerPositions);
+            totalCount += DisplayPositions(_tacticalPositionData.LowCoverPositions);
+
+
+            Debug.Log($"Currently displaying {totalCount} positions");
+        }
+
+        private int DisplayPositions(List<TacticalPosition> positions)
+        {
+            if (positions != null)
             {
-                if (position.mainCover.type == CoverType.LeftCorner)
+                foreach (TacticalPosition position in positions)
                 {
-                    Gizmos.color = Color.red;
-                }
-                else if (position.mainCover.type == CoverType.RightCorner)
-                {
-                    Gizmos.color = Color.blue;
-                }
-                else
-                {
-                    Gizmos.color = Color.white;
-                }
+                    if (position.mainCover.type == CoverType.LeftCorner)
+                    {
+                        Gizmos.color = Color.red;
+                    }
+                    else if (position.mainCover.type == CoverType.RightCorner)
+                    {
+                        Gizmos.color = Color.blue;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.white;
+                    }
 
-                if (position.isOutside)
-                {
-                    Gizmos.DrawSphere(position.Position, 0.1f);
-                }
-                else
-                {
-                    Gizmos.DrawWireSphere(position.Position, 0.1f);
-                }
+                    if (position.isOutside)
+                    {
+                        Gizmos.DrawSphere(position.Position, 0.1f);
+                    }
+                    else
+                    {
+                        Gizmos.DrawWireSphere(position.Position, 0.1f);
+                    }
 
-                Gizmos.DrawRay(position.Position, position.mainCover.rotationToAlignWithCover * Vector3.forward);
+                    Gizmos.DrawRay(position.Position, position.mainCover.rotationToAlignWithCover * Vector3.forward);
+                }
+                return positions.Count;
             }
+            return 0;
         }
     }
 }

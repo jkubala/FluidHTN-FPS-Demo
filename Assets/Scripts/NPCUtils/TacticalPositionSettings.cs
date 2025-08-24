@@ -8,8 +8,6 @@ public class TacticalPositionSettings : ScriptableObject
     public float distanceToRemoveDuplicates = 1f;
     [Range(0f, 360f)]
     public float maxAngleDifferenceToRemoveDuplicates = 20f;
-    public float minHeightToConsiderHighCover = 1.85f;
-    public float minHeightToConsiderLowCover = 0.95f;
 
     [Range(0.05f, 0.2f)]
     public float verticalStepToCheckForCover = 0.1f;
