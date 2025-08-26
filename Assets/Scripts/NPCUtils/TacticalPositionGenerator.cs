@@ -17,12 +17,13 @@ namespace FPSDemo.NPC.Utilities
         [SerializeField] private bool _showPositions = false;
 
         [SerializeField] private bool _createDebugGameObjects = false;
-        [SerializeField] private Vector3 _debugGameObjectsSpawn;
-        [SerializeField] private GameObject _debugGameObject;
+        [SerializeField] private GameObject _debugGameObjectPrefab;
         [SerializeField] private GameObject _debugGameObjectParent;
 
-        [SerializeField] private TacticalPosDebugGO _gizmoShowGameObject;
-        [Range(1f, 5f)][SerializeField] private float distanceToCreateGizmos = 10f;
+        [SerializeField] private Transform _gizmo3DCursor;
+        [Range(1f, 5f)][SerializeField] private float distanceToCreateGizmos = 3f;
+
+        [Header("Limits for difference when comparing after regeneration")]
         [Range(0.01f, 0.25f)][SerializeField] private float maxDistanceToConsiderSamePosition = 0.05f;
         [Range(1f, 3f)][SerializeField] private float maxDegreesDifferenceToConsiderSamePosition = 1f;
 
@@ -78,22 +79,18 @@ namespace FPSDemo.NPC.Utilities
                 CreateSpawnersAlongTheGrid();
             }
 
-            foreach (var context in _profile.GetContextsFor(_currentCoverGenMode))
+            foreach (CoverGenerationContext context in _profile.GetContextsFor(_currentCoverGenMode))
             {
                 if (_currentCoverGenMode != CoverGenerationMode.all && _currentCoverGenMode != context.genMode)
                 {
                     continue;
                 }
                 List<TacticalPosition> oldTacticalPositions = new(context.positionData.Positions);
-                if (_createDebugGameObjects)
-                {
-                    _gizmoShowGameObject.ClearDebugData(_currentCoverGenMode);
-                }
-                InitTacticalPositionData(context.positionData.Positions);
+                InitContextData(context);
 
                 foreach (Vector3 position in _profile.gridSpawnerData.Positions)
                 {
-                    CreatePositionsAtHitsAround(position, context.positionData.Positions, context.cornerSettings);
+                    CreatePositionsAtHitsAround(position, context);
                 }
                 RemoveDuplicates(_profile.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
                 CompareTheNewPositions(oldTacticalPositions, context.positionData.Positions);
@@ -265,7 +262,7 @@ namespace FPSDemo.NPC.Utilities
                 {
                     Debug.LogWarning($"Position at {position.Position} did not have a continuous cover to the ground! Removing it!");
 
-                    GameObject newDebugGO = Instantiate(_debugGameObject, _debugGameObjectParent.transform);
+                    GameObject newDebugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform);
                     newDebugGO.transform.position = position.Position;
                     targetData.Remove(position);
                     return;
@@ -275,28 +272,39 @@ namespace FPSDemo.NPC.Utilities
 
         public void ClearTacticalData()
         {
-            foreach (var context in _profile.GetContextsFor(_currentCoverGenMode))
+            foreach (CoverGenerationContext context in _profile.GetContextsFor(_currentCoverGenMode))
             {
                 context.positionData.Positions.Clear();
-                // TODO _gizmoShowGameObject.ClearDebugData(genMode);
+                ClearDebugGOs(context);
                 Save(context.positionData);
             }
         }
-
-        private void InitTacticalPositionData(List<TacticalPosition> targetData)
+        private void ClearDebugGOs(CoverGenerationContext context)
         {
-            if (targetData.Count > 0)
+            for (int i = context.debugData.Count - 1; i >= 0; i--)
             {
-                targetData.Clear();
-                _gizmoShowGameObject.ClearDebugData(_currentCoverGenMode);
+                GameObject child = context.debugData[i].debugGO.gameObject;
+#if UNITY_EDITOR
+                DestroyImmediate(child);
+#else
+                Destroy(child);
+#endif
+                context.debugData.RemoveAt(i);
+            }
+        }
+
+
+        private void InitContextData(CoverGenerationContext context)
+        {
+            if (context.positionData.Positions.Count > 0)
+            {
+                context.positionData.Positions.Clear();
             }
 
-            if (_debugGameObjectParent.transform.childCount > 0)
+            if (context.debugData.Count > 0)
             {
-                for (int i = _debugGameObjectParent.transform.childCount - 1; i >= 0; i--)
-                {
-                    DestroyImmediate(_debugGameObjectParent.transform.GetChild(i).gameObject);
-                }
+                ClearDebugGOs(context);
+                context.debugData.Clear();
             }
         }
 
@@ -418,37 +426,32 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private void CreatePositionsAtHitsAround(Vector3 position, List<TacticalPosition> targetData, TacticalPositionScanSettings cornerSettings)
+        private void CreatePositionsAtHitsAround(Vector3 position, CoverGenerationContext context)
         {
             float angleBetweenRays = 360f / _profile.gridSettings.NumberOfRaysSpawner;
             Vector3 direction = Vector3.forward;
-            Vector3 rayOrigin = position + Vector3.up * cornerSettings.heightToScanThisAt;
+            Vector3 rayOrigin = position + Vector3.up * context.cornerSettings.heightToScanThisAt;
 
             for (int i = 0; i < _profile.gridSettings.NumberOfRaysSpawner; i++)
             {
                 if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, _profile.gridSettings.DistanceOfRaycasts, _profile.raycastMask))
                 {
-                    if (_createDebugGameObjects && Vector3.Distance(hit.point, _gizmoShowGameObject.transform.position) < distanceToCreateGizmos)
+                    TacticalDebugData debugData = null;
+                    if (_createDebugGameObjects && Vector3.Distance(hit.point, _gizmo3DCursor.position) < distanceToCreateGizmos)
                     {
-                        if (cornerSettings.lowCover)
-                        {
-                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, cornerSettings, _profile.raycastMask, targetData, _gizmoShowGameObject.GetDebugDataHighCorners());
-                        }
-                        else
-                        {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, cornerSettings, _profile.raycastMask, targetData, _gizmoShowGameObject.GetDebugDataHighCorners());
-                        }
+                        TacticalPosDebugGO debugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform).GetComponent<TacticalPosDebugGO>();
+                        debugGO.transform.position = hit.point;
+                        debugData = debugGO.TacticalDebugData;
+                        context.debugData.Add(debugData);
+                    }
+
+                    if (context.cornerSettings.lowCover)
+                    {
+                        CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, context.cornerSettings, _profile.raycastMask, context.positionData.Positions, debugData);
                     }
                     else
                     {
-                        if (cornerSettings.lowCover)
-                        {
-                            CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, cornerSettings, _profile.raycastMask, targetData);
-                        }
-                        else
-                        {
-                            CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, cornerSettings, _profile.raycastMask, targetData);
-                        }
+                        CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, context.cornerSettings, _profile.raycastMask, context.positionData.Positions, debugData);
                     }
                 }
 

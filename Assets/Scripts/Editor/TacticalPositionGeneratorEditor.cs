@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using FPSDemo.Utils;
 using UnityEditor;
 using UnityEngine;
-using static FPSDemo.NPC.Utilities.TacticalPositionGenerator;
 
 namespace FPSDemo.NPC.Utilities
 {

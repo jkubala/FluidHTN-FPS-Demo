@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace FPSDemo.NPC.Utilities
@@ -6,50 +8,18 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalPosDebugGO : MonoBehaviour
     {
         enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
-        enum FinishedMode { All, OnlyFinished, OnlyUnfinished }
         [SerializeField] DebugMode debugMode;
-        [SerializeField] FinishedMode finishedMode;
-        [SerializeField] List<TacticalDebugData> tacticalDebugDataHighCorners = new();
-        [SerializeField] List<TacticalDebugData> tacticalDebugDataLowCorners = new();
-        [SerializeField] List<TacticalDebugData> tacticalDebugDataLowCover = new();
-
-        public void ClearDebugData(TacticalPositionGenerator.CoverGenerationMode genMode)
+        private TacticalDebugData _tacticalDebugData;
+        public TacticalDebugData TacticalDebugData
         {
-            switch(genMode)
+            get
             {
-                case TacticalPositionGenerator.CoverGenerationMode.highCorners:
-                    tacticalDebugDataHighCorners.Clear();
-                    break;
-                case TacticalPositionGenerator.CoverGenerationMode.lowCorners:
-                    tacticalDebugDataLowCorners.Clear();
-                    break;
-                case TacticalPositionGenerator.CoverGenerationMode.lowCover:
-                    tacticalDebugDataLowCover.Clear();
-                    break;
-                case TacticalPositionGenerator.CoverGenerationMode.all:
-                    tacticalDebugDataHighCorners.Clear();
-                    tacticalDebugDataLowCorners.Clear();
-                    tacticalDebugDataLowCover.Clear();
-                    break;
-                default:
-                    Debug.LogError("Invalid cover generation mode!");
-                    break;
+                if (_tacticalDebugData == null)
+                {
+                    _tacticalDebugData = new TacticalDebugData(this);
+                }
+                return _tacticalDebugData;
             }
-        }
-
-        public List<TacticalDebugData> GetDebugDataHighCorners()
-        {
-            return tacticalDebugDataHighCorners;
-        }
-
-        public List<TacticalDebugData> GetDebugDataLowCorners()
-        {
-            return tacticalDebugDataLowCorners;
-        }
-
-        public List<TacticalDebugData> GetDebugDataLowCover()
-        {
-            return tacticalDebugDataLowCover;
         }
 
         private void DrawSphere(Vector3 position, float radius, Color color)
@@ -121,45 +91,48 @@ namespace FPSDemo.NPC.Utilities
 
         void OnDrawGizmosSelected()
         {
-            Debug.Log($"Overall tactical debug positions: {tacticalDebugDataHighCorners.Count}");
-            foreach (TacticalDebugData tacticalDebugData in tacticalDebugDataHighCorners)
+#if UNITY_EDITOR
+            // To avoid gizmos showing when something upwards in the hierarchy is selected
+            if (Selection.activeGameObject != null && Selection.activeGameObject == gameObject)
             {
-                if ((finishedMode == FinishedMode.OnlyUnfinished && tacticalDebugData.finishedPosition) || (finishedMode == FinishedMode.OnlyFinished && !tacticalDebugData.finishedPosition))
-                {
-                    continue;
-                }
                 switch (debugMode)
                 {
                     case DebugMode.Corner:
-                        GetHighPosAdjustedToCornerDebug(tacticalDebugData);
+                        GetHighPosAdjustedToCornerDebug(_tacticalDebugData);
                         break;
                     case DebugMode.Obstacle:
-                        ObstacleInFiringPositionDebug(tacticalDebugData);
+                        ObstacleInFiringPositionDebug(_tacticalDebugData);
                         break;
                     case DebugMode.Non90DegreeCorner:
-                        Non90DegreeCornerDebug(tacticalDebugData);
+                        Non90DegreeCornerDebug(_tacticalDebugData);
                         break;
                     case DebugMode.NormalStandardisation:
-                        StandardisationDebug(tacticalDebugData);
+                        StandardisationDebug(_tacticalDebugData);
                         break;
                 }
             }
         }
+#endif
     }
 
     [System.Serializable]
     public class TacticalDebugData
     {
+        public TacticalPosDebugGO debugGO;
         public TacticalPosition tacticalPosition;
         public bool finishedPosition;
         public Vector3 offsetPosition, leftDirection, finalCornerPos;
         public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
         public float distanceToCornerLeft, distanceToCornerRight;
         public Vector3? leftCornerPos, rightCornerPos;
-        public List<Vector3> hitPositions;
+        public List<Vector3> hitPositions = new();
         public Vector3? initCornerNormal, initCornerFiringNormal;
 
         public Vector3 standardisationOrigin, standardisationDirection;
         public float standardisationDistance;
+        public TacticalDebugData(TacticalPosDebugGO ownerGO)
+        {
+            debugGO = ownerGO;
+        }
     }
 }

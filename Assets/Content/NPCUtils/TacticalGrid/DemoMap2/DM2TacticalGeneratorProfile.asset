@@ -16,12 +16,15 @@ MonoBehaviour:
   - genMode: 1
     positionData: {fileID: 11400000, guid: c47c702eb9e8f80489775719d49a1387, type: 2}
     cornerSettings: {fileID: 11400000, guid: 0f36221c8ffcad645944bc4313cd3c8a, type: 2}
+    debugData: []
   - genMode: 2
     positionData: {fileID: 11400000, guid: 5151f1a4c8d46bd47a0caf6d367b0b7a, type: 2}
     cornerSettings: {fileID: 11400000, guid: 41bad24ddf5599f47a4c56985921d4ca, type: 2}
+    debugData: []
   - genMode: 3
     positionData: {fileID: 11400000, guid: a8e0757be36b3444e85d1dfc003990cb, type: 2}
     cornerSettings: {fileID: 11400000, guid: 821bdb256ccdeb247b4a52adcde71292, type: 2}
+    debugData: []
   gridSettings: {fileID: 11400000, guid: a734d3d90ff7c0143b1c5086a4d04382, type: 2}
   positionSettings: {fileID: 11400000, guid: 575799178b16a2b4abcab36bf782a0b3, type: 2}
   gridSpawnerData: {fileID: 11400000, guid: 17781bff140f3a940a7bd499014dfade, type: 2}

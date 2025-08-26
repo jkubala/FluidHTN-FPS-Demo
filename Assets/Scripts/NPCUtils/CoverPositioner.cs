@@ -43,17 +43,14 @@ namespace FPSDemo.NPC.Utilities
         }
 
         // Find corner vertically
-        public void FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
+        public void FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, TacticalDebugData debugData = null)
         {
             // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
 
-            TacticalDebugData debugData = debugDataToAddTo != null ? new TacticalDebugData() : null;
-
             Vector3 leftDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
             if (debugData != null)
             {
-                debugDataToAddTo.Add(debugData);
                 debugData.offsetPosition = offsetPosition;
                 debugData.leftDirection = leftDirection;
                 debugData.hitPositions = new();
@@ -120,16 +117,13 @@ namespace FPSDemo.NPC.Utilities
             return cornerInfo;
         }
 
-        public void FindCornerPos(RaycastHit hit, CoverHeight coverHeight, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
+        public void FindCornerPos(RaycastHit hit, CoverHeight coverHeight, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, TacticalDebugData debugData = null)
         {
-            TacticalDebugData debugData = debugDataToAddTo != null ? new TacticalDebugData() : null;
-
             // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
             Vector3 leftDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
             if (debugData != null)
             {
-                debugDataToAddTo.Add(debugData);
                 debugData.offsetPosition = offsetPosition;
                 debugData.leftDirection = leftDirection;
                 debugData.hitPositions = new();

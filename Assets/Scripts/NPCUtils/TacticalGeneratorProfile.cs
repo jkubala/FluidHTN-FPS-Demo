@@ -41,5 +41,6 @@ namespace FPSDemo.NPC.Utilities
         public TacticalPositionGenerator.CoverGenerationMode genMode;
         public TacticalPositionData positionData;
         public TacticalPositionScanSettings cornerSettings;
+        public List<TacticalDebugData> debugData;
     }
 }
