@@ -13647,7 +13647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7d039b793bcfc42a47792ff46aa68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentCoverGenMode: 3
+  _currentCoverGenMode: 0
   _profile: {fileID: 11400000, guid: a233d0ad0918c664d859f2c9e3cca987, type: 2}
   _showPositions: 1
   _createDebugGameObjects: 0
