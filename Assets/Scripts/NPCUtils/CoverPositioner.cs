@@ -43,7 +43,7 @@ namespace FPSDemo.NPC.Utilities
         }
 
         // Find corner vertically
-        public void FindLowCoverPos(RaycastHit hit, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
+        public void FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
         {
             // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
@@ -99,7 +99,7 @@ namespace FPSDemo.NPC.Utilities
             AddCornerIfConvex(cornerInfo.Value, CoverHeight.LowCover, Vector3.up, cornerSettings.cornerCheckPositionOffset, raycastMask, listToAddTo);
         }
 
-        private PositionDetectionInfo? AdjustLowPosition(PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private PositionDetectionInfo? AdjustLowPosition(PositionDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
 
             Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings, raycastMask);
@@ -120,7 +120,7 @@ namespace FPSDemo.NPC.Utilities
             return cornerInfo;
         }
 
-        public void FindCornerPos(RaycastHit hit, CoverHeight coverHeight, TacticalCornerSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
+        public void FindCornerPos(RaycastHit hit, CoverHeight coverHeight, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, List<TacticalPosition> listToAddTo, List<TacticalDebugData> debugDataToAddTo = null)
         {
             TacticalDebugData debugData = debugDataToAddTo != null ? new TacticalDebugData() : null;
 
@@ -189,7 +189,7 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        private PositionDetectionInfo? FindConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalCornerSettings cornerSettings, LayerMask raycastMask, TacticalDebugData debugDataToAddTo = null)
+        private PositionDetectionInfo? FindConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, TacticalDebugData debugDataToAddTo = null)
         {
             float distanceToObstacleAlongTheAxis = cornerSettings.cornerCheckRaySequenceDistance;
             if (Physics.Raycast(offsetPosition, axis, out RaycastHit hit, cornerSettings.cornerCheckRaySequenceDistance, raycastMask))
@@ -240,7 +240,7 @@ namespace FPSDemo.NPC.Utilities
             return null;
         }
 
-        private bool ScanForConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalCornerSettings cornerSettings, LayerMask raycastMask, float maxDistance, out Vector3? detectedPosition, out Vector3? detectedFiringDirection, TacticalDebugData debugDataToAddTo = null)
+        private bool ScanForConvexCorner(Vector3 offsetPosition, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, float maxDistance, out Vector3? detectedPosition, out Vector3? detectedFiringDirection, TacticalDebugData debugDataToAddTo = null)
         {
             detectedPosition = null;
             detectedFiringDirection = null;
@@ -306,7 +306,7 @@ namespace FPSDemo.NPC.Utilities
             return false; // No convex corner found within the loop
         }
 
-        private PositionDetectionInfo? AdjustCornerPosition(PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private PositionDetectionInfo? AdjustCornerPosition(PositionDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
 
             Vector3? yStandardCornerPos = StandardizePositionOnYAxis(cornerInfo, cornerSettings, raycastMask);
@@ -339,7 +339,7 @@ namespace FPSDemo.NPC.Utilities
             return cornerInfo;
         }
 
-        private Vector3? StandardizePositionOnNormal(Vector3 position, PositionDetectionInfo cornerInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private Vector3? StandardizePositionOnNormal(Vector3 position, PositionDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             Vector3 sideDirection = Vector3.Cross(Vector3.up, -cornerInfo.coverWallNormal);
             if (cornerInfo.coverType == CoverType.LeftCorner)
@@ -356,7 +356,7 @@ namespace FPSDemo.NPC.Utilities
             return null;
         }
 
-        private Vector3? StandardizePositionOnYAxis(PositionDetectionInfo positionInfo, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private Vector3? StandardizePositionOnYAxis(PositionDetectionInfo positionInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             Vector3 outward = Vector3.Cross(Vector3.up, positionInfo.coverWallNormal);
             if (positionInfo.coverType == CoverType.LeftCorner)
@@ -388,7 +388,7 @@ namespace FPSDemo.NPC.Utilities
             return null;
         }
 
-        private bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection, TacticalCornerSettings cornerSettings, LayerMask raycastMask)
+        private bool ObstacleInFiringPosition(Vector3 cornerPosition, Vector3 cornerNormal, Vector3 cornerOutDirection, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             Vector3 sphereCastOrigin = cornerPosition + cornerNormal * (cornerSettings.sphereCastForFiringPositionCheckRadius + cornerSettings.floatPrecisionBuffer)
                 + cornerOutDirection * (cornerSettings.sphereCastForFiringPositionCheckOffset.x + cornerSettings.sphereCastForFiringPositionCheckRadius + cornerSettings.floatPrecisionBuffer)

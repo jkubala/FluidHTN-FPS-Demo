@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
-	[CreateAssetMenu(fileName = "New tactical grid generation settings", menuName = "FPSDemo/TacticalPositions/GridSettings")]
+	[CreateAssetMenu(fileName = "New tactical grid generation settings", menuName = "FPSDemo/TacticalGrid/GridSettings")]
 	public class TacticalGridGenerationSettings : ScriptableObject
 	{
 		[Header("Grid generation settings")]
@@ -12,5 +12,6 @@ namespace FPSDemo.NPC.Utilities
 		public bool OffsetEveryOtherRow = false;
 		[Range(4, 12)]
 		public int NumberOfRaysSpawner = 8;
+		public float floatPrecisionBuffer = 0.01f;
 	}
 }

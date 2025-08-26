@@ -13,20 +13,20 @@ namespace FPSDemo.NPC.Utilities
         [SerializeField] List<TacticalDebugData> tacticalDebugDataLowCorners = new();
         [SerializeField] List<TacticalDebugData> tacticalDebugDataLowCover = new();
 
-        public void ClearDebugData(TacticalPositionGenerator.CoverGenMode genMode)
+        public void ClearDebugData(TacticalPositionGenerator.CoverGenerationMode genMode)
         {
             switch(genMode)
             {
-                case TacticalPositionGenerator.CoverGenMode.highCorners:
+                case TacticalPositionGenerator.CoverGenerationMode.highCorners:
                     tacticalDebugDataHighCorners.Clear();
                     break;
-                case TacticalPositionGenerator.CoverGenMode.lowCorners:
+                case TacticalPositionGenerator.CoverGenerationMode.lowCorners:
                     tacticalDebugDataLowCorners.Clear();
                     break;
-                case TacticalPositionGenerator.CoverGenMode.lowCover:
+                case TacticalPositionGenerator.CoverGenerationMode.lowCover:
                     tacticalDebugDataLowCover.Clear();
                     break;
-                case TacticalPositionGenerator.CoverGenMode.all:
+                case TacticalPositionGenerator.CoverGenerationMode.all:
                     tacticalDebugDataHighCorners.Clear();
                     tacticalDebugDataLowCorners.Clear();
                     tacticalDebugDataLowCover.Clear();

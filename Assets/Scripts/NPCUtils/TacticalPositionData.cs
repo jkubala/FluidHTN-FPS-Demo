@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
-    [CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalPositions/Data")]
+    [CreateAssetMenu(fileName = "TacticalPositionData", menuName = "FPSDemo/TacticalGrid/PositionData")]
     public class TacticalPositionData : ScriptableObject
     {
-        public List<TacticalPosition> HighCornerPositions;
-        public List<TacticalPosition> LowCornerPositions;
-        public List<TacticalPosition> LowCoverPositions;
+        public List<TacticalPosition> Positions;
     }
 
     [System.Serializable]

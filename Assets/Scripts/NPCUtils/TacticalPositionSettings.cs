@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New position settings", menuName = "FPSDemo/TacticalPositions/PositionSettings")]
+[CreateAssetMenu(fileName = "New position settings", menuName = "FPSDemo/TacticalGrid/PositionSettings")]
 public class TacticalPositionSettings : ScriptableObject
 {
     public float RequiredProximityToNavMesh = 0.2f;
