@@ -95,6 +95,10 @@ namespace FPSDemo.NPC.Utilities
                 RemoveDuplicates(_profile.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
                 CompareTheNewPositions(oldTacticalPositions, context.positionData.Positions);
                 Save(context.positionData);
+                if(_createDebugGameObjects)
+                {
+                    EditorUtility.SetDirty(_debugGameObjectParent);
+                }
             }
         }
 
@@ -281,15 +285,25 @@ namespace FPSDemo.NPC.Utilities
         }
         private void ClearDebugGOs(CoverGenerationContext context)
         {
-            for (int i = context.debugData.Count - 1; i >= 0; i--)
+            for (int i = _debugGameObjectParent.transform.childCount - 1; i >= 0; i--)
             {
-                GameObject child = context.debugData[i].debugGO.gameObject;
+                GameObject child = _debugGameObjectParent.transform.GetChild(i).gameObject;
+                if (child.TryGetComponent(out TacticalPosDebugGO debugGO))
+                {
+                    if (debugGO.TacticalDebugData.genMode == context.genMode)
+                    {
 #if UNITY_EDITOR
-                DestroyImmediate(child);
+                        DestroyImmediate(child);
 #else
-                Destroy(child);
+                    Destroy(child);
 #endif
-                context.debugData.RemoveAt(i);
+                        context.debugData.RemoveAt(i);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"{child.name} did not have TacticalPosDebugGO script attached!");
+                }
             }
         }
 
@@ -442,6 +456,7 @@ namespace FPSDemo.NPC.Utilities
                         TacticalPosDebugGO debugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform).GetComponent<TacticalPosDebugGO>();
                         debugGO.transform.position = hit.point;
                         debugData = debugGO.TacticalDebugData;
+                        debugData.genMode = context.genMode;
                         context.debugData.Add(debugData);
                     }
 

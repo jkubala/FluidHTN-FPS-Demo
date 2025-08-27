@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -9,15 +8,11 @@ namespace FPSDemo.NPC.Utilities
     {
         enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
         [SerializeField] DebugMode debugMode;
-        private TacticalDebugData _tacticalDebugData;
+        [SerializeField] private TacticalDebugData _tacticalDebugData = new();
         public TacticalDebugData TacticalDebugData
         {
             get
             {
-                if (_tacticalDebugData == null)
-                {
-                    _tacticalDebugData = new TacticalDebugData(this);
-                }
                 return _tacticalDebugData;
             }
         }
@@ -118,7 +113,7 @@ namespace FPSDemo.NPC.Utilities
     [System.Serializable]
     public class TacticalDebugData
     {
-        public TacticalPosDebugGO debugGO;
+        public TacticalPositionGenerator.CoverGenerationMode genMode;
         public TacticalPosition tacticalPosition;
         public bool finishedPosition;
         public Vector3 offsetPosition, leftDirection, finalCornerPos;
@@ -130,9 +125,5 @@ namespace FPSDemo.NPC.Utilities
 
         public Vector3 standardisationOrigin, standardisationDirection;
         public float standardisationDistance;
-        public TacticalDebugData(TacticalPosDebugGO ownerGO)
-        {
-            debugGO = ownerGO;
-        }
     }
 }
