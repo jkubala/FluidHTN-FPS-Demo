@@ -278,8 +278,8 @@ namespace FPSDemo.NPC.Utilities
         {
             foreach (CoverGenerationContext context in _profile.GetContextsFor(_currentCoverGenMode))
             {
-                context.positionData.Positions.Clear();
                 ClearDebugGOs(context);
+                context.positionData.Positions.Clear();
                 Save(context.positionData);
             }
         }
@@ -297,7 +297,7 @@ namespace FPSDemo.NPC.Utilities
 #else
                     Destroy(child);
 #endif
-                        context.debugData.RemoveAt(i);
+                        context.debugData.Remove(debugGO.TacticalDebugData);
                     }
                 }
                 else
