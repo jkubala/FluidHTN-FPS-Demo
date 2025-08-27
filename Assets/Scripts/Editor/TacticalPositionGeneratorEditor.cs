@@ -27,6 +27,11 @@ namespace FPSDemo.NPC.Utilities
                 posGenerator.ClearTacticalData();
             }
 
+            if (GUILayout.Button("Clear position change debug objects"))
+            {
+                posGenerator.ClearAllPosChangeDebugGOs();
+            }
+
             if (GUILayout.Button("Verify cover of tactical positions"))
             {
                 posGenerator.VerifyPositionsCover();

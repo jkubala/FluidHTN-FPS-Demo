@@ -10,13 +10,28 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalPositionGenerator : MonoBehaviour
     {
         public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners }
+        [Flags]
+        public enum PositionChangeType
+        {
+            removed = 1,
+            added = 2,
+            modified = 4
+        }
         // ========================================================= INSPECTOR FIELDS
 
-        public CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
+        [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
+        [SerializeField] private PositionChangeType _positionChangeType;
         [SerializeField] private TacticalGeneratorProfile _profile;
         [SerializeField] private bool _showPositions = false;
 
         [SerializeField] private bool _createDebugGameObjects = false;
+        [SerializeField] private bool _createDebugGameObjectsPosChanges = false;
+        [SerializeField] private GameObject _debugGameObjectPosChangePrefab;
+        [SerializeField] private GameObject _debugGameObjectPosChangeAddParent;
+        [SerializeField] private GameObject _debugGameObjectPosChangeRemoveParent;
+        [SerializeField] private GameObject _debugGameObjectPosChangeModifiedParent;
+
+
         [SerializeField] private GameObject _debugGameObjectPrefab;
         [SerializeField] private GameObject _debugGameObjectParent;
 
@@ -95,15 +110,36 @@ namespace FPSDemo.NPC.Utilities
                 RemoveDuplicates(_profile.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
                 CompareTheNewPositions(oldTacticalPositions, context.positionData.Positions);
                 Save(context.positionData);
-                if(_createDebugGameObjects)
+                if (_createDebugGameObjects)
                 {
                     EditorUtility.SetDirty(_debugGameObjectParent);
                 }
             }
         }
 
+        public void ClearAllPosChangeDebugGOs()
+        {
+            ClearAllChildren(_debugGameObjectPosChangeModifiedParent);
+            ClearAllChildren(_debugGameObjectPosChangeAddParent);
+            ClearAllChildren(_debugGameObjectPosChangeRemoveParent);
+        }
+
+        private void ClearAllChildren(GameObject gameObject)
+        {
+            for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
+            {
+                GameObject child = gameObject.transform.GetChild(i).gameObject;
+#if UNITY_EDITOR
+                DestroyImmediate(child);
+#else
+                    Destroy(child);
+#endif
+            }
+        }
+
         private void CompareTheNewPositions(List<TacticalPosition> copyOfOldPositions, List<TacticalPosition> targetData)
         {
+            ClearAllPosChangeDebugGOs();
             List<TacticalPosition> copyOfNew = new(targetData);
             List<TacticalPosition> modifiedPositions = new();
             FilterListsForChanges(copyOfOldPositions, copyOfNew, modifiedPositions);
@@ -119,13 +155,22 @@ namespace FPSDemo.NPC.Utilities
 
             foreach (var pos in copyOfNew)
             {
+                if (_createDebugGameObjectsPosChanges && _positionChangeType.HasFlag(PositionChangeType.added))
+                {
+                    CreatePosChangeDebugGO(pos.Position, null, pos);
+                }
                 Debug.LogWarning($"[ADDED] {pos}");
             }
 
             foreach (var pos in copyOfOldPositions)
             {
+                if (_createDebugGameObjectsPosChanges && _positionChangeType.HasFlag(PositionChangeType.removed))
+                {
+                    CreatePosChangeDebugGO(pos.Position, pos, null);
+                }
                 Debug.LogWarning($"[REMOVED] {pos}");
             }
+
 
             foreach (var pos in modifiedPositions)
             {
@@ -160,16 +205,47 @@ namespace FPSDemo.NPC.Utilities
                         // But does not have the same values
                         if (!ArePositionsRoughlyEqual(pos1, newList[j], maxDegreesDifferenceToConsiderSamePosition))
                         {
-                            modifiedList.Add(newList[j]);
-                        }
+                            if (_createDebugGameObjectsPosChanges && _positionChangeType.HasFlag(PositionChangeType.modified))
+                            {
+                                CreatePosChangeDebugGO(pos1.Position, pos1, newList[j]);
+                                modifiedList.Add(newList[j]);
+                            }
 
-                        // They are equal, remove them
-                        oldList.RemoveAt(i);
-                        newList.RemoveAt(j);
-                        break;
+                            // They are equal, remove them
+                            oldList.RemoveAt(i);
+                            newList.RemoveAt(j);
+                            break;
+                        }
                     }
                 }
             }
+        }
+
+        private void CreatePosChangeDebugGO(Vector3 position, TacticalPosition oldPosition, TacticalPosition newPosition)
+        {
+            Transform transformToParentTo;
+            if (oldPosition != null && newPosition != null)
+            {
+                transformToParentTo = _debugGameObjectPosChangeModifiedParent.transform;
+            }
+            else if (oldPosition != null)
+            {
+                transformToParentTo = _debugGameObjectPosChangeRemoveParent.transform;
+            }
+            else if (newPosition != null)
+            {
+                transformToParentTo = _debugGameObjectPosChangeAddParent.transform;
+            }
+            else
+            {
+                Debug.LogError("Could not find a valid parent, both positions are null!");
+                return;
+            }
+            GameObject posModDebugGO = Instantiate(_debugGameObjectPosChangePrefab, transformToParentTo);
+            posModDebugGO.transform.position = position;
+            PosChangeDebugGO changeDebug = posModDebugGO.GetComponent<PosChangeDebugGO>();
+            changeDebug.oldPosition = oldPosition;
+            changeDebug.newPosition = newPosition;
         }
 
         private void LogInvalidPositions(string errorMessage, TacticalPosition pos1, TacticalPosition pos2)
