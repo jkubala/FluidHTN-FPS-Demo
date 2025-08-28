@@ -5463,12 +5463,12 @@ MonoBehaviour:
   _positionChangeType: -1
   _profile: {fileID: 11400000, guid: 0a7b0500d02b089478a8a8c37f7f31f5, type: 2}
   _showPositions: 1
-  _createDebugGameObjects: 1
+  _createDebugGameObjects: 0
   _createDebugGameObjectsPosChanges: 1
   _debugGameObjectPosChangePrefab: {fileID: 7906207471416637074, guid: 4c577dacbc2cefb44aa7f5697fe828b5, type: 3}
-  _debugGameObjectPosChangeAddParent: {fileID: 1531046890}
-  _debugGameObjectPosChangeRemoveParent: {fileID: 549289926}
-  _debugGameObjectPosChangeModifiedParent: {fileID: 284247250}
+  _debugParentAdded: {fileID: 1531046890}
+  _debugParentRemoved: {fileID: 549289926}
+  _debugParentModified: {fileID: 284247250}
   _debugGameObjectPrefab: {fileID: 1725634254696360293, guid: a8f6e3ffc6fe7c940ba2d8de5e5434c8, type: 3}
   _debugGameObjectParent: {fileID: 1130869014}
   _gizmo3DCursor: {fileID: 608155969}

@@ -10,27 +10,36 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalPositionGenerator : MonoBehaviour
     {
         public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners }
-        [Flags]
-        public enum PositionChangeType
-        {
-            removed = 1,
-            added = 2,
-            modified = 4
-        }
         // ========================================================= INSPECTOR FIELDS
 
         [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
-        [SerializeField] private PositionChangeType _positionChangeType;
         [SerializeField] private TacticalGeneratorProfile _profile;
         [SerializeField] private bool _showPositions = false;
 
         [SerializeField] private bool _createDebugGameObjects = false;
         [SerializeField] private bool _createDebugGameObjectsPosChanges = false;
         [SerializeField] private GameObject _debugGameObjectPosChangePrefab;
-        [SerializeField] private GameObject _debugGameObjectPosChangeAddParent;
-        [SerializeField] private GameObject _debugGameObjectPosChangeRemoveParent;
-        [SerializeField] private GameObject _debugGameObjectPosChangeModifiedParent;
 
+        [SerializeField] List<BasePositionClassifier> _classifiers = new();
+        private List<BasePositionClassifier> Classifiers
+        {
+            get
+            {
+                if (_classifiers == null || _classifiers.Count == 0)
+                {
+                    _classifiers = new List<BasePositionClassifier>
+                    {
+                        new AddedPositionClassifier(_debugParentAdded, maxDistanceToConsiderSamePosition, maxDegreesDifferenceToConsiderSamePosition),
+                        new RemovedPositionClassifier(_debugParentRemoved, maxDistanceToConsiderSamePosition, maxDegreesDifferenceToConsiderSamePosition),
+                        new ModifiedPositionClassifier(_debugParentModified, maxDistanceToConsiderSamePosition, maxDegreesDifferenceToConsiderSamePosition)
+                    };
+                }
+                return _classifiers;
+            }
+        }
+        [SerializeField] private GameObject _debugParentAdded;
+        [SerializeField] private GameObject _debugParentRemoved;
+        [SerializeField] private GameObject _debugParentModified;
 
         [SerializeField] private GameObject _debugGameObjectPrefab;
         [SerializeField] private GameObject _debugGameObjectParent;
@@ -100,7 +109,7 @@ namespace FPSDemo.NPC.Utilities
                 {
                     continue;
                 }
-                List<TacticalPosition> oldTacticalPositions = new(context.positionData.Positions);
+                List<TacticalPosition> oldTacticalPositionsSnapshot = new(context.positionData.Positions);
                 InitContextData(context);
 
                 foreach (Vector3 position in _profile.gridSpawnerData.Positions)
@@ -108,7 +117,7 @@ namespace FPSDemo.NPC.Utilities
                     CreatePositionsAtHitsAround(position, context);
                 }
                 RemoveDuplicates(_profile.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
-                CompareTheNewPositions(oldTacticalPositions, context.positionData.Positions);
+                LogDifferencesInNewlyGeneratedPositions(oldTacticalPositionsSnapshot, context.positionData.Positions);
                 Save(context.positionData);
                 if (_createDebugGameObjects)
                 {
@@ -117,65 +126,9 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        public void ClearAllPosChangeDebugGOs()
+        private void LogDifferencesInNewlyGeneratedPositions(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
         {
-            ClearAllChildren(_debugGameObjectPosChangeModifiedParent);
-            ClearAllChildren(_debugGameObjectPosChangeAddParent);
-            ClearAllChildren(_debugGameObjectPosChangeRemoveParent);
-        }
-
-        private void ClearAllChildren(GameObject gameObject)
-        {
-            for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
-            {
-                GameObject child = gameObject.transform.GetChild(i).gameObject;
-#if UNITY_EDITOR
-                DestroyImmediate(child);
-#else
-                    Destroy(child);
-#endif
-            }
-        }
-
-        private void CompareTheNewPositions(List<TacticalPosition> copyOfOldPositions, List<TacticalPosition> targetData)
-        {
-            ClearAllPosChangeDebugGOs();
-            List<TacticalPosition> copyOfNew = new(targetData);
-            List<TacticalPosition> modifiedPositions = new();
-            FilterListsForChanges(copyOfOldPositions, copyOfNew, modifiedPositions);
-
-            if (copyOfNew.Count == 0 && copyOfOldPositions.Count == 0 && modifiedPositions.Count == 0)
-            {
-                Debug.Log("The positions generated without any changes");
-            }
-            else
-            {
-                Debug.LogWarning($"Added: {copyOfNew.Count}, Removed: {copyOfOldPositions.Count}, Modified: {modifiedPositions.Count}");
-            }
-
-            foreach (var pos in copyOfNew)
-            {
-                if (_createDebugGameObjectsPosChanges && _positionChangeType.HasFlag(PositionChangeType.added))
-                {
-                    CreatePosChangeDebugGO(pos.Position, null, pos);
-                }
-                Debug.LogWarning($"[ADDED] {pos}");
-            }
-
-            foreach (var pos in copyOfOldPositions)
-            {
-                if (_createDebugGameObjectsPosChanges && _positionChangeType.HasFlag(PositionChangeType.removed))
-                {
-                    CreatePosChangeDebugGO(pos.Position, pos, null);
-                }
-                Debug.LogWarning($"[REMOVED] {pos}");
-            }
-
-
-            foreach (var pos in modifiedPositions)
-            {
-                Debug.LogWarning($"[MODIFIED] {pos}");
-            }
+            ComputeDifferences(oldPositions, newPositions);
         }
 
         public static void Save<T>(T obj) where T : ScriptableObject
@@ -189,130 +142,20 @@ namespace FPSDemo.NPC.Utilities
 #endif
         }
 
-
-        private void FilterListsForChanges(List<TacticalPosition> oldList, List<TacticalPosition> newList, List<TacticalPosition> modifiedList)
+        private void ComputeDifferences(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
         {
-            for (int i = oldList.Count - 1; i >= 0; i--)
+            GameObject debugGO = null;
+
+            if (_createDebugGameObjectsPosChanges)
             {
-                TacticalPosition pos1 = oldList[i];
+                debugGO = _debugGameObjectPosChangePrefab;
+            }
 
-                // Look for exact match in list2
-                for (int j = 0; j < newList.Count; j++)
-                {
-                    // If it is in the same spot
-                    if (Vector3.Distance(pos1.Position, newList[j].Position) < maxDistanceToConsiderSamePosition)
-                    {
-                        // But does not have the same values
-                        if (!ArePositionsRoughlyEqual(pos1, newList[j], maxDegreesDifferenceToConsiderSamePosition))
-                        {
-                            if (_createDebugGameObjectsPosChanges && _positionChangeType.HasFlag(PositionChangeType.modified))
-                            {
-                                CreatePosChangeDebugGO(pos1.Position, pos1, newList[j]);
-                                modifiedList.Add(newList[j]);
-                            }
-
-                            // They are equal, remove them
-                            oldList.RemoveAt(i);
-                            newList.RemoveAt(j);
-                            break;
-                        }
-                    }
-                }
+            foreach (var classifier in Classifiers)
+            {
+                classifier.Classify(oldPositions, newPositions, debugGO);
             }
         }
-
-        private void CreatePosChangeDebugGO(Vector3 position, TacticalPosition oldPosition, TacticalPosition newPosition)
-        {
-            Transform transformToParentTo;
-            if (oldPosition != null && newPosition != null)
-            {
-                transformToParentTo = _debugGameObjectPosChangeModifiedParent.transform;
-            }
-            else if (oldPosition != null)
-            {
-                transformToParentTo = _debugGameObjectPosChangeRemoveParent.transform;
-            }
-            else if (newPosition != null)
-            {
-                transformToParentTo = _debugGameObjectPosChangeAddParent.transform;
-            }
-            else
-            {
-                Debug.LogError("Could not find a valid parent, both positions are null!");
-                return;
-            }
-            GameObject posModDebugGO = Instantiate(_debugGameObjectPosChangePrefab, transformToParentTo);
-            posModDebugGO.transform.position = position;
-            PosChangeDebugGO changeDebug = posModDebugGO.GetComponent<PosChangeDebugGO>();
-            changeDebug.oldPosition = oldPosition;
-            changeDebug.newPosition = newPosition;
-        }
-
-        private void LogInvalidPositions(string errorMessage, TacticalPosition pos1, TacticalPosition pos2)
-        {
-            Debug.LogWarning($"{errorMessage}.\n{pos1}\n{pos2}");
-        }
-
-        private bool ArePositionsRoughlyEqual(TacticalPosition pos1, TacticalPosition pos2, float maxDifferenceInRotation)
-        {
-            if (pos1.mainCover.height != pos2.mainCover.height)
-            {
-                return false;
-            }
-
-            if (pos1.mainCover.type != pos2.mainCover.type)
-            {
-                return false;
-            }
-
-            if (Quaternion.Angle(pos1.mainCover.rotationToAlignWithCover, pos2.mainCover.rotationToAlignWithCover) > (maxDifferenceInRotation))
-            {
-                LogInvalidPositions("Positions rotationToAlignWithCover are not the same", pos1, pos2);
-                return false;
-            }
-
-            if (!CoverDirectionsApproximatelyEqual(pos1, pos2))
-            {
-                return false;
-            }
-
-            if (pos1.isOutside != pos2.isOutside)
-            {
-                LogInvalidPositions("Positions outside parameters are not the same", pos1, pos2);
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool CoverDirectionsApproximatelyEqual(TacticalPosition pos1, TacticalPosition pos2)
-        {
-            if (pos1.CoverDirections == null && pos2.CoverDirections == null)
-            {
-                return true;
-            }
-            if (pos1.CoverDirections == null || pos2.CoverDirections == null)
-            {
-                LogInvalidPositions("One CoverDirections array is null, while the other is not", pos1, pos2);
-                return false;
-            }
-            if (pos1.CoverDirections.Length != pos2.CoverDirections.Length)
-            {
-                LogInvalidPositions("CoverDirections length mismatch: {pos1.CoverDirections.Length} vs {pos2.CoverDirections.Length}", pos1, pos2);
-                return false;
-            }
-
-            for (int i = 0; i < pos1.CoverDirections.Length; i++)
-            {
-                if (pos1.CoverDirections[i] != pos2.CoverDirections[i])
-                {
-                    LogInvalidPositions("CoverDirections[{i}] mismatch: {pos1.CoverDirections[i]} vs {pos2.CoverDirections[i]}", pos1, pos2);
-                    return false;
-                }
-            }
-            return true;
-        }
-
 
         public void VerifyPositionsCover()
         {
@@ -382,7 +225,6 @@ namespace FPSDemo.NPC.Utilities
                 }
             }
         }
-
 
         private void InitContextData(CoverGenerationContext context)
         {
@@ -619,6 +461,14 @@ namespace FPSDemo.NPC.Utilities
                 return positions.Count;
             }
             return 0;
+        }
+
+        public void ClearAllDebugGOs()
+        {
+            foreach (BasePositionClassifier classifier in Classifiers)
+            {
+                classifier.ClearDebugGOs();
+            }
         }
     }
 }
