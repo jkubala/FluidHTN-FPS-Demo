@@ -40,6 +40,11 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     [Range(0.01f, 0.25f)][SerializeField] private float _maxDistanceToConsiderSamePosition = 0.05f;
     [Range(1f, 3f)][SerializeField] private float _maxDegreesDifferenceToConsiderSamePosition = 1f;
 
+    public Transform Gizmo3DCursor
+    {
+        get { return _gizmo3DCursor; }
+    }
+
     private void OnEnable()
     {
         if (_generator != null)
@@ -199,6 +204,24 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         }
 
         Debug.Log($"Currently displaying {totalCount} positions");
+
+        Draw3DCursor();
+    }
+
+    private void Draw3DCursor()
+    {
+        if (Gizmo3DCursor == null)
+            return;
+
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(Gizmo3DCursor.position, 0.1f);
+
+        if (_generator != null && _generator.DistanceToCreateGizmos > 0)
+        {
+            Gizmos.color = new Color(1, 1, 0, 0.1f);
+            Gizmos.DrawWireSphere(Gizmo3DCursor.position, _generator.DistanceToCreateGizmos);
+        }
     }
 
     private int DisplayPositions(List<TacticalPosition> positions)

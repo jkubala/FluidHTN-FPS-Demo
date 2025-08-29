@@ -2635,7 +2635,7 @@ Transform:
   m_GameObject: {fileID: 608155968}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.4, y: 0, z: -37.7}
+  m_LocalPosition: {x: -25, y: 2.6061316, z: -36.40252}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5461,7 +5461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCoverGenMode: 3
-  _profile: {fileID: 11400000, guid: 0a7b0500d02b089478a8a8c37f7f31f5, type: 2}
+  _settings: {fileID: 11400000, guid: 0a7b0500d02b089478a8a8c37f7f31f5, type: 2}
   _showPositions: 1
   _currentGizmoViewMode: 0
   _createGizmoDebugObjects: 1
