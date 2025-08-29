@@ -20,7 +20,6 @@ namespace FPSDemo.NPC.Utilities
                 _tacticalDebugData = value;
             }
         }
-
         private void DrawSphere(Vector3 position, float radius, Color color)
         {
             Color curColor = Gizmos.color;
@@ -119,7 +118,7 @@ namespace FPSDemo.NPC.Utilities
     {
         public TacticalPositionGenerator.CoverGenerationMode genMode;
         public TacticalPosition tacticalPosition;
-        public bool finishedPosition;
+        private bool finished;
         public Vector3 offsetPosition, leftDirection, finalCornerPos;
         public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
         public float distanceToCornerLeft, distanceToCornerRight;
@@ -129,5 +128,13 @@ namespace FPSDemo.NPC.Utilities
 
         public Vector3 standardisationOrigin, standardisationDirection;
         public float standardisationDistance;
+
+        public bool Finished { get { return finished; } }
+
+
+        public void MarkAsFinished()
+        {
+            finished = true;
+        }
     }
 }

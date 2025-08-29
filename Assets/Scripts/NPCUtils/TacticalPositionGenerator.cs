@@ -8,14 +8,18 @@ using UnityEngine.AI;
 
 namespace FPSDemo.NPC.Utilities
 {
+    [ExecuteInEditMode]
     public class TacticalPositionGenerator : MonoBehaviour
     {
         public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners }
+        public enum GizmoViewMode { all, finished, unfinished }
         // ========================================================= INSPECTOR FIELDS
 
         [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
         [SerializeField] private TacticalGeneratorSettings _profile;
         public bool _showPositions = false;
+        [SerializeField] private GizmoViewMode _currentGizmoViewMode;
+        private GizmoViewMode _lastGizmoViewMode;
         [SerializeField] private bool _createGizmoDebugObjects = false;
         [Range(1f, 5f)] public float _distanceToCreateGizmos = 3f;
 
@@ -28,7 +32,24 @@ namespace FPSDemo.NPC.Utilities
         }
 
         public event Action<TacticalPositionData, CoverGenerationContext> OnContextUpdated;
-        public event Action<Vector3, TacticalDebugData> OnNewPotentialPositionCreated;
+        public event Action<Vector3, TacticalDebugData, GizmoViewMode> OnNewPotentialPositionCreated;
+        public event Action<GizmoViewMode> OnGizmoViewModeChange;
+
+        private void OnEnable()
+        {
+            _lastGizmoViewMode = _currentGizmoViewMode;
+            OnGizmoViewModeChange?.Invoke(_currentGizmoViewMode);
+        }
+
+        private void OnValidate()
+        {
+            if (_lastGizmoViewMode != _currentGizmoViewMode)
+            {
+                _lastGizmoViewMode = _currentGizmoViewMode;
+                OnGizmoViewModeChange?.Invoke(_lastGizmoViewMode);
+            }
+        }
+
         // ========================================================= GENERATION
 
         //// TODO this approach not done, just the GenerateTacticalPositionSpawners below
@@ -324,7 +345,7 @@ namespace FPSDemo.NPC.Utilities
 
                     if (debugData != null)
                     {
-                        OnNewPotentialPositionCreated?.Invoke(hit.point, debugData);
+                        OnNewPotentialPositionCreated?.Invoke(hit.point, debugData, _currentGizmoViewMode);
                     }
                 }
 

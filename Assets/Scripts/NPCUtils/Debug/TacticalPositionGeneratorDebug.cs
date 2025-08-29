@@ -46,6 +46,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         {
             _generator.OnContextUpdated += HandleContextUpdated;
             _generator.OnNewPotentialPositionCreated += HandleNewPotentialPosition;
+            _generator.OnGizmoViewModeChange += GizmoViewChanged;
         }
     }
 
@@ -55,6 +56,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         {
             _generator.OnContextUpdated -= HandleContextUpdated;
             _generator.OnNewPotentialPositionCreated -= HandleNewPotentialPosition;
+            _generator.OnGizmoViewModeChange -= GizmoViewChanged;
         }
     }
 
@@ -77,15 +79,55 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         }
     }
 
-    private void HandleNewPotentialPosition(Vector3 position, TacticalDebugData debugData)
+    private void HandleNewPotentialPosition(Vector3 position, TacticalDebugData debugData, TacticalPositionGenerator.GizmoViewMode gizmoViewMode)
     {
         if (Vector3.Distance(position, _gizmo3DCursor.position) < _generator.DistanceToCreateGizmos)
         {
             TacticalPosDebugGizmoGO debugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform).GetComponent<TacticalPosDebugGizmoGO>();
             debugGO.transform.position = position;
             debugGO.TacticalDebugData = debugData;
+            HandleChildVisibility(gizmoViewMode, debugGO.gameObject);
             EditorUtility.SetDirty(_debugGizmoGOParent);
         }
+    }
+
+    private void GizmoViewChanged(TacticalPositionGenerator.GizmoViewMode viewMode)
+    {
+        for (int i = 0; i < _debugGizmoGOParent.transform.childCount; i++)
+        {
+            GameObject childGO = _debugGizmoGOParent.transform.GetChild(i).gameObject;
+            HandleChildVisibility(viewMode, childGO);
+        }
+    }
+
+    private void HandleChildVisibility(TacticalPositionGenerator.GizmoViewMode viewMode, GameObject childGO)
+    {
+        if (childGO.TryGetComponent(out TacticalPosDebugGizmoGO childDebugGO))
+        {
+            bool shouldShow = viewMode == TacticalPositionGenerator.GizmoViewMode.all ||
+                (childDebugGO.TacticalDebugData.Finished && viewMode == TacticalPositionGenerator.GizmoViewMode.finished) ||
+                (!childDebugGO.TacticalDebugData.Finished && viewMode == TacticalPositionGenerator.GizmoViewMode.unfinished);
+
+            SetChildVisibility(childGO, shouldShow);
+        }
+        else
+        {
+            Debug.LogError($"{childGO.name}, which is a child of debug gizmo gameobject parent does not have TacticalPosDebugGizmoGO script attached!");
+        }
+    }
+
+    private void SetChildVisibility(GameObject childGO, bool shouldShow)
+    {
+#if UNITY_EDITOR
+        EditorApplication.delayCall += () =>
+        {
+            if (childGO != null)
+                childGO.SetActive(shouldShow);
+        };
+#else
+    if (childGO != null)
+        childGO.SetActive(shouldShow);
+#endif
     }
 
     private void HandleContextUpdated(TacticalPositionData oldPositions, CoverGenerationContext context)

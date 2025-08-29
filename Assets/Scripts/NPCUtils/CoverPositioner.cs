@@ -449,7 +449,7 @@ namespace FPSDemo.NPC.Utilities
             {
                 debugData.tacticalPosition = newTacticalPos;
                 debugData.finalCornerPos = newTacticalPos.Position;
-                debugData.finishedPosition = true;
+                debugData.MarkAsFinished();
             }
 
             listToAddTo.Add(newTacticalPos);
