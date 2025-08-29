@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
@@ -73,7 +74,9 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
+            Undo.RecordObject(_parentGO, "Added a position change debug gameobject");
             GameObject debugGOInstance = GameObject.Instantiate(debugPrefab, _parentGO.transform);
+            Undo.RegisterCreatedObjectUndo(debugGOInstance, "Added a position change debug gameobject");
             debugGOInstance.transform.position = position;
             if (debugGOInstance.TryGetComponent<PosChangeDebugGO>(out PosChangeDebugGO debugComp))
             {
@@ -84,11 +87,12 @@ namespace FPSDemo.NPC.Utilities
 
         public void ClearDebugGOs()
         {
+            Undo.RecordObject(_parentGO, "Clear debug position change GOs");
             for (int i = _parentGO.transform.childCount - 1; i >= 0; i--)
             {
                 GameObject child = _parentGO.transform.GetChild(i).gameObject;
 #if UNITY_EDITOR
-                GameObject.DestroyImmediate(child);
+                Undo.DestroyObjectImmediate(child);
 #else
                 GameObject.Destroy(child);
 #endif

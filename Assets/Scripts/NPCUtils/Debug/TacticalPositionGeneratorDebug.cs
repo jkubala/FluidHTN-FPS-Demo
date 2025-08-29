@@ -88,10 +88,13 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (Vector3.Distance(position, _gizmo3DCursor.position) < _generator.DistanceToCreateGizmos)
         {
-            TacticalPosDebugGizmoGO debugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform).GetComponent<TacticalPosDebugGizmoGO>();
-            debugGO.transform.position = position;
-            debugGO.TacticalDebugData = debugData;
-            HandleChildVisibility(gizmoViewMode, debugGO.gameObject);
+            Undo.RecordObject(_debugGizmoGOParent, "Add a new potential position");
+            GameObject gizmoDebugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform);
+            Undo.RegisterCreatedObjectUndo(gizmoDebugGO, "Added a gizmo debug gameobject");
+            TacticalPosDebugGizmoGO gizmoDebug  = gizmoDebugGO.GetComponent<TacticalPosDebugGizmoGO>();
+            gizmoDebugGO.transform.position = position;
+            gizmoDebug.TacticalDebugData = debugData;
+            HandleChildVisibility(gizmoViewMode, gizmoDebugGO);
             EditorUtility.SetDirty(_debugGizmoGOParent);
         }
     }
@@ -127,7 +130,9 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         EditorApplication.delayCall += () =>
         {
             if (childGO != null)
+            {
                 childGO.SetActive(shouldShow);
+            }
         };
 #else
     if (childGO != null)
@@ -169,6 +174,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
 
     private void ClearDebugGizmosGOs(CoverGenerationContext context)
     {
+        Undo.RecordObject(_debugGizmoGOParent, "Clear debug gizmo GOs");
         for (int i = _debugGizmoGOParent.transform.childCount - 1; i >= 0; i--)
         {
             GameObject child = _debugGizmoGOParent.transform.GetChild(i).gameObject;
@@ -177,7 +183,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
                 if (debugGO.TacticalDebugData.genMode == context.genMode)
                 {
 #if UNITY_EDITOR
-                    DestroyImmediate(child);
+                    Undo.DestroyObjectImmediate(child);
 #else
                     Destroy(child);
 #endif

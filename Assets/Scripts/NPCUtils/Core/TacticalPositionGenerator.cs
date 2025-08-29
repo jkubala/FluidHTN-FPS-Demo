@@ -104,12 +104,15 @@ namespace FPSDemo.NPC.Utilities
                 CreateSpawnersAlongTheGrid();
             }
 
+            Undo.SetCurrentGroupName("Generate Tactical Positions");
+            int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
             {
                 if (_currentCoverGenMode != CoverGenerationMode.all && _currentCoverGenMode != context.genMode)
                 {
                     continue;
                 }
+                Undo.RecordObject(context.positionData, "Generate Tactical Positions");
                 TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
                 oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
                 ClearTacticalData(context);
@@ -121,6 +124,7 @@ namespace FPSDemo.NPC.Utilities
                 RemoveDuplicates(_settings.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
                 UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
             }
+            Undo.CollapseUndoOperations(undoGroup);
         }
 
         public List<CoverGenerationContext> GetActiveCoverGenContexts()
@@ -147,21 +151,35 @@ namespace FPSDemo.NPC.Utilities
 
         public void VerifyPositionsCover()
         {
+            Undo.SetCurrentGroupName("Verify tactical positions");
+            int undoGroup = Undo.GetCurrentGroup();
             foreach (var context in _settings.GetContextsFor(_currentCoverGenMode))
             {
+                Undo.RecordObject(context.positionData, "Clear All Tactical Data");
+                TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
+                oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
+                bool allPositionsValid = true;
                 for (int i = context.positionData.Positions.Count - 1; i >= 0; i--)
                 {
-                    VerifyCoverOfAPosition(context.positionData.Positions[i], context.positionData.Positions);
+                    if (!VerifyCoverOfAPosition(context.positionData.Positions[i], context.positionData.Positions))
+                    {
+                        allPositionsValid = false;
+                    }
+                }
+                if (!allPositionsValid)
+                {
+                    UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
                 }
             }
+            Undo.CollapseUndoOperations(undoGroup);
         }
 
-        private void VerifyCoverOfAPosition(TacticalPosition position, List<TacticalPosition> targetData)
+        private bool VerifyCoverOfAPosition(TacticalPosition position, List<TacticalPosition> targetData)
         {
             if (!Physics.Raycast(position.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _settings.raycastMask))
             {
                 Debug.LogError($"Position at {position.Position} did not have a solid ground underneath! Skipping validation!");
-                return;
+                return false;
             }
 
             Vector3 direction = position.mainCover.rotationToAlignWithCover * Vector3.forward;
@@ -172,21 +190,24 @@ namespace FPSDemo.NPC.Utilities
                 if (!Physics.Raycast(origin, direction, _settings.positionSettings.distanceToCheckForCover, _settings.raycastMask))
                 {
                     Debug.LogWarning($"Position at {position.Position} did not have a continuous cover to the ground! Removing it!");
-
-                    //GameObject newDebugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform);
-                    //newDebugGO.transform.position = position.Position;
                     targetData.Remove(position);
-                    return;
+                    return false;
                 }
             }
+            return true;
         }
+
 
         public void ClearAllTacticalData()
         {
+            Undo.SetCurrentGroupName("Clear All Tactical Data");
+            int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
             {
+                Undo.RecordObject(context.positionData, "Clear All Tactical Data");
                 ClearTacticalData(context);
             }
+            Undo.CollapseUndoOperations(undoGroup);
         }
 
 
@@ -201,6 +222,7 @@ namespace FPSDemo.NPC.Utilities
 
         public void CreateSpawnersAlongTheGrid()
         {
+            Undo.RecordObject(_settings.gridSpawnerData, "Generate tactical position spawners");
             _settings.gridSpawnerData.Positions.Clear();
             Debug.Log("Generating tactical position spawners");
             Vector3 currentPos = _settings.gridSettings.StartPos;
