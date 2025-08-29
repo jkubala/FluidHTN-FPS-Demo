@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FPSDemo.NPC.Utilities
 {
-    public class TacticalPosDebugGO : MonoBehaviour
+    public class TacticalPosDebugGizmoGO : MonoBehaviour
     {
         enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
         [SerializeField] DebugMode debugMode;

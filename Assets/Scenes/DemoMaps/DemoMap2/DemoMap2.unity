@@ -5463,9 +5463,9 @@ MonoBehaviour:
   _currentCoverGenMode: 0
   _profile: {fileID: 11400000, guid: 0a7b0500d02b089478a8a8c37f7f31f5, type: 2}
   _showPositions: 1
-  _createGizmoDebugObjects: 0
+  _createGizmoDebugObjects: 1
   _distanceToCreateGizmos: 3
-  _createPosChangesDebugObjects: 0
+  _createPosChangesDebugObjects: 1
 --- !u!114 &1544378102
 MonoBehaviour:
   m_ObjectHideFlags: 0

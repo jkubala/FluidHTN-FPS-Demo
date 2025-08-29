@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
-    [CreateAssetMenu(fileName = "TacticalGeneratorSettings", menuName = "FPSDemo/TacticalGrid/TacticalGeneratorProfile")]
-    public class TacticalGeneratorProfile : ScriptableObject
+    [CreateAssetMenu(fileName = "TacticalGeneratorSettings", menuName = "FPSDemo/TacticalGrid/TacticalGeneratorSettings")]
+    public class TacticalGeneratorSettings : ScriptableObject
     {
         [SerializeField] List<CoverGenerationContext> generationContexts;
         public TacticalGridGenerationSettings gridSettings;

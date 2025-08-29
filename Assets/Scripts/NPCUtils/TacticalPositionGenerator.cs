@@ -14,7 +14,7 @@ namespace FPSDemo.NPC.Utilities
         // ========================================================= INSPECTOR FIELDS
 
         [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
-        [SerializeField] private TacticalGeneratorProfile _profile;
+        [SerializeField] private TacticalGeneratorSettings _profile;
         public bool _showPositions = false;
         [SerializeField] private bool _createGizmoDebugObjects = false;
         [Range(1f, 5f)] public float _distanceToCreateGizmos = 3f;

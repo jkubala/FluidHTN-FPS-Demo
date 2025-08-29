@@ -81,7 +81,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (Vector3.Distance(position, _gizmo3DCursor.position) < _generator.DistanceToCreateGizmos)
         {
-            TacticalPosDebugGO debugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform).GetComponent<TacticalPosDebugGO>();
+            TacticalPosDebugGizmoGO debugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform).GetComponent<TacticalPosDebugGizmoGO>();
             debugGO.transform.position = position;
             debugGO.TacticalDebugData = debugData;
             EditorUtility.SetDirty(_debugGizmoGOParent);
@@ -125,7 +125,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         for (int i = _debugGizmoGOParent.transform.childCount - 1; i >= 0; i--)
         {
             GameObject child = _debugGizmoGOParent.transform.GetChild(i).gameObject;
-            if (child.TryGetComponent(out TacticalPosDebugGO debugGO))
+            if (child.TryGetComponent(out TacticalPosDebugGizmoGO debugGO))
             {
                 if (debugGO.TacticalDebugData.genMode == context.genMode)
                 {
