@@ -24,12 +24,7 @@ namespace FPSDemo.NPC.Utilities
 
             if (GUILayout.Button("Clear generated tactical positions for AI"))
             {
-                posGenerator.ClearTacticalData();
-            }
-
-            if (GUILayout.Button("Clear debug gameobjects"))
-            {
-                posGenerator.ClearAllDebugGOs();
+                posGenerator.ClearAllTacticalData();
             }
 
             if (GUILayout.Button("Verify cover of tactical positions"))

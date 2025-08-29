@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Codice.Client.Common.GameUI;
 using FPSDemo.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -14,43 +15,20 @@ namespace FPSDemo.NPC.Utilities
 
         [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
         [SerializeField] private TacticalGeneratorProfile _profile;
-        [SerializeField] private bool _showPositions = false;
+        public bool _showPositions = false;
+        [SerializeField] private bool _createGizmoDebugObjects = false;
+        [Range(1f, 5f)] public float _distanceToCreateGizmos = 3f;
 
-        [SerializeField] private bool _createDebugGameObjects = false;
-        [SerializeField] private bool _createDebugGameObjectsPosChanges = false;
-        [SerializeField] private GameObject _debugGameObjectPosChangePrefab;
-
-        [SerializeField] List<BasePositionClassifier> _classifiers = new();
-        private List<BasePositionClassifier> Classifiers
+        public bool ShowPositions { get { return _showPositions; } }
+        public float DistanceToCreateGizmos { get { return _distanceToCreateGizmos; } }
+        public bool _createPosChangesDebugObjects = false;
+        public bool CreatePosChangesDebugObjects
         {
-            get
-            {
-                if (_classifiers == null || _classifiers.Count == 0)
-                {
-                    _classifiers = new List<BasePositionClassifier>
-                    {
-                        new AddedPositionClassifier(_debugParentAdded, maxDistanceToConsiderSamePosition, maxDegreesDifferenceToConsiderSamePosition),
-                        new RemovedPositionClassifier(_debugParentRemoved, maxDistanceToConsiderSamePosition, maxDegreesDifferenceToConsiderSamePosition),
-                        new ModifiedPositionClassifier(_debugParentModified, maxDistanceToConsiderSamePosition, maxDegreesDifferenceToConsiderSamePosition)
-                    };
-                }
-                return _classifiers;
-            }
+            get { return _createPosChangesDebugObjects; }
         }
-        [SerializeField] private GameObject _debugParentAdded;
-        [SerializeField] private GameObject _debugParentRemoved;
-        [SerializeField] private GameObject _debugParentModified;
 
-        [SerializeField] private GameObject _debugGameObjectPrefab;
-        [SerializeField] private GameObject _debugGameObjectParent;
-
-        [SerializeField] private Transform _gizmo3DCursor;
-        [Range(1f, 5f)][SerializeField] private float distanceToCreateGizmos = 3f;
-
-        [Header("Limits for difference when comparing after regeneration")]
-        [Range(0.01f, 0.25f)][SerializeField] private float maxDistanceToConsiderSamePosition = 0.05f;
-        [Range(1f, 3f)][SerializeField] private float maxDegreesDifferenceToConsiderSamePosition = 1f;
-
+        public event Action<TacticalPositionData, CoverGenerationContext> OnContextUpdated;
+        public event Action<Vector3, TacticalDebugData> OnNewPotentialPositionCreated;
         // ========================================================= GENERATION
 
         //// TODO this approach not done, just the GenerateTacticalPositionSpawners below
@@ -109,29 +87,31 @@ namespace FPSDemo.NPC.Utilities
                 {
                     continue;
                 }
-                List<TacticalPosition> oldTacticalPositionsSnapshot = new(context.positionData.Positions);
-                InitContextData(context);
+                TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
+                oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
+                ClearTacticalData(context);
 
                 foreach (Vector3 position in _profile.gridSpawnerData.Positions)
                 {
                     CreatePositionsAtHitsAround(position, context);
                 }
                 RemoveDuplicates(_profile.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
-                LogDifferencesInNewlyGeneratedPositions(oldTacticalPositionsSnapshot, context.positionData.Positions);
-                Save(context.positionData);
-                if (_createDebugGameObjects)
-                {
-                    EditorUtility.SetDirty(_debugGameObjectParent);
-                }
+                UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
             }
         }
 
-        private void LogDifferencesInNewlyGeneratedPositions(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
+        public List<CoverGenerationContext> GetActiveCoverGenContexts()
         {
-            ComputeDifferences(oldPositions, newPositions);
+            return _profile.GetContextsFor(_currentCoverGenMode);
         }
 
-        public static void Save<T>(T obj) where T : ScriptableObject
+        private void UpdateCoverPositionContext(TacticalPositionData oldPositions, CoverGenerationContext context)
+        {
+            OnContextUpdated?.Invoke(oldPositions, context);
+            Save(context.positionData);
+        }
+
+        private void Save<T>(T obj) where T : ScriptableObject
         {
 #if UNITY_EDITOR
             if (obj != null)
@@ -140,21 +120,6 @@ namespace FPSDemo.NPC.Utilities
                 AssetDatabase.SaveAssetIfDirty(obj);
             }
 #endif
-        }
-
-        private void ComputeDifferences(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
-        {
-            GameObject debugGO = null;
-
-            if (_createDebugGameObjectsPosChanges)
-            {
-                debugGO = _debugGameObjectPosChangePrefab;
-            }
-
-            foreach (var classifier in Classifiers)
-            {
-                classifier.Classify(oldPositions, newPositions, debugGO);
-            }
         }
 
         public void VerifyPositionsCover()
@@ -185,59 +150,30 @@ namespace FPSDemo.NPC.Utilities
                 {
                     Debug.LogWarning($"Position at {position.Position} did not have a continuous cover to the ground! Removing it!");
 
-                    GameObject newDebugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform);
-                    newDebugGO.transform.position = position.Position;
+                    //GameObject newDebugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform);
+                    //newDebugGO.transform.position = position.Position;
                     targetData.Remove(position);
                     return;
                 }
             }
         }
 
-        public void ClearTacticalData()
+        public void ClearAllTacticalData()
         {
             foreach (CoverGenerationContext context in _profile.GetContextsFor(_currentCoverGenMode))
             {
-                ClearDebugGOs(context);
-                context.positionData.Positions.Clear();
-                Save(context.positionData);
-            }
-        }
-        private void ClearDebugGOs(CoverGenerationContext context)
-        {
-            for (int i = _debugGameObjectParent.transform.childCount - 1; i >= 0; i--)
-            {
-                GameObject child = _debugGameObjectParent.transform.GetChild(i).gameObject;
-                if (child.TryGetComponent(out TacticalPosDebugGO debugGO))
-                {
-                    if (debugGO.TacticalDebugData.genMode == context.genMode)
-                    {
-#if UNITY_EDITOR
-                        DestroyImmediate(child);
-#else
-                    Destroy(child);
-#endif
-                        context.debugData.Remove(debugGO.TacticalDebugData);
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"{child.name} did not have TacticalPosDebugGO script attached!");
-                }
+                ClearTacticalData(context);
             }
         }
 
-        private void InitContextData(CoverGenerationContext context)
+
+        private void ClearTacticalData(CoverGenerationContext context)
         {
             if (context.positionData.Positions.Count > 0)
             {
                 context.positionData.Positions.Clear();
             }
-
-            if (context.debugData.Count > 0)
-            {
-                ClearDebugGOs(context);
-                context.debugData.Clear();
-            }
+            UpdateCoverPositionContext(null, context);
         }
 
         public void CreateSpawnersAlongTheGrid()
@@ -369,13 +305,12 @@ namespace FPSDemo.NPC.Utilities
                 if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, _profile.gridSettings.DistanceOfRaycasts, _profile.raycastMask))
                 {
                     TacticalDebugData debugData = null;
-                    if (_createDebugGameObjects && Vector3.Distance(hit.point, _gizmo3DCursor.position) < distanceToCreateGizmos)
+                    if (_createGizmoDebugObjects)
                     {
-                        TacticalPosDebugGO debugGO = Instantiate(_debugGameObjectPrefab, _debugGameObjectParent.transform).GetComponent<TacticalPosDebugGO>();
-                        debugGO.transform.position = hit.point;
-                        debugData = debugGO.TacticalDebugData;
-                        debugData.genMode = context.genMode;
-                        context.debugData.Add(debugData);
+                        debugData = new()
+                        {
+                            genMode = context.genMode
+                        };
                     }
 
                     if (context.cornerSettings.lowCover)
@@ -385,6 +320,11 @@ namespace FPSDemo.NPC.Utilities
                     else
                     {
                         CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, context.cornerSettings, _profile.raycastMask, context.positionData.Positions, debugData);
+                    }
+
+                    if (debugData != null)
+                    {
+                        OnNewPotentialPositionCreated?.Invoke(hit.point, debugData);
                     }
                 }
 
@@ -407,68 +347,6 @@ namespace FPSDemo.NPC.Utilities
             }
 
             return true;
-        }
-
-
-        // ========================================================= DEBUG
-
-        void OnDrawGizmosSelected()
-        {
-            if (!_showPositions)
-            {
-                return;
-            }
-
-            int totalCount = 0;
-            foreach (var activeContext in _profile.GetContextsFor(_currentCoverGenMode))
-            {
-                totalCount += DisplayPositions(activeContext.positionData.Positions);
-            }
-
-            Debug.Log($"Currently displaying {totalCount} positions");
-        }
-
-        private int DisplayPositions(List<TacticalPosition> positions)
-        {
-            if (positions != null)
-            {
-                foreach (TacticalPosition position in positions)
-                {
-                    if (position.mainCover.type == CoverType.LeftCorner)
-                    {
-                        Gizmos.color = Color.red;
-                    }
-                    else if (position.mainCover.type == CoverType.RightCorner)
-                    {
-                        Gizmos.color = Color.blue;
-                    }
-                    else
-                    {
-                        Gizmos.color = Color.white;
-                    }
-
-                    if (position.isOutside)
-                    {
-                        Gizmos.DrawSphere(position.Position, 0.1f);
-                    }
-                    else
-                    {
-                        Gizmos.DrawWireSphere(position.Position, 0.1f);
-                    }
-
-                    Gizmos.DrawRay(position.Position, position.mainCover.rotationToAlignWithCover * Vector3.forward);
-                }
-                return positions.Count;
-            }
-            return 0;
-        }
-
-        public void ClearAllDebugGOs()
-        {
-            foreach (BasePositionClassifier classifier in Classifiers)
-            {
-                classifier.ClearDebugGOs();
-            }
         }
     }
 }

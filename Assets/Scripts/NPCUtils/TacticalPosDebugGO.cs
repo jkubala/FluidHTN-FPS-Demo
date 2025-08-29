@@ -8,12 +8,16 @@ namespace FPSDemo.NPC.Utilities
     {
         enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
         [SerializeField] DebugMode debugMode;
-        [SerializeField] private TacticalDebugData _tacticalDebugData = new();
+        [SerializeField] private TacticalDebugData _tacticalDebugData;
         public TacticalDebugData TacticalDebugData
         {
             get
             {
                 return _tacticalDebugData;
+            }
+            set
+            {
+                _tacticalDebugData = value;
             }
         }
 

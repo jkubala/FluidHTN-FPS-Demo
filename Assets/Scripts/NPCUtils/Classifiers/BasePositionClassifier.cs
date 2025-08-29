@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 namespace FPSDemo.NPC.Utilities
 {
     public abstract class BasePositionClassifier
@@ -16,12 +15,9 @@ namespace FPSDemo.NPC.Utilities
             _maxDegreesDifferenceToConsiderSamePosition = maxDegrees;
         }
 
-        public List<TacticalPosition> Positions { get; } = new();
-
         public void Classify(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions, GameObject debugGO = null)
         {
             ClearDebugGOs();
-            Positions.Clear();
             CustomClassification(oldPositions, newPositions, debugGO);
         }
 

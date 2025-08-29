@@ -12,12 +12,15 @@ namespace FPSDemo.NPC.Utilities
             {
                 if (!newPositions.Exists(newPos => Vector3.Distance(oldPos.Position, newPos.Position) < _maxDistanceToConsiderSamePosition))
                 {
-                    Positions.Add(oldPos);
                     if (debugGO != null)
                     {
                         CreateDebugGO(debugGO, oldPos.Position, oldPos: oldPos);
                     }
                 }
+            }
+            if (oldPositions.Count > 0)
+            {
+                Debug.Log($"Removed {oldPositions.Count} positions");
             }
         }
     }

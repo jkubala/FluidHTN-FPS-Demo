@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 namespace FPSDemo.NPC.Utilities
 {
     public class AddedPositionClassifier : BasePositionClassifier
@@ -13,12 +12,15 @@ namespace FPSDemo.NPC.Utilities
             {
                 if (!oldPositions.Exists(oldPos => Vector3.Distance(oldPos.Position, newPos.Position) < _maxDistanceToConsiderSamePosition))
                 {
-                    Positions.Add(newPos);
                     if (debugGO != null)
                     {
                         CreateDebugGO(debugGO, newPos.Position, newPos: newPos);
                     }
                 }
+            }
+            if (newPositions.Count > 0)
+            {
+                Debug.Log($"Added {newPositions.Count} positions");
             }
         }
     }
