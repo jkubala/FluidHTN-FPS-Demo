@@ -175,7 +175,7 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
             {
-                if (_currentCoverGenMode != CoverGenerationMode.all && _currentCoverGenMode != context.genMode)
+                if ((_currentCoverGenMode != CoverGenerationMode.all && _currentCoverGenMode != context.genMode) || context.genMode == CoverGenerationMode.manual)
                 {
                     continue;
                 }
@@ -222,7 +222,12 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (var context in _settings.GetContextsFor(_currentCoverGenMode))
             {
-                Undo.RecordObject(context.positionData, "Clear All Tactical Data");
+                if(context.genMode == CoverGenerationMode.manual)
+                {
+                    continue;
+                }
+
+                Undo.RecordObject(context.positionData, "Verify Tactical Data");
                 TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
                 oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
                 bool allPositionsValid = true;
@@ -271,6 +276,10 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
             {
+                if(context.genMode == CoverGenerationMode.manual)
+                {
+                    continue;
+                }
                 Undo.RecordObject(context.positionData, "Clear All Tactical Data");
                 ClearTacticalData(context);
             }
