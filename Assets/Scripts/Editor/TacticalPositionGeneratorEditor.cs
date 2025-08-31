@@ -32,14 +32,14 @@ namespace FPSDemo.NPC.Utilities
                 posGenerator.VerifyPositionsCover();
             }
 
-            if (GUILayout.Button("Load manual positions"))
-            {
-                posGenerator.LoadManualPositions();
-            }
-
-            if (GUILayout.Button("Save manual positions"))
+            if (GUILayout.Button("Save manual position GO data to memory"))
             {
                 posGenerator.SaveManualPositions();
+            }
+
+            if (GUILayout.Button("Spawn manual position GOs from memory"))
+            {
+                posGenerator.LoadManualPositions();
             }
 
             base.OnInspectorGUI();

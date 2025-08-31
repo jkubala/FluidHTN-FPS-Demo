@@ -56,43 +56,6 @@ namespace FPSDemo.NPC.Utilities
 
         // ========================================================= GENERATION
 
-        //// TODO this approach not done, just the GenerateTacticalPositionSpawners below
-        //public void AddTacticalProbes(bool clearPositions, TacticalProbe[] probes)
-        //{
-        //    if (probes == null || probes.Length == 0)
-        //    {
-        //        return;
-        //    }
-
-        //    if (!ValidateParams())
-        //    {
-        //        return;
-        //    }
-
-        //    if (_tacticalPositionData.Positions == null)
-        //    {
-        //        _tacticalPositionData.Positions = new List<TacticalPosition>();
-        //    }
-        //    else if (clearPositions && _tacticalPositionData.Positions.Count > 0)
-        //    {
-        //        _tacticalPositionData.Positions.Clear();
-        //    }
-
-        //    foreach (var probe in probes)
-        //    {
-        //        _tacticalPositionData.Positions.Add(new TacticalPosition
-        //        {
-        //            Position = probe.transform.position,
-        //            CoverDirections = new CoverHeight[1]
-        //            {
-        //                new() {
-
-        //                }
-        //            }
-        //        });
-        //    }
-        //}
-
         public void LoadManualPositions()
         {
             Undo.SetCurrentGroupName("Load Manual Positions");
@@ -335,8 +298,8 @@ namespace FPSDemo.NPC.Utilities
 
         private void RemoveDuplicates(float distanceThreshold, List<TacticalPosition> targetData)
         {
-            // List to store unique positions
-            List<TacticalPosition> uniquePositions = new();
+            // List to store unique positions, initialized with manually placed positions
+            List<TacticalPosition> uniquePositions = new(_settings.GetContextsFor(CoverGenerationMode.manual).First().positionData.Positions);
 
             // Iterate over each position
             for (int i = 0; i < targetData.Count; i++)
