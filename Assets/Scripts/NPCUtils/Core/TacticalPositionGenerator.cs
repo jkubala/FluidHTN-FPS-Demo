@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Codice.Client.Common.GameUI;
+using System.Linq;
 using FPSDemo.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -11,12 +11,14 @@ namespace FPSDemo.NPC.Utilities
     [ExecuteInEditMode]
     public class TacticalPositionGenerator : MonoBehaviour
     {
-        public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners }
+        public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners, manual }
         public enum GizmoViewMode { all, finished, unfinished }
         // ========================================================= INSPECTOR FIELDS
         [Header("General")]
         [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
         [SerializeField] private TacticalGeneratorSettings _settings;
+        [SerializeField] private GameObject _manualPositionsParent;
+        [SerializeField] private GameObject manualPositionPrefab;
         public bool _showPositions = false;
         [Header("Gizmo debug")]
         [SerializeField] private GizmoViewMode _currentGizmoViewMode;
@@ -90,6 +92,71 @@ namespace FPSDemo.NPC.Utilities
         //        });
         //    }
         //}
+
+        public void LoadManualPositions()
+        {
+            Undo.SetCurrentGroupName("Load Manual Positions");
+            int undoGroup = Undo.GetCurrentGroup();
+
+            Undo.RecordObject(_manualPositionsParent.transform, "Clear manual position children");
+            ClearManualPositionParentChildren();
+            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
+            foreach (TacticalPosition position in manualContext.positionData.Positions)
+            {
+                GameObject newManualPosition = Instantiate(manualPositionPrefab, position.Position, position.mainCover.rotationToAlignWithCover, _manualPositionsParent.transform);
+                Undo.RegisterCreatedObjectUndo(newManualPosition, "Create manual position GameObject");
+                if (newManualPosition.TryGetComponent(out ManualPosition pos))
+                {
+                    Undo.RecordObject(pos, "Set tactical position data");
+                    pos.tacticalPosition = position;
+                }
+                else
+                {
+                    Debug.LogError($"Manual position prefab not have ManualPosition script attached!");
+                }
+            }
+            Undo.CollapseUndoOperations(undoGroup);
+        }
+
+        private void ClearManualPositionParentChildren()
+        {
+            for (int i = _manualPositionsParent.transform.childCount - 1; i >= 0; i--)
+            {
+                GameObject child = _manualPositionsParent.transform.GetChild(i).gameObject;
+
+#if UNITY_EDITOR
+                Undo.DestroyObjectImmediate(child);
+#else
+                Destroy(child);
+#endif
+            }
+        }
+
+        public void SaveManualPositions()
+        {
+            Undo.SetCurrentGroupName("Save Manual Positions");
+            int undoGroup = Undo.GetCurrentGroup();
+
+            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
+            Undo.RecordObject(manualContext.positionData, "Save manual position data");
+            manualContext.positionData.Positions.Clear();
+
+            for (int i = 0; i < _manualPositionsParent.transform.childCount; i++)
+            {
+                Transform child = _manualPositionsParent.transform.GetChild(i);
+                if (child.TryGetComponent(out ManualPosition pos))
+                {
+                    manualContext.positionData.Positions.Add(pos.tacticalPosition);
+                }
+                else
+                {
+                    Debug.LogError($"{_manualPositionsParent} has a child '{child.name}' which does not have ManualPosition script attached!");
+                }
+            }
+
+            Save(manualContext.positionData);
+            Undo.CollapseUndoOperations(undoGroup);
+        }
 
         public void GenerateTacticalPositions()
         {

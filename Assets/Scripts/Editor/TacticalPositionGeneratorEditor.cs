@@ -32,6 +32,16 @@ namespace FPSDemo.NPC.Utilities
                 posGenerator.VerifyPositionsCover();
             }
 
+            if (GUILayout.Button("Load manual positions"))
+            {
+                posGenerator.LoadManualPositions();
+            }
+
+            if (GUILayout.Button("Save manual positions"))
+            {
+                posGenerator.SaveManualPositions();
+            }
+
             base.OnInspectorGUI();
         }
     }
