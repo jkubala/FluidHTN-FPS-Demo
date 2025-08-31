@@ -117,7 +117,7 @@ namespace FPSDemo.NPC.Utilities
                 }
             }
 
-            Save(manualContext.positionData);
+            UpdateCoverPositionContext(null, manualContext);
             Undo.CollapseUndoOperations(undoGroup);
         }
 

@@ -144,6 +144,11 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (context != null)
         {
+            if(context.genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
+            {
+                return;
+            }
+
             if (context.positionData.Positions.Count == 0)
             {
                 ClearDebugGizmosGOs(context);
