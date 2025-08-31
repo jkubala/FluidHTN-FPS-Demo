@@ -13,13 +13,6 @@ MonoBehaviour:
   m_Name: DM2PositionsLowCorner
   m_EditorClassIdentifier: 
   Positions:
-  - Position: {x: -22.751, y: 2.748, z: -37.321}
-    mainCover:
-      type: 0
-      height: 1
-      rotationToAlignWithCover: {x: -0, y: -0.90108174, z: -0, w: 0.43364936}
-    CoverDirections: 
-    isOutside: 0
   - Position: {x: -54.199997, y: 0.999996, z: -53.54}
     mainCover:
       type: 0

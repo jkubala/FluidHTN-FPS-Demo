@@ -1,13 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace FPSDemo.NPC.Utilities
 {
     public class TacticalPosDebugGizmoGO : MonoBehaviour
     {
-        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, NormalStandardisation }
+        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, YAxisStandardisation, NormalStandardisation }
         [SerializeField] DebugMode debugMode;
         [SerializeField] private TacticalDebugData _tacticalDebugData;
         public TacticalDebugData TacticalDebugData
@@ -62,35 +62,87 @@ namespace FPSDemo.NPC.Utilities
             if (cornerDebugData.finalCornerPos.HasValue)
             {
                 DrawSphere(cornerDebugData.finalCornerPos.Value, 0.05f, Color.green);
-                DrawRay(cornerDebugData.finalCornerPos.Value,  cornerDebugData.tacticalPosition.mainCover.rotationToAlignWithCover * Vector3.forward, Color.green);
+                DrawRay(cornerDebugData.finalCornerPos.Value, cornerDebugData.tacticalPosition.mainCover.rotationToAlignWithCover * Vector3.forward, Color.green);
             }
         }
 
         private void ObstacleInFiringPositionDebug(TacticalDebugData tacticalDebugData)
         {
-            //DrawSphere(tacticalDebugData.sphereCastOrigin, 0.1f, Color.black);
-            //DrawRay(tacticalDebugData.sphereCastOrigin, tacticalDebugData.sphereCastDirection, Color.blue);
-            //DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.cornerNormal, Color.cyan);
-            //DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.cornerFiringNormal, Color.black);
+            DisplayCornerObstacleCheck(tacticalDebugData.leftCorner);
+            DisplayCornerObstacleCheck(tacticalDebugData.rightCorner);
+        }
+
+        private void DisplayCornerObstacleCheck(CornerDebugData debugData)
+        {
+            if (debugData.sphereCastOrigin.HasValue && debugData.sphereCastDirection.HasValue && debugData.sphereCastRadius != 0)
+            {
+                DrawSphere(debugData.sphereCastOrigin.Value, debugData.sphereCastRadius, Color.black);
+                DrawRay(debugData.sphereCastOrigin.Value, debugData.sphereCastDirection.Value, Color.blue);
+            }
         }
 
         private void Non90DegreeCornerDebug(TacticalDebugData tacticalDebugData)
         {
-            //if (tacticalDebugData.initCornerNormal.HasValue)
-            //{
-            //    DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.initCornerNormal.Value, Color.black);
-            //}
-            //if (tacticalDebugData.initCornerFiringNormal.HasValue)
-            //{
-            //    DrawRay(tacticalDebugData.finalCornerPos, tacticalDebugData.initCornerFiringNormal.Value, Color.yellow);
-            //}
+            DisplayCornerFiringNormals(tacticalDebugData.leftCorner);
+            DisplayCornerFiringNormals(tacticalDebugData.rightCorner);
         }
 
-        private void StandardisationDebug(TacticalDebugData tacticalDebugData)
+        private void DisplayCornerFiringNormals(CornerDebugData debugData)
         {
-            DrawRay(tacticalDebugData.standardisationOrigin, tacticalDebugData.standardisationDirection * tacticalDebugData.standardisationDistance, Color.black);
+            if (debugData.finalCornerPos.HasValue && debugData.cornerNormal.HasValue && debugData.cornerFiringNormal.HasValue)
+            {
+                DrawRay(debugData.finalCornerPos.Value, debugData.cornerNormal.Value, Color.black);
+                DrawRay(debugData.finalCornerPos.Value, debugData.cornerFiringNormal.Value, Color.yellow);
+            }
         }
 
+        private void YAxisStandardisationDebug(TacticalDebugData tacticalDebugData)
+        {
+            DrawYAxisStandardisationSphereCast(tacticalDebugData.leftCorner);
+            DrawYAxisStandardisationSphereCast(tacticalDebugData.rightCorner);
+        }
+
+        private void DrawYAxisStandardisationSphereCast(CornerDebugData tacticalDebugData)
+        {
+            if (!tacticalDebugData.yAxisStandSphereCastOrigin.HasValue || !tacticalDebugData.yAxisStandSphereCastDirection.HasValue || tacticalDebugData.yAxisStandSphereCastRadius == 0)
+            {
+                return;
+            }
+
+            DrawSphere(tacticalDebugData.yAxisStandSphereCastOrigin.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.black);
+            DrawRay(tacticalDebugData.yAxisStandSphereCastOrigin.Value, tacticalDebugData.yAxisStandSphereCastDirection.Value, Color.black);
+
+            if (!tacticalDebugData.yAxisStandSphereCastHit.HasValue)
+            {
+                return;
+            }
+
+            DrawSphere(tacticalDebugData.yAxisStandSphereCastHit.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.red);
+
+            if (!tacticalDebugData.yAxisStandPos.HasValue)
+            {
+                return;
+            }
+
+            DrawSphere(tacticalDebugData.yAxisStandPos.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.yellow);
+        }
+
+        private void NormalStandardisationDebug(TacticalDebugData tacticalDebugData)
+        {
+            DisplayCornerNormalStandardisation(tacticalDebugData.leftCorner);
+            DisplayCornerNormalStandardisation(tacticalDebugData.rightCorner);
+        }
+
+        private void DisplayCornerNormalStandardisation(CornerDebugData debugData)
+        {
+            if (!debugData.normStandOrigin.HasValue || !debugData.normStandNormal.HasValue || debugData.normStandDistance == 0)
+            {
+                return;
+            }
+
+            DrawSphere(debugData.normStandOrigin.Value, 0.05f, Color.black);
+            DrawRay(debugData.normStandOrigin.Value, debugData.normStandDistance * debugData.normStandNormal.Value, Color.black);
+        }
 
         void OnDrawGizmosSelected()
         {
@@ -109,8 +161,11 @@ namespace FPSDemo.NPC.Utilities
                     case DebugMode.Non90DegreeCorner:
                         Non90DegreeCornerDebug(_tacticalDebugData);
                         break;
+                    case DebugMode.YAxisStandardisation:
+                        YAxisStandardisationDebug(_tacticalDebugData);
+                        break;
                     case DebugMode.NormalStandardisation:
-                        StandardisationDebug(_tacticalDebugData);
+                        NormalStandardisationDebug(_tacticalDebugData);
                         break;
                 }
             }
@@ -126,7 +181,6 @@ namespace FPSDemo.NPC.Utilities
         public Vector3 offsetPosition, leftDirection;
         public CornerDebugData leftCorner;
         public CornerDebugData rightCorner;
-        public Vector3 sphereCastAnchor, sphereCastOrigin, sphereCastDirection, sphereCastNormal, cornerNormal, cornerFiringNormal;
         public Vector3 standardisationOrigin, standardisationDirection;
         public float standardisationDistance;
 
@@ -148,6 +202,11 @@ namespace FPSDemo.NPC.Utilities
         public SN<Vector3> cornerPos;
         public SN<Vector3> finalCornerPos;
         public List<Vector3> hitPositions;
-        public SN<Vector3> initCornerNormal, initCornerFiringNormal;
+        public SN<Vector3> sphereCastOrigin, sphereCastDirection, cornerNormal, cornerFiringNormal;
+        public float sphereCastRadius;
+        public SN<Vector3> yAxisStandSphereCastOrigin, yAxisStandSphereCastDirection, yAxisStandSphereCastHit, yAxisStandPos;
+        public float yAxisStandSphereCastRadius;
+        public SN<Vector3> normStandOrigin, normStandNormal;
+        public float normStandDistance;
     }
 }

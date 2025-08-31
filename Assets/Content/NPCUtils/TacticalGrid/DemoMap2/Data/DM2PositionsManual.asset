@@ -12,11 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b795074835a6bd49a639a2aab7e0383, type: 3}
   m_Name: DM2PositionsManual
   m_EditorClassIdentifier: 
-  Positions:
-  - Position: {x: -22.751, y: 2.748, z: -37.321}
-    mainCover:
-      type: 0
-      height: 1
-      rotationToAlignWithCover: {x: -0, y: -0.90108174, z: -0, w: 0.43364936}
-    CoverDirections: 
-    isOutside: 0
+  Positions: []

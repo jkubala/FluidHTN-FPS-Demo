@@ -299,7 +299,8 @@ namespace FPSDemo.NPC.Utilities
         private void RemoveDuplicates(float distanceThreshold, List<TacticalPosition> targetData)
         {
             // List to store unique positions, initialized with manually placed positions
-            List<TacticalPosition> uniquePositions = new(_settings.GetContextsFor(CoverGenerationMode.manual).First().positionData.Positions);
+            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
+            List<TacticalPosition> uniquePositions = new(manualContext.positionData.Positions);
 
             // Iterate over each position
             for (int i = 0; i < targetData.Count; i++)
