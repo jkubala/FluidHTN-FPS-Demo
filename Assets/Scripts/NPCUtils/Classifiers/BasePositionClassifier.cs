@@ -78,7 +78,7 @@ namespace FPSDemo.NPC.Utilities
             GameObject debugGOInstance = GameObject.Instantiate(debugPrefab, _parentGO.transform);
             Undo.RegisterCreatedObjectUndo(debugGOInstance, "Added a position change debug gameobject");
             debugGOInstance.transform.position = position;
-            if (debugGOInstance.TryGetComponent<PosChangeDebugGO>(out PosChangeDebugGO debugComp))
+            if (debugGOInstance.TryGetComponent(out PosChangeDebugGO debugComp))
             {
                 if (oldPos != null) debugComp.oldPosition = oldPos;
                 if (newPos != null) debugComp.newPosition = newPos;

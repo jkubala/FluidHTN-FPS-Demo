@@ -7,7 +7,7 @@ namespace FPSDemo.NPC.Utilities
 {
     public class TacticalPosDebugGizmoGO : MonoBehaviour
     {
-        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, YAxisStandardisation, NormalStandardisation }
+        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, YAxisStandardisation, NormalStandardisation, Verification }
         [SerializeField] DebugMode debugMode;
         [SerializeField] private TacticalDebugData _tacticalDebugData;
         public TacticalDebugData TacticalDebugData
@@ -144,6 +144,23 @@ namespace FPSDemo.NPC.Utilities
             DrawRay(debugData.normStandOrigin.Value, debugData.normStandDistance * debugData.normStandNormal.Value, Color.black);
         }
 
+        private void DisplayVerificationData(TacticalDebugData debugData)
+        {
+            DisplayVerificationDataOfCorner(debugData.leftCorner);
+            DisplayVerificationDataOfCorner(debugData.rightCorner);
+        }
+
+        private void DisplayVerificationDataOfCorner(CornerDebugData debugData)
+        {
+            if (debugData.verifyFailurePos.HasValue && debugData.verifyHorizStartPos.HasValue && debugData.verifyHorizEndPos.HasValue)
+            {
+                DrawSphere(debugData.verifyHorizStartPos.Value, 0.1f, Color.black);
+                DrawRay(debugData.verifyHorizStartPos.Value, debugData.verifyHorizEndPos.Value - debugData.verifyHorizStartPos.Value, Color.black);
+                DrawSphere(debugData.verifyHorizEndPos.Value, 0.1f, Color.cyan);
+                DrawSphere(debugData.verifyFailurePos.Value, 0.1f, Color.green);
+            }
+        }
+
         void OnDrawGizmosSelected()
         {
 #if UNITY_EDITOR
@@ -166,6 +183,9 @@ namespace FPSDemo.NPC.Utilities
                         break;
                     case DebugMode.NormalStandardisation:
                         NormalStandardisationDebug(_tacticalDebugData);
+                        break;
+                    case DebugMode.Verification:
+                        DisplayVerificationData(_tacticalDebugData);
                         break;
                 }
             }
@@ -208,5 +228,7 @@ namespace FPSDemo.NPC.Utilities
         public float yAxisStandSphereCastRadius;
         public SN<Vector3> normStandOrigin, normStandNormal;
         public float normStandDistance;
+
+        public SN<Vector3> verifyHorizStartPos, verifyHorizEndPos, verifyFailurePos;
     }
 }

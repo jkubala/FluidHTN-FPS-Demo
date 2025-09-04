@@ -24,6 +24,7 @@ namespace FPSDemo.NPC.Utilities
                     {
                         if (!ArePositionsRoughlyEqual(oldPos, newPos, _maxDegreesDifferenceToConsiderSamePosition))
                         {
+                            nOfModifiedPositions++;
                             if (debugGO != null)
                             {
                                 CreateDebugGO(debugGO, newPos.Position, oldPos, newPos);

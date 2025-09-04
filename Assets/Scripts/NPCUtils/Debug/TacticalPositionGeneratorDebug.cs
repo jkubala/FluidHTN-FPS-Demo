@@ -91,7 +91,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
             Undo.RecordObject(_debugGizmoGOParent, "Add a new potential position");
             GameObject gizmoDebugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform);
             Undo.RegisterCreatedObjectUndo(gizmoDebugGO, "Added a gizmo debug gameobject");
-            TacticalPosDebugGizmoGO gizmoDebug  = gizmoDebugGO.GetComponent<TacticalPosDebugGizmoGO>();
+            TacticalPosDebugGizmoGO gizmoDebug = gizmoDebugGO.GetComponent<TacticalPosDebugGizmoGO>();
             gizmoDebugGO.transform.position = position;
             gizmoDebug.TacticalDebugData = debugData;
             HandleChildVisibility(gizmoViewMode, gizmoDebugGO);
@@ -144,12 +144,12 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (context != null)
         {
-            if(context.genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
+            if (context.genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
             {
                 return;
             }
 
-            if (context.positionData.Positions.Count == 0)
+            if (context.positionData.Positions.Count == 0 && oldPositions == null)
             {
                 ClearDebugGizmosGOs(context);
             }

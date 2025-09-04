@@ -5,6 +5,7 @@ using FPSDemo.Utils;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 namespace FPSDemo.NPC.Utilities
 {
@@ -181,55 +182,33 @@ namespace FPSDemo.NPC.Utilities
 
         public void VerifyPositionsCover()
         {
-            Undo.SetCurrentGroupName("Verify tactical positions");
-            int undoGroup = Undo.GetCurrentGroup();
-            foreach (var context in _settings.GetContextsFor(_currentCoverGenMode))
-            {
-                if(context.genMode == CoverGenerationMode.manual)
-                {
-                    continue;
-                }
+            //Undo.SetCurrentGroupName("Verify tactical positions");
+            //int undoGroup = Undo.GetCurrentGroup();
+            //foreach (var context in _settings.GetContextsFor(_currentCoverGenMode))
+            //{
+            //    if (context.genMode == CoverGenerationMode.manual)
+            //    {
+            //        continue;
+            //    }
 
-                Undo.RecordObject(context.positionData, "Verify Tactical Data");
-                TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
-                oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
-                bool allPositionsValid = true;
-                for (int i = context.positionData.Positions.Count - 1; i >= 0; i--)
-                {
-                    if (!VerifyCoverOfAPosition(context.positionData.Positions[i], context.positionData.Positions))
-                    {
-                        allPositionsValid = false;
-                    }
-                }
-                if (!allPositionsValid)
-                {
-                    UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
-                }
-            }
-            Undo.CollapseUndoOperations(undoGroup);
-        }
-
-        private bool VerifyCoverOfAPosition(TacticalPosition position, List<TacticalPosition> targetData)
-        {
-            if (!Physics.Raycast(position.Position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _settings.raycastMask))
-            {
-                Debug.LogError($"Position at {position.Position} did not have a solid ground underneath! Skipping validation!");
-                return false;
-            }
-
-            Vector3 direction = position.mainCover.rotationToAlignWithCover * Vector3.forward;
-            Vector3 origin = hit.point;
-            for (float currentHeight = hit.point.y + _settings.positionSettings.bottomRaycastBuffer; currentHeight < position.Position.y; currentHeight += _settings.positionSettings.verticalStepToCheckForCover)
-            {
-                origin.y = currentHeight;
-                if (!Physics.Raycast(origin, direction, _settings.positionSettings.distanceToCheckForCover, _settings.raycastMask))
-                {
-                    Debug.LogWarning($"Position at {position.Position} did not have a continuous cover to the ground! Removing it!");
-                    targetData.Remove(position);
-                    return false;
-                }
-            }
-            return true;
+            //    Undo.RecordObject(context.positionData, "Verify Tactical Data");
+            //    TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
+            //    oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
+            //    bool allPositionsValid = true;
+            //    for (int i = context.positionData.Positions.Count - 1; i >= 0; i--)
+            //    {
+            //        if (!VerifyContinuousVerticalCoverSliceOfAPosition(context.positionData.Positions[i].Position, context.positionData.Positions[i].mainCover.rotationToAlignWithCover, _settings.positionSettings.verticalStepToCheckForCover))
+            //        {
+            //            context.positionData.Positions.Remove(context.positionData.Positions[i]);
+            //            allPositionsValid = false;
+            //        }
+            //    }
+            //    if (!allPositionsValid)
+            //    {
+            //        UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
+            //    }
+            //}
+            //Undo.CollapseUndoOperations(undoGroup);
         }
 
 
@@ -239,7 +218,7 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
             {
-                if(context.genMode == CoverGenerationMode.manual)
+                if (context.genMode == CoverGenerationMode.manual)
                 {
                     continue;
                 }
@@ -398,18 +377,25 @@ namespace FPSDemo.NPC.Utilities
                         };
                     }
 
+                    List<TacticalPosition> tacticalPositions;
+
                     if (context.cornerSettings.lowCover)
                     {
-                        CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, context.positionData.Positions, debugData);
+                        tacticalPositions = CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, _settings.positionSettings, debugData);
                     }
                     else
                     {
-                        CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, context.cornerSettings, _settings.raycastMask, context.positionData.Positions, debugData);
+                        tacticalPositions = CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, context.cornerSettings, _settings.raycastMask, _settings.positionSettings, debugData);
                     }
 
                     if (debugData != null)
                     {
                         OnNewPotentialPositionCreated?.Invoke(hit.point, debugData, _currentGizmoViewMode);
+                    }
+
+                    if(tacticalPositions != null && tacticalPositions.Count != 0)
+                    {
+                        context.positionData.Positions.AddRange(tacticalPositions);
                     }
                 }
 
