@@ -214,6 +214,14 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
             totalCount += DisplayPositions(activeContext.positionData.Positions);
         }
 
+        if (_generator.ShowSpawners)
+        {
+            foreach (Vector3 pos in _generator.GetSpawnerData.Positions)
+            {
+                Gizmos.DrawSphere(pos, 0.1f);
+            }
+        }
+
         Debug.Log($"Currently displaying {totalCount} positions");
 
         Draw3DCursor();

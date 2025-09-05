@@ -15,26 +15,7 @@ MonoBehaviour:
   StartPos: {x: -80, y: 50, z: -140}
   EndPos: {x: 95, y: 50, z: 15}
   DistanceBetweenPositions: 0.75
-  DistanceOfRaycasts: 3
-  OffsetEveryOtherRow: 0
+  DistanceOfRaycasts: 0.75
+  OffsetEveryOtherRow: 1
   NumberOfRaysSpawner: 8
-  NumberOfRaysPosition: 8
-  RequiredProximityToNavMesh: 0.2
-  geometryCheckYOffset: 3
-  distanceToRemoveDuplicates: 1
-  RaycastMask:
-    serializedVersion: 2
-    m_Bits: 1
-  cornerCheckRayWallOffset: 0.1
-  cornerCheckRayStep: 0.01
-  cornerCheckRaySequenceDistance: 2
-  cornerCheckPositionOffset: 0.25
-  minWidthToConsiderAValidPosition: 0.7
-  minAngleToConsiderCorner: 15
-  rayLengthBeyondWall: 0.25
-  sphereCastForFiringPositionCheckOffset: {x: 0.1, y: 0}
-  sphereCastForFiringPositionCheckRadius: 0.15
-  sphereCastForFiringPositionCheckDistance: 1
-  nOfHitsOfDifferentNormalToConsiderCorner: 3
-  minHeightToConsiderHighCover: 1.85
-  minHeightToConsiderLowCover: 0.95
+  floatPrecisionBuffer: 0.01

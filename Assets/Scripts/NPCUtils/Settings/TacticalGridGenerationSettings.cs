@@ -8,7 +8,6 @@ namespace FPSDemo.NPC.Utilities
 		public Vector3 StartPos;
 		public Vector3 EndPos;
 		public float DistanceBetweenPositions = 3f;
-		public float DistanceOfRaycasts = 0.5f;
 		public bool OffsetEveryOtherRow = false;
 		[Range(4, 12)]
 		public int NumberOfRaysSpawner = 8;

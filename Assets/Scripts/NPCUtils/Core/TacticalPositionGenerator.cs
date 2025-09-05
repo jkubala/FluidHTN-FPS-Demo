@@ -18,8 +18,9 @@ namespace FPSDemo.NPC.Utilities
         [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
         [SerializeField] private TacticalGeneratorSettings _settings;
         [SerializeField] private GameObject _manualPositionsParent;
-        [SerializeField] private GameObject manualPositionPrefab;
-        public bool _showPositions = false;
+        [SerializeField] private GameObject _manualPositionPrefab;
+        [SerializeField] private bool _showPositions = false;
+        [SerializeField] private bool _showSpawners = false;
         [Header("Gizmo debug")]
         [SerializeField] private GizmoViewMode _currentGizmoViewMode;
         private GizmoViewMode _lastGizmoViewMode;
@@ -29,11 +30,14 @@ namespace FPSDemo.NPC.Utilities
         public bool _createPosChangesDebugObjects = false;
 
         public bool ShowPositions { get { return _showPositions; } }
+        public bool ShowSpawners { get { return _showSpawners; } }
         public float DistanceToCreateGizmos { get { return _distanceToCreateGizmos; } }
         public bool CreatePosChangesDebugObjects
         {
             get { return _createPosChangesDebugObjects; }
         }
+
+        public TacticalGridSpawnerData GetSpawnerData { get { return _settings.gridSpawnerData; } }
 
         public event Action<TacticalPositionData, CoverGenerationContext> OnContextUpdated;
         public event Action<Vector3, TacticalDebugData, GizmoViewMode> OnNewPotentialPositionCreated;
@@ -66,7 +70,7 @@ namespace FPSDemo.NPC.Utilities
             CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
             foreach (TacticalPosition position in manualContext.positionData.Positions)
             {
-                GameObject newManualPosition = Instantiate(manualPositionPrefab, position.Position, position.mainCover.rotationToAlignWithCover, _manualPositionsParent.transform);
+                GameObject newManualPosition = Instantiate(_manualPositionPrefab, position.Position, position.mainCover.rotationToAlignWithCover, _manualPositionsParent.transform);
                 Undo.RegisterCreatedObjectUndo(newManualPosition, "Create manual position GameObject");
                 if (newManualPosition.TryGetComponent(out ManualPosition pos))
                 {
@@ -147,10 +151,39 @@ namespace FPSDemo.NPC.Utilities
                 oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
                 ClearTacticalData(context);
 
+                List<RaycastHit> hits = new();
                 foreach (Vector3 position in _settings.gridSpawnerData.Positions)
                 {
-                    CreatePositionsAtHitsAround(position, context);
+                    hits.AddRange(GetHitsAround(position, context));
                 }
+
+                RemoveDuplicateHits(hits);
+
+                List<CornerDetectionInfo> cornersFound = new();
+
+                foreach (RaycastHit hit in hits)
+                {
+                    TacticalDebugData debugData = null;
+                    if (_createGizmoDebugObjects)
+                    {
+                        debugData = new()
+                        {
+                            genMode = context.genMode
+                        };
+                    }
+                    cornersFound.AddRange(GetCornersAt(hit, context, debugData));
+                }
+
+                for (int j = cornersFound.Count - 1; j >= 0; j--)
+                {
+                    TacticalPosition newPosition = ProcessCornerToTacticalPosition(cornersFound[j], context);
+                    if (newPosition != null)
+                    {
+                        context.positionData.Positions.Add(newPosition);
+                        cornersFound[j].debugData?.parentData?.MarkAsFinished();
+                    }
+                }
+
                 RemoveDuplicates(_settings.positionSettings.distanceToRemoveDuplicates, context.positionData.Positions);
                 UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
             }
@@ -178,38 +211,6 @@ namespace FPSDemo.NPC.Utilities
             }
 #endif
         }
-
-        public void VerifyPositionsCover()
-        {
-            //Undo.SetCurrentGroupName("Verify tactical positions");
-            //int undoGroup = Undo.GetCurrentGroup();
-            //foreach (var context in _settings.GetContextsFor(_currentCoverGenMode))
-            //{
-            //    if (context.genMode == CoverGenerationMode.manual)
-            //    {
-            //        continue;
-            //    }
-
-            //    Undo.RecordObject(context.positionData, "Verify Tactical Data");
-            //    TacticalPositionData oldTacticalPositionsSnapshot = ScriptableObject.CreateInstance<TacticalPositionData>();
-            //    oldTacticalPositionsSnapshot.Positions = new(context.positionData.Positions);
-            //    bool allPositionsValid = true;
-            //    for (int i = context.positionData.Positions.Count - 1; i >= 0; i--)
-            //    {
-            //        if (!VerifyContinuousVerticalCoverSliceOfAPosition(context.positionData.Positions[i].Position, context.positionData.Positions[i].mainCover.rotationToAlignWithCover, _settings.positionSettings.verticalStepToCheckForCover))
-            //        {
-            //            context.positionData.Positions.Remove(context.positionData.Positions[i]);
-            //            allPositionsValid = false;
-            //        }
-            //    }
-            //    if (!allPositionsValid)
-            //    {
-            //        UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
-            //    }
-            //}
-            //Undo.CollapseUndoOperations(undoGroup);
-        }
-
 
         public void ClearAllTacticalData()
         {
@@ -357,52 +358,63 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private void CreatePositionsAtHitsAround(Vector3 position, CoverGenerationContext context)
+        private List<RaycastHit> GetHitsAround(Vector3 position, CoverGenerationContext context)
         {
             float angleBetweenRays = 360f / _settings.gridSettings.NumberOfRaysSpawner;
             Vector3 direction = Vector3.forward;
             Vector3 rayOrigin = position + Vector3.up * context.cornerSettings.heightToScanThisAt;
+            List<RaycastHit> hitsFound = new();
 
             for (int i = 0; i < _settings.gridSettings.NumberOfRaysSpawner; i++)
             {
-                if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, _settings.gridSettings.DistanceOfRaycasts, _settings.raycastMask))
+                if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, _settings.gridSettings.DistanceBetweenPositions * 2, _settings.raycastMask))
                 {
-                    TacticalDebugData debugData = null;
-                    if (_createGizmoDebugObjects)
-                    {
-                        debugData = new()
-                        {
-                            genMode = context.genMode
-                        };
-                    }
-
-                    if (context.cornerSettings.lowCover)
-                    {
-                        //tacticalPositions = CornerFinder.GetCornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, _settings.positionSettings, debugData);
-                    }
-                    else
-                    {
-                        List<CornerDetectionInfo> cornersFound = CornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask, debugData);
-                        // Add a position adjuster
-                        for (int j = cornersFound.Count - 1; j >= 0; j--)
-                        {
-                            CornerDetectionInfo? adjustedInfo = PositionValidator.ValidateCornerPosition(cornersFound[j], context.cornerSettings, _settings.positionSettings, _settings.raycastMask, debugData);
-                            if (adjustedInfo.HasValue)
-                            {
-                                // Finally assemble it
-                                context.positionData.Positions.Add(CreateCorner(adjustedInfo.Value, context.cornerSettings.coverHeight, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask, debugData));
-                            }
-                        }
-                    }
-
-                    if (debugData != null)
-                    {
-                        OnNewPotentialPositionCreated?.Invoke(hit.point, debugData, _currentGizmoViewMode);
-                    }
+                    hitsFound.Add(hit);
                 }
 
                 direction = Quaternion.Euler(0, angleBetweenRays, 0) * direction;
             }
+
+            return hitsFound;
+        }
+
+        private List<CornerDetectionInfo> GetCornersAt(RaycastHit hit, CoverGenerationContext context, TacticalDebugData debugData)
+        {
+            List<CornerDetectionInfo> cornersFound = new();
+
+            if (context.cornerSettings.lowCover)
+            {
+                CornerDetectionInfo? lowCoverInfo = CornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, debugData);
+                if (lowCoverInfo.HasValue)
+                {
+                    cornersFound = new()
+                    {
+                        lowCoverInfo.Value
+                    };
+                }
+            }
+            else
+            {
+                cornersFound = CornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask, debugData);
+            }
+
+            if (debugData != null)
+            {
+                OnNewPotentialPositionCreated?.Invoke(hit.point, debugData, _currentGizmoViewMode);
+            }
+
+            return cornersFound;
+        }
+
+        private TacticalPosition ProcessCornerToTacticalPosition(CornerDetectionInfo corner, CoverGenerationContext context)
+        {
+            CornerDetectionInfo? adjustedInfo = PositionValidator.ValidateCornerPosition(corner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
+            if (adjustedInfo.HasValue)
+            {
+                return CreateTacticalPosition(adjustedInfo.Value, context.cornerSettings.coverHeight, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask);
+            }
+
+            return null;
         }
 
         private bool ValidateParams()
@@ -422,7 +434,7 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private TacticalPosition CreateCorner(CornerDetectionInfo cornerInfo, CoverHeight coverHeight, float cornerCheckPositionOffset, LayerMask raycastMask, TacticalDebugData debugData = null)
+        private TacticalPosition CreateTacticalPosition(CornerDetectionInfo cornerInfo, CoverHeight coverHeight, float cornerCheckPositionOffset, LayerMask raycastMask)
         {
             MainCover mainCover = new()
             {
@@ -439,19 +451,10 @@ namespace FPSDemo.NPC.Utilities
                 CoverDirections = Array.Empty<CoverHeight>()
             };
 
-            if (debugData != null)
+            if (cornerInfo.debugData != null)
             {
-                if (cornerInfo.coverType == CoverType.LeftCorner)
-                {
-                    debugData.leftCorner.finalCornerPos = newTacticalPos.Position;
-                    debugData.leftCorner.tacticalPosition = newTacticalPos;
-                }
-                else
-                {
-                    debugData.rightCorner.finalCornerPos = newTacticalPos.Position;
-                    debugData.rightCorner.tacticalPosition = newTacticalPos;
-                }
-                debugData.MarkAsFinished();
+                cornerInfo.debugData.finalCornerPos = newTacticalPos.Position;
+                cornerInfo.debugData.tacticalPosition = newTacticalPos;
             }
             return newTacticalPos;
         }
@@ -465,7 +468,34 @@ namespace FPSDemo.NPC.Utilities
 
             return true;
         }
+
+        private void RemoveDuplicateHits(List<RaycastHit> hits, float positionThreshold = 0.1f, float normalThreshold = 0.9f)
+        {
+            for (int i = hits.Count - 1; i >= 0; i--)
+            {
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    float posDistance = Vector3.Distance(hits[i].point, hits[j].point);
+                    float normalDot = Vector3.Dot(hits[i].normal, hits[j].normal);
+
+                    if (posDistance < positionThreshold && normalDot > normalThreshold)
+                    {
+                        if (hits[i].distance > hits[j].distance)
+                        {
+                            hits.RemoveAt(i);
+                        }
+                        else
+                        {
+                            hits.RemoveAt(j);
+                            i--;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
+
 
     public struct CornerDetectionInfo
     {
@@ -476,6 +506,7 @@ namespace FPSDemo.NPC.Utilities
         public Vector3 positionFiringDirection;
         public Vector3 outDirection;
         public float distanceToCorner;
+        public CornerDebugData debugData;
     };
 
     public enum CornerType

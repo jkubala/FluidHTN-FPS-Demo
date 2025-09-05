@@ -43,8 +43,14 @@ namespace FPSDemo.NPC.Utilities
             DrawRay(tacticalDebugData.offsetPosition, tacticalDebugData.leftDirection * tacticalDebugData.leftCorner.distanceToCorner, Color.black);
             DrawRay(tacticalDebugData.offsetPosition, -tacticalDebugData.leftDirection * tacticalDebugData.rightCorner.distanceToCorner, Color.black);
             DrawSphere(tacticalDebugData.offsetPosition, 0.05f, Color.black);
-            DisplayCornerDebugGizmos(tacticalDebugData.leftCorner);
-            DisplayCornerDebugGizmos(tacticalDebugData.rightCorner);
+            if (tacticalDebugData.leftCorner != null)
+            {
+                DisplayCornerDebugGizmos(tacticalDebugData.leftCorner);
+            }
+            if (tacticalDebugData.rightCorner != null)
+            {
+                DisplayCornerDebugGizmos(tacticalDebugData.rightCorner);
+            }
         }
 
         private void DisplayCornerDebugGizmos(CornerDebugData cornerDebugData)
@@ -54,7 +60,7 @@ namespace FPSDemo.NPC.Utilities
                 DrawSphere(cornerDebugData.cornerPos.Value, 0.05f, Color.cyan);
             }
 
-            foreach (Vector3 pos in cornerDebugData.hitPositions)
+            foreach (Vector3 pos in cornerDebugData?.hitPositions)
             {
                 DrawSphere(pos, 0.01f, Color.red);
             }
@@ -196,7 +202,11 @@ namespace FPSDemo.NPC.Utilities
     [System.Serializable]
     public class CornerDebugData
     {
-
+        public CornerDebugData(TacticalDebugData parentData)
+        {
+            this.parentData = parentData;
+        }
+        [System.NonSerialized] public TacticalDebugData parentData;
         public TacticalPosition tacticalPosition;
         public float distanceToCorner;
         public SN<Vector3> cornerPos;

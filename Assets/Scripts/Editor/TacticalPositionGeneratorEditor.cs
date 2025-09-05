@@ -27,11 +27,6 @@ namespace FPSDemo.NPC.Utilities
                 posGenerator.ClearAllTacticalData();
             }
 
-            if (GUILayout.Button("Verify cover of tactical positions"))
-            {
-                posGenerator.VerifyPositionsCover();
-            }
-
             if (GUILayout.Button("Save manual position GO data to memory"))
             {
                 posGenerator.SaveManualPositions();
@@ -44,5 +39,6 @@ namespace FPSDemo.NPC.Utilities
 
             base.OnInspectorGUI();
         }
+
     }
 }
