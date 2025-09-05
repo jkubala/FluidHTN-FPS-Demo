@@ -5,7 +5,6 @@ using FPSDemo.Utils;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 namespace FPSDemo.NPC.Utilities
 {
@@ -377,25 +376,28 @@ namespace FPSDemo.NPC.Utilities
                         };
                     }
 
-                    List<TacticalPosition> tacticalPositions;
-
                     if (context.cornerSettings.lowCover)
                     {
-                        tacticalPositions = CoverPositioner.GetCoverPositioner.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, _settings.positionSettings, debugData);
+                        //tacticalPositions = CornerFinder.GetCornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, _settings.positionSettings, debugData);
                     }
                     else
                     {
-                        tacticalPositions = CoverPositioner.GetCoverPositioner.FindCornerPos(hit, CoverHeight.HighCover, context.cornerSettings, _settings.raycastMask, _settings.positionSettings, debugData);
+                        List<CornerDetectionInfo> cornersFound = CornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask, debugData);
+                        // Add a position adjuster
+                        for (int j = cornersFound.Count - 1; j >= 0; j--)
+                        {
+                            CornerDetectionInfo? adjustedInfo = PositionValidator.ValidateCornerPosition(cornersFound[j], context.cornerSettings, _settings.positionSettings, _settings.raycastMask, debugData);
+                            if (adjustedInfo.HasValue)
+                            {
+                                // Finally assemble it
+                                context.positionData.Positions.Add(CreateCorner(adjustedInfo.Value, context.cornerSettings.coverHeight, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask, debugData));
+                            }
+                        }
                     }
 
                     if (debugData != null)
                     {
                         OnNewPotentialPositionCreated?.Invoke(hit.point, debugData, _currentGizmoViewMode);
-                    }
-
-                    if(tacticalPositions != null && tacticalPositions.Count != 0)
-                    {
-                        context.positionData.Positions.AddRange(tacticalPositions);
                     }
                 }
 
@@ -419,5 +421,66 @@ namespace FPSDemo.NPC.Utilities
 
             return true;
         }
+
+        private TacticalPosition CreateCorner(CornerDetectionInfo cornerInfo, CoverHeight coverHeight, float cornerCheckPositionOffset, LayerMask raycastMask, TacticalDebugData debugData = null)
+        {
+            MainCover mainCover = new()
+            {
+                type = cornerInfo.coverType,
+                height = coverHeight,
+                rotationToAlignWithCover = Quaternion.LookRotation(-cornerInfo.coverWallNormal, Vector3.up)
+            };
+
+            TacticalPosition newTacticalPos = new()
+            {
+                Position = cornerInfo.position - cornerInfo.outDirection * cornerCheckPositionOffset,
+                mainCover = mainCover,
+                isOutside = SimpleIsOutsideCheck(cornerInfo.position, raycastMask),
+                CoverDirections = Array.Empty<CoverHeight>()
+            };
+
+            if (debugData != null)
+            {
+                if (cornerInfo.coverType == CoverType.LeftCorner)
+                {
+                    debugData.leftCorner.finalCornerPos = newTacticalPos.Position;
+                    debugData.leftCorner.tacticalPosition = newTacticalPos;
+                }
+                else
+                {
+                    debugData.rightCorner.finalCornerPos = newTacticalPos.Position;
+                    debugData.rightCorner.tacticalPosition = newTacticalPos;
+                }
+                debugData.MarkAsFinished();
+            }
+            return newTacticalPos;
+        }
+
+        bool SimpleIsOutsideCheck(Vector3 position, LayerMask raycastMask)
+        {
+            if (Physics.Raycast(position, Vector3.up, Mathf.Infinity, raycastMask))
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    public struct CornerDetectionInfo
+    {
+        public CornerType cornerType;
+        public CoverType coverType;
+        public Vector3 position;
+        public Vector3 coverWallNormal;
+        public Vector3 positionFiringDirection;
+        public Vector3 outDirection;
+        public float distanceToCorner;
+    };
+
+    public enum CornerType
+    {
+        Convex,
+        Concave
     }
 }

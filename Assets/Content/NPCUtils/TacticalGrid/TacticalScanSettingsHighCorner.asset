@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e339ba524ff0ba439801a87d7fc6402, type: 3}
   m_Name: TacticalScanSettingsHighCorner
   m_EditorClassIdentifier: 
+  heightToScanThisAt: 1.85
+  coverHeight: 1
   cornerCheckRayWallOffset: 0.1
   cornerCheckRayStep: 0.01
   cornerCheckRaySequenceDistance: 2
@@ -19,9 +21,11 @@ MonoBehaviour:
   minWidthToConsiderAValidPosition: 0.7
   minAngleToConsiderCorner: 15
   rayLengthBeyondWall: 0.25
+  floatPrecisionBuffer: 0.01
   sphereCastForFiringPositionCheckOffset: {x: 0.1, y: 0}
   sphereCastForFiringPositionCheckRadius: 0.15
   sphereCastForFiringPositionCheckDistance: 1
   nOfHitsOfDifferentNormalToConsiderCorner: 3
-  heightOfHighFiringPosition: 1.6
-  heightOfLowFiringPosition: 0.5
+  firingPositionHeight: 1.6
+  maxYDifferenceWhenAdjusting: 0.3
+  lowCover: 0

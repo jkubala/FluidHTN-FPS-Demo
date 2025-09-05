@@ -20,5 +20,12 @@ namespace FPSDemo.Utils
 
             return raycasts.ToArray();
         }
+
+        public static Vector3 FlattenVector(Vector3 vector)
+        {
+            Vector3 flattenedHitNormal = vector;
+            flattenedHitNormal.y = 0;
+            return flattenedHitNormal.normalized;
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace FPSDemo.NPC.Utilities
 {
     public class TacticalPosDebugGizmoGO : MonoBehaviour
     {
-        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, YAxisStandardisation, NormalStandardisation, Verification }
+        enum DebugMode { Corner, Non90DegreeCorner, Obstacle, YAxisStandardisation, Verification }
         [SerializeField] DebugMode debugMode;
         [SerializeField] private TacticalDebugData _tacticalDebugData;
         public TacticalDebugData TacticalDebugData
@@ -89,10 +89,10 @@ namespace FPSDemo.NPC.Utilities
 
         private void DisplayCornerFiringNormals(CornerDebugData debugData)
         {
-            if (debugData.finalCornerPos.HasValue && debugData.cornerNormal.HasValue && debugData.cornerFiringNormal.HasValue)
+            if (debugData.finalCornerPos.HasValue && debugData.cornerNormal.HasValue && debugData.positionFiringDirection.HasValue)
             {
                 DrawRay(debugData.finalCornerPos.Value, debugData.cornerNormal.Value, Color.black);
-                DrawRay(debugData.finalCornerPos.Value, debugData.cornerFiringNormal.Value, Color.yellow);
+                DrawRay(debugData.finalCornerPos.Value, debugData.positionFiringDirection.Value, Color.yellow);
             }
         }
 
@@ -125,23 +125,6 @@ namespace FPSDemo.NPC.Utilities
             }
 
             DrawSphere(tacticalDebugData.yAxisStandPos.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.yellow);
-        }
-
-        private void NormalStandardisationDebug(TacticalDebugData tacticalDebugData)
-        {
-            DisplayCornerNormalStandardisation(tacticalDebugData.leftCorner);
-            DisplayCornerNormalStandardisation(tacticalDebugData.rightCorner);
-        }
-
-        private void DisplayCornerNormalStandardisation(CornerDebugData debugData)
-        {
-            if (!debugData.normStandOrigin.HasValue || !debugData.normStandNormal.HasValue || debugData.normStandDistance == 0)
-            {
-                return;
-            }
-
-            DrawSphere(debugData.normStandOrigin.Value, 0.05f, Color.black);
-            DrawRay(debugData.normStandOrigin.Value, debugData.normStandDistance * debugData.normStandNormal.Value, Color.black);
         }
 
         private void DisplayVerificationData(TacticalDebugData debugData)
@@ -181,9 +164,6 @@ namespace FPSDemo.NPC.Utilities
                     case DebugMode.YAxisStandardisation:
                         YAxisStandardisationDebug(_tacticalDebugData);
                         break;
-                    case DebugMode.NormalStandardisation:
-                        NormalStandardisationDebug(_tacticalDebugData);
-                        break;
                     case DebugMode.Verification:
                         DisplayVerificationData(_tacticalDebugData);
                         break;
@@ -214,7 +194,7 @@ namespace FPSDemo.NPC.Utilities
     }
 
     [System.Serializable]
-    public struct CornerDebugData
+    public class CornerDebugData
     {
 
         public TacticalPosition tacticalPosition;
@@ -222,11 +202,10 @@ namespace FPSDemo.NPC.Utilities
         public SN<Vector3> cornerPos;
         public SN<Vector3> finalCornerPos;
         public List<Vector3> hitPositions;
-        public SN<Vector3> sphereCastOrigin, sphereCastDirection, cornerNormal, cornerFiringNormal;
+        public SN<Vector3> sphereCastOrigin, sphereCastDirection, cornerNormal, positionFiringDirection;
         public float sphereCastRadius;
         public SN<Vector3> yAxisStandSphereCastOrigin, yAxisStandSphereCastDirection, yAxisStandSphereCastHit, yAxisStandPos;
         public float yAxisStandSphereCastRadius;
-        public SN<Vector3> normStandOrigin, normStandNormal;
         public float normStandDistance;
 
         public SN<Vector3> verifyHorizStartPos, verifyHorizEndPos, verifyFailurePos;

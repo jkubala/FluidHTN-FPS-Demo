@@ -5,6 +5,7 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalPositionScanSettings : ScriptableObject
     {
         public float heightToScanThisAt = 1.85f;
+        public CoverHeight coverHeight = CoverHeight.NoCover;
         [Header("Corner detection settings")]
         public float cornerCheckRayWallOffset = 0.1f; // how far from the wall should the raycasts be fired from
         public float cornerCheckRayStep = 0.01f; // how much distance between the individual raycasts when scanning the wall
