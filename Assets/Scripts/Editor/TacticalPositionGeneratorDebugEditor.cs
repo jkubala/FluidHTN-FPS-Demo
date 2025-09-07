@@ -1,5 +1,6 @@
-using UnityEngine;
+using FPSDemo.Utils;
 using UnityEditor;
+using UnityEngine;
 namespace FPSDemo.NPC.Utilities
 {
 
@@ -16,7 +17,33 @@ namespace FPSDemo.NPC.Utilities
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            TacticalPositionGeneratorDebug posGeneratorDebug = (TacticalPositionGeneratorDebug)target;
+
+            if (GUILayout.Button("Generate tactical grid spawners"))
+            {
+                posGeneratorDebug.CreateSpawnersAlongTheGrid();
+            }
+
+            if (GUILayout.Button("Generate tactical positions for AI"))
+            {
+                LoggingUtils.ClearConsole();
+                posGeneratorDebug.GenerateTacticalPositions();
+            }
+
+            if (GUILayout.Button("Clear generated tactical positions for AI"))
+            {
+                posGeneratorDebug.ClearAllTacticalData();
+            }
+
+            if (GUILayout.Button("Save manual position GO data to memory"))
+            {
+                posGeneratorDebug.SaveManualPositions();
+            }
+
+            if (GUILayout.Button("Spawn manual position GOs from memory"))
+            {
+                posGeneratorDebug.LoadManualPositions();
+            }
 
             EditorGUILayout.LabelField("3D Cursor", EditorStyles.boldLabel);
 
@@ -29,6 +56,8 @@ namespace FPSDemo.NPC.Utilities
                 EditorGUILayout.LabelField("Cursor Position", _generatorDebug.Gizmo3DCursor.position.ToString("F2"));
                 EditorGUILayout.HelpBox("Hold Shift and click in Scene view to move the 3D cursor.", MessageType.Info);
             }
+
+            DrawDefaultInspector();
         }
 
         private void OnSceneGUI()

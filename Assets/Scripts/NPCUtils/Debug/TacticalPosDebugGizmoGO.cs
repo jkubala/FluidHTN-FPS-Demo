@@ -39,17 +39,10 @@ namespace FPSDemo.NPC.Utilities
 
         private void GetHighPosAdjustedToCornerDebug(TacticalDebugData tacticalDebugData)
         {
-            // Looking for left and right corners
-            DrawRay(tacticalDebugData.offsetPosition, tacticalDebugData.leftDirection * tacticalDebugData.leftCorner.distanceToCorner, Color.black);
-            DrawRay(tacticalDebugData.offsetPosition, -tacticalDebugData.leftDirection * tacticalDebugData.rightCorner.distanceToCorner, Color.black);
             DrawSphere(tacticalDebugData.offsetPosition, 0.05f, Color.black);
-            if (tacticalDebugData.leftCorner != null)
+            foreach (CornerDebugData corner in tacticalDebugData.corners)
             {
-                DisplayCornerDebugGizmos(tacticalDebugData.leftCorner);
-            }
-            if (tacticalDebugData.rightCorner != null)
-            {
-                DisplayCornerDebugGizmos(tacticalDebugData.rightCorner);
+                DisplayCornerDebugGizmos(corner);
             }
         }
 
@@ -74,8 +67,10 @@ namespace FPSDemo.NPC.Utilities
 
         private void ObstacleInFiringPositionDebug(TacticalDebugData tacticalDebugData)
         {
-            DisplayCornerObstacleCheck(tacticalDebugData.leftCorner);
-            DisplayCornerObstacleCheck(tacticalDebugData.rightCorner);
+            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            {
+                DisplayCornerObstacleCheck(corner);
+            }
         }
 
         private void DisplayCornerObstacleCheck(CornerDebugData debugData)
@@ -89,8 +84,10 @@ namespace FPSDemo.NPC.Utilities
 
         private void Non90DegreeCornerDebug(TacticalDebugData tacticalDebugData)
         {
-            DisplayCornerFiringNormals(tacticalDebugData.leftCorner);
-            DisplayCornerFiringNormals(tacticalDebugData.rightCorner);
+            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            {
+                DisplayCornerFiringNormals(corner);
+            }
         }
 
         private void DisplayCornerFiringNormals(CornerDebugData debugData)
@@ -104,8 +101,10 @@ namespace FPSDemo.NPC.Utilities
 
         private void YAxisStandardisationDebug(TacticalDebugData tacticalDebugData)
         {
-            DrawYAxisStandardisationSphereCast(tacticalDebugData.leftCorner);
-            DrawYAxisStandardisationSphereCast(tacticalDebugData.rightCorner);
+            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            {
+                DrawYAxisStandardisationSphereCast(corner);
+            }
         }
 
         private void DrawYAxisStandardisationSphereCast(CornerDebugData tacticalDebugData)
@@ -133,10 +132,12 @@ namespace FPSDemo.NPC.Utilities
             DrawSphere(tacticalDebugData.yAxisStandPos.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.yellow);
         }
 
-        private void DisplayVerificationData(TacticalDebugData debugData)
+        private void DisplayVerificationData(TacticalDebugData tacticalDebugData)
         {
-            DisplayVerificationDataOfCorner(debugData.leftCorner);
-            DisplayVerificationDataOfCorner(debugData.rightCorner);
+            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            { 
+                DisplayVerificationDataOfCorner(corner);
+            }
         }
 
         private void DisplayVerificationDataOfCorner(CornerDebugData debugData)
@@ -184,9 +185,8 @@ namespace FPSDemo.NPC.Utilities
     {
         public TacticalPositionGenerator.CoverGenerationMode genMode;
         private bool finished;
-        public Vector3 offsetPosition, leftDirection;
-        public CornerDebugData leftCorner;
-        public CornerDebugData rightCorner;
+        public Vector3 offsetPosition;
+        public List<CornerDebugData> corners = new();
         public Vector3 standardisationOrigin, standardisationDirection;
         public float standardisationDistance;
 

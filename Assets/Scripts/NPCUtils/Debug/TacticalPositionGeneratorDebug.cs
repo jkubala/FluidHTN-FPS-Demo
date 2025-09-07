@@ -1,22 +1,77 @@
+using System;
 using System.Collections.Generic;
 using FPSDemo.NPC.Utilities;
 using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(TacticalPositionGenerator))]
 public class TacticalPositionGeneratorDebug : MonoBehaviour
 {
-    [SerializeField] private TacticalPositionGenerator _generator;
+    private enum GizmoViewMode { all, finished, unfinished }
+    [SerializeField] private TacticalPositionGenerator.CoverGenerationMode _currentCoverGenMode = TacticalPositionGenerator.CoverGenerationMode.lowCover;
 
+    [SerializeField] private TacticalPositionGenerator _generator;
+    [SerializeField] private TacticalGeneratorSettings _settings;
+    [SerializeField] private bool _showPositions = false;
+    [SerializeField] private bool _showSpawners = false;
+
+    [Header("Gizmos")]
+    [SerializeField] private bool _createGizmoDebugObjects = false;
+    [SerializeField] private GizmoViewMode _currentGizmoViewMode;
+    private GizmoViewMode _lastGizmoViewMode;
+    [Range(1f, 5f)] public float _distanceToCreateGizmos = 3f;
+
+    [Header("Changed positions debug")]
+    public bool _createPosChangesDebugObjects = false;
+    [Range(0.01f, 0.25f)][SerializeField] private float _maxDistanceToConsiderSamePosition = 0.05f;
+    [Range(1f, 3f)][SerializeField] private float _maxDegreesDifferenceToConsiderSamePosition = 1f;
+
+    [Header("Scene references")]
     [SerializeField] private GameObject _debugParentAdded;
     [SerializeField] private GameObject _debugParentRemoved;
     [SerializeField] private GameObject _debugParentModified;
-    [SerializeField] private GameObject _debugGameObjectPosChangePrefab;
-
-    [SerializeField] private GameObject _debugGizmoGOPrefab;
     [SerializeField] private GameObject _debugGizmoGOParent;
+    [SerializeField] private GameObject _manualPositionsParent;
     [SerializeField] private Transform _gizmo3DCursor;
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject _debugGizmoGOPrefab;
+    [SerializeField] private GameObject _debugGameObjectPosChangePrefab;
+    [SerializeField] private GameObject _manualPositionPrefab;
+
+
+    CornerFinder _cornerFinder;
+    CornerFinder _cornerFinderDebug;
+
+
+    TacticalPositionGenerator Generator
+    {
+        get
+        {
+            if (_generator == null)
+            {
+                _generator = new(_settings, GetCornerFinder);
+            }
+            return _generator;
+        }
+    }
+
+    public CornerFinder GetCornerFinder
+    {
+        get
+        {
+            return _createGizmoDebugObjects ? (_cornerFinderDebug ??= new CornerFinderDebug(this))
+                            : (_cornerFinder ??= new CornerFinder());
+        }
+    }
+
+    public TacticalPositionGenerator.CoverGenerationMode CurCoverGenMode
+    {
+        get
+        {
+            return _currentCoverGenMode;
+        }
+    }
 
     [SerializeField] List<BasePositionClassifier> _classifiers = new();
     private List<BasePositionClassifier> Classifiers
@@ -36,9 +91,6 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         }
     }
 
-    [Header("Limits for difference when comparing after regeneration")]
-    [Range(0.01f, 0.25f)][SerializeField] private float _maxDistanceToConsiderSamePosition = 0.05f;
-    [Range(1f, 3f)][SerializeField] private float _maxDegreesDifferenceToConsiderSamePosition = 1f;
 
     public Transform Gizmo3DCursor
     {
@@ -47,33 +99,34 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_generator != null)
-        {
-            _generator.OnContextUpdated += HandleContextUpdated;
-            _generator.OnNewPotentialPositionCreated += HandleNewPotentialPosition;
-            _generator.OnGizmoViewModeChange += GizmoViewChanged;
-        }
+        _lastGizmoViewMode = _currentGizmoViewMode;
+        Generator.OnContextUpdated += HandleContextUpdated;
     }
 
     private void OnDisable()
     {
-        if (_generator != null)
+        Generator.OnContextUpdated -= HandleContextUpdated;
+    }
+
+    private void OnValidate()
+    {
+        if (_currentGizmoViewMode != _lastGizmoViewMode)
         {
-            _generator.OnContextUpdated -= HandleContextUpdated;
-            _generator.OnNewPotentialPositionCreated -= HandleNewPotentialPosition;
-            _generator.OnGizmoViewModeChange -= GizmoViewChanged;
+            GizmoViewChanged(_currentGizmoViewMode);
+            _lastGizmoViewMode = _currentGizmoViewMode;
         }
+        Generator.UpdateCornerFinder(GetCornerFinder);
     }
 
     private void ComputeDifferences(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
     {
-        if (!_generator.CreatePosChangesDebugObjects)
+        if (!_createPosChangesDebugObjects)
         {
             return;
         }
         GameObject debugGO = null;
 
-        if (_generator.CreatePosChangesDebugObjects)
+        if (_createPosChangesDebugObjects)
         {
             debugGO = _debugGameObjectPosChangePrefab;
         }
@@ -84,9 +137,14 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         }
     }
 
-    private void HandleNewPotentialPosition(Vector3 position, TacticalDebugData debugData, TacticalPositionGenerator.GizmoViewMode gizmoViewMode)
+    public bool PositionGizmoInRange(Vector3 position)
     {
-        if (Vector3.Distance(position, _gizmo3DCursor.position) < _generator.DistanceToCreateGizmos)
+        return Vector3.Distance(position, _gizmo3DCursor.position) < _distanceToCreateGizmos;
+    }
+
+    public void HandleNewPotentialPosition(Vector3 position, TacticalDebugData debugData)
+    {
+        if (PositionGizmoInRange(position))
         {
             Undo.RecordObject(_debugGizmoGOParent, "Add a new potential position");
             GameObject gizmoDebugGO = Instantiate(_debugGizmoGOPrefab, _debugGizmoGOParent.transform);
@@ -94,27 +152,27 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
             TacticalPosDebugGizmoGO gizmoDebug = gizmoDebugGO.GetComponent<TacticalPosDebugGizmoGO>();
             gizmoDebugGO.transform.position = position;
             gizmoDebug.TacticalDebugData = debugData;
-            HandleChildVisibility(gizmoViewMode, gizmoDebugGO);
+            UpdateChildVisibility(_currentGizmoViewMode, gizmoDebugGO);
             EditorUtility.SetDirty(_debugGizmoGOParent);
         }
     }
 
-    private void GizmoViewChanged(TacticalPositionGenerator.GizmoViewMode viewMode)
+    private void GizmoViewChanged(GizmoViewMode viewMode)
     {
         for (int i = 0; i < _debugGizmoGOParent.transform.childCount; i++)
         {
             GameObject childGO = _debugGizmoGOParent.transform.GetChild(i).gameObject;
-            HandleChildVisibility(viewMode, childGO);
+            UpdateChildVisibility(viewMode, childGO);
         }
     }
 
-    private void HandleChildVisibility(TacticalPositionGenerator.GizmoViewMode viewMode, GameObject childGO)
+    private void UpdateChildVisibility(GizmoViewMode viewMode, GameObject childGO)
     {
         if (childGO.TryGetComponent(out TacticalPosDebugGizmoGO childDebugGO))
         {
-            bool shouldShow = viewMode == TacticalPositionGenerator.GizmoViewMode.all ||
-                (childDebugGO.TacticalDebugData.Finished && viewMode == TacticalPositionGenerator.GizmoViewMode.finished) ||
-                (!childDebugGO.TacticalDebugData.Finished && viewMode == TacticalPositionGenerator.GizmoViewMode.unfinished);
+            bool shouldShow = viewMode == GizmoViewMode.all ||
+                (childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.finished) ||
+                (!childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.unfinished);
 
             SetChildVisibility(childGO, shouldShow);
         }
@@ -203,20 +261,20 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if (!_generator.ShowPositions)
+        if (!_showPositions)
         {
             return;
         }
 
         int totalCount = 0;
-        foreach (var activeContext in _generator.GetActiveCoverGenContexts())
+        foreach (var activeContext in Generator.GetActiveCoverGenContexts(_currentCoverGenMode))
         {
             totalCount += DisplayPositions(activeContext.positionData.Positions);
         }
 
-        if (_generator.ShowSpawners)
+        if (_showSpawners)
         {
-            foreach (Vector3 pos in _generator.GetSpawnerData.Positions)
+            foreach (Vector3 pos in Generator.GetSpawnerData.Positions)
             {
                 Gizmos.DrawSphere(pos, 0.1f);
             }
@@ -236,10 +294,10 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(Gizmo3DCursor.position, 0.1f);
 
-        if (_generator != null && _generator.DistanceToCreateGizmos > 0)
+        if (Generator != null && _distanceToCreateGizmos > 0)
         {
             Gizmos.color = new Color(1, 1, 0, 0.1f);
-            Gizmos.DrawWireSphere(Gizmo3DCursor.position, _generator.DistanceToCreateGizmos);
+            Gizmos.DrawWireSphere(Gizmo3DCursor.position, _distanceToCreateGizmos);
         }
     }
 
@@ -276,5 +334,30 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
             return positions.Count;
         }
         return 0;
+    }
+
+    public void CreateSpawnersAlongTheGrid()
+    {
+        Generator.CreateSpawnersAlongTheGrid();
+    }
+
+    public void GenerateTacticalPositions()
+    {
+        Generator.GenerateTacticalPositions(_currentCoverGenMode);
+    }
+
+    public void ClearAllTacticalData()
+    {
+        Generator.ClearAllTacticalData(_currentCoverGenMode);
+    }
+
+    public void SaveManualPositions()
+    {
+        Generator.SaveManualPositions(_manualPositionsParent);
+    }
+
+    public void LoadManualPositions()
+    {
+        Generator.LoadManualPositions(_manualPositionPrefab, _manualPositionsParent);
     }
 }

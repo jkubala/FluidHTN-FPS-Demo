@@ -4,27 +4,16 @@ using UnityEngine;
 
 namespace FPSDemo.NPC.Utilities
 {
-    public static class CornerFinder
+    public class CornerFinder
     {
         // A buffer to see, if there are any colliders present
-        private static readonly Collider[] nonAllocColBuffer = new Collider[1];
+        private readonly Collider[] nonAllocColBuffer = new Collider[1];
 
         // Find corner vertically
-        public static CornerDetectionInfo? FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, TacticalDebugData debugData = null)
+        public CornerDetectionInfo? FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             // Offset self from the wall in the direction of its normal
-            Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
-
-            Vector3 leftDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
-            if (debugData != null)
-            {
-                debugData.offsetPosition = offsetPosition;
-                debugData.leftDirection = leftDirection;
-                debugData.leftCorner = new(debugData)
-                {
-                    hitPositions = new()
-                };
-            }
+            Vector3 offsetPosition = CalculateOffsetPosition(hit, cornerSettings);
 
             // Return if inside geometry
             if (Physics.OverlapSphereNonAlloc(offsetPosition, cornerSettings.cornerCheckRayWallOffset - cornerSettings.floatPrecisionBuffer, nonAllocColBuffer) > 0)
@@ -33,25 +22,16 @@ namespace FPSDemo.NPC.Utilities
             }
 
             // Vertical corner "over" the cover
-            return FindCorner(offsetPosition, hit.normal, Vector3.up, cornerSettings, raycastMask, debugData?.leftCorner);
+            return FindCorner(offsetPosition, hit.normal, Vector3.up, cornerSettings, raycastMask);
         }
 
-        public static List<CornerDetectionInfo> FindCorners(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, TacticalDebugData debugData = null)
+        public virtual List<CornerDetectionInfo> FindCorners(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             List<CornerDetectionInfo> cornersFound = new();
 
             // Offset self from the wall in the direction of its normal
-            Vector3 offsetPosition = hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
+            Vector3 offsetPosition = CalculateOffsetPosition(hit, cornerSettings);
             Vector3 leftDirection = Vector3.Cross(Vector3.up, hit.normal).normalized;
-            if (debugData != null)
-            {
-                debugData.offsetPosition = offsetPosition;
-                debugData.leftDirection = leftDirection;
-                debugData.leftCorner = new(debugData);
-                debugData.rightCorner = new(debugData);
-                debugData.leftCorner.hitPositions = new();
-                debugData.rightCorner.hitPositions = new();
-            }
 
             // Return if inside geometry
             if (Physics.OverlapSphereNonAlloc(offsetPosition, cornerSettings.cornerCheckRayWallOffset - cornerSettings.floatPrecisionBuffer, nonAllocColBuffer) > 0)
@@ -60,8 +40,8 @@ namespace FPSDemo.NPC.Utilities
             }
 
             // Looking for left and right corners
-            CornerDetectionInfo? leftCornerInfo = FindCorner(offsetPosition, hit.normal, leftDirection, cornerSettings, raycastMask, debugData?.leftCorner);
-            CornerDetectionInfo? rightCornerInfo = FindCorner(offsetPosition, hit.normal, -leftDirection, cornerSettings, raycastMask, debugData?.rightCorner);
+            CornerDetectionInfo? leftCornerInfo = FindCorner(offsetPosition, hit.normal, leftDirection, cornerSettings, raycastMask);
+            CornerDetectionInfo? rightCornerInfo = FindCorner(offsetPosition, hit.normal, -leftDirection, cornerSettings, raycastMask);
 
             // If there is not enough space (do not want to have a cover position behind thin objects)
             if (GetCornerDistance(leftCornerInfo) + GetCornerDistance(rightCornerInfo) < cornerSettings.minWidthToConsiderAValidPosition)
@@ -82,7 +62,12 @@ namespace FPSDemo.NPC.Utilities
             return cornersFound;
         }
 
-        private static CornerDetectionInfo? FindCorner(Vector3 position, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, CornerDebugData debugData = null)
+        protected virtual Vector3 CalculateOffsetPosition(RaycastHit hit, TacticalPositionScanSettings cornerSettings)
+        {
+            return hit.point + hit.normal * cornerSettings.cornerCheckRayWallOffset;
+        }
+
+        protected virtual CornerDetectionInfo? FindCorner(Vector3 position, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             float distanceToObstacleAlongTheAxis = cornerSettings.cornerCheckRaySequenceDistance;
             if (Physics.Raycast(position, axis, out RaycastHit hit, cornerSettings.cornerCheckRaySequenceDistance, raycastMask))
@@ -90,19 +75,10 @@ namespace FPSDemo.NPC.Utilities
                 distanceToObstacleAlongTheAxis = Vector3.Distance(position, hit.point);
             }
 
-            CornerDetectionInfo? detectedCorner = ScanForConvexCorner(position, hitNormal, axis, cornerSettings, raycastMask, distanceToObstacleAlongTheAxis, debugData);
+            CornerDetectionInfo? detectedCorner = ScanForConvexCorner(position, hitNormal, axis, cornerSettings, raycastMask, distanceToObstacleAlongTheAxis);
 
-            // Convex corner found
-            if (detectedCorner.HasValue)
-            {
-                if (detectedCorner.Value.debugData != null)
-                {
-                    detectedCorner.Value.debugData.cornerNormal = detectedCorner.Value.coverWallNormal;
-                    detectedCorner.Value.debugData.positionFiringDirection = detectedCorner.Value.positionFiringDirection;
-                }
-            }
             // Convex corner not found
-            else
+            if (!detectedCorner.HasValue)
             {
                 // Stopped before reaching the full distance due to obstacle, return concave corner
                 if (!Mathf.Approximately(distanceToObstacleAlongTheAxis, cornerSettings.cornerCheckRaySequenceDistance))
@@ -119,10 +95,10 @@ namespace FPSDemo.NPC.Utilities
             return detectedCorner;
         }
 
-        private static CornerDetectionInfo? ScanForConvexCorner(Vector3 position, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, float maxDistance, CornerDebugData debugData = null)
+        protected virtual CornerDetectionInfo? ScanForConvexCorner(Vector3 position, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask, float maxDistance)
         {
             int currentHitsOfDifferentNormal = 0;
-            RaycastHit? lastDifferentHit = null;
+            Vector3? lastDifferentNormal = null;
             Vector3? lastAdjustedPosition = null;
             Vector3 adjustedPosition = position;
 
@@ -142,58 +118,36 @@ namespace FPSDemo.NPC.Utilities
             {
                 if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit newHit, cornerSettings.cornerCheckRayWallOffset + cornerSettings.rayLengthBeyondWall, raycastMask))
                 {
-                    debugData?.hitPositions.Add(newHit.point);
-
                     Vector3 newProjectedHitNormal = Vector3.ProjectOnPlane(newHit.normal, Vector3.up).normalized;
                     float angleDifference = Mathf.Abs(Vector3.SignedAngle(hitNormal, newProjectedHitNormal, Vector3.up));
-
-                    if (angleDifference > cornerSettings.minAngleToConsiderCorner)
+                    if (CornerBendDetected(newProjectedHitNormal, angleDifference, cornerSettings, ref currentHitsOfDifferentNormal, ref lastDifferentNormal, ref lastAdjustedPosition, adjustedPosition, newHit))
                     {
-                        if (!lastDifferentHit.HasValue || lastDifferentHit.Value.normal != newHit.normal)
+                        Vector3 newHitFiringNormal = Vector3.Cross(lastDifferentNormal.Value, Vector3.up).normalized;
+                        if (coverType == CoverType.LeftCorner)
                         {
-                            lastDifferentHit = newHit;
-                            lastAdjustedPosition = adjustedPosition;
-                            currentHitsOfDifferentNormal = 1;
+                            newHitFiringNormal = -newHitFiringNormal;
                         }
-                        else
+
+                        return new()
                         {
-                            currentHitsOfDifferentNormal++;
-
-                            if (currentHitsOfDifferentNormal >= cornerSettings.nOfHitsOfDifferentNormalToConsiderCorner)
-                            {
-                                Vector3 newHitFiringNormal = Vector3.Cross(lastDifferentHit.Value.normal, Vector3.up).normalized;
-                                if (coverType == CoverType.LeftCorner)
-                                {
-                                    newHitFiringNormal = -newHitFiringNormal;
-                                }
-
-                                return new()
-                                {
-                                    position = lastAdjustedPosition.Value,
-                                    cornerType = CornerType.Convex,
-                                    coverWallNormal = PhysicsUtils.FlattenVector(hitNormal),
-                                    coverType = coverType,
-                                    debugData = debugData,
-                                    outDirection = axis.normalized,
-                                    positionFiringDirection = PhysicsUtils.FlattenVector(newHitFiringNormal),
-                                    distanceToCorner = Vector3.Distance(position, lastAdjustedPosition.Value)
-                                };
-                            }
-                        }
+                            position = lastAdjustedPosition.Value,
+                            cornerType = CornerType.Convex,
+                            coverWallNormal = PhysicsUtils.FlattenVector(hitNormal),
+                            coverType = coverType,
+                            outDirection = axis.normalized,
+                            positionFiringDirection = PhysicsUtils.FlattenVector(newHitFiringNormal),
+                            distanceToCorner = Vector3.Distance(position, lastAdjustedPosition.Value)
+                        };
                     }
                 }
                 else
                 {
-                    Vector3 flattenedHitNormal = hitNormal;
-                    flattenedHitNormal.y = 0;
-                    flattenedHitNormal.Normalize();
                     return new()
                     {
                         position = adjustedPosition,
                         cornerType = CornerType.Convex,
                         coverWallNormal = PhysicsUtils.FlattenVector(hitNormal),
                         coverType = coverType,
-                        debugData = debugData,
                         outDirection = axis.normalized,
                         positionFiringDirection = PhysicsUtils.FlattenVector(-hitNormal),
                         distanceToCorner = Vector3.Distance(position, adjustedPosition)
@@ -206,7 +160,31 @@ namespace FPSDemo.NPC.Utilities
             return null; // No convex corner found within the loop
         }
 
-        private static float GetCornerDistance(CornerDetectionInfo? cornerInfo)
+        protected virtual bool CornerBendDetected(Vector3 newProjectedNormal, float angleDifference, TacticalPositionScanSettings cornerSettings, ref int currentHitsOfDifferentNormal, ref Vector3? lastDifferentNormal, ref Vector3? lastAdjustedPosition, Vector3 adjustedPosition, RaycastHit newHit)
+        {
+            if (angleDifference > cornerSettings.minAngleToConsiderCorner)
+            {
+                if (!lastDifferentNormal.HasValue || lastDifferentNormal.Value != newHit.normal)
+                {
+                    lastDifferentNormal = newHit.normal;
+                    lastAdjustedPosition = adjustedPosition;
+                    currentHitsOfDifferentNormal = 1;
+                }
+                else
+                {
+                    currentHitsOfDifferentNormal++;
+
+                    if (currentHitsOfDifferentNormal >= cornerSettings.nOfHitsOfDifferentNormalToConsiderCorner)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private float GetCornerDistance(CornerDetectionInfo? cornerInfo)
         {
             // Corner does not exist, so return infinity
             if (!cornerInfo.HasValue)

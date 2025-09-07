@@ -9,68 +9,39 @@ using UnityEngine.AI;
 namespace FPSDemo.NPC.Utilities
 {
     [ExecuteInEditMode]
-    public class TacticalPositionGenerator : MonoBehaviour
+    public class TacticalPositionGenerator
     {
-        public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners, manual }
-        public enum GizmoViewMode { all, finished, unfinished }
-        // ========================================================= INSPECTOR FIELDS
-        [Header("General")]
-        [SerializeField] private CoverGenerationMode _currentCoverGenMode = CoverGenerationMode.lowCover;
-        [SerializeField] private TacticalGeneratorSettings _settings;
-        [SerializeField] private GameObject _manualPositionsParent;
-        [SerializeField] private GameObject _manualPositionPrefab;
-        [SerializeField] private bool _showPositions = false;
-        [SerializeField] private bool _showSpawners = false;
-        [Header("Gizmo debug")]
-        [SerializeField] private GizmoViewMode _currentGizmoViewMode;
-        private GizmoViewMode _lastGizmoViewMode;
-        [SerializeField] private bool _createGizmoDebugObjects = false;
-        [Range(1f, 5f)] public float _distanceToCreateGizmos = 3f;
-        [Header("Position modification debug")]
-        public bool _createPosChangesDebugObjects = false;
-
-        public bool ShowPositions { get { return _showPositions; } }
-        public bool ShowSpawners { get { return _showSpawners; } }
-        public float DistanceToCreateGizmos { get { return _distanceToCreateGizmos; } }
-        public bool CreatePosChangesDebugObjects
+        public TacticalPositionGenerator(TacticalGeneratorSettings settings, CornerFinder cornerFinder)
         {
-            get { return _createPosChangesDebugObjects; }
+            _settings = settings;
+            _cornerFinder = cornerFinder;
+        }
+        public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners, manual }
+        [SerializeField] private TacticalGeneratorSettings _settings;
+        [SerializeField] private CornerFinder _cornerFinder;
+
+        public void UpdateCornerFinder(CornerFinder cornerFinder)
+        {
+            _cornerFinder = cornerFinder;
         }
 
         public TacticalGridSpawnerData GetSpawnerData { get { return _settings.gridSpawnerData; } }
 
         public event Action<TacticalPositionData, CoverGenerationContext> OnContextUpdated;
-        public event Action<Vector3, TacticalDebugData, GizmoViewMode> OnNewPotentialPositionCreated;
-        public event Action<GizmoViewMode> OnGizmoViewModeChange;
-
-        private void OnEnable()
-        {
-            _lastGizmoViewMode = _currentGizmoViewMode;
-            OnGizmoViewModeChange?.Invoke(_currentGizmoViewMode);
-        }
-
-        private void OnValidate()
-        {
-            if (_lastGizmoViewMode != _currentGizmoViewMode)
-            {
-                _lastGizmoViewMode = _currentGizmoViewMode;
-                OnGizmoViewModeChange?.Invoke(_lastGizmoViewMode);
-            }
-        }
 
         // ========================================================= GENERATION
 
-        public void LoadManualPositions()
+        public void LoadManualPositions(GameObject manualPositionPrefab, GameObject positionsParent)
         {
             Undo.SetCurrentGroupName("Load Manual Positions");
             int undoGroup = Undo.GetCurrentGroup();
 
-            Undo.RecordObject(_manualPositionsParent.transform, "Clear manual position children");
-            ClearManualPositionParentChildren();
+            Undo.RecordObject(positionsParent.transform, "Clear manual position children");
+            ClearManualPositionParentChildren(positionsParent);
             CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
             foreach (TacticalPosition position in manualContext.positionData.Positions)
             {
-                GameObject newManualPosition = Instantiate(_manualPositionPrefab, position.Position, position.mainCover.rotationToAlignWithCover, _manualPositionsParent.transform);
+                GameObject newManualPosition = GameObject.Instantiate(manualPositionPrefab, position.Position, position.mainCover.rotationToAlignWithCover, positionsParent.transform);
                 Undo.RegisterCreatedObjectUndo(newManualPosition, "Create manual position GameObject");
                 if (newManualPosition.TryGetComponent(out ManualPosition pos))
                 {
@@ -85,11 +56,11 @@ namespace FPSDemo.NPC.Utilities
             Undo.CollapseUndoOperations(undoGroup);
         }
 
-        private void ClearManualPositionParentChildren()
+        private void ClearManualPositionParentChildren(GameObject positionsParent)
         {
-            for (int i = _manualPositionsParent.transform.childCount - 1; i >= 0; i--)
+            for (int i = positionsParent.transform.childCount - 1; i >= 0; i--)
             {
-                GameObject child = _manualPositionsParent.transform.GetChild(i).gameObject;
+                GameObject child = positionsParent.transform.GetChild(i).gameObject;
 
 #if UNITY_EDITOR
                 Undo.DestroyObjectImmediate(child);
@@ -99,7 +70,7 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        public void SaveManualPositions()
+        public void SaveManualPositions(GameObject positionsParent)
         {
             Undo.SetCurrentGroupName("Save Manual Positions");
             int undoGroup = Undo.GetCurrentGroup();
@@ -108,16 +79,16 @@ namespace FPSDemo.NPC.Utilities
             Undo.RecordObject(manualContext.positionData, "Save manual position data");
             manualContext.positionData.Positions.Clear();
 
-            for (int i = 0; i < _manualPositionsParent.transform.childCount; i++)
+            for (int i = 0; i < positionsParent.transform.childCount; i++)
             {
-                Transform child = _manualPositionsParent.transform.GetChild(i);
+                Transform child = positionsParent.transform.GetChild(i);
                 if (child.TryGetComponent(out ManualPosition pos))
                 {
                     manualContext.positionData.Positions.Add(pos.tacticalPosition);
                 }
                 else
                 {
-                    Debug.LogError($"{_manualPositionsParent} has a child '{child.name}' which does not have ManualPosition script attached!");
+                    Debug.LogError($"{positionsParent} has a child '{child.name}' which does not have ManualPosition script attached!");
                 }
             }
 
@@ -125,7 +96,7 @@ namespace FPSDemo.NPC.Utilities
             Undo.CollapseUndoOperations(undoGroup);
         }
 
-        public void GenerateTacticalPositions()
+        public void GenerateTacticalPositions(CoverGenerationMode genMode)
         {
             Debug.Log("Generating tactical positions for AI");
             if (!ValidateParams())
@@ -140,9 +111,9 @@ namespace FPSDemo.NPC.Utilities
 
             Undo.SetCurrentGroupName("Generate Tactical Positions");
             int undoGroup = Undo.GetCurrentGroup();
-            foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
+            foreach (CoverGenerationContext context in _settings.GetContextsFor(genMode))
             {
-                if ((_currentCoverGenMode != CoverGenerationMode.all && _currentCoverGenMode != context.genMode) || context.genMode == CoverGenerationMode.manual)
+                if ((genMode != CoverGenerationMode.all && genMode != context.genMode) || context.genMode == CoverGenerationMode.manual)
                 {
                     continue;
                 }
@@ -163,15 +134,7 @@ namespace FPSDemo.NPC.Utilities
 
                 foreach (RaycastHit hit in hits)
                 {
-                    TacticalDebugData debugData = null;
-                    if (_createGizmoDebugObjects)
-                    {
-                        debugData = new()
-                        {
-                            genMode = context.genMode
-                        };
-                    }
-                    cornersFound.AddRange(GetCornersAt(hit, context, debugData));
+                    cornersFound.AddRange(GetCornersAt(hit, context));
                 }
 
                 for (int j = cornersFound.Count - 1; j >= 0; j--)
@@ -190,9 +153,9 @@ namespace FPSDemo.NPC.Utilities
             Undo.CollapseUndoOperations(undoGroup);
         }
 
-        public List<CoverGenerationContext> GetActiveCoverGenContexts()
+        public List<CoverGenerationContext> GetActiveCoverGenContexts(CoverGenerationMode genMode)
         {
-            return _settings.GetContextsFor(_currentCoverGenMode);
+            return _settings.GetContextsFor(genMode);
         }
 
         private void UpdateCoverPositionContext(TacticalPositionData oldPositions, CoverGenerationContext context)
@@ -212,11 +175,11 @@ namespace FPSDemo.NPC.Utilities
 #endif
         }
 
-        public void ClearAllTacticalData()
+        public void ClearAllTacticalData(CoverGenerationMode genMode)
         {
             Undo.SetCurrentGroupName("Clear All Tactical Data");
             int undoGroup = Undo.GetCurrentGroup();
-            foreach (CoverGenerationContext context in _settings.GetContextsFor(_currentCoverGenMode))
+            foreach (CoverGenerationContext context in _settings.GetContextsFor(genMode))
             {
                 if (context.genMode == CoverGenerationMode.manual)
                 {
@@ -227,7 +190,6 @@ namespace FPSDemo.NPC.Utilities
             }
             Undo.CollapseUndoOperations(undoGroup);
         }
-
 
         private void ClearTacticalData(CoverGenerationContext context)
         {
@@ -378,29 +340,24 @@ namespace FPSDemo.NPC.Utilities
             return hitsFound;
         }
 
-        private List<CornerDetectionInfo> GetCornersAt(RaycastHit hit, CoverGenerationContext context, TacticalDebugData debugData)
+        private List<CornerDetectionInfo> GetCornersAt(RaycastHit hit, CoverGenerationContext context)
         {
             List<CornerDetectionInfo> cornersFound = new();
 
             if (context.cornerSettings.lowCover)
             {
-                CornerDetectionInfo? lowCoverInfo = CornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, debugData);
-                if (lowCoverInfo.HasValue)
-                {
-                    cornersFound = new()
-                    {
-                        lowCoverInfo.Value
-                    };
-                }
+                //CornerDetectionInfo? lowCoverInfo = CornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, debugData);
+                //if (lowCoverInfo.HasValue)
+                //{
+                //    cornersFound = new()
+                //    {
+                //        lowCoverInfo.Value
+                //    };
+                //}
             }
             else
             {
-                cornersFound = CornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask, debugData);
-            }
-
-            if (debugData != null)
-            {
-                OnNewPotentialPositionCreated?.Invoke(hit.point, debugData, _currentGizmoViewMode);
+                cornersFound = _cornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask);
             }
 
             return cornersFound;
@@ -495,7 +452,6 @@ namespace FPSDemo.NPC.Utilities
             }
         }
     }
-
 
     public struct CornerDetectionInfo
     {

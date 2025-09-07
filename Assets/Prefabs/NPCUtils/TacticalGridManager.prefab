@@ -102,7 +102,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8732690725868077008}
-  - component: {fileID: 2812548268978884110}
   - component: {fileID: 4184888688748300026}
   m_Layer: 0
   m_Name: TacticalGridManager
@@ -129,27 +128,6 @@ Transform:
   - {fileID: 8472293042617022404}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2812548268978884110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440761298117873262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7d039b793bcfc42a47792ff46aa68d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentCoverGenMode: 0
-  _settings: {fileID: 11400000, guid: 0a7b0500d02b089478a8a8c37f7f31f5, type: 2}
-  _manualPositionsParent: {fileID: 4389727415186780036}
-  manualPositionPrefab: {fileID: 5471357510846678973, guid: 71d628ed68a430046812f5f646a261e9, type: 3}
-  _showPositions: 1
-  _currentGizmoViewMode: 1
-  _createGizmoDebugObjects: 1
-  _distanceToCreateGizmos: 3
-  _createPosChangesDebugObjects: 1
 --- !u!114 &4184888688748300026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +140,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661cead1df5608340b0acb5c930ec722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generator: {fileID: 2812548268978884110}
+  _currentCoverGenMode: 1
+  _currentGizmoViewMode: 0
+  _showPositions: 0
+  _showSpawners: 0
+  _distanceToCreateGizmos: 3
+  _createGizmoDebugObjects: 0
+  _createPosChangesDebugObjects: 0
   _debugParentAdded: {fileID: 5176006460058414084}
   _debugParentRemoved: {fileID: 1865662451736853929}
   _debugParentModified: {fileID: 2136254997686686962}
@@ -170,6 +154,9 @@ MonoBehaviour:
   _debugGizmoGOPrefab: {fileID: 1725634254696360293, guid: a8f6e3ffc6fe7c940ba2d8de5e5434c8, type: 3}
   _debugGizmoGOParent: {fileID: 8901765915555985194}
   _gizmo3DCursor: {fileID: 756202816415675167}
+  _manualPositionsParent: {fileID: 0}
+  _manualPositionPrefab: {fileID: 0}
+  _settings: {fileID: 0}
   _maxDistanceToConsiderSamePosition: 0.05
   _maxDegreesDifferenceToConsiderSamePosition: 1
 --- !u!1 &4389727415186780036
