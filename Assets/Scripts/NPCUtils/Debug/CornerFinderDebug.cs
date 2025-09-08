@@ -39,7 +39,7 @@ public class CornerFinderDebug : CornerFinder
         return offsetPosition;
     }
 
-    protected override CornerDetectionInfo? FindCorner(Vector3 position, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
+    protected override CornerDetectionInfo FindCorner(Vector3 position, Vector3 hitNormal, Vector3 axis, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
     {
         CornerDebugData cornerDebugData = null;
         if (_debugData != null)
@@ -50,16 +50,16 @@ public class CornerFinderDebug : CornerFinder
             };
             _debugData.corners.Add(cornerDebugData);
         }
-        CornerDetectionInfo? cornerInfo = base.FindCorner(position, hitNormal, axis, cornerSettings, raycastMask);
+        CornerDetectionInfo cornerInfo = base.FindCorner(position, hitNormal, axis, cornerSettings, raycastMask);
 
-        if (cornerDebugData != null && cornerInfo.HasValue)
+        if (cornerDebugData != null && cornerInfo != null)
         {
-            var modifiedCornerInfo = cornerInfo.Value;
+            var modifiedCornerInfo = cornerInfo;
             modifiedCornerInfo.debugData = cornerDebugData;
-            if (cornerInfo.Value.cornerType == CornerType.Convex)
+            if (cornerInfo.cornerType == CornerType.Convex)
             {
-                cornerDebugData.cornerNormal = cornerInfo.Value.coverWallNormal;
-                cornerDebugData.positionFiringDirection = cornerInfo.Value.positionFiringDirection;
+                cornerDebugData.cornerNormal = cornerInfo.coverWallNormal;
+                cornerDebugData.positionFiringDirection = cornerInfo.positionFiringDirection;
             }
             return modifiedCornerInfo;
         }

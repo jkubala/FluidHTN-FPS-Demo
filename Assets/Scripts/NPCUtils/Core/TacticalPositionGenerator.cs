@@ -11,14 +11,16 @@ namespace FPSDemo.NPC.Utilities
     [ExecuteInEditMode]
     public class TacticalPositionGenerator
     {
-        public TacticalPositionGenerator(TacticalGeneratorSettings settings, CornerFinder cornerFinder)
+        public TacticalPositionGenerator(TacticalGeneratorSettings settings, CornerFinder cornerFinder, PositionValidator positionValidator)
         {
             _settings = settings;
             _cornerFinder = cornerFinder;
+            _positionValidator = positionValidator;
         }
         public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners, manual }
         [SerializeField] private TacticalGeneratorSettings _settings;
         [SerializeField] private CornerFinder _cornerFinder;
+        [SerializeField] private PositionValidator _positionValidator;
 
         public void UpdateCornerFinder(CornerFinder cornerFinder)
         {
@@ -365,10 +367,10 @@ namespace FPSDemo.NPC.Utilities
 
         private TacticalPosition ProcessCornerToTacticalPosition(CornerDetectionInfo corner, CoverGenerationContext context)
         {
-            CornerDetectionInfo? adjustedInfo = PositionValidator.ValidateCornerPosition(corner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
-            if (adjustedInfo.HasValue)
+            CornerDetectionInfo adjustedInfo = _positionValidator.ValidateCornerPosition(corner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
+            if (adjustedInfo != null)
             {
-                return CreateTacticalPosition(adjustedInfo.Value, context.cornerSettings.coverHeight, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask);
+                return CreateTacticalPosition(adjustedInfo, context.cornerSettings.coverHeight, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask);
             }
 
             return null;
@@ -453,7 +455,7 @@ namespace FPSDemo.NPC.Utilities
         }
     }
 
-    public struct CornerDetectionInfo
+    public class CornerDetectionInfo
     {
         public CornerType cornerType;
         public CoverType coverType;

@@ -123,13 +123,6 @@ namespace FPSDemo.NPC.Utilities
             }
 
             DrawSphere(tacticalDebugData.yAxisStandSphereCastHit.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.red);
-
-            if (!tacticalDebugData.yAxisStandPos.HasValue)
-            {
-                return;
-            }
-
-            DrawSphere(tacticalDebugData.yAxisStandPos.Value, tacticalDebugData.yAxisStandSphereCastRadius, Color.yellow);
         }
 
         private void DisplayVerificationData(TacticalDebugData tacticalDebugData)
@@ -214,7 +207,7 @@ namespace FPSDemo.NPC.Utilities
         public List<Vector3> hitPositions;
         public SN<Vector3> sphereCastOrigin, sphereCastDirection, cornerNormal, positionFiringDirection;
         public float sphereCastRadius;
-        public SN<Vector3> yAxisStandSphereCastOrigin, yAxisStandSphereCastDirection, yAxisStandSphereCastHit, yAxisStandPos;
+        public SN<Vector3> yAxisStandSphereCastOrigin, yAxisStandSphereCastDirection, yAxisStandSphereCastHit;
         public float yAxisStandSphereCastRadius;
         public float normStandDistance;
 

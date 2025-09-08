@@ -41,7 +41,10 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
 
 
     CornerFinder _cornerFinder;
-    CornerFinder _cornerFinderDebug;
+    CornerFinderDebug _cornerFinderDebug;
+
+    PositionValidator _positionValidator;
+    PositionValidatorDebug _positionValidatorDebug;
 
 
     TacticalPositionGenerator Generator
@@ -50,7 +53,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         {
             if (_generator == null)
             {
-                _generator = new(_settings, GetCornerFinder);
+                _generator = new(_settings, GetCornerFinder, GetPositionValidator);
             }
             return _generator;
         }
@@ -62,6 +65,15 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         {
             return _createGizmoDebugObjects ? (_cornerFinderDebug ??= new CornerFinderDebug(this))
                             : (_cornerFinder ??= new CornerFinder());
+        }
+    }
+
+    public PositionValidator GetPositionValidator
+    {
+        get
+        {
+            return _createGizmoDebugObjects ? (_positionValidatorDebug ??= new PositionValidatorDebug())
+                            : (_positionValidator ??= new PositionValidator());
         }
     }
 
