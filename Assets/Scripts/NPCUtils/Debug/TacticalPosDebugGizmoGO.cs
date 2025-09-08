@@ -10,6 +10,43 @@ namespace FPSDemo.NPC.Utilities
         enum DebugMode { Corner, Non90DegreeCorner, Obstacle, YAxisStandardisation, Verification }
         [SerializeField] DebugMode debugMode;
         [SerializeField] private TacticalDebugData _tacticalDebugData;
+        [SerializeField] private bool showAllCorners = true;
+        private int currentCornerIndex = 0;
+
+        public bool ShowAllCorners => showAllCorners;
+
+        public int CurrentCornerIndex
+        {
+            get { return currentCornerIndex; }
+        }
+
+        public void IncrementCornerIndex()
+        {
+            if (currentCornerIndex + 1 > _tacticalDebugData.corners.Count - 1)
+            {
+                currentCornerIndex = 0;
+            }
+            else
+            {
+                currentCornerIndex++;
+            }
+            SceneView.RepaintAll();
+        }
+
+        public void DecrementCornerIndex()
+        {
+            if (currentCornerIndex - 1 < 0)
+            {
+                currentCornerIndex = _tacticalDebugData.corners.Count - 1;
+            }
+            else
+            {
+                currentCornerIndex--;
+            }
+            SceneView.RepaintAll();
+        }
+
+
         public TacticalDebugData TacticalDebugData
         {
             get
@@ -21,6 +58,24 @@ namespace FPSDemo.NPC.Utilities
                 _tacticalDebugData = value;
             }
         }
+
+        private IEnumerable<CornerDebugData> GetCornersToDraw(TacticalDebugData tacticalDebugData)
+        {
+            if (tacticalDebugData == null || tacticalDebugData.corners.Count == 0)
+                yield break;
+
+            if (showAllCorners)
+            {
+                foreach (var c in tacticalDebugData.corners)
+                    yield return c;
+            }
+            else
+            {
+                currentCornerIndex = Mathf.Clamp(currentCornerIndex, 0, tacticalDebugData.corners.Count - 1);
+                yield return tacticalDebugData.corners[currentCornerIndex];
+            }
+        }
+
         private void DrawSphere(Vector3 position, float radius, Color color)
         {
             Color curColor = Gizmos.color;
@@ -40,7 +95,7 @@ namespace FPSDemo.NPC.Utilities
         private void GetHighPosAdjustedToCornerDebug(TacticalDebugData tacticalDebugData)
         {
             DrawSphere(tacticalDebugData.offsetPosition, 0.05f, Color.black);
-            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            foreach (CornerDebugData corner in GetCornersToDraw(tacticalDebugData))
             {
                 DisplayCornerDebugGizmos(corner);
             }
@@ -67,7 +122,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void ObstacleInFiringPositionDebug(TacticalDebugData tacticalDebugData)
         {
-            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            foreach (CornerDebugData corner in GetCornersToDraw(tacticalDebugData))
             {
                 DisplayCornerObstacleCheck(corner);
             }
@@ -84,7 +139,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void Non90DegreeCornerDebug(TacticalDebugData tacticalDebugData)
         {
-            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            foreach (CornerDebugData corner in GetCornersToDraw(tacticalDebugData))
             {
                 DisplayCornerFiringNormals(corner);
             }
@@ -101,7 +156,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void YAxisStandardisationDebug(TacticalDebugData tacticalDebugData)
         {
-            foreach (CornerDebugData corner in tacticalDebugData.corners)
+            foreach (CornerDebugData corner in GetCornersToDraw(tacticalDebugData))
             {
                 DrawYAxisStandardisationSphereCast(corner);
             }
@@ -127,8 +182,8 @@ namespace FPSDemo.NPC.Utilities
 
         private void DisplayVerificationData(TacticalDebugData tacticalDebugData)
         {
-            foreach (CornerDebugData corner in tacticalDebugData.corners)
-            { 
+            foreach (CornerDebugData corner in GetCornersToDraw(tacticalDebugData))
+            {
                 DisplayVerificationDataOfCorner(corner);
             }
         }
