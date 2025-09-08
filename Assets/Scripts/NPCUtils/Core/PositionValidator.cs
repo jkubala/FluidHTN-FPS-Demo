@@ -21,7 +21,6 @@ namespace FPSDemo.NPC.Utilities
             // Try to juggle shifts due to cover continuity and also Y axis shifts
             do
             {
-                //newPos = VerifyContinuousCoverOfCorner(newPos.Value, Quaternion.LookRotation(-cornerInfo.coverWallNormal, Vector3.up), -cornerInfo.outDirection, 2f, .75f, posSettings, raycastMask);
                 newPos = VerifyContinuousCoverOfCorner(newPos.Value, cornerInfo, 2f, .75f, posSettings, raycastMask);
                 // Cover verification failed, get out of there
                 if (!newPos.HasValue)
@@ -44,7 +43,7 @@ namespace FPSDemo.NPC.Utilities
 
             if (ObstacleInFiringPositionOfCorner(cornerInfo, cornerSettings, raycastMask))
             {
-                return null;
+               // return null;
             }
             return cornerInfo;
         }

@@ -16,7 +16,6 @@ namespace FPSDemo.NPC.Utilities
             {
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Showing corner: " + (gizmoScript.CurrentCornerIndex + 1));
-                //EditorGUILayout.LabelField("Corner Cycling Controls", EditorStyles.boldLabel);
 
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Previous"))

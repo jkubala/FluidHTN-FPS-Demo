@@ -27,6 +27,6 @@ MonoBehaviour:
   sphereCastForFiringPositionCheckRadius: 0.15
   sphereCastForFiringPositionCheckDistance: 1
   nOfHitsOfDifferentNormalToConsiderCorner: 3
-  firingPositionHeight: 1
+  firingPositionHeight: 1.2
   maxYDifferenceWhenAdjusting: 0.3
   lowCover: 0

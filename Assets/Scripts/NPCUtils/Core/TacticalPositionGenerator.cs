@@ -345,18 +345,18 @@ namespace FPSDemo.NPC.Utilities
         {
             List<CornerDetectionInfo> cornersFound = new();
 
-            if (context.cornerSettings.lowCover)
+            if (context.cornerSettings.genMode == CoverGenerationMode.lowCover)
             {
-                //CornerDetectionInfo? lowCoverInfo = CornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask, debugData);
-                //if (lowCoverInfo.HasValue)
-                //{
-                //    cornersFound = new()
-                //    {
-                //        lowCoverInfo.Value
-                //    };
-                //}
+                CornerDetectionInfo lowCoverInfo = _cornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask);
+                if (lowCoverInfo != null)
+                {
+                    cornersFound = new()
+                    {
+                        lowCoverInfo
+                    };
+                }
             }
-            else
+            else if (context.cornerSettings.genMode == CoverGenerationMode.lowCorners || context.cornerSettings.genMode == CoverGenerationMode.highCorners)
             {
                 cornersFound = _cornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask);
             }
@@ -369,7 +369,7 @@ namespace FPSDemo.NPC.Utilities
             CornerDetectionInfo adjustedInfo = _positionValidator.ValidateCornerPosition(corner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
             if (adjustedInfo != null)
             {
-                return CreateTacticalPosition(adjustedInfo, context.cornerSettings.coverHeight, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask);
+                return CreateTacticalPosition(adjustedInfo, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask);
             }
 
             return null;
@@ -392,12 +392,11 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private TacticalPosition CreateTacticalPosition(CornerDetectionInfo cornerInfo, CoverHeight coverHeight, float cornerCheckPositionOffset, LayerMask raycastMask)
+        private TacticalPosition CreateTacticalPosition(CornerDetectionInfo cornerInfo, float cornerCheckPositionOffset, LayerMask raycastMask)
         {
             MainCover mainCover = new()
             {
                 type = cornerInfo.coverType,
-                height = coverHeight,
                 rotationToAlignWithCover = Quaternion.LookRotation(-cornerInfo.coverWallNormal, Vector3.up)
             };
 

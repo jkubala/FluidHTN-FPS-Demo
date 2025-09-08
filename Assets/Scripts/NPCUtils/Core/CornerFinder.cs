@@ -10,7 +10,7 @@ namespace FPSDemo.NPC.Utilities
         private readonly Collider[] nonAllocColBuffer = new Collider[1];
 
         // Find corner vertically
-        public CornerDetectionInfo FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
+        public virtual CornerDetectionInfo FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             // Offset self from the wall in the direction of its normal
             Vector3 offsetPosition = CalculateOffsetPosition(hit, cornerSettings);

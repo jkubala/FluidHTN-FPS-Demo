@@ -24,10 +24,28 @@ public class CornerFinderDebug : CornerFinder
         {
             _debugData = null;
         }
-        var result = base.FindCorners(hit, cornerSettings, raycastMask);
         _debugGen.HandleNewPotentialPosition(hit.point, _debugData);
-        return result;
+        return base.FindCorners(hit, cornerSettings, raycastMask);
     }
+
+    public override CornerDetectionInfo FindLowCoverPos(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
+    {
+        if (_debugGen.PositionGizmoInRange(hit.point))
+        {
+            _debugData = new()
+            {
+                genMode = cornerSettings.genMode
+            };
+        }
+        else
+        {
+            _debugData = null;
+        }
+
+        _debugGen.HandleNewPotentialPosition(hit.point, _debugData);
+        return base.FindLowCoverPos(hit, cornerSettings, raycastMask); ;
+    }
+
 
     protected override Vector3 CalculateOffsetPosition(RaycastHit hit, TacticalPositionScanSettings cornerSettings)
     {
