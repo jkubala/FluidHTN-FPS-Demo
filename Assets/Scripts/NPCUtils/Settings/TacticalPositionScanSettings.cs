@@ -4,6 +4,7 @@ namespace FPSDemo.NPC.Utilities
     [CreateAssetMenu(fileName = "New corner settings", menuName = "FPSDemo/TacticalGrid/PositionScanSettings")]
     public class TacticalPositionScanSettings : ScriptableObject
     {
+        public TacticalPositionGenerator.CoverGenerationMode genMode;
         public float heightToScanThisAt = 1.85f;
         public CoverHeight coverHeight = CoverHeight.NoCover;
         [Header("Corner detection settings")]

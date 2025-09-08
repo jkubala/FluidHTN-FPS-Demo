@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e339ba524ff0ba439801a87d7fc6402, type: 3}
   m_Name: TacticalScanSettingsLowCorner
   m_EditorClassIdentifier: 
+  genMode: 2
   heightToScanThisAt: 0.95
+  coverHeight: 2
   cornerCheckRayWallOffset: 0.1
   cornerCheckRayStep: 0.01
   cornerCheckRaySequenceDistance: 2
@@ -27,3 +29,4 @@ MonoBehaviour:
   nOfHitsOfDifferentNormalToConsiderCorner: 3
   firingPositionHeight: 1
   maxYDifferenceWhenAdjusting: 0.3
+  lowCover: 0

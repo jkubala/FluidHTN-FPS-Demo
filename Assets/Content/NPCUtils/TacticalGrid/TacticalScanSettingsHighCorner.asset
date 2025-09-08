@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e339ba524ff0ba439801a87d7fc6402, type: 3}
   m_Name: TacticalScanSettingsHighCorner
   m_EditorClassIdentifier: 
+  genMode: 3
   heightToScanThisAt: 1.85
   coverHeight: 1
   cornerCheckRayWallOffset: 0.1

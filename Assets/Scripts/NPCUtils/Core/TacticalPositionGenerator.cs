@@ -115,7 +115,7 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(genMode))
             {
-                if ((genMode != CoverGenerationMode.all && genMode != context.genMode) || context.genMode == CoverGenerationMode.manual)
+                if ((genMode != CoverGenerationMode.all && genMode != context.cornerSettings.genMode) || context.cornerSettings.genMode == CoverGenerationMode.manual)
                 {
                     continue;
                 }
@@ -183,7 +183,7 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(genMode))
             {
-                if (context.genMode == CoverGenerationMode.manual)
+                if (context.cornerSettings.genMode == CoverGenerationMode.manual)
                 {
                     continue;
                 }
@@ -242,8 +242,7 @@ namespace FPSDemo.NPC.Utilities
         private void RemoveDuplicates(float distanceThreshold, List<TacticalPosition> targetData)
         {
             // List to store unique positions, initialized with manually placed positions
-            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
-            List<TacticalPosition> uniquePositions = new(manualContext.positionData.Positions);
+            List<TacticalPosition> uniquePositions = new(_settings.GetManualPositionData().Positions);
 
             // Iterate over each position
             for (int i = 0; i < targetData.Count; i++)

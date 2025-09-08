@@ -7,15 +7,21 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalGeneratorSettings : ScriptableObject
     {
         [SerializeField] List<CoverGenerationContext> generationContexts;
+        [SerializeField] private TacticalPositionData manualPositionData;
         public TacticalGridGenerationSettings gridSettings;
-        public TacticalPositionSettings positionSettings;
         public TacticalGridSpawnerData gridSpawnerData;
+        public TacticalPositionSettings positionSettings;
         public LayerMask raycastMask = 1 << 0;
 
 
         public List<CoverGenerationContext> GetContextsFor(TacticalPositionGenerator.CoverGenerationMode genMode)
         {
             List<CoverGenerationContext> contexts = new();
+            if (genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
+            {
+                return contexts;
+            }
+
             if (genMode == TacticalPositionGenerator.CoverGenerationMode.all)
             {
                 contexts.AddRange(generationContexts);
@@ -24,7 +30,7 @@ namespace FPSDemo.NPC.Utilities
             {
                 foreach (var ctx in generationContexts)
                 {
-                    if (ctx.genMode == genMode)
+                    if (ctx.cornerSettings.genMode == genMode)
                     {
                         contexts.Add(ctx);
                         break;
@@ -33,12 +39,16 @@ namespace FPSDemo.NPC.Utilities
             }
             return contexts;
         }
+
+        public TacticalPositionData GetManualPositionData()
+        {
+            return manualPositionData;
+        }
     }
 
     [Serializable]
     public class CoverGenerationContext
     {
-        public TacticalPositionGenerator.CoverGenerationMode genMode;
         public TacticalPositionData positionData;
         public TacticalPositionScanSettings cornerSettings;
     }

@@ -13,21 +13,16 @@ MonoBehaviour:
   m_Name: DM1TacticalGeneratorSettings
   m_EditorClassIdentifier: 
   generationContexts:
-  - genMode: 1
-    positionData: {fileID: 11400000, guid: 75a9fb66c084d2a41b633033ad046e32, type: 2}
+  - positionData: {fileID: 11400000, guid: 75a9fb66c084d2a41b633033ad046e32, type: 2}
     cornerSettings: {fileID: 11400000, guid: 0f36221c8ffcad645944bc4313cd3c8a, type: 2}
-  - genMode: 2
-    positionData: {fileID: 11400000, guid: 2af7f2930fba2b549a48dff968d0d56a, type: 2}
+  - positionData: {fileID: 11400000, guid: 2af7f2930fba2b549a48dff968d0d56a, type: 2}
     cornerSettings: {fileID: 11400000, guid: 41bad24ddf5599f47a4c56985921d4ca, type: 2}
-  - genMode: 3
-    positionData: {fileID: 11400000, guid: b94514ec79c5099429cbbe581fb4c80a, type: 2}
+  - positionData: {fileID: 11400000, guid: b94514ec79c5099429cbbe581fb4c80a, type: 2}
     cornerSettings: {fileID: 11400000, guid: 821bdb256ccdeb247b4a52adcde71292, type: 2}
-  - genMode: 4
-    positionData: {fileID: 11400000, guid: eff49685c96ebca49a8c8be4ac6ae2fd, type: 2}
-    cornerSettings: {fileID: 0}
+  manualPositionData: {fileID: 11400000, guid: eff49685c96ebca49a8c8be4ac6ae2fd, type: 2}
   gridSettings: {fileID: 11400000, guid: a734d3d90ff7c0143b1c5086a4d04382, type: 2}
-  positionSettings: {fileID: 11400000, guid: 575799178b16a2b4abcab36bf782a0b3, type: 2}
   gridSpawnerData: {fileID: 11400000, guid: af0af839894b6dd40a87ff0789b77136, type: 2}
+  positionSettings: {fileID: 11400000, guid: 575799178b16a2b4abcab36bf782a0b3, type: 2}
   raycastMask:
     serializedVersion: 2
     m_Bits: 1

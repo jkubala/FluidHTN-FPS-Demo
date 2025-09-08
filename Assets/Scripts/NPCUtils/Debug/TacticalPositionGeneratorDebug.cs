@@ -214,7 +214,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (context != null)
         {
-            if (context.genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
+            if (context.cornerSettings.genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
             {
                 return;
             }
@@ -255,7 +255,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
             GameObject child = _debugGizmoGOParent.transform.GetChild(i).gameObject;
             if (child.TryGetComponent(out TacticalPosDebugGizmoGO debugGO))
             {
-                if (debugGO.TacticalDebugData.genMode == context.genMode)
+                if (debugGO.TacticalDebugData.genMode == context.cornerSettings.genMode)
                 {
 #if UNITY_EDITOR
                     Undo.DestroyObjectImmediate(child);

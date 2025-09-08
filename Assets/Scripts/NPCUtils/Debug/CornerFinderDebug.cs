@@ -17,7 +17,7 @@ public class CornerFinderDebug : CornerFinder
         {
             _debugData = new()
             {
-                genMode = _debugGen.CurCoverGenMode
+                genMode = cornerSettings.genMode
             };
         }
         else
