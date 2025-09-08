@@ -9,7 +9,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
 {
     private enum GizmoViewMode { all, finished, unfinished }
     [SerializeField] private TacticalPositionGenerator.CoverGenerationMode _currentCoverGenMode = TacticalPositionGenerator.CoverGenerationMode.lowCover;
-
+    private TacticalPositionGenerator.CoverGenerationMode _lastCoverGenMode;
     [SerializeField] private TacticalPositionGenerator _generator;
     [SerializeField] private TacticalGeneratorSettings _settings;
     [SerializeField] private bool _showPositions = false;
@@ -112,6 +112,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     private void OnEnable()
     {
         _lastGizmoViewMode = _currentGizmoViewMode;
+        _lastCoverGenMode = _currentCoverGenMode;
         Generator.OnContextUpdated += HandleContextUpdated;
     }
 
@@ -126,6 +127,11 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         {
             GizmoViewChanged(_currentGizmoViewMode);
             _lastGizmoViewMode = _currentGizmoViewMode;
+        }
+        if (_currentCoverGenMode != _lastCoverGenMode)
+        {
+            CoverGenTypeChanged(_currentCoverGenMode);
+            _lastCoverGenMode = _currentCoverGenMode;
         }
         Generator.UpdateCornerFinder(GetCornerFinder);
     }
@@ -164,7 +170,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
             TacticalPosDebugGizmoGO gizmoDebug = gizmoDebugGO.GetComponent<TacticalPosDebugGizmoGO>();
             gizmoDebugGO.transform.position = position;
             gizmoDebug.TacticalDebugData = debugData;
-            UpdateChildVisibility(_currentGizmoViewMode, gizmoDebugGO);
+            UpdateChildVisibility(_currentGizmoViewMode, _currentCoverGenMode, gizmoDebugGO);
             EditorUtility.SetDirty(_debugGizmoGOParent);
         }
     }
@@ -174,19 +180,32 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
         for (int i = 0; i < _debugGizmoGOParent.transform.childCount; i++)
         {
             GameObject childGO = _debugGizmoGOParent.transform.GetChild(i).gameObject;
-            UpdateChildVisibility(viewMode, childGO);
+            UpdateChildVisibility(viewMode, _currentCoverGenMode, childGO);
         }
     }
 
-    private void UpdateChildVisibility(GizmoViewMode viewMode, GameObject childGO)
+    private void CoverGenTypeChanged(TacticalPositionGenerator.CoverGenerationMode genMode)
+    {
+        for (int i = 0; i < _debugGizmoGOParent.transform.childCount; i++)
+        {
+            GameObject childGO = _debugGizmoGOParent.transform.GetChild(i).gameObject;
+            UpdateChildVisibility(_currentGizmoViewMode, genMode, childGO);
+        }
+    }
+
+    private void UpdateChildVisibility(GizmoViewMode viewMode, TacticalPositionGenerator.CoverGenerationMode coverGenMode, GameObject childGO)
     {
         if (childGO.TryGetComponent(out TacticalPosDebugGizmoGO childDebugGO))
         {
-            bool shouldShow = viewMode == GizmoViewMode.all ||
+            bool viewModeOK = viewMode == GizmoViewMode.all ||
                 (childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.finished) ||
                 (!childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.unfinished);
 
-            SetChildVisibility(childGO, shouldShow);
+            bool coverTypeOK = coverGenMode == TacticalPositionGenerator.CoverGenerationMode.all ||
+                childDebugGO.TacticalDebugData.genMode == coverGenMode;
+
+
+            SetChildVisibility(childGO, viewModeOK && coverTypeOK);
         }
         else
         {
