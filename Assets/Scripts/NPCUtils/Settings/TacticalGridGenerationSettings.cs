@@ -7,10 +7,14 @@ namespace FPSDemo.NPC.Utilities
 		[Header("Grid generation settings")]
 		public Vector3 StartPos;
 		public Vector3 EndPos;
+		public float maxRaycastDistance = 100f;
 		public float DistanceBetweenPositions = 3f;
 		public bool OffsetEveryOtherRow = false;
 		[Range(4, 12)]
 		public int NumberOfRaysSpawner = 8;
 		public float floatPrecisionBuffer = 0.01f;
-	}
+		public float distanceSimilarityThreshold = 0.1f;
+		public float normalSimilarityThreshold = 0.9f;
+
+    }
 }

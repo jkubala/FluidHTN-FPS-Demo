@@ -8,21 +8,21 @@ namespace FPSDemo.NPC.Utilities
             : base(parentGO, maxDistance, maxDegrees) { }
         protected override void CustomClassification(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions, GameObject debugGO = null)
         {
-            int count = 0;
+            int addedPositionCount = 0;
             foreach (var newPos in newPositions)
             {
                 if (!oldPositions.Exists(oldPos => Vector3.Distance(oldPos.Position, newPos.Position) < _maxDistanceToConsiderSamePosition))
                 {
-                    count++;
+                    addedPositionCount++;
                     if (debugGO != null)
                     {
-                        CreateDebugGO(debugGO, newPos.Position, newPos: newPos);
+                        CreateDebugGameObject(debugGO, newPos.Position, newPos: newPos);
                     }
                 }
             }
-            if (count > 0)
+            if (addedPositionCount > 0)
             {
-                Debug.LogWarning($"Added {count} positions");
+                Debug.LogWarning($"Added {addedPositionCount} positions");
             }
         }
     }

@@ -24,12 +24,12 @@ namespace FPSDemo.NPC.Utilities
 
         protected abstract void CustomClassification(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions, GameObject debugGO = null);
 
-        protected bool ArePositionsRoughlyEqual(TacticalPosition a, TacticalPosition b, float maxDegreesDifference)
+        protected bool ArePositionPropertiesEqual(TacticalPosition a, TacticalPosition b, float maxDegreesDifference)
         {
             if (a.mainCover.height != b.mainCover.height) return false;
             if (a.mainCover.type != b.mainCover.type) return false;
             if (Quaternion.Angle(a.mainCover.rotationToAlignWithCover, b.mainCover.rotationToAlignWithCover) > maxDegreesDifference) return false;
-            if (!CoverDirectionsApproximatelyEqual(a, b)) return false;
+            if (!AreCoverDirectionsEqual(a, b)) return false;
             if (a.isOutside != b.isOutside) return false;
             return true;
         }
@@ -39,7 +39,7 @@ namespace FPSDemo.NPC.Utilities
             Debug.LogWarning($"{errorMessage}.\n{pos1}\n{pos2}");
         }
 
-        protected bool CoverDirectionsApproximatelyEqual(TacticalPosition pos1, TacticalPosition pos2)
+        protected bool AreCoverDirectionsEqual(TacticalPosition pos1, TacticalPosition pos2)
         {
             if (pos1.CoverDirections == null && pos2.CoverDirections == null)
             {
@@ -67,7 +67,7 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        protected void CreateDebugGO(GameObject debugPrefab, Vector3 position, TacticalPosition oldPos = null, TacticalPosition newPos = null)
+        protected void CreateDebugGameObject(GameObject debugPrefab, Vector3 position, TacticalPosition oldPos = null, TacticalPosition newPos = null)
         {
             if (debugPrefab == null)
             {

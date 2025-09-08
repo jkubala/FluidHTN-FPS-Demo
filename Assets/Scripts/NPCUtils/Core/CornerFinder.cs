@@ -120,7 +120,7 @@ namespace FPSDemo.NPC.Utilities
                 {
                     Vector3 newProjectedHitNormal = Vector3.ProjectOnPlane(newHit.normal, Vector3.up).normalized;
                     float angleDifference = Mathf.Abs(Vector3.SignedAngle(hitNormal, newProjectedHitNormal, Vector3.up));
-                    if (CornerBendDetected(newProjectedHitNormal, angleDifference, cornerSettings, ref currentHitsOfDifferentNormal, ref lastDifferentNormal, ref lastAdjustedPosition, adjustedPosition, newHit))
+                    if (IsCornerBend(newProjectedHitNormal, angleDifference, cornerSettings, ref currentHitsOfDifferentNormal, ref lastDifferentNormal, ref lastAdjustedPosition, adjustedPosition, newHit))
                     {
                         Vector3 newHitFiringNormal = Vector3.Cross(lastDifferentNormal.Value, Vector3.up).normalized;
                         if (coverType == CoverType.LeftCorner)
@@ -160,7 +160,7 @@ namespace FPSDemo.NPC.Utilities
             return null; // No convex corner found within the loop
         }
 
-        protected virtual bool CornerBendDetected(Vector3 newProjectedNormal, float angleDifference, TacticalPositionScanSettings cornerSettings, ref int currentHitsOfDifferentNormal, ref Vector3? lastDifferentNormal, ref Vector3? lastAdjustedPosition, Vector3 adjustedPosition, RaycastHit newHit)
+        protected virtual bool IsCornerBend(Vector3 newProjectedNormal, float angleDifference, TacticalPositionScanSettings cornerSettings, ref int currentHitsOfDifferentNormal, ref Vector3? lastDifferentNormal, ref Vector3? lastAdjustedPosition, Vector3 adjustedPosition, RaycastHit newHit)
         {
             if (angleDifference > cornerSettings.minAngleToConsiderCorner)
             {
@@ -174,7 +174,7 @@ namespace FPSDemo.NPC.Utilities
                 {
                     currentHitsOfDifferentNormal++;
 
-                    if (currentHitsOfDifferentNormal >= cornerSettings.nOfHitsOfDifferentNormalToConsiderCorner)
+                    if (currentHitsOfDifferentNormal >= cornerSettings.hitsRequiredForCorner)
                     {
                         return true;
                     }

@@ -84,10 +84,10 @@ public class CornerFinderDebug : CornerFinder
         return cornerInfo;
     }
 
-    protected override bool CornerBendDetected(Vector3 newProjectedNormal, float angleDifference, TacticalPositionScanSettings cornerSettings, ref int currentHitsOfDifferentNormal, ref Vector3? lastDifferentNormal, ref Vector3? lastAdjustedPosition, Vector3 adjustedPosition, RaycastHit newHit)
+    protected override bool IsCornerBend(Vector3 newProjectedNormal, float angleDifference, TacticalPositionScanSettings cornerSettings, ref int currentHitsOfDifferentNormal, ref Vector3? lastDifferentNormal, ref Vector3? lastAdjustedPosition, Vector3 adjustedPosition, RaycastHit newHit)
     {
         _debugData?.corners[^1].hitPositions.Add(newHit.point);
-        return base.CornerBendDetected(newProjectedNormal, angleDifference, cornerSettings, ref currentHitsOfDifferentNormal, ref lastDifferentNormal, ref lastAdjustedPosition, adjustedPosition, newHit);
+        return base.IsCornerBend(newProjectedNormal, angleDifference, cornerSettings, ref currentHitsOfDifferentNormal, ref lastDifferentNormal, ref lastAdjustedPosition, adjustedPosition, newHit);
     }
 
 }

@@ -12,6 +12,7 @@ namespace FPSDemo.NPC.Utilities
         public float cornerCheckRaySequenceDistance = 2f; // how far to the side should the raycasts go when scanning the wall
         public float cornerCheckPositionOffset = 0.25f; // how far to offset the position from the found corner
         public float minWidthToConsiderAValidPosition = 0.7f;
+        public float maxCoverAnalysisDistance = 2f;
         public float minAngleToConsiderCorner = 15f;
         [Range(0.001f, 1f)]
         public float rayLengthBeyondWall = 0.25f; // To catch non 90 degree convex corners - the ray needs to go further than the initial distance to wall
@@ -19,8 +20,9 @@ namespace FPSDemo.NPC.Utilities
         public Vector2 sphereCastForFiringPositionCheckOffset = new(0.1f, 0f);
         public float sphereCastForFiringPositionCheckRadius = 0.15f;
         public float sphereCastForFiringPositionCheckDistance = 1f;
-        public int nOfHitsOfDifferentNormalToConsiderCorner = 3;
+        public int hitsRequiredForCorner = 3;
         public float firingPositionHeight = 1.6f;
-        public float maxYDifferenceWhenAdjusting = 0.3f;
+        public float maxStandardHeightDifference = 0.3f;
+        public float maxValidationAdjustmentDistance = 0.1f;
     }
 }

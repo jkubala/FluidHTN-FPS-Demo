@@ -13,7 +13,6 @@ namespace FPSDemo.NPC.Utilities
                 return null;
             }
 
-            float maxDistanceToRedo = 0.1f;
             int maxTries = 3;
             int currentTry = 0;
 
@@ -21,7 +20,7 @@ namespace FPSDemo.NPC.Utilities
             // Try to juggle shifts due to cover continuity and also Y axis shifts
             do
             {
-                newPos = VerifyContinuousCoverOfCorner(newPos.Value, cornerInfo, 2f, .75f, posSettings, raycastMask);
+                newPos = ValidateCoverContinuity(newPos.Value, cornerInfo, cornerSettings, posSettings, raycastMask);
                 // Cover verification failed, get out of there
                 if (!newPos.HasValue)
                 {
@@ -32,7 +31,7 @@ namespace FPSDemo.NPC.Utilities
                 newPos = FindGroundLevelAtCorner(cornerInfo, cornerSettings, raycastMask);
                 currentTry++;
             }
-            while (newPos.HasValue && Vector3.Distance(cornerInfo.position, newPos.Value) > maxDistanceToRedo && currentTry < maxTries);
+            while (newPos.HasValue && Vector3.Distance(cornerInfo.position, newPos.Value) > cornerSettings.maxValidationAdjustmentDistance && currentTry < maxTries);
 
             if (!newPos.HasValue)
             {
@@ -41,26 +40,26 @@ namespace FPSDemo.NPC.Utilities
 
             cornerInfo.position = newPos.Value;
 
-            if (ObstacleInFiringPositionOfCorner(cornerInfo, cornerSettings, raycastMask))
+            if (HasFiringObstacle(cornerInfo, cornerSettings, raycastMask))
             {
-               // return null;
+                return null;
             }
             return cornerInfo;
         }
 
-        protected virtual Vector3? VerifyContinuousCoverOfCorner(Vector3 position, CornerDetectionInfo cornerInfo, float maxDistanceToAnalyse, float minimumWidth, TacticalPositionSettings posSettings, LayerMask raycastMask)
+        protected virtual Vector3? ValidateCoverContinuity(Vector3 position, CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, TacticalPositionSettings posSettings, LayerMask raycastMask)
         {
             float currentScanningDistance = 0;
             float currentContinuousCoverDistance = 0;
             Vector3? lastGoodPosition = null;
 
-            while (currentScanningDistance < maxDistanceToAnalyse)
+            while (currentScanningDistance < cornerSettings.maxCoverAnalysisDistance)
             {
                 bool continuousCoverFound = false;
                 Vector3 cornerPosition = position - cornerInfo.outDirection.normalized * currentScanningDistance;
                 if (Physics.Raycast(cornerPosition, Vector3.down, out RaycastHit groundHit, Mathf.Infinity, raycastMask))
                 {
-                    Vector3? holePos = FindHoleInCoverVertically(groundHit.point, cornerInfo, raycastMask, posSettings);
+                    Vector3? holePos = ScanForCoverGaps(groundHit.point, cornerInfo, raycastMask, posSettings);
                     if (!holePos.HasValue)
                     {
                         continuousCoverFound = true;
@@ -73,7 +72,7 @@ namespace FPSDemo.NPC.Utilities
                     {
                         lastGoodPosition = position - cornerInfo.outDirection.normalized * currentScanningDistance;
                     }
-                    if (currentContinuousCoverDistance >= minimumWidth)
+                    if (currentContinuousCoverDistance >= cornerSettings.minWidthToConsiderAValidPosition)
                     {
                         break;
                     }
@@ -99,7 +98,7 @@ namespace FPSDemo.NPC.Utilities
                 }
             }
 
-            if (currentContinuousCoverDistance < minimumWidth)
+            if (currentContinuousCoverDistance < cornerSettings.minWidthToConsiderAValidPosition)
             {
                 lastGoodPosition = null;
             }
@@ -107,7 +106,7 @@ namespace FPSDemo.NPC.Utilities
             return lastGoodPosition;
         }
 
-        protected virtual Vector3? FindHoleInCoverVertically(Vector3 bottomStart, CornerDetectionInfo cornerInfo, LayerMask raycastMask, TacticalPositionSettings posSettings)
+        protected virtual Vector3? ScanForCoverGaps(Vector3 bottomStart, CornerDetectionInfo cornerInfo, LayerMask raycastMask, TacticalPositionSettings posSettings)
         {
             for (float currentHeight = bottomStart.y + posSettings.bottomRaycastBuffer; currentHeight < cornerInfo.position.y; currentHeight += posSettings.verticalStepToCheckForCover)
             {
@@ -123,20 +122,20 @@ namespace FPSDemo.NPC.Utilities
         protected virtual Vector3? FindGroundLevelAtCorner(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             // Not all walls are perfectly 90 degree ones. If the wall is leaning away from the cover position, the sphereCast needs to go along the wall normal, since it will hit the wall if it would go Vector3.down.
-            Vector3 downAlongWall = GetVectorDownAlongWall(cornerInfo);
+            Vector3 downAlongWall = CalculateWallAlignedDownVector(cornerInfo);
 
             if (Physics.SphereCast(cornerInfo.position, cornerSettings.cornerCheckRayWallOffset - cornerSettings.floatPrecisionBuffer, downAlongWall, out RaycastHit hit, Mathf.Infinity, raycastMask))
             {
-                return ValidateAndAdjustHeight(hit.point, cornerInfo, cornerSettings);
+                return AdjustToStandardHeight(hit.point, cornerInfo, cornerSettings);
             }
             return null;
         }
 
-        protected virtual Vector3? ValidateAndAdjustHeight(Vector3 pos, CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings)
+        protected virtual Vector3? AdjustToStandardHeight(Vector3 pos, CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings)
         {
             float standardizedHeight = pos.y + cornerSettings.firingPositionHeight;
 
-            if (Mathf.Abs(cornerInfo.position.y - standardizedHeight) > cornerSettings.maxYDifferenceWhenAdjusting)
+            if (Mathf.Abs(cornerInfo.position.y - standardizedHeight) > cornerSettings.maxStandardHeightDifference)
             {
                 return null;
             }
@@ -147,7 +146,7 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        protected virtual Vector3 GetVectorDownAlongWall(CornerDetectionInfo cornerInfo)
+        protected virtual Vector3 CalculateWallAlignedDownVector(CornerDetectionInfo cornerInfo)
         {
             Vector3 downAlongWall = Vector3.ProjectOnPlane(Vector3.down, cornerInfo.coverWallNormal).normalized;
 
@@ -165,9 +164,9 @@ namespace FPSDemo.NPC.Utilities
             return downAlongWall;
         }
 
-        protected virtual bool ObstacleInFiringPositionOfCorner(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
+        protected virtual bool HasFiringObstacle(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
-            Vector3 sphereCastOrigin = CalculateSphereCastOrigin(cornerInfo, cornerSettings);
+            Vector3 sphereCastOrigin = GetFiringCheckOrigin(cornerInfo, cornerSettings);
 
             Vector3 sphereCastDirection = cornerInfo.positionFiringDirection.normalized;
 
@@ -189,7 +188,7 @@ namespace FPSDemo.NPC.Utilities
             return false;
         }
 
-        protected virtual Vector3 CalculateSphereCastOrigin(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings)
+        protected virtual Vector3 GetFiringCheckOrigin(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings)
         {
             return cornerInfo.position
                             + cornerInfo.coverWallNormal * (cornerSettings.sphereCastForFiringPositionCheckRadius + cornerSettings.floatPrecisionBuffer)

@@ -17,7 +17,7 @@ namespace FPSDemo.NPC.Utilities
             _cornerFinder = cornerFinder;
             _positionValidator = positionValidator;
         }
-        public enum CoverGenerationMode { all, lowCover, lowCorners, highCorners, manual }
+        public enum CoverGenerationMode { All, LowCover, LowCorners, HighCorners, Manual }
         [SerializeField] private TacticalGeneratorSettings _settings;
         [SerializeField] private CornerFinder _cornerFinder;
         [SerializeField] private PositionValidator _positionValidator;
@@ -40,7 +40,7 @@ namespace FPSDemo.NPC.Utilities
 
             Undo.RecordObject(positionsParent.transform, "Clear manual position children");
             ClearManualPositionParentChildren(positionsParent);
-            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
+            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.Manual).First();
             foreach (TacticalPosition position in manualContext.positionData.Positions)
             {
                 GameObject newManualPosition = GameObject.Instantiate(manualPositionPrefab, position.Position, position.mainCover.rotationToAlignWithCover, positionsParent.transform);
@@ -77,7 +77,7 @@ namespace FPSDemo.NPC.Utilities
             Undo.SetCurrentGroupName("Save Manual Positions");
             int undoGroup = Undo.GetCurrentGroup();
 
-            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.manual).First();
+            CoverGenerationContext manualContext = _settings.GetContextsFor(CoverGenerationMode.Manual).First();
             Undo.RecordObject(manualContext.positionData, "Save manual position data");
             manualContext.positionData.Positions.Clear();
 
@@ -115,7 +115,7 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(genMode))
             {
-                if ((genMode != CoverGenerationMode.all && genMode != context.cornerSettings.genMode) || context.cornerSettings.genMode == CoverGenerationMode.manual)
+                if ((genMode != CoverGenerationMode.All && genMode != context.cornerSettings.genMode) || context.cornerSettings.genMode == CoverGenerationMode.Manual)
                 {
                     continue;
                 }
@@ -141,11 +141,10 @@ namespace FPSDemo.NPC.Utilities
 
                 for (int j = cornersFound.Count - 1; j >= 0; j--)
                 {
-                    TacticalPosition newPosition = ProcessCornerToTacticalPosition(cornersFound[j], context);
-                    if (newPosition != null)
+                    if (ValidateCornerForTacticalUse(cornersFound[j], context, out CornerDetectionInfo validatedCorner))
                     {
-                        context.positionData.Positions.Add(newPosition);
-                        cornersFound[j].debugData?.parentData?.MarkAsFinished();
+                        context.positionData.Positions.Add(CreateTacticalPositionFromCorner(validatedCorner, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask));
+                        validatedCorner.debugData?.parentData.MarkAsFinished();
                     }
                 }
 
@@ -153,6 +152,30 @@ namespace FPSDemo.NPC.Utilities
                 UpdateCoverPositionContext(oldTacticalPositionsSnapshot, context);
             }
             Undo.CollapseUndoOperations(undoGroup);
+        }
+
+        private TacticalPosition CreateTacticalPositionFromCorner(CornerDetectionInfo validatedCorner, float positionOffset, LayerMask raycastMask)
+        {
+            MainCover mainCover = new()
+            {
+                type = validatedCorner.coverType,
+                rotationToAlignWithCover = Quaternion.LookRotation(-validatedCorner.coverWallNormal, Vector3.up)
+            };
+
+            TacticalPosition newTacticalPos = new()
+            {
+                Position = validatedCorner.position - validatedCorner.outDirection * positionOffset,
+                mainCover = mainCover,
+                isOutside = SimpleIsOutsideCheck(validatedCorner.position, raycastMask),
+                CoverDirections = Array.Empty<CoverHeight>()
+            };
+
+            if (validatedCorner.debugData != null)
+            {
+                validatedCorner.debugData.finalCornerPos = newTacticalPos.Position;
+                validatedCorner.debugData.tacticalPosition = newTacticalPos;
+            }
+            return newTacticalPos;
         }
 
         public List<CoverGenerationContext> GetActiveCoverGenContexts(CoverGenerationMode genMode)
@@ -183,7 +206,7 @@ namespace FPSDemo.NPC.Utilities
             int undoGroup = Undo.GetCurrentGroup();
             foreach (CoverGenerationContext context in _settings.GetContextsFor(genMode))
             {
-                if (context.cornerSettings.genMode == CoverGenerationMode.manual)
+                if (context.cornerSettings.genMode == CoverGenerationMode.Manual)
                 {
                     continue;
                 }
@@ -224,7 +247,7 @@ namespace FPSDemo.NPC.Utilities
 
                 while (currentPos.z < _settings.gridSettings.EndPos.z)
                 {
-                    RaycastHit[] hitsToConvertToPos = PhysicsUtils.RaycastTrulyAll(currentPos, Vector3.down, _settings.raycastMask, 0.1f, 100f);
+                    RaycastHit[] hitsToConvertToPos = PhysicsUtils.RaycastTrulyAll(currentPos, Vector3.down, _settings.raycastMask, _settings.gridSettings.floatPrecisionBuffer, _settings.gridSettings.maxRaycastDistance);
                     foreach (var hit in hitsToConvertToPos)
                     {
                         if (PositionValid(hit.point))
@@ -292,17 +315,7 @@ namespace FPSDemo.NPC.Utilities
         private bool PositionValid(Vector3 position)
         {
             // Discard the position if it is too far from NavMesh
-            if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, _settings.raycastMask))
-            {
-                Vector3 heightAdjustedHit = hit.position;
-                heightAdjustedHit.y = position.y;
-
-                if (Vector3.Distance(heightAdjustedHit, position) > _settings.positionSettings.RequiredProximityToNavMesh)
-                {
-                    return false;
-                }
-            }
-            else
+            if (!NavMesh.SamplePosition(position, out _, _settings.positionSettings.RequiredProximityToNavMesh, _settings.raycastMask))
             {
                 return false;
             }
@@ -345,7 +358,7 @@ namespace FPSDemo.NPC.Utilities
         {
             List<CornerDetectionInfo> cornersFound = new();
 
-            if (context.cornerSettings.genMode == CoverGenerationMode.lowCover)
+            if (context.cornerSettings.genMode == CoverGenerationMode.LowCover)
             {
                 CornerDetectionInfo lowCoverInfo = _cornerFinder.FindLowCoverPos(hit, context.cornerSettings, _settings.raycastMask);
                 if (lowCoverInfo != null)
@@ -356,7 +369,7 @@ namespace FPSDemo.NPC.Utilities
                     };
                 }
             }
-            else if (context.cornerSettings.genMode == CoverGenerationMode.lowCorners || context.cornerSettings.genMode == CoverGenerationMode.highCorners)
+            else if (context.cornerSettings.genMode == CoverGenerationMode.LowCorners || context.cornerSettings.genMode == CoverGenerationMode.HighCorners)
             {
                 cornersFound = _cornerFinder.FindCorners(hit, context.cornerSettings, _settings.raycastMask);
             }
@@ -364,15 +377,10 @@ namespace FPSDemo.NPC.Utilities
             return cornersFound;
         }
 
-        private TacticalPosition ProcessCornerToTacticalPosition(CornerDetectionInfo corner, CoverGenerationContext context)
+        private bool ValidateCornerForTacticalUse(CornerDetectionInfo corner, CoverGenerationContext context, out CornerDetectionInfo validatedCorner)
         {
-            CornerDetectionInfo adjustedInfo = _positionValidator.ValidateCornerPosition(corner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
-            if (adjustedInfo != null)
-            {
-                return CreateTacticalPosition(adjustedInfo, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask);
-            }
-
-            return null;
+            validatedCorner = _positionValidator.ValidateCornerPosition(corner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
+            return validatedCorner != null;
         }
 
         private bool ValidateParams()
@@ -392,30 +400,6 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private TacticalPosition CreateTacticalPosition(CornerDetectionInfo cornerInfo, float cornerCheckPositionOffset, LayerMask raycastMask)
-        {
-            MainCover mainCover = new()
-            {
-                type = cornerInfo.coverType,
-                rotationToAlignWithCover = Quaternion.LookRotation(-cornerInfo.coverWallNormal, Vector3.up)
-            };
-
-            TacticalPosition newTacticalPos = new()
-            {
-                Position = cornerInfo.position - cornerInfo.outDirection * cornerCheckPositionOffset,
-                mainCover = mainCover,
-                isOutside = SimpleIsOutsideCheck(cornerInfo.position, raycastMask),
-                CoverDirections = Array.Empty<CoverHeight>()
-            };
-
-            if (cornerInfo.debugData != null)
-            {
-                cornerInfo.debugData.finalCornerPos = newTacticalPos.Position;
-                cornerInfo.debugData.tacticalPosition = newTacticalPos;
-            }
-            return newTacticalPos;
-        }
-
         bool SimpleIsOutsideCheck(Vector3 position, LayerMask raycastMask)
         {
             if (Physics.Raycast(position, Vector3.up, Mathf.Infinity, raycastMask))
@@ -426,7 +410,7 @@ namespace FPSDemo.NPC.Utilities
             return true;
         }
 
-        private void RemoveDuplicateHits(List<RaycastHit> hits, float positionThreshold = 0.1f, float normalThreshold = 0.9f)
+        private void RemoveDuplicateHits(List<RaycastHit> hits)
         {
             for (int i = hits.Count - 1; i >= 0; i--)
             {
@@ -435,7 +419,7 @@ namespace FPSDemo.NPC.Utilities
                     float posDistance = Vector3.Distance(hits[i].point, hits[j].point);
                     float normalDot = Vector3.Dot(hits[i].normal, hits[j].normal);
 
-                    if (posDistance < positionThreshold && normalDot > normalThreshold)
+                    if (posDistance < _settings.gridSettings.distanceSimilarityThreshold && normalDot > _settings.gridSettings.normalSimilarityThreshold)
                     {
                         if (hits[i].distance > hits[j].distance)
                         {

@@ -13,34 +13,6 @@ MonoBehaviour:
   m_Name: DM2PositionsLowCorner
   m_EditorClassIdentifier: 
   Positions:
-  - Position: {x: -9.4, y: 1.1999978, z: -30.249996}
-    mainCover:
-      type: 1
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -9.4, y: 1.1999955, z: -59.76}
-    mainCover:
-      type: 0
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -10.245001, y: 1.1999978, z: -29.4}
-    mainCover:
-      type: 0
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -10.245011, y: 1.1999955, z: -60.6}
-    mainCover:
-      type: 1
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
-    CoverDirections: 
-    isOutside: 1
   - Position: {x: -18.199999, y: 1.1999973, z: -36.05}
     mainCover:
       type: 1
@@ -1045,34 +1017,6 @@ MonoBehaviour:
   - Position: {x: -54.1, y: 1.199996, z: -53.549995}
     mainCover:
       type: 0
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -59.75499, y: 1.1999978, z: -29.4}
-    mainCover:
-      type: 1
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -59.75499, y: 1.1999955, z: -60.6}
-    mainCover:
-      type: 0
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -60.6, y: 1.1999978, z: -30.245}
-    mainCover:
-      type: 0
-      height: 0
-      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-    CoverDirections: 
-    isOutside: 1
-  - Position: {x: -60.6, y: 1.1999955, z: -59.754997}
-    mainCover:
-      type: 1
       height: 0
       rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     CoverDirections: 

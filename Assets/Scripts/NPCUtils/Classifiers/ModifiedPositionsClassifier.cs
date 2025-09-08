@@ -11,7 +11,7 @@ namespace FPSDemo.NPC.Utilities
         {
             List<TacticalPosition> oldCopy = new(oldPositions);
             List<TacticalPosition> newCopy = new(newPositions);
-            int nOfModifiedPositions = 0;
+            int modifiedPositionCount = 0;
             for (int i = oldCopy.Count - 1; i >= 0; i--)
             {
                 TacticalPosition oldPos = oldCopy[i];
@@ -22,12 +22,12 @@ namespace FPSDemo.NPC.Utilities
 
                     if (Vector3.Distance(oldPos.Position, newPos.Position) < _maxDistanceToConsiderSamePosition)
                     {
-                        if (!ArePositionsRoughlyEqual(oldPos, newPos, _maxDegreesDifferenceToConsiderSamePosition))
+                        if (!ArePositionPropertiesEqual(oldPos, newPos, _maxDegreesDifferenceToConsiderSamePosition))
                         {
-                            nOfModifiedPositions++;
+                            modifiedPositionCount++;
                             if (debugGO != null)
                             {
-                                CreateDebugGO(debugGO, newPos.Position, oldPos, newPos);
+                                CreateDebugGameObject(debugGO, newPos.Position, oldPos, newPos);
                             }
                         }
 
@@ -37,9 +37,9 @@ namespace FPSDemo.NPC.Utilities
                     }
                 }
             }
-            if (nOfModifiedPositions > 0)
+            if (modifiedPositionCount > 0)
             {
-                Debug.Log($"Modified {nOfModifiedPositions} positions");
+                Debug.Log($"Modified {modifiedPositionCount} positions");
             }
         }
     }

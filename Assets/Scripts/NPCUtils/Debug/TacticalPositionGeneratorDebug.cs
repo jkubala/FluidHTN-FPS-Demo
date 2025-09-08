@@ -7,8 +7,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TacticalPositionGeneratorDebug : MonoBehaviour
 {
-    private enum GizmoViewMode { all, finished, unfinished }
-    [SerializeField] private TacticalPositionGenerator.CoverGenerationMode _currentCoverGenMode = TacticalPositionGenerator.CoverGenerationMode.lowCover;
+    private enum GizmoViewMode { All, Finished, Unfinished }
+    [SerializeField] private TacticalPositionGenerator.CoverGenerationMode _currentCoverGenMode = TacticalPositionGenerator.CoverGenerationMode.LowCover;
     private TacticalPositionGenerator.CoverGenerationMode _lastCoverGenMode;
     [SerializeField] private TacticalPositionGenerator _generator;
     [SerializeField] private TacticalGeneratorSettings _settings;
@@ -197,11 +197,11 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (childGO.TryGetComponent(out TacticalPosDebugGizmoGO childDebugGO))
         {
-            bool viewModeOK = viewMode == GizmoViewMode.all ||
-                (childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.finished) ||
-                (!childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.unfinished);
+            bool viewModeOK = viewMode == GizmoViewMode.All ||
+                (childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.Finished) ||
+                (!childDebugGO.TacticalDebugData.Finished && viewMode == GizmoViewMode.Unfinished);
 
-            bool coverTypeOK = coverGenMode == TacticalPositionGenerator.CoverGenerationMode.all ||
+            bool coverTypeOK = coverGenMode == TacticalPositionGenerator.CoverGenerationMode.All ||
                 childDebugGO.TacticalDebugData.genMode == coverGenMode;
 
 
@@ -233,7 +233,7 @@ public class TacticalPositionGeneratorDebug : MonoBehaviour
     {
         if (context != null)
         {
-            if (context.cornerSettings.genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
+            if (context.cornerSettings.genMode == TacticalPositionGenerator.CoverGenerationMode.Manual)
             {
                 return;
             }

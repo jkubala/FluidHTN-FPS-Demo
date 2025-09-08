@@ -17,12 +17,12 @@ namespace FPSDemo.NPC.Utilities
         public List<CoverGenerationContext> GetContextsFor(TacticalPositionGenerator.CoverGenerationMode genMode)
         {
             List<CoverGenerationContext> contexts = new();
-            if (genMode == TacticalPositionGenerator.CoverGenerationMode.manual)
+            if (genMode == TacticalPositionGenerator.CoverGenerationMode.Manual)
             {
                 return contexts;
             }
 
-            if (genMode == TacticalPositionGenerator.CoverGenerationMode.all)
+            if (genMode == TacticalPositionGenerator.CoverGenerationMode.All)
             {
                 contexts.AddRange(generationContexts);
             }
