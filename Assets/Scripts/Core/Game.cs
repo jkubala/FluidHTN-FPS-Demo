@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using FPSDemo.NPC.Utilities;
 
 namespace FPSDemo.Core
 {
@@ -7,11 +8,13 @@ namespace FPSDemo.Core
         // -------------------------------------------- STATIC PROPERTIES
         private static Game Instance { get; set; }
         public static AISettings AISettings => Instance != null ? Instance._aiSettings : null;
+        public static TacticalGeneratorSettings TacticalSettings => Instance != null ? Instance._tacticalSettings : null;
 
 
         // -------------------------------------------- INSPECTOR FIELDS
 
         [SerializeField] private AISettings _aiSettings;
+        [SerializeField] private TacticalGeneratorSettings _tacticalSettings;
 
 
         // ========================================================= UNITY METHODS

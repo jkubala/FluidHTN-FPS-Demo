@@ -31,6 +31,7 @@ namespace FPSDemo.NPC
         // ========================================================= PUBLIC PROPERTIES
 
         public ThirdPersonController Controller => _controller;
+        public AIContext Context => _context;
 
         // ========================================================= UNITY METHODS
 
@@ -53,9 +54,21 @@ namespace FPSDemo.NPC
 		{
 			_context.Init(_settings);
 
+            // Subscribe to damage events
+            var healthSystem = GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                healthSystem.OnDamageTaken += OnDamageTaken;
+            }
+
             // NPC starts off holding their fire, until the planner decides otherwise.
             _context.SetWeaponState(WeaponStateType.HoldYourFire, EffectType.Permanent);
             _weaponFsm.ChangeState((int)WeaponStateType.HoldYourFire, _context);
+        }
+        
+        private void OnDamageTaken(Vector3 damagePosition)
+        {
+            _context.RecordDamageAtCurrentPosition();
         }
 
         public void Update()
@@ -64,6 +77,15 @@ namespace FPSDemo.NPC
             _planner.Tick(_domain, _context);
 
             _weaponFsm.Tick(_context);
+        }
+        
+        private void OnDestroy()
+        {
+            var healthSystem = GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                healthSystem.OnDamageTaken -= OnDamageTaken;
+            }
         }
     }
 }

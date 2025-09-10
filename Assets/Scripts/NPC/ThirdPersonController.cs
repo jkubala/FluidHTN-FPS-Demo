@@ -106,6 +106,16 @@ namespace FPSDemo.NPC
 		public bool IsStopped => _navAgent?.isStopped ?? true;
         public bool IsReloading => _isReloading;
         public bool IsShooting => _isShooting;
+        public Vector3 Destination => _navAgent?.destination ?? Vector3.zero;
+        public float Speed 
+        { 
+            get => _navAgent?.speed ?? 0.0f;
+            set 
+            { 
+                if (_navAgent != null) 
+                    _navAgent.speed = value; 
+            } 
+        }
 
 
         // ========================================================= UNITY METHODS

@@ -136,5 +136,100 @@ namespace FPSDemo.NPC
         }
 
         // TODO: Move to cover if we are reloading
+
+        // ========================================================= TACTICAL POSITIONING METHODS
+
+        public AIDomainBuilder EmergencyReposition()
+        {
+            Action("Emergency reposition from compromised position");
+            {
+                HasState(AIWorldState.CurrentPositionCompromised);
+                
+                if (Pointer is IPrimitiveTask task)
+                {
+                    task.SetOperator(new Operators.EmergencyRepositionOperator());
+                }
+                
+                SetState(AIWorldState.IsPursuingEnemy, EffectType.PlanAndExecute);
+                SetState(AIWorldState.CurrentPositionCompromised, false, EffectType.PlanOnly);
+            }
+            End();
+            return this;
+        }
+
+        public AIDomainBuilder MoveToBestCover()
+        {
+            Action("Move to best available cover position");
+            {
+                HasState(AIWorldState.HasBetterCoverAvailable);
+                HasStateGreaterThan(AIWorldState.CoverQualityScore, 64); // Minimum quality threshold
+                
+                if (Pointer is IPrimitiveTask task)
+                {
+                    task.SetOperator(new Operators.MoveToBestCoverOperator());
+                }
+                
+                SetState(AIWorldState.IsPursuingEnemy, EffectType.PlanAndExecute);
+                SetState(AIWorldState.HasBetterCoverAvailable, false, EffectType.PlanOnly);
+            }
+            End();
+            return this;
+        }
+
+        public AIDomainBuilder SeekFlankingPosition()
+        {
+            Action("Seek flanking position on enemy");
+            {
+                HasState(AIWorldState.FlankingOpportunityAvailable);
+                HasState(AIWorldState.AwareOfEnemy);
+                
+                if (Pointer is IPrimitiveTask task)
+                {
+                    task.SetOperator(new Operators.SeekFlankingPositionOperator());
+                }
+                
+                SetState(AIWorldState.IsPursuingEnemy, EffectType.PlanAndExecute);
+            }
+            End();
+            return this;
+        }
+
+        public AIDomainBuilder HoldDefensivePosition()
+        {
+            Action("Hold current defensive position");
+            {
+                HasState(AIWorldState.InEffectiveCoverPosition);
+                HasState(AIWorldState.HasBetterCoverAvailable, (byte)0);
+                
+                if (Pointer is IPrimitiveTask task)
+                {
+                    task.SetOperator(new Operators.HoldDefensivePositionOperator());
+                }
+                
+                // No state changes - maintaining position
+            }
+            End();
+            return this;
+        }
+
+        public AIDomainBuilder TacticalPositioningSelector()
+        {
+            Select("Tactical Positioning Decision Tree");
+            {
+                // Priority 1: Emergency repositioning
+                EmergencyReposition();
+                
+                // Priority 2: Opportunistic flanking  
+                SeekFlankingPosition();
+                
+                // Priority 3: Better cover available
+                MoveToBestCover();
+                
+                // Priority 4: Hold position if already good
+                HoldDefensivePosition();
+            }
+            End();
+            return this;
+        }
     }
 }

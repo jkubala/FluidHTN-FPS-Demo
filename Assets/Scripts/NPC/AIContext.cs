@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluidHTN.Contexts;
 using FPSDemo.Target;
+using FPSDemo.NPC.Utilities;
 
 namespace FPSDemo.NPC
 {
@@ -32,6 +33,16 @@ namespace FPSDemo.NPC
         // TODO: destination points. E.g. find a position that's closest to ideal
         // TODO: range and also a tactically sound position.
         public float IdealEnemyRange { get; set; } = 20.0f;
+
+        // Cached data from CoverPositionSensor
+        public TacticalPosition BestCoverPosition { get; internal set; }
+        public TacticalPosition NearestSafePosition { get; internal set; }
+        public List<TacticalPosition> FlankingPositions { get; internal set; } = new();
+        
+        // Damage tracking for safety score calculation
+        public Vector3 LastDamagePosition { get; private set; } = Vector3.zero;
+        public float LastDamageTime { get; private set; } = -1f;
+        public bool HasRecentDamage => Time.time - LastDamageTime < 5f; // 5 second window
 
 
         // ========================================================= INIT
@@ -139,5 +150,28 @@ namespace FPSDemo.NPC
             targetData.awarenessOfThisTarget = Mathf.Max(0f,
                 targetData.awarenessOfThisTarget - AwarenessDeterioration * Time.deltaTime);
         }
+
+
+        // ========================================================= DAMAGE TRACKING
+        
+        public void RecordDamageAtCurrentPosition()
+        {
+            LastDamagePosition = ThisNPC.transform.position;
+            LastDamageTime = Time.time;
+        }
+        
+        public bool WasDamagedNear(Vector3 position, float threshold = 3f)
+        {
+            if (!HasRecentDamage) return false;
+            return Vector3.Distance(LastDamagePosition, position) <= threshold;
+        }
+
+
+        // ========================================================= TACTICAL POSITION ACCESS
+
+        public TacticalPosition GetBestCoverPosition() => BestCoverPosition;
+        public TacticalPosition GetNearestSafePosition() => NearestSafePosition;
+        public bool HasFlankingOpportunity() => FlankingPositions.Count > 0;
+        public List<TacticalPosition> GetFlankingPositions() => FlankingPositions;
     }
 }

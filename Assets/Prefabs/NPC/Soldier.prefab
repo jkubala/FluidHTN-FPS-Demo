@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 4286341724367834088}
   - component: {fileID: 4832982898588977342}
   - component: {fileID: -2090350393218632744}
+  - component: {fileID: 3304358085570505177}
   m_Layer: 6
   m_Name: Soldier
   m_TagString: Untagged
@@ -1614,7 +1615,7 @@ MonoBehaviour:
   _thisTarget: {fileID: 894179025977565157}
   _raycastMask:
     serializedVersion: 2
-    m_Bits: 5
+    m_Bits: 133
   _timeToNotice: 1
   _visionVertFocusAngleUp: 25
   _visionVertFocusAngleDown: 30
@@ -1733,6 +1734,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npc: {fileID: 771428641627287120}
+--- !u!114 &3304358085570505177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467778002156970774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c21536ac2b328442be3085e0e37dbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thisTarget: {fileID: 894179025977565157}
+  _raycastMask:
+    serializedVersion: 2
+    m_Bits: 513
+  _searchRadius: 50
+  _positionChangeThreshold: 2
 --- !u!1 &603353626836289854
 GameObject:
   m_ObjectHideFlags: 0

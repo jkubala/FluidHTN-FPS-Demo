@@ -9,5 +9,6 @@ namespace FPSDemo.Core
 
         public float VisionSensorTickRate = 1f;
         public float EnemySensorTickRate = 1f;
+        public float CoverPositionSensorTickRate = 0.2f;
     }
 }

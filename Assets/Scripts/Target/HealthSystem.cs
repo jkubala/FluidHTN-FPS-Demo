@@ -15,6 +15,7 @@ namespace FPSDemo.Target
 
         bool isDead = false;
         public event Action OnDeath;
+        public event Action<Vector3> OnDamageTaken;
         public HumanTarget ThisTarget { get; private set; }
         CapsuleCollider characterCollider;
 
@@ -28,6 +29,9 @@ namespace FPSDemo.Target
         {
             if (!isDead && shotBy != ThisTarget && !godMode)
             {
+                // Notify about damage taken at this position
+                OnDamageTaken?.Invoke(transform.position);
+                
                 KillThisEntity();
             }
         }
