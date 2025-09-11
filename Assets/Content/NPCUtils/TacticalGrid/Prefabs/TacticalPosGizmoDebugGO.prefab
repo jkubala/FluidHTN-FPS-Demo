@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6120454939665569197}
   - component: {fileID: 7804836397173391181}
   m_Layer: 2
-  m_Name: TacticalPosDebugGO
+  m_Name: TacticalPosGizmoDebugGO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa788a9675d76f241bb2f76b47342bfb, type: 3}
-  m_Name: DM2TacticalGeneratorSettings
+  m_Name: DemoMap2TacticalGeneratorSettings
   m_EditorClassIdentifier: 
   generationContexts:
   - positionData: {fileID: 11400000, guid: c47c702eb9e8f80489775719d49a1387, type: 2}

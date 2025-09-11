@@ -1,14 +1,15 @@
+using System;
 using System.Collections.Generic;
 using FPSDemo.NPC.Utilities;
 using UnityEngine;
 
 public class CornerFinderDebug : CornerFinder
 {
-    public CornerFinderDebug(TacticalPositionGeneratorDebug debugGen)
+    public CornerFinderDebug(TacticalPositionGeneratorEditorWindow debugGen)
     {
-        _debugGen = debugGen;
+        _debugGen = debugGen != null ? debugGen : throw new ArgumentNullException(nameof(debugGen));
     }
-    private readonly TacticalPositionGeneratorDebug _debugGen;
+    private readonly TacticalPositionGeneratorEditorWindow _debugGen;
     private TacticalDebugData _debugData;
 
     public override List<CornerDetectionInfo> FindCorners(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)

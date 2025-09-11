@@ -13,9 +13,9 @@ namespace FPSDemo.NPC.Utilities
     {
         public TacticalPositionGenerator(TacticalGeneratorSettings settings, CornerFinder cornerFinder, PositionValidator positionValidator)
         {
-            _settings = settings;
-            _cornerFinder = cornerFinder;
-            _positionValidator = positionValidator;
+            _settings = settings != null ? settings : throw new ArgumentNullException(nameof(settings));
+            _cornerFinder = cornerFinder ?? throw new ArgumentNullException(nameof(cornerFinder));
+            _positionValidator = positionValidator ?? throw new ArgumentNullException(nameof(positionValidator));
         }
         public enum CoverGenerationMode { All, LowCover, LowCorners, HighCorners, Manual }
         [SerializeField] private TacticalGeneratorSettings _settings;

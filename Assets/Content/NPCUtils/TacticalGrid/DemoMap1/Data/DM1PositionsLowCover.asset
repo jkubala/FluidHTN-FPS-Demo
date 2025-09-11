@@ -1,0 +1,274 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b795074835a6bd49a639a2aab7e0383, type: 3}
+  m_Name: DM1PositionsLowCover
+  m_EditorClassIdentifier: 
+  Positions:
+  - Position: {x: -19.4, y: 1.1999968, z: -41.999996}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -19.4, y: 1.199997, z: -40.749996}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -19.4, y: 1.1999965, z: -47.75}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -19.4, y: 1.1999964, z: -48.75}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -19.750002, y: 1.1999964, z: -49.6}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -19.999998, y: 1.199997, z: -40.530003}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -20.6, y: 1.199997, z: -41.25}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -20.6, y: 1.1999965, z: -48.000004}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -20.6, y: 1.1999964, z: -49.5}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -24.644394, y: 1.1999968, z: -41.92567}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.8755649, z: -0, w: -0.48310056}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -25.514292, y: 1.199997, z: -40.545567}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.8755649, z: -0, w: -0.48310056}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -26.053322, y: 1.199997, z: -40.653275}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.96072155, z: 0, w: 0.27751422}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -26.23446, y: 1.199997, z: -41.653454}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.48310056, z: 0, w: 0.8755649}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -30.316555, y: 1.1999964, z: -49.171104}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.94576484, z: -0, w: -0.3248521}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -29.786291, y: 1.1999962, z: -49.946266}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.4390516, z: -0, w: 0.8984619}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -30.460136, y: 1.1999962, z: -50.811447}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.4390516, z: -0, w: 0.8984619}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -30.985008, y: 1.1999964, z: -49.532444}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.8984619, z: 0, w: 0.4390516}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -31.089893, y: 1.1999961, z: -51.357338}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.3248521, z: 0, w: 0.94576484}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -31.641764, y: 1.1999962, z: -50.375683}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.8984619, z: 0, w: 0.4390516}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.350002, y: 1.1999971, z: -40.25}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.350002, y: 1.199997, z: -41.75}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.350002, y: 1.1999964, z: -48.5}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.350002, y: 1.1999962, z: -50}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.98, y: 1.1999971, z: -39.88}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -40.02, y: 1.1999968, z: -42.079998}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.5, y: 1.1999965, z: -48}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 1, z: -0, w: -0}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -39.5, y: 1.1999962, z: -50.199997}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0, z: -0, w: 1}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -40.55, y: 1.1999971, z: -40.050003}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -40.55, y: 1.199997, z: -41.55}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -40.55, y: 1.1999964, z: -48.3}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -40.55, y: 1.1999962, z: -49.799995}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -46.705692, y: 1.199997, z: -41.453754}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.9264801, z: -0, w: -0.37634373}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -46.391315, y: 1.1999968, z: -42.35674}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.38900518, z: -0, w: 0.92123556}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -47.071674, y: 1.199997, z: -41.3352}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.92123556, z: 0, w: 0.38900518}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -47.131042, y: 1.1999968, z: -43.117023}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: -0.38900518, z: -0, w: 0.92123556}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -47.821674, y: 1.1999968, z: -42.106045}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.92123556, z: 0, w: 0.38900518}
+    CoverDirections: 
+    isOutside: 1
+  - Position: {x: -47.819736, y: 1.1999967, z: -43.439335}
+    mainCover:
+      type: 2
+      height: 0
+      rotationToAlignWithCover: {x: 0, y: 0.37634373, z: 0, w: 0.9264801}
+    CoverDirections: 
+    isOutside: 1
