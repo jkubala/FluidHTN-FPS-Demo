@@ -43,16 +43,14 @@ namespace FPSDemo.NPC.Utilities
         private bool _gizmosFoldout = true;
         private bool _posChangesFoldout = true;
 
-        public TacticalPositionGenerator Generator
+        private TacticalPositionGenerator Generator
         {
             get
             {
                 if (GetSettings != null)
                 {
-                    if (_generator == null)
-                    {
-                        _generator = new(GetSettings, GetCornerFinder, GetPositionValidator);
-                    }
+                    _generator ??= new(GetSettings, GetCornerFinder, GetPositionValidator);
+
                     return _generator;
                 }
                 Debug.LogError("Settings is missing in the Tactical Position Editor Window!");
@@ -82,27 +80,10 @@ namespace FPSDemo.NPC.Utilities
         {
             get
             {
-                if (_settings != null)
-                {
-                    return _settings;
-                }
-
-                string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-                string path = $"Assets/Content/NPCUtils/TacticalGrid/{sceneName}/{sceneName}TacticalGeneratorSettings.asset";
-                _settings = AssetDatabase.LoadAssetAtPath<TacticalGeneratorSettings>(path);
-
                 if (_settings == null)
                 {
-                    string folderPath = $"Assets/Content/NPCUtils/TacticalGrid/{sceneName}";
-                    if (!AssetDatabase.IsValidFolder(folderPath))
-                        AssetDatabase.CreateFolder("Assets/Content/NPCUtils/TacticalGrid", sceneName);
-
-                    _settings = ScriptableObject.CreateInstance<TacticalGeneratorSettings>();
-                    AssetDatabase.CreateAsset(_settings, $"{folderPath}/{sceneName}TacticalGeneratorSettings.asset");
-                    AssetDatabase.SaveAssets();
-                    Debug.Log($"Created default TacticalGeneratorSettings for scene {sceneName}");
+                    _settings = AssetLoaderHelper.GetOrCreateSettings();
                 }
-
                 return _settings;
             }
         }
@@ -111,36 +92,21 @@ namespace FPSDemo.NPC.Utilities
         {
             get
             {
-                if (_manualPositionPrefab != null)
-                {
-                    return _manualPositionPrefab;
-                }
-
-                string path = "Assets/Content/NPCUtils/TacticalGrid/Prefabs/ManualTacticalPosition.prefab";
-                _manualPositionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-
                 if (_manualPositionPrefab == null)
                 {
-                    //CheckPrefabFolderExistence();
-                    Debug.LogError($"No ManualTacticalPosition prefab at {path}!");
+                    _manualPositionPrefab = AssetLoaderHelper.GetPrefab("Prefabs/ManualTacticalPosition.prefab", "ManualTacticalPosition");
                 }
-
                 return _manualPositionPrefab;
             }
-
-            set { _manualPositionPrefab = value; }
         }
 
         public TacticalPositionDebugManager GetDebugManager
         {
             get
             {
-                if (_debugManager != null)
-                {
-                    return _debugManager;
-                }
-
-                return new TacticalPositionDebugManager(this);
+                _debugManager ??= new TacticalPositionDebugManager(this);
+                _debugManager.Init();
+                return _debugManager;
             }
         }
 
@@ -191,19 +157,30 @@ namespace FPSDemo.NPC.Utilities
             window.Show();
         }
 
+        private void Awake()
+        {
+            _lastGizmoViewMode = _currentGizmoViewMode;
+            _lastCoverGenMode = _currentCoverGenMode;
+        }
+
         private void OnEnable()
         {
             EditorSceneManager.sceneOpened += OnSceneOpened;
-
-            _lastGizmoViewMode = _currentGizmoViewMode;
-            _lastCoverGenMode = _currentCoverGenMode;
+            Generator.OnContextUpdated += PropagateOnContextUpdatedEvent;
             SceneView.duringSceneGui += OnSceneGUI;
+            OnSceneLoad?.Invoke();
         }
 
         private void OnDisable()
         {
             EditorSceneManager.sceneOpened -= OnSceneOpened;
+            Generator.OnContextUpdated -= PropagateOnContextUpdatedEvent;
             SceneView.duringSceneGui -= OnSceneGUI;
+        }
+
+        private void OnDestroy()
+        {
+            GetDebugManager.Dispose();
         }
 
         private void OnGUI()
@@ -224,6 +201,11 @@ namespace FPSDemo.NPC.Utilities
             EditorGUILayout.EndScrollView();
 
             HandleUIChanges();
+        }
+
+        private void PropagateOnContextUpdatedEvent(TacticalPositionData oldPositions, CoverGenerationContext context)
+        {
+            OnContextUpdated?.Invoke(oldPositions, context);
         }
 
         private void DrawMainSettings()
@@ -339,12 +321,12 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            int totalCount = 0;
+            _totalPositionsCount = 0;
             if (Generator != null)
             {
                 foreach (var activeContext in Generator.GetActiveCoverGenContexts(_currentCoverGenMode))
                 {
-                    totalCount += DisplayPositions(activeContext.positionData.Positions);
+                    _totalPositionsCount += DisplayPositions(activeContext.positionData.Positions);
                 }
 
                 if (_showSpawners)
@@ -358,13 +340,6 @@ namespace FPSDemo.NPC.Utilities
             }
 
             OnOnSceneGUI?.Invoke();
-
-            if (totalCount > 0)
-            {
-                Handles.BeginGUI();
-                GUI.Label(new Rect(10, 30, 200, 20), $"Displaying {totalCount} positions");
-                Handles.EndGUI();
-            }
         }
 
         private void HandleUIChanges()
@@ -476,12 +451,20 @@ namespace FPSDemo.NPC.Utilities
         public void OnSceneOpened(Scene scene, OpenSceneMode mode)
         {
             Debug.Log($"Scene opened: {scene.name}. Resetting scene references.");
+            ResetReferences();
+            OnSceneLoad?.Invoke();
+            Repaint();
+        }
+
+        private void ResetReferences()
+        {
             _generator = null;
             _settings = null;
             _manualPositionPrefab = null;
             _manualPositionsParent = null;
-            OnSceneLoad?.Invoke();
-            Repaint();
+
+            GetDebugManager.Dispose();
+            _debugManager = null;
         }
     }
 }

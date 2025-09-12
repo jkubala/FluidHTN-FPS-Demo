@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -8,33 +7,6 @@ namespace FPSDemo.NPC.Utilities
     public class TacticalPositionDebugManager
     {
         public enum GizmoViewMode { All, Finished, Unfinished }
-
-        public TacticalPositionDebugManager(TacticalPositionGeneratorEditorWindow editorWindow)
-        {
-            _editorWindow = editorWindow;
-            _editorWindow.OnGizmoViewModeChanged += GizmoViewChanged;
-            _editorWindow.OnCoverGenTypeChanged += CoverGenTypeChanged;
-            _editorWindow.OnSceneLoad += InitializeSceneParents;
-            _editorWindow.OnOnSceneGUI += Handle3DCursor;
-            _editorWindow.Generator.OnContextUpdated += HandleContextUpdated;
-
-        }
-
-        ~TacticalPositionDebugManager()
-        {
-            _editorWindow.OnGizmoViewModeChanged -= GizmoViewChanged;
-            _editorWindow.OnCoverGenTypeChanged -= CoverGenTypeChanged;
-            _editorWindow.OnSceneLoad -= InitializeSceneParents;
-            _editorWindow.OnOnSceneGUI -= Handle3DCursor;
-            _editorWindow.Generator.OnContextUpdated -= HandleContextUpdated;
-        }
-
-        private void Handle3DCursor()
-        {
-            Process3DCursorInput();
-            Draw3DCursor();
-        }
-
         private readonly TacticalPositionGeneratorEditorWindow _editorWindow;
 
         [SerializeField] private GameObject _debugParentAdded;
@@ -50,25 +22,11 @@ namespace FPSDemo.NPC.Utilities
         {
             get
             {
-                if (_debugGameObjectPosChangePrefab != null)
-                {
-                    return _debugGameObjectPosChangePrefab;
-                }
-
-                string path = "Assets/Content/NPCUtils/TacticalGrid/Prefabs/TacticalPosChangeDebugGO.prefab";
-                _debugGameObjectPosChangePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-
                 if (_debugGameObjectPosChangePrefab == null)
                 {
-                    CheckPrefabFolderExistence();
-                    Debug.LogError($"No debugChangePos prefab at {path}!");
+                    _debugGameObjectPosChangePrefab = AssetLoaderHelper.GetPrefab("Prefabs/TacticalPosChangeDebugGO.prefab", "TacticalPosChangeDebugGO");
                 }
-
                 return _debugGameObjectPosChangePrefab;
-            }
-            set
-            {
-                _debugGameObjectPosChangePrefab = value;
             }
         }
 
@@ -76,32 +34,11 @@ namespace FPSDemo.NPC.Utilities
         {
             get
             {
-                if (_debugGizmoGOPrefab != null)
-                {
-                    return _debugGizmoGOPrefab;
-                }
-
-                string path = "Assets/Content/NPCUtils/TacticalGrid/Prefabs/TacticalPosGizmoDebugGO.prefab";
-                _debugGizmoGOPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-
                 if (_debugGizmoGOPrefab == null)
                 {
-                    CheckPrefabFolderExistence();
-                    Debug.LogError($"No debugGizmo prefab at {path}!");
+                    _debugGizmoGOPrefab = AssetLoaderHelper.GetPrefab("Prefabs/TacticalPosGizmoDebugGO.prefab", "TacticalPosGizmoDebugGO");
                 }
-
                 return _debugGizmoGOPrefab;
-            }
-            set { _debugGizmoGOPrefab = value; }
-        }
-
-        private static void CheckPrefabFolderExistence()
-        {
-            string folderPath = "Assets/Content/NPCUtils/TacticalGrid/Prefabs";
-            if (!AssetDatabase.IsValidFolder(folderPath))
-            {
-                Debug.LogError("Did now find the prefab folder of Tactical Grid! Making it now.");
-                AssetDatabase.CreateFolder("Assets/Content/NPCUtils/TacticalGrid", "Prefabs");
             }
         }
 
@@ -128,20 +65,42 @@ namespace FPSDemo.NPC.Utilities
             get { return _gizmo3DCursor; }
         }
 
-        private void InitializeSceneParents()
+        public TacticalPositionDebugManager(TacticalPositionGeneratorEditorWindow editorWindow)
         {
-            var debugRoot = GameObject.Find("TacticalPositionDebugParent");
-            if (debugRoot == null)
-            {
-                debugRoot = new GameObject("TacticalPositionDebugParent");
-                Undo.RegisterCreatedObjectUndo(debugRoot, "Create DebugParent for tactical positions");
-            }
+            _editorWindow = editorWindow;
+        }
 
-            _debugGizmoGOParent = GetOrCreateChild(debugRoot.transform, "Gizmos");
-            _debugParentAdded = GetOrCreateChild(debugRoot.transform, "AddedPositions");
-            _debugParentRemoved = GetOrCreateChild(debugRoot.transform, "RemovedPositions");
-            _debugParentModified = GetOrCreateChild(debugRoot.transform, "ModifiedPositions");
-            _gizmo3DCursor = GetOrCreateChild(debugRoot.transform, "Gizmo3DCursor").transform;
+        public void Init()
+        {
+            _editorWindow.OnGizmoViewModeChanged += GizmoViewChanged;
+            _editorWindow.OnCoverGenTypeChanged += CoverGenTypeChanged;
+            _editorWindow.OnSceneLoad += OnSceneLoad;
+            _editorWindow.OnOnSceneGUI += Handle3DCursor;
+            _editorWindow.OnContextUpdated += HandleContextUpdated;
+            InitializeSceneReferences();
+        }
+
+        public void Dispose()
+        {
+            _editorWindow.OnGizmoViewModeChanged -= GizmoViewChanged;
+            _editorWindow.OnCoverGenTypeChanged -= CoverGenTypeChanged;
+            _editorWindow.OnSceneLoad -= OnSceneLoad;
+            _editorWindow.OnOnSceneGUI -= Handle3DCursor;
+            _editorWindow.OnContextUpdated -= HandleContextUpdated;
+        }
+
+        private void OnSceneLoad()
+        {
+            InitializeSceneReferences();
+        }
+
+        private void InitializeSceneReferences()
+        {
+            _debugGizmoGOParent = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "Gizmos");
+            _debugParentAdded = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "AddedPositions");
+            _debugParentRemoved = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "RemovedPositions");
+            _debugParentModified = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "ModifiedPositions");
+            _gizmo3DCursor = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "Gizmo3DCursor").transform;
         }
 
         private void ComputeDifferences(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
@@ -252,18 +211,6 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        private GameObject GetOrCreateChild(Transform parent, string childName)
-        {
-            var childTransform = parent.Find(childName);
-            if (childTransform == null)
-            {
-                childTransform = new GameObject(childName).transform;
-                Undo.RegisterCreatedObjectUndo(childTransform.gameObject, $"Create {childName}");
-                childTransform.SetParent(parent);
-            }
-            return childTransform.gameObject;
-        }
-
         private void ClearAllPosChangeDebugGOs()
         {
             foreach (BasePositionClassifier classifier in Classifiers)
@@ -274,7 +221,10 @@ namespace FPSDemo.NPC.Utilities
 
         private void ClearDebugGizmosGOs(CoverGenerationContext context)
         {
-            if (_debugGizmoGOParent == null) return;
+            if (_debugGizmoGOParent == null)
+            {
+                return;
+            }
 
             Undo.RecordObject(_debugGizmoGOParent, "Clear debug gizmo GOs");
             for (int i = _debugGizmoGOParent.transform.childCount - 1; i >= 0; i--)
@@ -294,20 +244,12 @@ namespace FPSDemo.NPC.Utilities
             }
         }
 
-        private void Draw3DCursor()
+        private void Handle3DCursor()
         {
-            if (Gizmo3DCursor == null)
-                return;
-
-            Handles.color = Color.yellow;
-            Handles.SphereHandleCap(0, Gizmo3DCursor.position, Quaternion.identity, 0.2f, EventType.Repaint);
-
-            if (_editorWindow.Generator != null && _editorWindow.DistanceToCreateGizmos > 0)
-            {
-                Handles.color = new Color(1, 1, 0, 0.1f);
-                Handles.DrawWireDisc(Gizmo3DCursor.position, Vector3.up, _editorWindow.DistanceToCreateGizmos);
-            }
+            Process3DCursorInput();
+            Draw3DCursor();
         }
+
         private void Process3DCursorInput()
         {
             if (_gizmo3DCursor == null)
@@ -336,6 +278,23 @@ namespace FPSDemo.NPC.Utilities
                 EditorUtility.SetDirty(_gizmo3DCursor);
 
                 e.Use();
+            }
+        }
+
+        private void Draw3DCursor()
+        {
+            if (Gizmo3DCursor == null)
+            {
+                return;
+            }
+
+            Handles.color = Color.yellow;
+            Handles.SphereHandleCap(0, Gizmo3DCursor.position, Quaternion.identity, 0.2f, EventType.Repaint);
+
+            if (_editorWindow.DistanceToCreateGizmos > 0)
+            {
+                Handles.color = new Color(1, 1, 0, 0.1f);
+                Handles.DrawWireDisc(Gizmo3DCursor.position, Vector3.up, _editorWindow.DistanceToCreateGizmos);
             }
         }
     }
