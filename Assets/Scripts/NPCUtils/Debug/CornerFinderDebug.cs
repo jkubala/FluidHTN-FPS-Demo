@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CornerFinderDebug : CornerFinder
 {
-    public CornerFinderDebug(TacticalPositionGeneratorEditorWindow debugGen)
+    public CornerFinderDebug(TacticalPositionDebugManager debugGen)
     {
         _debugGen = debugGen != null ? debugGen : throw new ArgumentNullException(nameof(debugGen));
     }
-    private readonly TacticalPositionGeneratorEditorWindow _debugGen;
+    private readonly TacticalPositionDebugManager _debugGen;
     private TacticalDebugData _debugData;
 
     public override List<CornerDetectionInfo> FindCorners(RaycastHit hit, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)

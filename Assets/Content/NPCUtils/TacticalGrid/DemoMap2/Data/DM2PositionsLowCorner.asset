@@ -895,14 +895,14 @@ MonoBehaviour:
       rotationToAlignWithCover: {x: 0, y: 0.92123556, z: 0, w: 0.38900518}
     CoverDirections: 
     isOutside: 1
-  - Position: {x: -47.884247, y: 1.1999967, z: -43.376568}
+  - Position: {x: -47.883335, y: 1.1999967, z: -43.37746}
     mainCover:
       type: 1
       height: 0
       rotationToAlignWithCover: {x: 0, y: 0.37634373, z: 0, w: 0.9264801}
     CoverDirections: 
     isOutside: 1
-  - Position: {x: -48.235443, y: 1.1999968, z: -43.03487}
+  - Position: {x: -48.234528, y: 1.1999968, z: -43.035763}
     mainCover:
       type: 0
       height: 0
