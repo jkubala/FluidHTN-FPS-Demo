@@ -18,7 +18,7 @@ namespace FPSDemo.NPC.Utilities
         [SerializeField] private GameObject _manualPositionPrefab;
 
         [SerializeField] private bool _showPositions = false;
-        [SerializeField, HideInInspector] private int _currentPositionsCount = 0;
+        [SerializeField, HideInInspector] private int _currentVisiblePositionsCount = 0;
         [SerializeField, HideInInspector] private int _totalPositionsCount = 0;
 
         [SerializeField] private bool _showSpawners = false;
@@ -39,8 +39,6 @@ namespace FPSDemo.NPC.Utilities
         private TacticalPositionDebugManager _debugManager;
 
         private Vector2 _scrollPosition;
-        private bool _gizmosFoldout = true;
-        private bool _posChangesFoldout = true;
 
         private TacticalPositionGenerator Generator
         {
@@ -161,11 +159,7 @@ namespace FPSDemo.NPC.Utilities
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
             DrawMainSettings();
-            EditorGUILayout.Space();
-
             DrawGizmosSection();
-            EditorGUILayout.Space();
-
             DrawPositionChangesSection();
             EditorGUILayout.Space();
 
@@ -203,6 +197,12 @@ namespace FPSDemo.NPC.Utilities
 
             EditorGUI.BeginChangeCheck();
             _showPositions = EditorGUILayout.Toggle("Show Positions", _showPositions);
+            if (_showPositions)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.LabelField("Position Count:", $"{_currentVisiblePositionsCount}/{_totalPositionsCount}", EditorStyles.miniLabel);
+                EditorGUI.indentLevel--;
+            }
             if (EditorGUI.EndChangeCheck())
             {
                 UpdateVisibleCount();
@@ -211,6 +211,12 @@ namespace FPSDemo.NPC.Utilities
 
             EditorGUI.BeginChangeCheck();
             _showSpawners = EditorGUILayout.Toggle("Show Spawners", _showSpawners);
+            if (_showSpawners)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.LabelField("Spawner Count:", $"{Generator.GetSpawnerData.Positions.Count}", EditorStyles.miniLabel);
+                EditorGUI.indentLevel--;
+            }
             if (EditorGUI.EndChangeCheck())
             {
                 SceneView.RepaintAll();
@@ -219,35 +225,26 @@ namespace FPSDemo.NPC.Utilities
 
         private void DrawGizmosSection()
         {
-            _gizmosFoldout = EditorGUILayout.Foldout(_gizmosFoldout, "Gizmos", true);
-            if (_gizmosFoldout)
+            EditorGUI.BeginChangeCheck();
+            _currentGizmoViewMode = (TacticalPositionDebugManager.GizmoViewMode)EditorGUILayout.EnumPopup("Gizmo View Mode", _currentGizmoViewMode);
+            if (EditorGUI.EndChangeCheck())
             {
-                EditorGUI.indentLevel++;
+                OnGizmoViewModeChanged?.Invoke(_currentGizmoViewMode);
+                _lastGizmoViewMode = _currentGizmoViewMode;
+            }
 
-                _createGizmoDebugObjects = EditorGUILayout.Toggle("Create Gizmo Debug Objects", _createGizmoDebugObjects);
-
-                EditorGUI.BeginChangeCheck();
-                _currentGizmoViewMode = (TacticalPositionDebugManager.GizmoViewMode)EditorGUILayout.EnumPopup("Gizmo View Mode", _currentGizmoViewMode);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    OnGizmoViewModeChanged?.Invoke(_currentGizmoViewMode);
-                    _lastGizmoViewMode = _currentGizmoViewMode;
-                }
-
+            _createGizmoDebugObjects = EditorGUILayout.Toggle("Create Gizmo Debug Objects", _createGizmoDebugObjects);
+            if (_createGizmoDebugObjects)
+            {
                 _distanceToCreateGizmos = EditorGUILayout.Slider("Distance to Create Gizmos", _distanceToCreateGizmos, 1f, 5f);
-
-                EditorGUI.indentLevel--;
             }
         }
 
         private void DrawPositionChangesSection()
         {
-            _posChangesFoldout = EditorGUILayout.Foldout(_posChangesFoldout, "Position Changes Debug", true);
-            if (_posChangesFoldout)
+            _createPosChangesDebugObjects = EditorGUILayout.Toggle("Create Position Changes Debug Objects", _createPosChangesDebugObjects);
+            if (_createPosChangesDebugObjects)
             {
-                EditorGUI.indentLevel++;
-
-                _createPosChangesDebugObjects = EditorGUILayout.Toggle("Create Position Changes Debug Objects", _createPosChangesDebugObjects);
                 EditorGUI.BeginChangeCheck();
                 _maxDistanceToConsiderSamePosition = EditorGUILayout.Slider("Max Distance Same Position", _maxDistanceToConsiderSamePosition, 0.01f, 0.25f);
                 if (EditorGUI.EndChangeCheck())
@@ -261,7 +258,6 @@ namespace FPSDemo.NPC.Utilities
                 {
                     OnPosChangeDegreeDifferenceChanged?.Invoke(_maxDegreesDifferenceToConsiderSamePosition);
                 }
-                EditorGUI.indentLevel--;
             }
         }
 
@@ -299,17 +295,14 @@ namespace FPSDemo.NPC.Utilities
 
         private void OnSceneGUI(SceneView sceneView)
         {
-            if (!_showPositions || _settings == null)
-            {
-                return;
-            }
-
-            _totalPositionsCount = 0;
             if (Generator != null)
             {
-                foreach (var activeContext in Generator.GetActiveCoverGenContexts(_currentCoverGenMode))
+                if (_showPositions)
                 {
-                    _totalPositionsCount += DisplayPositions(activeContext.positionData.Positions);
+                    foreach (var activeContext in Generator.GetActiveCoverGenContexts(_currentCoverGenMode))
+                    {
+                        DisplayPositions(activeContext.positionData.Positions);
+                    }
                 }
 
                 if (_showSpawners)
@@ -346,7 +339,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void UpdateVisibleCount()
         {
-            _currentPositionsCount = 0;
+            _currentVisiblePositionsCount = 0;
             _totalPositionsCount = 0;
 
             if (Generator == null)
@@ -354,16 +347,14 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            List<CoverGenerationContext> allContexts = Generator.GetActiveCoverGenContexts(TacticalPositionGenerator.CoverGenerationMode.All);
-            foreach (var context in allContexts)
+            foreach (CoverGenerationContext context in Generator.GetActiveCoverGenContexts(TacticalPositionGenerator.CoverGenerationMode.All))
             {
                 _totalPositionsCount += context.positionData.Positions.Count;
             }
 
-            List<CoverGenerationContext> currentContexts = Generator.GetActiveCoverGenContexts(CurCoverGenMode);
-            foreach (var context in currentContexts)
+            foreach (CoverGenerationContext context in Generator.GetActiveCoverGenContexts(CurCoverGenMode))
             {
-                _currentPositionsCount += context.positionData.Positions.Count;
+                _currentVisiblePositionsCount += context.positionData.Positions.Count;
             }
         }
 
