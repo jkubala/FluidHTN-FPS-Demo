@@ -43,22 +43,6 @@ namespace FPSDemo.NPC.Utilities
         }
 
         [SerializeField] List<BasePositionClassifier> _classifiers = new();
-        private List<BasePositionClassifier> Classifiers
-        {
-            get
-            {
-                if (_classifiers == null || _classifiers.Count == 0)
-                {
-                    _classifiers = new List<BasePositionClassifier>
-                {
-                    new AddedPositionClassifier(_debugParentAdded, _editorWindow.MaxDistanceToConsiderSamePosition, _editorWindow.MaxDegreesDifferenceToConsiderSamePosition),
-                    new RemovedPositionClassifier(_debugParentRemoved, _editorWindow.MaxDistanceToConsiderSamePosition, _editorWindow.MaxDegreesDifferenceToConsiderSamePosition),
-                    new ModifiedPositionClassifier(_debugParentModified, _editorWindow.MaxDistanceToConsiderSamePosition, _editorWindow.MaxDegreesDifferenceToConsiderSamePosition)
-                };
-                }
-                return _classifiers;
-            }
-        }
 
         public Transform Gizmo3DCursor
         {
@@ -70,23 +54,27 @@ namespace FPSDemo.NPC.Utilities
             _editorWindow = editorWindow;
         }
 
-        public void Init()
+        public void StartListening()
         {
             _editorWindow.OnGizmoViewModeChanged += GizmoViewChanged;
             _editorWindow.OnCoverGenTypeChanged += CoverGenTypeChanged;
             _editorWindow.OnSceneLoad += OnSceneLoad;
             _editorWindow.OnOnSceneGUI += Handle3DCursor;
             _editorWindow.OnContextUpdated += HandleContextUpdated;
+            _editorWindow.OnPosChangeDistanceChanged += UpdateClassifierDistances;
+            _editorWindow.OnPosChangeDegreeDifferenceChanged += UpdateClassifierDegreeDifferences;
             InitializeSceneReferences();
         }
 
-        public void Dispose()
+        public void StopListening()
         {
             _editorWindow.OnGizmoViewModeChanged -= GizmoViewChanged;
             _editorWindow.OnCoverGenTypeChanged -= CoverGenTypeChanged;
             _editorWindow.OnSceneLoad -= OnSceneLoad;
             _editorWindow.OnOnSceneGUI -= Handle3DCursor;
             _editorWindow.OnContextUpdated -= HandleContextUpdated;
+            _editorWindow.OnPosChangeDistanceChanged -= UpdateClassifierDistances;
+            _editorWindow.OnPosChangeDegreeDifferenceChanged -= UpdateClassifierDegreeDifferences;
         }
 
         private void OnSceneLoad()
@@ -101,6 +89,31 @@ namespace FPSDemo.NPC.Utilities
             _debugParentRemoved = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "RemovedPositions");
             _debugParentModified = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "ModifiedPositions");
             _gizmo3DCursor = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "Gizmo3DCursor").transform;
+            ReinitiliazeClassifiers();
+        }
+
+        private void ReinitiliazeClassifiers()
+        {
+            _classifiers.Clear();
+            _classifiers.Add(new AddedPositionClassifier(_debugParentAdded, _editorWindow.MaxDistanceToConsiderSamePosition, _editorWindow.MaxDegreesDifferenceToConsiderSamePosition));
+            _classifiers.Add(new RemovedPositionClassifier(_debugParentRemoved, _editorWindow.MaxDistanceToConsiderSamePosition, _editorWindow.MaxDegreesDifferenceToConsiderSamePosition));
+            _classifiers.Add(new ModifiedPositionClassifier(_debugParentModified, _editorWindow.MaxDistanceToConsiderSamePosition, _editorWindow.MaxDegreesDifferenceToConsiderSamePosition));
+        }
+
+        private void UpdateClassifierDistances(float maxDistance)
+        {
+            foreach (BasePositionClassifier classifier in _classifiers)
+            {
+                classifier.UpdateMaxDistance(maxDistance);
+            }
+        }
+
+        private void UpdateClassifierDegreeDifferences(float maxAngleDifference)
+        {
+            foreach (BasePositionClassifier classifier in _classifiers)
+            {
+                classifier.UpdateMaxDegreesDifference(maxAngleDifference);
+            }
         }
 
         private void ComputeDifferences(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions)
@@ -110,7 +123,7 @@ namespace FPSDemo.NPC.Utilities
                 return;
             }
 
-            foreach (var classifier in Classifiers)
+            foreach (var classifier in _classifiers)
             {
                 classifier.Classify(oldPositions, newPositions, GetDebugGameObjectPosChangePrefab);
             }
@@ -213,7 +226,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void ClearAllPosChangeDebugGOs()
         {
-            foreach (BasePositionClassifier classifier in Classifiers)
+            foreach (BasePositionClassifier classifier in _classifiers)
             {
                 classifier.ClearDebugGOs();
             }

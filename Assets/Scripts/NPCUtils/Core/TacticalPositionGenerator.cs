@@ -27,6 +27,11 @@ namespace FPSDemo.NPC.Utilities
             _cornerFinder = cornerFinder;
         }
 
+        public void UpdateSettings(TacticalGeneratorSettings settings)
+        {
+            _settings = settings;
+        }
+
         public TacticalGridSpawnerData GetSpawnerData { get { return _settings.gridSpawnerData; } }
 
         public event Action<TacticalPositionData, CoverGenerationContext> OnContextUpdated;

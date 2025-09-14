@@ -19,7 +19,6 @@ namespace FPSDemo.NPC.Utilities
 
         [SerializeField] private bool _showPositions = false;
         [SerializeField, HideInInspector] private int _currentPositionsCount = 0;
-
         [SerializeField, HideInInspector] private int _totalPositionsCount = 0;
 
         [SerializeField] private bool _showSpawners = false;
@@ -47,9 +46,9 @@ namespace FPSDemo.NPC.Utilities
         {
             get
             {
-                if (GetSettings != null)
+                if (_settings != null)
                 {
-                    _generator ??= new(GetSettings, GetCornerFinder, GetPositionValidator);
+                    _generator ??= new(_settings, GetCornerFinder, GetPositionValidator);
 
                     return _generator;
                 }
@@ -62,7 +61,7 @@ namespace FPSDemo.NPC.Utilities
         {
             get
             {
-                return _createGizmoDebugObjects ? (_cornerFinderDebug ??= new CornerFinderDebug(GetDebugManager))
+                return _createGizmoDebugObjects ? (_cornerFinderDebug ??= new CornerFinderDebug(_debugManager))
                                 : (_cornerFinder ??= new CornerFinder());
             }
         }
@@ -73,40 +72,6 @@ namespace FPSDemo.NPC.Utilities
             {
                 return _createGizmoDebugObjects ? (_positionValidatorDebug ??= new PositionValidatorDebug())
                                 : (_positionValidator ??= new PositionValidator());
-            }
-        }
-
-        public TacticalGeneratorSettings GetSettings
-        {
-            get
-            {
-                if (_settings == null)
-                {
-                    _settings = AssetLoaderHelper.GetOrCreateSettings();
-                }
-                return _settings;
-            }
-        }
-
-        public GameObject GetManualPositionPrefab
-        {
-            get
-            {
-                if (_manualPositionPrefab == null)
-                {
-                    _manualPositionPrefab = AssetLoaderHelper.GetPrefab("Prefabs/ManualTacticalPosition.prefab", "ManualTacticalPosition");
-                }
-                return _manualPositionPrefab;
-            }
-        }
-
-        public TacticalPositionDebugManager GetDebugManager
-        {
-            get
-            {
-                _debugManager ??= new TacticalPositionDebugManager(this);
-                _debugManager.Init();
-                return _debugManager;
             }
         }
 
@@ -140,12 +105,12 @@ namespace FPSDemo.NPC.Utilities
             get { return _createPosChangesDebugObjects; }
         }
 
-        private static bool IsWindowOpen => HasOpenInstances<TacticalPositionGeneratorEditorWindow>();
-
         public Action<TacticalPositionGenerator.CoverGenerationMode> OnCoverGenTypeChanged;
         public Action<TacticalPositionDebugManager.GizmoViewMode> OnGizmoViewModeChanged;
         public Action OnOnSceneGUI;
         public Action OnSceneLoad;
+        public Action<float> OnPosChangeDistanceChanged;
+        public Action<float> OnPosChangeDegreeDifferenceChanged;
         public Action<TacticalPositionData, CoverGenerationContext> OnContextUpdated;
 
 
@@ -165,9 +130,17 @@ namespace FPSDemo.NPC.Utilities
 
         private void OnEnable()
         {
+            _debugManager ??= new(this);
+            _manualPositionPrefab = AssetLoaderHelper.GetPrefab("Prefabs/ManualTacticalPosition.prefab", "ManualTacticalPosition");
+            _settings = AssetLoaderHelper.GetOrCreateSettings();
+            _generator ??= new(_settings, GetCornerFinder, GetPositionValidator);
+            LoadSceneReferences();
+
             EditorSceneManager.sceneOpened += OnSceneOpened;
             Generator.OnContextUpdated += PropagateOnContextUpdatedEvent;
             SceneView.duringSceneGui += OnSceneGUI;
+
+            _debugManager.StartListening();
             OnSceneLoad?.Invoke();
         }
 
@@ -180,7 +153,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void OnDestroy()
         {
-            GetDebugManager.Dispose();
+            _debugManager.StopListening();
         }
 
         private void OnGUI()
@@ -212,7 +185,7 @@ namespace FPSDemo.NPC.Utilities
         {
             EditorGUILayout.LabelField("Main Settings", EditorStyles.boldLabel);
 
-            if (GetSettings == null)
+            if (_settings == null)
             {
                 EditorGUILayout.HelpBox("Tactical Generator Settings is not assigned!", MessageType.Error);
             }
@@ -275,9 +248,19 @@ namespace FPSDemo.NPC.Utilities
                 EditorGUI.indentLevel++;
 
                 _createPosChangesDebugObjects = EditorGUILayout.Toggle("Create Position Changes Debug Objects", _createPosChangesDebugObjects);
+                EditorGUI.BeginChangeCheck();
                 _maxDistanceToConsiderSamePosition = EditorGUILayout.Slider("Max Distance Same Position", _maxDistanceToConsiderSamePosition, 0.01f, 0.25f);
-                _maxDegreesDifferenceToConsiderSamePosition = EditorGUILayout.Slider("Max Degrees Difference Same Position", _maxDegreesDifferenceToConsiderSamePosition, 1f, 3f);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    OnPosChangeDistanceChanged?.Invoke(_maxDistanceToConsiderSamePosition);
+                }
 
+                EditorGUI.BeginChangeCheck();
+                _maxDegreesDifferenceToConsiderSamePosition = EditorGUILayout.Slider("Max Degrees Difference Same Position", _maxDegreesDifferenceToConsiderSamePosition, 1f, 3f);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    OnPosChangeDegreeDifferenceChanged?.Invoke(_maxDegreesDifferenceToConsiderSamePosition);
+                }
                 EditorGUI.indentLevel--;
             }
         }
@@ -316,7 +299,7 @@ namespace FPSDemo.NPC.Utilities
 
         private void OnSceneGUI(SceneView sceneView)
         {
-            if (!_showPositions || GetSettings == null)
+            if (!_showPositions || _settings == null)
             {
                 return;
             }
@@ -445,26 +428,22 @@ namespace FPSDemo.NPC.Utilities
 
         public void LoadManualPositions()
         {
-            Generator.LoadManualPositions(GetManualPositionPrefab, _manualPositionsParent);
+            Generator.LoadManualPositions(_manualPositionPrefab, _manualPositionsParent);
         }
 
         public void OnSceneOpened(Scene scene, OpenSceneMode mode)
         {
             Debug.Log($"Scene opened: {scene.name}. Resetting scene references.");
-            ResetReferences();
+            LoadSceneReferences();
             OnSceneLoad?.Invoke();
             Repaint();
         }
 
-        private void ResetReferences()
+        private void LoadSceneReferences()
         {
-            _generator = null;
-            _settings = null;
-            _manualPositionPrefab = null;
-            _manualPositionsParent = null;
-
-            GetDebugManager.Dispose();
-            _debugManager = null;
+            _settings = AssetLoaderHelper.GetOrCreateSettings();
+            _generator.UpdateSettings(_settings);
+            _manualPositionsParent = AssetLoaderHelper.GetOrCreateSceneObject("TacticalPositionDebugParent", "ManualPositions");
         }
     }
 }

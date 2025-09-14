@@ -6,14 +6,24 @@ namespace FPSDemo.NPC.Utilities
     public abstract class BasePositionClassifier
     {
         protected readonly GameObject _parentGO;
-        protected readonly float _maxDistanceToConsiderSamePosition;
-        protected readonly float _maxDegreesDifferenceToConsiderSamePosition;
+        protected float _maxDistanceToConsiderSamePosition;
+        protected float _maxDegreesDifferenceToConsiderSamePosition;
 
         public BasePositionClassifier(GameObject parentGO, float maxDistance, float maxDegrees)
         {
             _parentGO = parentGO;
             _maxDistanceToConsiderSamePosition = maxDistance;
             _maxDegreesDifferenceToConsiderSamePosition = maxDegrees;
+        }
+
+        public void UpdateMaxDistance(float distance)
+        {
+            _maxDistanceToConsiderSamePosition = distance;
+        }
+
+        public void UpdateMaxDegreesDifference(float difference)
+        {
+            _maxDegreesDifferenceToConsiderSamePosition = difference;
         }
 
         public void Classify(List<TacticalPosition> oldPositions, List<TacticalPosition> newPositions, GameObject debugGO = null)
