@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputActions",
     "maps": [
         {
@@ -54,7 +55,16 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "c14bfa58-ac89-47e5-a63b-fe9dcfec834d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Adjust Stance",
+                    "type": "Button",
+                    "id": "daf92a2f-18a9-4214-b4ca-7e0263a0b42a",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -200,6 +210,17 @@
                     "processors": "",
                     "groups": "Keyboard And Mouse",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e3bf613-1b48-4e92-a5b1-3b00bf4ae779",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard And Mouse",
+                    "action": "Adjust Stance",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

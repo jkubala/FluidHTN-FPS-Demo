@@ -9,7 +9,7 @@ namespace FPSDemo.Player
         [Header("Crouching")]
 		[SerializeField] private float _crouchSpeed = 10f;
 		[SerializeField] private float _crouchSpeedMultiplier = 0.4f;
-		[SerializeField] private int _numberOfStepsToCrouch = 3;
+		[SerializeField] private float _crouchSensitivity = 0.01f;
 		[SerializeField] private float _spaceFromCeilingWhenUncrouching = 0.1f;
 		[SerializeField] private float _deadHeight = 0.8f;
 
@@ -18,9 +18,9 @@ namespace FPSDemo.Player
 
         // ========================================================= PRIVATE FIELDS
 
-        private int _currentCrouchLevel = 0;
+        private float _currentCrouchAmount = 0;
+        private float _maxCrouchAmount = 0;
 		private bool _isAdjustingCrouchLevel = false;
-		private float _stepSize;
         private Vector3 _castOrigin = Vector3.zero;
 
 
@@ -46,7 +46,7 @@ namespace FPSDemo.Player
 
         private void Start()
 		{
-			_stepSize = (_player.StandingFloatingColliderHeight - _player.CrouchFloatingColliderHeight) / _numberOfStepsToCrouch;
+			_maxCrouchAmount = _player.StandingFloatingColliderHeight - _player.CrouchFloatingColliderHeight;
 		}
 
         private void OnEnable()
@@ -87,7 +87,7 @@ namespace FPSDemo.Player
 			}
 			else
 			{
-				heightTarget = _player.StandingFloatingColliderHeight - (_currentCrouchLevel * _stepSize);
+				heightTarget = _player.StandingFloatingColliderHeight - _currentCrouchAmount;
 				if (_player.IsCrouching && Mathf.Approximately(heightTarget, _player.CurrentFloatingColliderHeight) == false)
 				{
 					_castOrigin = _player.PlayerTopSphere();
@@ -130,14 +130,10 @@ namespace FPSDemo.Player
 		{
 			if (!_player.IsSprinting)
 			{
-				if (_player.InputManager.IncreaseCrouchLevel)
+				float crouchAmountDelta = _player.InputManager.ChangeStanceAmount.y * _crouchSensitivity;
+				if (crouchAmountDelta != 0f)
 				{
-					_currentCrouchLevel = Mathf.Clamp(++_currentCrouchLevel, 0, _numberOfStepsToCrouch);
-					_isAdjustingCrouchLevel = true;
-				}
-				else if (_player.InputManager.DecreaseCrouchLevel)
-				{
-					_currentCrouchLevel = Mathf.Clamp(--_currentCrouchLevel, 0, _numberOfStepsToCrouch);
+					_currentCrouchAmount = Mathf.Clamp(_currentCrouchAmount + crouchAmountDelta, 0, _maxCrouchAmount);
 					_isAdjustingCrouchLevel = true;
 				}
 				else if (_player.InputManager.CrouchToggled)
@@ -148,20 +144,20 @@ namespace FPSDemo.Player
 					}
 					else
 					{
-						if (_currentCrouchLevel > 0)
+						if (_currentCrouchAmount > 0)
 						{
-							_currentCrouchLevel = 0;
+							_currentCrouchAmount = 0;
 						}
 						else
 						{
-							_currentCrouchLevel = _numberOfStepsToCrouch;
+							_currentCrouchAmount = _maxCrouchAmount;
 						}
 					}
 				}
 			}
 			else
 			{
-				_currentCrouchLevel = 0;
+				_currentCrouchAmount = 0;
 			}
 		}
 
@@ -170,17 +166,17 @@ namespace FPSDemo.Player
 
         public void SetCrouchLevelToMatchHeight(float heightToMatch)
 		{
-			int crouchLevelToSet;
+			float crouchAmountToSet;
 			if (Mathf.Approximately(heightToMatch, _player.CharacterHeight))
 			{
-				crouchLevelToSet = 0;
+				crouchAmountToSet = 0;
 			}
 			else
 			{
-				crouchLevelToSet = _numberOfStepsToCrouch - Mathf.FloorToInt((heightToMatch - CrouchColliderHeight - _spaceFromCeilingWhenUncrouching) / _stepSize);
+				crouchAmountToSet = _maxCrouchAmount - (heightToMatch - CrouchColliderHeight - _spaceFromCeilingWhenUncrouching);
 			}
 
-            _currentCrouchLevel = crouchLevelToSet;
+            _currentCrouchAmount = crouchAmountToSet;
         }
 	}
 }
