@@ -30,17 +30,18 @@ namespace FPSDemo.Player
 		[SerializeField] private float _camDampSpeed = 0.1f;
 		[SerializeField] private float _tiltHeadForward = 0.1f;
 		[SerializeField] private float _tiltHeadBack = -0.15f;
+		
+        [SerializeField] private float _cameraRotationLeaning = 20f;
 
         [SerializeField] float _cameraDefaultFOV = 65f;
 
         [SerializeField] private Camera _camera;
         [SerializeField] private Player _player;
         [SerializeField] private PlayerLeaning _playerLeaning;
-
-
+        
         // ========================================================= PRIVATE FIELDS
 
-        private Coroutine _rotateTowardsRoutine = null;
+        private Coroutine _rotateTowardsRoutine;
 		private Quaternion _originalRotation;
 		private Transform _cameraOffsetPoint;
 		private Vector3 _currentCamXZPos;
@@ -48,23 +49,21 @@ namespace FPSDemo.Player
         private Vector2 _cameraMovementLastFrame = Vector2.zero;
 
         private float _currentMaxXAngle = 360f;
-        private float _rotationX = 0f;
-        private float _rotationY = 0f;
-        private float _rotationZ = 0f;
+        private float _rotationX;
+        private float _rotationY;
+        private float _rotationZ;
         private float _currentCamYPos;
 		private float _camYVelocity;
+		private float _currentFOV = 45f;
 		private float _targetFOV;
         private float _targetMouseSensitivity;
-
+        
         // ========================================================= PROPERTIES
 
         public Transform CameraBase { get; private set; }
         public bool CanRotateCamera { get; set; } = true;
         public bool RotateTowardsFinished { get; private set; } = true;
         public Vector2 CameraMovementThisFrame { get; private set; } = Vector2.zero;
-		public float CurrentFOV { get; set; } = 45f;
-        public float NormalFOV { get { return _cameraDefaultFOV; } private set { _cameraDefaultFOV = value; } }
-
 
         // ========================================================= UNITY METHODS
 
@@ -93,8 +92,8 @@ namespace FPSDemo.Player
 			_originalRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
 			_targetCamYPos = _standingCamHeight;
 			_currentCamXZPos = transform.position;
-			CurrentFOV = NormalFOV;
-			_camera.fieldOfView = CurrentFOV;
+			_currentFOV = _cameraDefaultFOV;
+			_camera.fieldOfView = _currentFOV;
 			_targetMouseSensitivity = _mouseSensitivity;
 			_currentCamYPos = _targetCamYPos + _player.transform.position.y;
 		}
@@ -134,7 +133,7 @@ namespace FPSDemo.Player
 
 			_rotationX = Mathf.Clamp(_rotationX %= 360f, -_currentMaxXAngle, _currentMaxXAngle);
 			_rotationY = Mathf.Clamp(_rotationY %= 360f, -_defaultYAngleLimit, _defaultYAngleLimit);
-			_rotationZ = -_playerLeaning.LeanPos * _playerLeaning.RotationLeanAmt;
+			_rotationZ = -_playerLeaning.CurrentLeanDistance * _cameraRotationLeaning;
 
 			CameraMovementThisFrame = new Vector2(_rotationX - _cameraMovementLastFrame.x, _rotationY - _cameraMovementLastFrame.y);
 			
@@ -158,13 +157,13 @@ namespace FPSDemo.Player
 			var headTiltValue = Vector3.Dot(-transform.up, _camera.transform.forward);
 			var headTilt = transform.forward * Mathf.Lerp(_tiltHeadBack, _tiltHeadForward, (headTiltValue + 1f) / 2f);
 
-			CameraBase.transform.position = _cameraOffsetPoint.position + _player.transform.right * _playerLeaning.LeanPos + headTilt;
+			CameraBase.transform.position = _cameraOffsetPoint.position + _player.transform.right * _playerLeaning.CurrentLeanDistance + headTilt;
 		}
 
 
         // ========================================================= GETTERS
 
-        public float GetCameraPitch()
+        private float GetCameraPitch()
         {
             float angleToReturn = CameraBase.localRotation.eulerAngles.x;
             if (angleToReturn > 180)

@@ -101,11 +101,6 @@ namespace FPSDemo.Input
 
         public virtual Vector2 GetLookInput()
         {
-            if (AdjustStanceInputAction.IsPressed())
-            {
-                return Vector2.zero;
-            }
-
             Vector2 value = MouseLookInputAction.ReadValue<Vector2>();
             if (invertVerticalLook)
             {
@@ -117,14 +112,12 @@ namespace FPSDemo.Input
 
         public Vector2 GetMovementInput()
         {
-            if (MovementInputAction != null)
-            {
-                return MovementInputAction.ReadValue<Vector2>();
-            }
-            else
+            if (AdjustStanceInputAction.IsPressed())
             {
                 return Vector2.zero;
             }
+
+            return MovementInputAction.ReadValue<Vector2>();
         }
 
         public bool CrouchToggled
@@ -140,15 +133,40 @@ namespace FPSDemo.Input
                 {
                     if (invertVerticalLook)
                     {
-                        return MouseLookInputAction.ReadValue<Vector2>();
+                        return MovementInputAction.ReadValue<Vector2>();
                     }
 
-                    return -MouseLookInputAction.ReadValue<Vector2>();
+                    return -MovementInputAction.ReadValue<Vector2>();
                 }
                 else
                 {
                     return Vector2.zero;
                 }
+            }
+        }
+
+        public int ShouldQuickLean
+        {
+            get
+            {
+                if (AdjustStanceInputAction.IsPressed())
+                {
+                    return 0;
+                }
+
+                // Lean left
+                if (LeanLeftInputAction.IsPressed() && !LeanRightInputAction.IsPressed())
+                {
+                    return -1;
+                }
+
+                // Lean right
+                if (LeanRightInputAction.IsPressed() && !LeanLeftInputAction.IsPressed())
+                {
+                    return 1;
+                }
+
+                return 0;
             }
         }
     }

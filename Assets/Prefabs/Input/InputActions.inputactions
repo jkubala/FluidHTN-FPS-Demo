@@ -91,7 +91,7 @@
                     "name": "Aim",
                     "type": "Button",
                     "id": "a3bdc9af-c9aa-4a94-966f-6c0f1706683c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -109,7 +109,7 @@
                     "name": "Lean Right",
                     "type": "Button",
                     "id": "57f14dc5-e837-45eb-9b2d-ed5b4d8abf24",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -216,7 +216,7 @@
                 {
                     "name": "",
                     "id": "9e3bf613-1b48-4e92-a5b1-3b00bf4ae779",
-                    "path": "<Keyboard>/leftAlt",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard And Mouse",

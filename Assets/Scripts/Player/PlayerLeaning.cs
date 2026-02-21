@@ -7,34 +7,34 @@ namespace FPSDemo.Player
         // ========================================================= INSPECTOR FIELDS
 
         [Header("Leaning")]
-        [Tooltip("Distance left or right the player can lean.")]
-        [SerializeField] private float _leanDistance = 0.75f;
+        [Tooltip("Max distance left or right the player can lean when adjusting stance.")]
+        [SerializeField] private float _maxLeanDistance = 0.75f;
+        
+        [Tooltip(("Factor of how much the player can lean while using quick lean (Q or E)."))]
+        [SerializeField] private float _leanDistanceMobileFactor = 0.4f;
 
-        [Tooltip("Pecentage the player can lean while standing.")]
-        [SerializeField] private float _standLeanAmt = 1f;
-
-        [Tooltip("Pecentage the player can lean while crouching.")]
+        [Tooltip("Factor of how much the player can lean while standing.")]
+        [SerializeField] private float _standLeanFactor = 1f;
+        
+        [Tooltip("Factor of how much the player can lean while crouching.")]
         [SerializeField] private float _crouchLeanAmt = 0.75f;
 
-        [SerializeField] private float _rotationLeanAmt = 20f;
-
-        [SerializeField] private Player _player;
-
-
+        [SerializeField] private float _leaningSensitivity = 0.01f;
+        
+        [Header("Spherecast check parameters")]
+        [SerializeField] private float _bufferDistanceFromWall = 0.4f;
+        [SerializeField] private float _originOffsetDistance = 0.05f;
+        [SerializeField] private float _playerRadiusPercentage = 0.6f;
+        
         // ========================================================= PRIVATE FIELDS
-
-        private float _leanFactorAmt = 1f;
+        
         private float _currentLeanVelocity;
-        private Vector3 _leanCheckPos;
-
+        private Player _player;
+        private float _targetLeanDistance;
 
         // ========================================================= PROPERTIES
 
-        public float RotationLeanAmt => _rotationLeanAmt;
-        public float LeanAmt { get; set; } = 0f;
-        public float LeanPos { get; set; }
-        public bool IsLeaning { get; set; }
-
+        public float CurrentLeanDistance { get; private set; }
 
         // ========================================================= UNITY METHODS
 
@@ -50,63 +50,89 @@ namespace FPSDemo.Player
         {
             _player.OnBeforeMove += OnBeforeMove;
         }
+
         void OnDisable()
         {
             _player.OnBeforeMove -= OnBeforeMove;
         }
-
-
+        
         // ========================================================= CALLBACKS
 
         void OnBeforeMove()
         {
-            LeanAmt = 0f;
-            IsLeaning = false;
-            if (_player.IsSprinting == false && 
-                _player.IsGrounded && 
-                Mathf.Abs(_player.InputManager.GetMovementInput().y) < 0.2f &&
-                (_player.InputManager.LeanLeftInputAction.IsPressed() || 
-                 _player.InputManager.LeanRightInputAction.IsPressed()))
+            _targetLeanDistance = CalculateCurrentLeanAmt();
+
+            // Smooth current lean to target lean
+            CurrentLeanDistance = Mathf.SmoothDamp(CurrentLeanDistance, _targetLeanDistance, ref _currentLeanVelocity, 0.1f, Mathf.Infinity,
+                Time.deltaTime);
+        }
+
+        float CalculateCurrentLeanAmt()
+        {
+            if (_player.IsSprinting || !_player.IsGrounded)
             {
-                int direction;
-
-                // lean left
-                if (_player.InputManager.LeanLeftInputAction.IsPressed() && 
-                    _player.InputManager.LeanRightInputAction.IsPressed() == false) 
-                {
-                    direction = -1;
-                }
-                // lean right
-                else if (_player.InputManager.LeanRightInputAction.IsPressed() && 
-                         _player.InputManager.LeanLeftInputAction.IsPressed() == false) 
-                {
-                    direction = 1;
-                }
-                else
-                {
-                    return;
-                }
-
-                _leanCheckPos = transform.position + Vector3.up * (_player.CurrentFloatingColliderHeight + _player.DistanceToFloat - _player.Capsule.radius);
-                _leanFactorAmt = Mathf.Lerp(_standLeanAmt, _crouchLeanAmt, _player.CrouchPercentage);
-
-                // Offset a bit to the opposite side so that the cast does not miss a wall the player is touching
-                var offset = -direction * 0.05f * transform.right;
-                var origin = _leanCheckPos + offset;
-                var radius = _player.Capsule.radius * 0.6f;
-                var dir = transform.right * direction;
-                var maxDistance = _leanDistance * _leanFactorAmt;
-                var layerMask = _player.GroundMask.value;
-
-                if (Physics.SphereCast(origin, radius, dir, out _, maxDistance, layerMask) == false)
-                {
-                    LeanAmt = _leanDistance * _leanFactorAmt * direction;
-                    IsLeaning = true;
-                }
+                return 0f;
             }
 
-            // smooth position between leanAmt values
-            LeanPos = Mathf.SmoothDamp(LeanPos, LeanAmt, ref _currentLeanVelocity, 0.1f, Mathf.Infinity, Time.deltaTime);
+            // Quick lean
+            int quickLeanDirection = _player.InputManager.ShouldQuickLean;
+            if (quickLeanDirection != 0)
+            {
+                return CurrentLeanFromQuickLean(quickLeanDirection);
+            }
+
+            // Adjust stance lean
+            float changeStanceLean = -_player.InputManager.ChangeStanceAmount.x;
+            if (changeStanceLean != 0 && Mathf.Abs(_player.InputManager.GetMovementInput().y) == 0f)
+            {
+                return CurrentLeanFromAdjustStanceLean(changeStanceLean);
+            }
+
+            // Maintain lean if adjusting
+            if (_player.InputManager.AdjustStanceInputAction.IsPressed())
+            {
+                return _targetLeanDistance;
+            }
+
+            // Otherwise reset lean
+            return 0f;
+        }
+
+        private float CurrentLeanFromAdjustStanceLean(float changeStanceLean)
+        {
+            // Max distance player can lean based on current stance
+            float maxDistanceToLean = _maxLeanDistance *
+                                      Mathf.Lerp(_standLeanFactor, _crouchLeanAmt, _player.CrouchPercentage);
+            // Clamped distance based on any obstacles in the way
+            float clampedDistanceToLeanLeft = GetMaxDistanceInDirection(-1, maxDistanceToLean);
+            float clampedDistanceToLeanRight = GetMaxDistanceInDirection(1, maxDistanceToLean);
+            return Mathf.Clamp(CurrentLeanDistance + changeStanceLean * _leaningSensitivity, -clampedDistanceToLeanLeft, clampedDistanceToLeanRight);
+        }
+
+        private float CurrentLeanFromQuickLean(int quickLeanDirection)
+        {
+            float distanceToLean = _maxLeanDistance * _leanDistanceMobileFactor *
+                                   Mathf.Lerp(_standLeanFactor, _crouchLeanAmt, _player.CrouchPercentage);
+            return GetMaxDistanceInDirection(quickLeanDirection, distanceToLean) * quickLeanDirection;
+        }
+
+        private float GetMaxDistanceInDirection(int leanDirection, float distanceToLean)
+        {
+            var origin = transform.position
+                         + Vector3.up * (_player.CurrentFloatingColliderHeight + _player.DistanceToFloat -
+                                         _player.Capsule.radius)
+                         + transform.right *
+                         (-leanDirection *
+                          _originOffsetDistance); // Offset a bit to the opposite side so that the cast does not miss a wall the player is touching
+
+            if (Physics.SphereCast(origin, _player.Capsule.radius * _playerRadiusPercentage,
+                    transform.right * leanDirection, out RaycastHit hit, distanceToLean + _bufferDistanceFromWall,
+                    _player.GroundMask.value))
+            {
+                return Vector3.Distance(hit.point, origin) - _bufferDistanceFromWall;
+            }
+
+            return distanceToLean;
         }
     }
 }
