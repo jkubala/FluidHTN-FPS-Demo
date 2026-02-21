@@ -2,16 +2,15 @@ using UnityEngine;
 
 namespace FPSDemo.Player
 {
-	public class PlayerCrouching : MonoBehaviour
-	{
+    public class PlayerCrouching : MonoBehaviour
+    {
         // ========================================================= INSPECTOR FIELDS
 
-        [Header("Crouching")]
-		[SerializeField] private float _crouchSpeed = 10f;
-		[SerializeField] private float _crouchSpeedMultiplier = 0.4f;
-		[SerializeField] private float _crouchSensitivity = 0.01f;
-		[SerializeField] private float _spaceFromCeilingWhenUncrouching = 0.1f;
-		[SerializeField] private float _deadHeight = 0.8f;
+        [Header("Crouching")] [SerializeField] private float _crouchSpeed = 10f;
+        [SerializeField] private float _crouchSpeedMultiplier = 0.4f;
+        [SerializeField] private float _crouchSensitivity = 0.01f;
+        [SerializeField] private float _spaceFromCeilingWhenUncrouching = 0.1f;
+        [SerializeField] private float _deadHeight = 0.8f;
 
         [SerializeField] private Player _player;
 
@@ -20,7 +19,6 @@ namespace FPSDemo.Player
 
         private float _currentCrouchAmount = 0;
         private float _maxCrouchAmount = 0;
-		private bool _isAdjustingCrouchLevel = false;
         private Vector3 _castOrigin = Vector3.zero;
 
 
@@ -40,27 +38,28 @@ namespace FPSDemo.Player
         }
 
         private void Awake()
-		{
-			_player.CrouchFloatingColliderHeight = CrouchColliderHeight - _player.DistanceToFloat;
-		}
+        {
+            _player.CrouchFloatingColliderHeight = CrouchColliderHeight - _player.DistanceToFloat;
+        }
 
         private void Start()
-		{
-			_maxCrouchAmount = _player.StandingFloatingColliderHeight - _player.CrouchFloatingColliderHeight;
-		}
+        {
+            _maxCrouchAmount = _player.StandingFloatingColliderHeight - _player.CrouchFloatingColliderHeight;
+        }
 
         private void OnEnable()
-		{
-			_player.OnPlayerUpdate += OnPlayerUpdate;
-			_player.OnBeforeMove += OnBeforeMove;
+        {
+            _player.OnPlayerUpdate += OnPlayerUpdate;
+            _player.OnBeforeMove += OnBeforeMove;
 
-			OnRestart();
-		}
+            OnRestart();
+        }
+
         private void OnDisable()
-		{
-			_player.OnPlayerUpdate -= OnPlayerUpdate;
-			_player.OnBeforeMove -= OnBeforeMove;
-		}
+        {
+            _player.OnPlayerUpdate -= OnPlayerUpdate;
+            _player.OnBeforeMove -= OnBeforeMove;
+        }
 
 
         // ========================================================= CLEAR / RESET
@@ -79,104 +78,106 @@ namespace FPSDemo.Player
         }
 
         private void OnBeforeMove()
-		{
-			float heightTarget;
-			if (_player.ThisTarget.IsDead)
-			{
-				heightTarget = _deadHeight;
-			}
-			else
-			{
-				heightTarget = _player.StandingFloatingColliderHeight - _currentCrouchAmount;
-				if (_player.IsCrouching && Mathf.Approximately(heightTarget, _player.CurrentFloatingColliderHeight) == false)
-				{
-					_castOrigin = _player.PlayerTopSphere();
+        {
+            float heightTarget;
+            if (_player.ThisTarget.IsDead)
+            {
+                heightTarget = _deadHeight;
+            }
+            else
+            {
+                heightTarget = _player.StandingFloatingColliderHeight - _currentCrouchAmount;
+                if (_player.IsCrouching &&
+                    Mathf.Approximately(heightTarget, _player.CurrentFloatingColliderHeight) == false)
+                {
+                    _castOrigin = _player.PlayerTopSphere();
                     var maxDistance = _player.StandingFloatingColliderHeight - _player.CurrentFloatingColliderHeight;
                     var layerMask = ~LayerMask.GetMask("Player");
 
-                    if (Physics.SphereCast(_castOrigin, _player.Radius, Vector3.up, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
-					{
-						var distanceToHit = Mathf.Clamp(hit.point.y - _castOrigin.y - _player.Radius, 0, Mathf.Infinity);
-						heightTarget = Mathf.Clamp(Mathf.Min(_player.CurrentFloatingColliderHeight + distanceToHit - _spaceFromCeilingWhenUncrouching, heightTarget), _player.CrouchFloatingColliderHeight, _player.StandingFloatingColliderHeight);
-					}
-				}
-			}
+                    if (Physics.SphereCast(_castOrigin, _player.Radius, Vector3.up, out RaycastHit hit, maxDistance,
+                            layerMask, QueryTriggerInteraction.Ignore))
+                    {
+                        var distanceToHit =
+                            Mathf.Clamp(hit.point.y - _castOrigin.y - _player.Radius, 0, Mathf.Infinity);
+                        heightTarget =
+                            Mathf.Clamp(
+                                Mathf.Min(
+                                    _player.CurrentFloatingColliderHeight + distanceToHit -
+                                    _spaceFromCeilingWhenUncrouching, heightTarget),
+                                _player.CrouchFloatingColliderHeight, _player.StandingFloatingColliderHeight);
+                    }
+                }
+            }
 
-			// Gradually adjust current height to target height
-			if (Mathf.Abs(heightTarget - _player.CurrentFloatingColliderHeight) > 0.001f)
-			{
-				_player.CurrentFloatingColliderHeight = Mathf.Lerp(_player.CurrentFloatingColliderHeight, heightTarget, _crouchSpeed * Time.deltaTime);
-			}
-			else
-			{
-				_player.CurrentFloatingColliderHeight = heightTarget;
-			}
+            // Gradually adjust current height to target height
+            if (Mathf.Abs(heightTarget - _player.CurrentFloatingColliderHeight) > 0.001f)
+            {
+                _player.CurrentFloatingColliderHeight = Mathf.Lerp(_player.CurrentFloatingColliderHeight, heightTarget,
+                    _crouchSpeed * Time.deltaTime);
+            }
+            else
+            {
+                _player.CurrentFloatingColliderHeight = heightTarget;
+            }
 
-			// Calculate crouch speed
-			if (_player.IsCrouching)
-			{
-				_player.CrouchSpeedMultiplier = Mathf.Lerp(1f, _crouchSpeedMultiplier, _player.CrouchPercentage);
-			}
-			else
-			{
-				_player.CrouchSpeedMultiplier = 1f;
-			}
-		}
+            // Calculate crouch speed
+            if (_player.IsCrouching)
+            {
+                _player.CrouchSpeedMultiplier = Mathf.Lerp(1f, _crouchSpeedMultiplier, _player.CrouchPercentage);
+            }
+            else
+            {
+                _player.CrouchSpeedMultiplier = 1f;
+            }
+        }
 
 
         // ========================================================= SIMULATION
 
         private void UpdateCrouchLevel()
-		{
-			if (!_player.IsSprinting)
-			{
-				float crouchAmountDelta = _player.InputManager.ChangeStanceAmount.y * _crouchSensitivity;
-				if (crouchAmountDelta != 0f)
-				{
-					_currentCrouchAmount = Mathf.Clamp(_currentCrouchAmount + crouchAmountDelta, 0, _maxCrouchAmount);
-					_isAdjustingCrouchLevel = true;
-				}
-				else if (_player.InputManager.CrouchToggled)
-				{
-					if (_isAdjustingCrouchLevel)
-					{
-						_isAdjustingCrouchLevel = false;
-					}
-					else
-					{
-						if (_currentCrouchAmount > 0)
-						{
-							_currentCrouchAmount = 0;
-						}
-						else
-						{
-							_currentCrouchAmount = _maxCrouchAmount;
-						}
-					}
-				}
-			}
-			else
-			{
-				_currentCrouchAmount = 0;
-			}
-		}
+        {
+            if (!_player.IsSprinting)
+            {
+                float crouchAmountDelta = _player.InputManager.ChangeStanceAmount.y * _crouchSensitivity;
+                if (crouchAmountDelta != 0f)
+                {
+                    _currentCrouchAmount = Mathf.Clamp(_currentCrouchAmount + crouchAmountDelta, 0, _maxCrouchAmount);
+                }
+                else if (_player.InputManager.CrouchToggled)
+                {
+                    if (_currentCrouchAmount > 0)
+                    {
+                        _currentCrouchAmount = 0;
+                    }
+                    else
+                    {
+                        _currentCrouchAmount = _maxCrouchAmount;
+                    }
+                }
+            }
+            else
+            {
+                _currentCrouchAmount = 0;
+            }
+        }
 
 
         // ========================================================= SETTERS
 
         public void SetCrouchLevelToMatchHeight(float heightToMatch)
-		{
-			float crouchAmountToSet;
-			if (Mathf.Approximately(heightToMatch, _player.CharacterHeight))
-			{
-				crouchAmountToSet = 0;
-			}
-			else
-			{
-				crouchAmountToSet = _maxCrouchAmount - (heightToMatch - CrouchColliderHeight - _spaceFromCeilingWhenUncrouching);
-			}
+        {
+            float crouchAmountToSet;
+            if (Mathf.Approximately(heightToMatch, _player.CharacterHeight))
+            {
+                crouchAmountToSet = 0;
+            }
+            else
+            {
+                crouchAmountToSet = _maxCrouchAmount -
+                                    (heightToMatch - CrouchColliderHeight - _spaceFromCeilingWhenUncrouching);
+            }
 
             _currentCrouchAmount = crouchAmountToSet;
         }
-	}
+    }
 }
