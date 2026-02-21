@@ -5787,7 +5787,7 @@ MonoBehaviour:
   _leanDistanceMobileFactor: 0.4
   _standLeanFactor: 1
   _crouchLeanAmt: 0.75
-  _leaningSensitivity: 0.01
+  _leaningSensitivity: 0.2
   _bufferDistanceFromWall: 0.4
   _originOffsetDistance: 0.05
   _playerRadiusPercentage: 0.6

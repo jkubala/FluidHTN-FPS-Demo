@@ -19,7 +19,7 @@ namespace FPSDemo.Player
         [Tooltip("Factor of how much the player can lean while crouching.")]
         [SerializeField] private float _crouchLeanAmt = 0.75f;
 
-        [SerializeField] private float _leaningSensitivity = 0.01f;
+        [SerializeField] private float _leaningSensitivity = 0.2f;
         
         [Header("Spherecast check parameters")]
         [SerializeField] private float _bufferDistanceFromWall = 0.4f;
