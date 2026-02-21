@@ -57,6 +57,7 @@ namespace FPSDemo.Player
 		private float _currentFOV = 45f;
 		private float _targetFOV;
         private float _targetMouseSensitivity;
+        private Quaternion _baseCameraRotation;
         
         // ========================================================= PROPERTIES
 
@@ -96,6 +97,7 @@ namespace FPSDemo.Player
 			_camera.fieldOfView = _currentFOV;
 			_targetMouseSensitivity = _mouseSensitivity;
 			_currentCamYPos = _targetCamYPos + _player.transform.position.y;
+			_baseCameraRotation = CameraBase.rotation;
 		}
 
 		void Start()
@@ -123,8 +125,6 @@ namespace FPSDemo.Player
 
         // ========================================================= TICK
 
-        
-
         private void RotateCamera()
 		{
 			_targetMouseSensitivity = _player.IsAiming ? _mouseSensitivityADS : _mouseSensitivity;
@@ -138,8 +138,9 @@ namespace FPSDemo.Player
 			CameraMovementThisFrame = new Vector2(_rotationX - _cameraMovementLastFrame.x, _rotationY - _cameraMovementLastFrame.y);
 			
             transform.rotation = Quaternion.Lerp(transform.rotation, _originalRotation * Quaternion.AngleAxis(_rotationX, Vector3.up), _smoothSpeed * Time.deltaTime);
-			
-            CameraBase.transform.rotation = Quaternion.Lerp(CameraBase.transform.rotation, transform.rotation * Quaternion.AngleAxis(_rotationY, Vector3.right) * Quaternion.AngleAxis(_rotationZ, Vector3.forward), _smoothSpeed * Time.deltaTime);
+
+            _baseCameraRotation = Quaternion.Lerp(_baseCameraRotation, transform.rotation * Quaternion.AngleAxis(_rotationY, Vector3.right), _smoothSpeed * Time.deltaTime);
+            CameraBase.transform.rotation = _baseCameraRotation * Quaternion.AngleAxis(_rotationZ, Vector3.forward);
 			
             _cameraMovementLastFrame.x = _rotationX;
 			_cameraMovementLastFrame.y = _rotationY;
@@ -248,7 +249,6 @@ namespace FPSDemo.Player
         private void OnUpdateRotation(Quaternion newRotation)
         {
             UpdateRotation(newRotation);
-
         }
 
         private void OnTeleportYCamPosUpdate(float newPosition)
