@@ -127,7 +127,7 @@ namespace FPSDemo.Player
 			if (_shouldClimb && !_player.IsClimbing)
 			{
 				// Pick the best valid hit
-				var chosenHit = GetBestHit(_cameraMovement.CameraBase.transform.rotation);
+				var chosenHit = GetBestHit(_cameraMovement.CameraOffset.transform.rotation);
 				if (chosenHit != null)
 				{
 					_playerCrouching.SetCrouchLevelToMatchHeight(chosenHit.Value.HeightSpace);

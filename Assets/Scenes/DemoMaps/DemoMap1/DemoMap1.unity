@@ -1287,22 +1287,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _standingCamHeight: 1.65
-  _targetCamYPos: 1.65
   _mouseSensitivity: 0.2
   _mouseSensitivityADS: 0.1
   _defaultYAngleLimit: 89
   _defaultXAngleLimit: 360
   _smoothSpeed: 50
-  _lookTowardsSpeed: 50
+  _lookTowardsSpeed: 150
   _camLeanMoveTime: 0.075
   _camDampSpeed: 0.1
   _tiltHeadForward: 0.1
   _tiltHeadBack: -0.15
   _cameraRotationLeaning: 20
   _cameraDefaultFOV: 65
-  _camera: {fileID: 367746773}
-  _player: {fileID: 639755639}
-  _playerLeaning: {fileID: 639755636}
 --- !u!1 &245279780
 GameObject:
   m_ObjectHideFlags: 0

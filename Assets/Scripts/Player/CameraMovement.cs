@@ -8,7 +8,6 @@ namespace FPSDemo.Player
         // ========================================================= INSPECTOR FIELDS
 
         [SerializeField] private float _standingCamHeight = 1.65f;
-		[SerializeField] private float _targetCamYPos = 1.65f;
 
 		[Tooltip("Mouse look sensitivity/camera move speed.")]
 		[SerializeField] private float _mouseSensitivity = 0.2f;
@@ -25,7 +24,7 @@ namespace FPSDemo.Player
 		[Tooltip("Smooth speed of camera angles for mouse look.")]
 		[SerializeField] private float _smoothSpeed = 50f;
 
-		[SerializeField] private float _lookTowardsSpeed = 50f;
+		[SerializeField] private float _lookTowardsSpeed = 150f;
 		[SerializeField] private float _camLeanMoveTime = 0.075f;
 		[SerializeField] private float _camDampSpeed = 0.1f;
 		[SerializeField] private float _tiltHeadForward = 0.1f;
@@ -34,16 +33,11 @@ namespace FPSDemo.Player
         [SerializeField] private float _cameraRotationLeaning = 20f;
 
         [SerializeField] float _cameraDefaultFOV = 65f;
-
-        [SerializeField] private Camera _camera;
-        [SerializeField] private Player _player;
-        [SerializeField] private PlayerLeaning _playerLeaning;
-        
         // ========================================================= PRIVATE FIELDS
 
+		private float _targetCamYPos;
         private Coroutine _rotateTowardsRoutine;
 		private Quaternion _originalRotation;
-		private Transform _cameraOffsetPoint;
 		private Vector3 _currentCamXZPos;
         private Vector3 _camXVelocity;
         private Vector2 _cameraMovementLastFrame = Vector2.zero;
@@ -59,9 +53,14 @@ namespace FPSDemo.Player
         private float _targetMouseSensitivity;
         private Quaternion _baseCameraRotation;
         
+        private Camera _camera;
+        private Rigidbody _rb;
+        private Player _player;
+        private PlayerLeaning _playerLeaning;
+        
         // ========================================================= PROPERTIES
 
-        public Transform CameraBase { get; private set; }
+        public Transform CameraOffset { get; private set; }
         public bool CanRotateCamera { get; set; } = true;
         public bool RotateTowardsFinished { get; private set; } = true;
         public Vector2 CameraMovementThisFrame { get; private set; } = Vector2.zero;
@@ -88,8 +87,7 @@ namespace FPSDemo.Player
 
         void Awake()
 		{
-			CameraBase = _camera.transform.parent;
-			_cameraOffsetPoint = CameraBase.transform.parent;
+			CameraOffset = _camera.transform.parent;
 			_originalRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
 			_targetCamYPos = _standingCamHeight;
 			_currentCamXZPos = transform.position;
@@ -97,7 +95,8 @@ namespace FPSDemo.Player
 			_camera.fieldOfView = _currentFOV;
 			_targetMouseSensitivity = _mouseSensitivity;
 			_currentCamYPos = _targetCamYPos + _player.transform.position.y;
-			_baseCameraRotation = CameraBase.rotation;
+			_baseCameraRotation = CameraOffset.rotation;
+			_rb = _player.GetComponent<Rigidbody>();
 		}
 
 		void Start()
@@ -140,7 +139,7 @@ namespace FPSDemo.Player
             transform.rotation = Quaternion.Lerp(transform.rotation, _originalRotation * Quaternion.AngleAxis(_rotationX, Vector3.up), _smoothSpeed * Time.deltaTime);
 
             _baseCameraRotation = Quaternion.Lerp(_baseCameraRotation, transform.rotation * Quaternion.AngleAxis(_rotationY, Vector3.right), _smoothSpeed * Time.deltaTime);
-            CameraBase.transform.rotation = _baseCameraRotation * Quaternion.AngleAxis(_rotationZ, Vector3.forward);
+            CameraOffset.rotation = _baseCameraRotation * Quaternion.AngleAxis(_rotationZ, Vector3.forward);
 			
             _cameraMovementLastFrame.x = _rotationX;
 			_cameraMovementLastFrame.y = _rotationY;
@@ -158,7 +157,7 @@ namespace FPSDemo.Player
 			var headTiltValue = Vector3.Dot(-transform.up, _camera.transform.forward);
 			var headTilt = transform.forward * Mathf.Lerp(_tiltHeadBack, _tiltHeadForward, (headTiltValue + 1f) / 2f);
 
-			CameraBase.transform.position = _cameraOffsetPoint.position + _player.transform.right * _playerLeaning.CurrentLeanDistance + headTilt;
+			CameraOffset.position = transform.position + _player.transform.right * _playerLeaning.CurrentLeanDistance + headTilt;
 		}
 
 
@@ -166,7 +165,7 @@ namespace FPSDemo.Player
 
         private float GetCameraPitch()
         {
-            float angleToReturn = CameraBase.localRotation.eulerAngles.x;
+            float angleToReturn = CameraOffset.localRotation.eulerAngles.x;
             if (angleToReturn > 180)
             {
                 angleToReturn -= 360;
@@ -208,13 +207,14 @@ namespace FPSDemo.Player
 		{
 			while (targetRot != transform.rotation || !Mathf.Approximately(GetCameraPitch(), targetCameraPitch))
 			{
-				CameraBase.localRotation = Quaternion.Euler(new Vector3(Mathf.MoveTowards(GetCameraPitch(), targetCameraPitch, Time.deltaTime * _lookTowardsSpeed), 0, 0));
+				CameraOffset.localRotation = Quaternion.Euler(new Vector3(Mathf.MoveTowards(GetCameraPitch(), targetCameraPitch, Time.deltaTime * _lookTowardsSpeed), 0, 0));
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * _lookTowardsSpeed);
 				yield return null;
 			}
 			_originalRotation = targetRot;
 			UpdateRotation(transform.rotation);
 			UpdateCameraPitch(GetCameraPitch());
+			_baseCameraRotation = CameraOffset.rotation; 
 			_cameraMovementLastFrame = new Vector2(_rotationX, _rotationY);
 			RotateTowardsFinished = true;
 		}
@@ -232,7 +232,7 @@ namespace FPSDemo.Player
             else
             {
                 _targetCamYPos = _standingCamHeight - (_player.StandingFloatingColliderHeight - _player.CurrentFloatingColliderHeight) + _player.transform.position.y;
-                _player.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(Vector3.up * transform.eulerAngles.y));
+                _rb.MoveRotation(Quaternion.Euler(Vector3.up * transform.eulerAngles.y));
             }
         }
 
