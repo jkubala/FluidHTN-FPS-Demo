@@ -19,12 +19,17 @@ MonoBehaviour:
   cornerCheckRaySequenceDistance: 2
   cornerCheckPositionOffset: 0
   minWidthToConsiderAValidPosition: 0.7
+  maxCoverAnalysisDistance: 2
   minAngleToConsiderCorner: 15
   rayLengthBeyondWall: 0.25
   floatPrecisionBuffer: 0.01
   sphereCastForFiringPositionCheckOffset: {x: 0, y: 0}
   sphereCastForFiringPositionCheckRadius: 0.15
   sphereCastForFiringPositionCheckDistance: 1
-  nOfHitsOfDifferentNormalToConsiderCorner: 3
+  hitsRequiredForCorner: 3
   firingPositionHeight: 1.2
-  maxYDifferenceWhenAdjusting: 0.3
+  maxStandardHeightDifference: 0.3
+  maxValidationAdjustmentDistance: 0.1
+  wallCoverScanDistance: 3
+  spacingBetweenWallCoverPoints: 1
+  minDistanceFromCoverEdge: 0.3

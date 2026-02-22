@@ -24,5 +24,9 @@ namespace FPSDemo.NPC.Utilities
         public float firingPositionHeight = 1.6f;
         public float maxStandardHeightDifference = 0.3f;
         public float maxValidationAdjustmentDistance = 0.1f;
+        [Header("Wall cover spacing")]
+        public float wallCoverScanDistance = 3f;
+        public float spacingBetweenWallCoverPoints = 2f;
+        public float minDistanceFromCoverEdge = 0.5f;
     }
 }

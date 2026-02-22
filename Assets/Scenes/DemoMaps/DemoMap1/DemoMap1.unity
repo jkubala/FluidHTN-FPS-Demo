@@ -1292,13 +1292,13 @@ MonoBehaviour:
   _defaultYAngleLimit: 89
   _defaultXAngleLimit: 360
   _smoothSpeed: 50
-  _lookTowardsSpeed: 5
-  _camLeanMoveTime: 0.075
+  _lookTowardsSpeed: 10
   _camDampSpeed: 0.1
   _tiltHeadForward: 0.1
   _tiltHeadBack: -0.15
-  _cameraRotationLeaning: 20
-  _cameraDefaultFOV: 65
+  _rotationLeaning: 20
+  _defaultFOV: 65
+  _rotationSnapThreshold: 0.1
 --- !u!1 &245279780
 GameObject:
   m_ObjectHideFlags: 0

@@ -148,7 +148,18 @@ namespace FPSDemo.NPC.Utilities
                 {
                     if (ValidateCornerForTacticalUse(cornersFound[j], context, out CornerDetectionInfo validatedCorner))
                     {
-                        context.positionData.Positions.Add(CreateTacticalPositionFromCorner(validatedCorner, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask));
+                        if (context.cornerSettings.genMode == CoverGenerationMode.LowCover)
+                        {
+                            (Vector3 start, Vector3 end)? extent = _positionValidator.MeasureCoverExtent(validatedCorner, context.cornerSettings, _settings.positionSettings, _settings.raycastMask);
+                            if (extent.HasValue)
+                            {
+                                context.positionData.Positions.AddRange(GenerateSpacedWallCoverPositions(extent.Value, validatedCorner, context));
+                            }
+                        }
+                        else
+                        {
+                            context.positionData.Positions.Add(CreateTacticalPositionFromCorner(validatedCorner, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask));
+                        }
                         validatedCorner.debugData?.parentData.MarkAsFinished();
                     }
                 }
@@ -181,6 +192,31 @@ namespace FPSDemo.NPC.Utilities
                 validatedCorner.debugData.tacticalPosition = newTacticalPos;
             }
             return newTacticalPos;
+        }
+
+        private List<TacticalPosition> GenerateSpacedWallCoverPositions((Vector3 start, Vector3 end) extent, CornerDetectionInfo validatedCorner, CoverGenerationContext context)
+        {
+            List<TacticalPosition> positions = new();
+            float spacing = context.cornerSettings.spacingBetweenWallCoverPoints;
+            float segmentLength = Vector3.Distance(extent.start, extent.end);
+            Vector3 segmentCenter = (extent.start + extent.end) / 2f;
+            Vector3 segmentDir = segmentLength > 0.001f ? (extent.end - extent.start).normalized : Vector3.zero;
+
+            int pointCount = Mathf.FloorToInt(segmentLength / spacing) + 1;
+            float coveredSpan = (pointCount - 1) * spacing;
+            float startOffset = -coveredSpan / 2f;
+
+            for (int i = 0; i < pointCount; i++)
+            {
+                Vector3 point = segmentCenter + segmentDir * (startOffset + i * spacing);
+                validatedCorner.position = point;
+                if (!_positionValidator.HasFiringObstacle(validatedCorner, context.cornerSettings, _settings.raycastMask))
+                {
+                    positions.Add(CreateTacticalPositionFromCorner(validatedCorner, context.cornerSettings.cornerCheckPositionOffset, _settings.raycastMask));
+                }
+            }
+
+            return positions;
         }
 
         public List<CoverGenerationContext> GetActiveCoverGenContexts(CoverGenerationMode genMode)

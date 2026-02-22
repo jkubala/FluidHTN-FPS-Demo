@@ -47,6 +47,76 @@ namespace FPSDemo.NPC.Utilities
             return cornerInfo;
         }
 
+        public (Vector3 start, Vector3 end)? MeasureCoverExtent(
+            CornerDetectionInfo cornerInfo,
+            TacticalPositionScanSettings scanSettings,
+            TacticalPositionSettings posSettings,
+            LayerMask raycastMask)
+        {
+            Vector3 wallParallel = Vector3.Cross(Vector3.up, cornerInfo.coverWallNormal).normalized;
+            float stepSize = posSettings.horizontalStepToCheckForCover;
+
+            Vector3 startEdge = cornerInfo.position;
+            Vector3 endEdge = cornerInfo.position;
+
+            // Scan in the positive wall-parallel direction
+            for (float dist = stepSize; dist <= scanSettings.wallCoverScanDistance; dist += stepSize)
+            {
+                Vector3 testPos = cornerInfo.position + wallParallel * dist;
+                if (!IsCoverContinuousAt(testPos, cornerInfo, posSettings, raycastMask))
+                {
+                    break;
+                }
+                endEdge = testPos;
+            }
+
+            // Scan in the negative wall-parallel direction
+            for (float dist = stepSize; dist <= scanSettings.wallCoverScanDistance; dist += stepSize)
+            {
+                Vector3 testPos = cornerInfo.position - wallParallel * dist;
+                if (!IsCoverContinuousAt(testPos, cornerInfo, posSettings, raycastMask))
+                {
+                    break;
+                }
+                startEdge = testPos;
+            }
+
+            // Shrink extent inward to keep points away from edges
+            startEdge += wallParallel * scanSettings.minDistanceFromCoverEdge;
+            endEdge -= wallParallel * scanSettings.minDistanceFromCoverEdge;
+
+            float extentLength = Vector3.Distance(startEdge, endEdge);
+            if (extentLength < scanSettings.spacingBetweenWallCoverPoints * 0.1f)
+            {
+                return null;
+            }
+
+            return (startEdge, endEdge);
+        }
+
+        protected virtual bool IsCoverContinuousAt(Vector3 testPosition, CornerDetectionInfo cornerInfo, TacticalPositionSettings posSettings, LayerMask raycastMask)
+        {
+            if (!Physics.Raycast(testPosition + Vector3.up * 5f, Vector3.down, out RaycastHit groundHit, Mathf.Infinity, raycastMask))
+            {
+                return false;
+            }
+
+            Vector3? gapPos = ScanForCoverGaps(groundHit.point, cornerInfo, raycastMask, posSettings);
+            if (gapPos.HasValue)
+            {
+                return false;
+            }
+
+            // Stop scanning if wall extends to firing height - this is high cover, not low cover
+            Vector3 firingHeightCheck = new Vector3(testPosition.x, cornerInfo.position.y, testPosition.z);
+            if (Physics.Raycast(firingHeightCheck, -cornerInfo.coverWallNormal, posSettings.distanceToCheckForCover, raycastMask))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         protected virtual Vector3? ValidateCoverContinuity(Vector3 position, CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, TacticalPositionSettings posSettings, LayerMask raycastMask)
         {
             float currentScanningDistance = 0;
@@ -164,7 +234,7 @@ namespace FPSDemo.NPC.Utilities
             return downAlongWall;
         }
 
-        protected virtual bool HasFiringObstacle(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
+        public virtual bool HasFiringObstacle(CornerDetectionInfo cornerInfo, TacticalPositionScanSettings cornerSettings, LayerMask raycastMask)
         {
             Vector3 sphereCastOrigin = GetFiringCheckOrigin(cornerInfo, cornerSettings);
 
