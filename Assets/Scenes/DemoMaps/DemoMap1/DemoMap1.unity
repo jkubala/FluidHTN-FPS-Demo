@@ -1292,7 +1292,7 @@ MonoBehaviour:
   _defaultYAngleLimit: 89
   _defaultXAngleLimit: 360
   _smoothSpeed: 50
-  _lookTowardsSpeed: 150
+  _lookTowardsSpeed: 5
   _camLeanMoveTime: 0.075
   _camDampSpeed: 0.1
   _tiltHeadForward: 0.1
