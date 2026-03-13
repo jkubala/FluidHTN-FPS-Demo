@@ -103,7 +103,8 @@ FluidHTN-FPS-Demo/
 ### Prerequisites
 
 - **Unity 6** (6000.3.9f1) — check `ProjectSettings/ProjectVersion.txt` for the exact version
-- All package dependencies (including Fluid HTN) are resolved automatically via `Packages/manifest.json` — no manual install needed
+- All Unity package dependencies are resolved automatically via `Packages/manifest.json` — no manual install needed
+- Fluid HTN is included directly as a local package under `Packages/Fluid-HTN/`
 
 ### Setup
 
@@ -125,7 +126,7 @@ Cover points must be baked before enemy AI can use them. With a demo scene open,
 
 | Dependency | Source |
 |---|---|
-| [Fluid HTN](https://github.com/ptrefall/fluid-hierarchical-task-network) | Git URL in `Packages/manifest.json` |
+| [Fluid HTN](https://github.com/ptrefall/fluid-hierarchical-task-network) | Local package at `Packages/Fluid-HTN/` |
 | Unity AI Navigation (NavMesh) | `com.unity.ai.navigation` |
 | Unity Input System | `com.unity.inputsystem` |
 | Unity Animation Rigging | `com.unity.animation.rigging` |
