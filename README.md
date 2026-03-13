@@ -25,7 +25,7 @@ A custom editor tool that **bakes tactical cover positions at edit time**. The g
 
 ### AI Sensor
 
-Enemies use a dedicated sensor system to perceive the player. The sensor tracks whether the player is visible, at what range, and crucially **from which direction** they are being observed. This feeds directly into the world-state blackboard so the HTN planner can make informed decisions — e.g. only taking cover when the player has line of sight, or flanking from a blind side.
+Enemies use a dedicated sensor system to perceive the player. The sensor tracks whether the player is visible, at what range, and crucially **from which direction** they are being observed. This feeds directly into the world-state blackboard so the HTN planner can make informed decisions — e.g., only taking cover when the player has line of sight, or flanking from a blind side.
 
 A built-in **direction updater GUI** visualises the sensor state in the editor and at runtime, displaying a directional indicator of where the player is currently being seen from. This makes it easy to debug and tune perception behaviour without needing to read raw blackboard values.
 
@@ -86,12 +86,13 @@ FluidHTN-FPS-Demo/
 │   └── ThirdParty/
 │       ├── BloodDecalsAndEffects/       # Blood decal visual effects
 │       ├── JMO Assets/                  # Particle effects
-│       ├── Ishikawa1116/                # Character animations
+│       ├── Ishikawa1116/                # Low-poly guns pack
 │       ├── LowPolySoldiers_demo/        # NPC character models
 │       ├── Mixamo/                      # Additional animations
 │       └── SFX/                         # Sound effects
 ├── Packages/
-│   └── manifest.json                    # Package dependencies including Fluid HTN
+│   ├── Fluid-HTN/                       # Fluid HTN local package
+│   └── manifest.json                    # Unity package dependencies
 ├── ProjectSettings/
 └── README.md
 ```
@@ -102,7 +103,7 @@ FluidHTN-FPS-Demo/
 
 ### Prerequisites
 
-- **Unity 6** (6000.3.9f1) — check `ProjectSettings/ProjectVersion.txt` for the exact version
+- **Unity 6** (6000.3.9f1)
 - All Unity package dependencies are resolved automatically via `Packages/manifest.json` — no manual install needed
 - Fluid HTN is included directly as a local package under `Packages/Fluid-HTN/`
 
