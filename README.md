@@ -10,7 +10,7 @@ A Unity FPS demo built for the [Fluid HTN](https://github.com/ptrefall/fluid-hie
 
 The player controller is the centrepiece of the demo, covering a broad set of movement and interaction mechanics:
 
-- **Movement** — standard first-person movement via Unity's `CharacterController`
+- **Movement** — first-person movement with a floating capsule, spring-damped ground detection, and slope handling
 - **Mouse look / camera** — smoothed look with configurable sensitivity
 - **Crouching** — toggleable crouch that adjusts the character capsule height
 - **Leaning** — left/right lean for peeking around corners without fully exposing the player
@@ -19,9 +19,9 @@ The player controller is the centrepiece of the demo, covering a broad set of mo
 - **Shooting / weapons** — weapon firing with configurable parameters
 - **Health / damage** — player health management and damage reception
 
-### Cover Point Generator
+### Tactical Cover Point Generator
 
-A custom editor tool that **bakes cover positions at edit time**. Cover points are stamped into the scene as precomputed data, so enemy agents can query valid positions cheaply at runtime without any per-frame spatial analysis. The baked points are what enemy AI uses when deciding where to seek cover relative to the player.
+A custom editor tool that **bakes tactical cover positions at edit time**. The generator detects low cover positions, low corners, and high corners by scanning geometry with raycasts, then validates each candidate for ground level, cover continuity, and firing clearance. Cover points are stamped into scene-specific data assets so enemy agents can query valid positions cheaply at runtime without any per-frame spatial analysis.
 
 ### AI Sensor
 
@@ -31,7 +31,7 @@ A built-in **direction updater GUI** visualises the sensor state in the editor a
 
 ### Enemy AI
 
-Enemies are driven by an **HTN (Hierarchical Task Network) planner** via the [Fluid HTN](https://github.com/ptrefall/fluid-hierarchical-task-network) library. The planner queries the baked cover points and the player controller's state (health, visibility, position) through a shared world-state blackboard to produce coherent multi-step plans — patrolling, engaging, seeking cover, and so on.
+Enemies are driven by an **HTN (Hierarchical Task Network) planner** via the [Fluid HTN](https://github.com/ptrefall/fluid-hierarchical-task-network) library. The planner queries the baked cover points and the player's state (health, visibility, position) through a shared world-state blackboard to produce coherent multi-step plans — patrolling, engaging, seeking cover, flanking, and so on.
 
 > ⚠️ **Work in progress** — the AI agent is in its early stages and only the basics are implemented so far. The HTN planner is not yet meaningfully showcased through agent behaviour. That said, the demo already has a lot of substance in the player controller, cover system, and sensor — these are the main things worth exploring right now.
 
@@ -40,19 +40,60 @@ Enemies are driven by an **HTN (Hierarchical Task Network) planner** via the [Fl
 ## Project Structure
 
 ```
-Assets/
-├── Scripts/
-│   ├── Player/
-│   │   └── PlayerController.cs     # Movement, look, crouch, lean, climb, shoot, health
-│   ├── Cover/
-│   │   └── CoverPointGenerator.cs  # Editor tool — bakes cover points into the scene
-│   ├── AI/                         # HTN context, domain, operators, conditions, effects
-│   └── ...
-├── Scenes/
-├── Prefabs/
-└── Shaders/
-Packages/
-└── manifest.json                   # Includes Fluid HTN as a Git package dependency
+FluidHTN-FPS-Demo/
+├── Assets/
+│   ├── Scripts/
+│   │   ├── Core/                        # Game manager singleton, AI settings
+│   │   ├── Editor/                      # Custom inspectors (ThirdPersonController)
+│   │   ├── FSM/                         # Generic finite state machine
+│   │   ├── Input/                       # Input manager (Unity Input System)
+│   │   ├── NPC/
+│   │   │   ├── Conditions/              # HTN conditions (world state checks)
+│   │   │   ├── Domains/                 # HTN domain + task definitions
+│   │   │   ├── Effects/                 # HTN effects (world state mutations)
+│   │   │   ├── FSMs/                    # NPC weapon FSM and states
+│   │   │   ├── Operators/               # HTN operators (move to cover, shoot, flank, etc.)
+│   │   │   ├── Sensors/                 # Vision, enemy, cover position sensors
+│   │   │   ├── AIContext.cs             # HTN world-state blackboard
+│   │   │   ├── AIDomainBuilder.cs       # HTN domain builder
+│   │   │   ├── AIWorldState.cs          # World state enum
+│   │   │   ├── NPC.cs                   # NPC entry point
+│   │   │   └── ThirdPersonController.cs # NPC movement controller (NavMeshAgent + IK)
+│   │   ├── NPCUtils/
+│   │   │   ├── Classifiers/             # Position change classifiers (added/modified/removed)
+│   │   │   ├── Core/                    # Corner finder, position validator, tactical position generator
+│   │   │   ├── Data Containers/         # Tactical position data and grid spawner data
+│   │   │   ├── Debug/                   # Gizmo and debug visualisers for tactical positions
+│   │   │   ├── Editor/                  # Editor window for baking tactical positions
+│   │   │   └── Settings/                # Generator and scan settings
+│   │   ├── Player/
+│   │   │   ├── CameraMovement.cs        # Mouse look / camera
+│   │   │   ├── DetectionDirectionFiller.cs
+│   │   │   ├── DetectionDirectionUpdater.cs  # GUI showing from which direction player is seen
+│   │   │   ├── EnvironmentScanner.cs    # Physics raycast scanning for climbable surfaces
+│   │   │   ├── Player.cs                # Core player character (floating capsule, grounding, events)
+│   │   │   ├── PlayerClimbing.cs        # Environment and ladder climbing
+│   │   │   ├── PlayerCrouching.cs
+│   │   │   ├── PlayerJumping.cs
+│   │   │   ├── PlayerLeaning.cs
+│   │   │   ├── PlayerSprinting.cs
+│   │   │   ├── PlayerWeaponController.cs
+│   │   │   ├── PlayerWeaponMover.cs
+│   │   │   └── PlayerWeaponUI.cs
+│   │   ├── Shooting/                    # Weapon logic, collision detection, UI
+│   │   ├── Target/                      # Health system, hit registration, visible body parts
+│   │   └── Utils/                       # Pooling, physics helpers, layer manager, logging
+│   └── ThirdParty/
+│       ├── BloodDecalsAndEffects/       # Blood decal visual effects
+│       ├── JMO Assets/                  # Particle effects
+│       ├── Ishikawa1116/                # Character animations
+│       ├── LowPolySoldiers_demo/        # NPC character models
+│       ├── Mixamo/                      # Additional animations
+│       └── SFX/                         # Sound effects
+├── Packages/
+│   └── manifest.json                    # Package dependencies including Fluid HTN
+├── ProjectSettings/
+└── README.md
 ```
 
 ---
@@ -61,8 +102,8 @@ Packages/
 
 ### Prerequisites
 
-- **Unity 2022.x or later** (check `ProjectSettings/ProjectVersion.txt` for the exact version)
-- Fluid HTN is pulled automatically via `Packages/manifest.json` — no manual install needed
+- **Unity 6** (6000.3.9f1) — check `ProjectSettings/ProjectVersion.txt` for the exact version
+- All package dependencies (including Fluid HTN) are resolved automatically via `Packages/manifest.json` — no manual install needed
 
 ### Setup
 
@@ -71,14 +112,12 @@ Packages/
    git clone https://github.com/jkubala/FluidHTN-FPS-Demo.git
    ```
 2. Open the project folder in **Unity Hub** and let package resolution complete.
-3. Open the demo scene from `Assets/Scenes/`.
+3. Open a demo scene from `Assets/Scenes/DemoMaps/`.
 4. Press **Play**.
 
 ### Baking Cover Points
 
-Cover points must be baked before enemy AI can use them. With the scene open in the editor, select the `CoverPointGenerator` object and run the bake from its Inspector. Re-bake whenever the level geometry changes.
-
-> ⚠️ **Work in progress** — the cover point generator is still in development. Proper horizontal spacing is not yet supported, so baked results may not be reliable in all environments.
+Cover points must be baked before enemy AI can use them. With a demo scene open, use the **Tactical Position Generator** editor window to run the bake. Re-bake whenever the level geometry changes.
 
 ---
 
@@ -87,8 +126,11 @@ Cover points must be baked before enemy AI can use them. With the scene open in 
 | Dependency | Source |
 |---|---|
 | [Fluid HTN](https://github.com/ptrefall/fluid-hierarchical-task-network) | Git URL in `Packages/manifest.json` |
-| Unity NavMesh | Built-in Unity package |
-| Unity Input System | Built-in Unity package |
+| Unity AI Navigation (NavMesh) | `com.unity.ai.navigation` |
+| Unity Input System | `com.unity.inputsystem` |
+| Unity Animation Rigging | `com.unity.animation.rigging` |
+| ProBuilder | `com.unity.probuilder` |
+| Unity Timeline | `com.unity.timeline` |
 
 ---
 
