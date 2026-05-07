@@ -18,4 +18,5 @@ public class TacticalPositionSettings : ScriptableObject
     public float bottomRaycastBuffer = 0.1f; // Added to the ground so that it will not raycast through it
     [Range(0.5f, 2f)]
     public float distanceToCheckForCover = 1f;
+    public float groundScanUpwardOffset = 5f;
 }

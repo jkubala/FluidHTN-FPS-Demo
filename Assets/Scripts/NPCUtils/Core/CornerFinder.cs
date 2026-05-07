@@ -100,7 +100,7 @@ namespace FPSDemo.NPC.Utilities
             int currentHitsOfDifferentNormal = 0;
             Vector3? lastDifferentNormal = null;
             Vector3? lastAdjustedPosition = null;
-            Vector3 adjustedPosition = position;
+            Vector3 adjustedPosition;
 
             // Determine if direction is to the left or right of hitNormal
             CoverType coverType;
@@ -116,6 +116,8 @@ namespace FPSDemo.NPC.Utilities
             // Subtracting floatPrecisionBuffer to avoid raycasts starting inside geometry
             for (float distance = 0; distance <= maxDistance - cornerSettings.floatPrecisionBuffer; distance += cornerSettings.cornerCheckRayStep)
             {
+                adjustedPosition = position + axis * distance;
+
                 if (Physics.Raycast(adjustedPosition, -hitNormal, out RaycastHit newHit, cornerSettings.cornerCheckRayWallOffset + cornerSettings.rayLengthBeyondWall, raycastMask))
                 {
                     Vector3 newProjectedHitNormal = Vector3.ProjectOnPlane(newHit.normal, Vector3.up).normalized;
@@ -153,8 +155,6 @@ namespace FPSDemo.NPC.Utilities
                         distanceToCorner = Vector3.Distance(position, adjustedPosition)
                     };
                 }
-
-                adjustedPosition = position + axis * distance;
             }
 
             return null; // No convex corner found within the loop

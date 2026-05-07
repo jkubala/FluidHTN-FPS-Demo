@@ -96,7 +96,7 @@ namespace FPSDemo.NPC.Utilities
 
         protected virtual bool IsCoverContinuousAt(Vector3 testPosition, CornerDetectionInfo cornerInfo, TacticalPositionSettings posSettings, LayerMask raycastMask)
         {
-            if (!Physics.Raycast(testPosition + Vector3.up * 5f, Vector3.down, out RaycastHit groundHit, Mathf.Infinity, raycastMask))
+            if (!Physics.Raycast(testPosition + Vector3.up * posSettings.groundScanUpwardOffset, Vector3.down, out RaycastHit groundHit, Mathf.Infinity, raycastMask))
             {
                 return false;
             }
@@ -241,7 +241,7 @@ namespace FPSDemo.NPC.Utilities
             Vector3 sphereCastDirection = cornerInfo.positionFiringDirection.normalized;
 
             // Make sure there is no obstacle between the position and firing pos
-            if (Physics.Linecast(cornerInfo.position, sphereCastOrigin))
+            if (Physics.Linecast(cornerInfo.position, sphereCastOrigin, raycastMask))
             {
                 return true;
             }
